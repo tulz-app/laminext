@@ -14,7 +14,7 @@ object Validations {
       else { NonEmptyChain.one(message).asLeft }
 
   def nonBlank(message: String = "required"): Validation[String] =
-    custom(message)(!_.isBlank)
+    custom(message)(_.trim.nonEmpty)
 
   def email(message: String = "required"): Validation[String] =
     custom(message)(EmailValidator.isValidEmail)
@@ -22,9 +22,11 @@ object Validations {
   def pass: Validation[String] =
     custom("")(_ => true)
 
-  def isTrue(message: String = "required"): Validation[Boolean] =
+  def isTrue(message: String): Validation[Boolean] =
     b =>
       if (b) { b.asRight }
       else { NonEmptyChain.one(message).asLeft }
+
+  def isFalse(message: String): Validation[Boolean] = b => isTrue(message)(!b)
 
 }

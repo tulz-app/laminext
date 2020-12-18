@@ -36,9 +36,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
   def skipWhen(b: Signal[Boolean]): EventStream[A] =
     underlying
       .withCurrentValueOf(b)
-      .collect { case (v, false) =>
-        v
-      }
+      .collect { case (v, false) => v }
 
   def drop(count: Int): EventStream[A] = {
     var seen = 0

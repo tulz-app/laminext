@@ -6,7 +6,8 @@ import com.raquo.airstream.eventstream.EventStream
 
 class StreamOfBooleanValidationOps(s: EventStream[Boolean]) {
 
-  def validatedIsTrue(message: String): EventStream[ValidatedValue[Boolean]] =
-    s.map(Validations.isTrue(message))
+  def validatedIsTrue(message: String): EventStream[ValidatedValue[Boolean]] = s.map(Validations.isTrue(message))
+
+  def validatedIsFalse(message: String): EventStream[ValidatedValue[Boolean]] = s.map(Validations.isFalse(message))
 
 }

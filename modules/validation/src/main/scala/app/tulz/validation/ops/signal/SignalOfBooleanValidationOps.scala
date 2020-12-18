@@ -8,4 +8,6 @@ class SignalOfBooleanValidationOps(s: Signal[Boolean]) {
 
   def validatedIsTrue(message: String): Signal[ValidatedValue[Boolean]] = s.map(Validations.isTrue(message))
 
+  def validatedIsFalse(message: String): Signal[ValidatedValue[Boolean]] = s.map(Validations.isFalse(message))
+
 }
