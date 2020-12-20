@@ -14,7 +14,7 @@ class AmendedHtmlTag[+R <: dom.html.Element, AmType <: AmAny](
     original.apply(modifiers ++ amendments: _*)
   }
 
-  def amend(mods: Mod[ReactiveHtmlElement[R]]*): AmendedHtmlTag[R, AmType] =
-    new AmendedHtmlTag[R, AmType](this, amendments ++ mods)
+  def amend[NewAmType <: AmAny](mods: Mod[ReactiveHtmlElement[R]]*): AmendedHtmlTag[R, NewAmType] =
+    new AmendedHtmlTag[R, NewAmType](this, amendments ++ mods)
 
 }

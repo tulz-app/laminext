@@ -1,4 +1,5 @@
-package app.tulz.laminext.tailwind.ops.svgelement
+package app.tulz.tailwind
+package ops.svgelement
 
 import com.raquo.laminar.api.L.{cls => _, _}
 import com.raquo.laminar.api.L.svg._

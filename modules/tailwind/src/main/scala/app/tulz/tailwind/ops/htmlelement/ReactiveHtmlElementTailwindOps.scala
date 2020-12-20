@@ -1,4 +1,5 @@
-package app.tulz.laminext.tailwind.ops.htmlelement
+package app.tulz.tailwind
+package ops.htmlelement
 
 import com.raquo.airstream.signal.Signal
 import com.raquo.domtypes.generic.Modifier

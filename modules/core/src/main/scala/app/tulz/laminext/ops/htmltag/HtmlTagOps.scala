@@ -9,7 +9,7 @@ import org.scalajs.dom
 
 class HtmlTagOps[T <: dom.html.Element](tag: HtmlTag[T]) {
 
-  @inline def amend[AmType <: AmAny]: AmendedHtmlTag[T, AmType] =
+  @inline def amended[AmType <: AmAny]: AmendedHtmlTag[T, AmType] =
     new AmendedHtmlTag[T, AmType](tag, Seq.empty)
 
   @inline def amend[AmType <: AmAny](mods: Modifier[ReactiveHtmlElement[T]]*): AmendedHtmlTag[T, AmType] =

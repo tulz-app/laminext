@@ -99,7 +99,6 @@ package object ext extends SimpleUtilities with HtmlEntities {
   val futureChildren: FutureChildrenReceiver.type = FutureChildrenReceiver
 
   trait AmAny
-  trait AmButton extends AmAny
 
   def updatableSignal[A](initial: A): (Signal[A], Observer[A => A]) = UpdatableSignal(initial)
 

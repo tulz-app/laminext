@@ -43,13 +43,23 @@ lazy val commonSettings = Seq(
     "-encoding",
     "utf8"
   ),
-  testFrameworks += new TestFramework("utest.runner.Framework")
+  jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+  version in installJsdom := "16.4.0",
+  useYarn := true,
+  requireJsDomEnv in Test := true,
+  parallelExecution in Test := false,
+  scalaJSUseMainModuleInitializer := true,
+  scalaJSLinkerConfig in (Compile, fastOptJS) ~= {
+    _.withSourceMap(false)
+  }
 )
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    "com.raquo"   %%% "laminar" % "0.11.0",
-    "com.lihaoyi" %%% "utest"   % "0.7.5" % Test
+    "com.raquo"     %%% "laminar"      % "0.11.0",
+    "org.scalatest" %%% "scalatest"    % "3.2.0"          % Test,
+    "app.tulz"      %%% "stringdiff"   % "0.1.0-SNAPSHOT" % Test,
+    "com.raquo"     %%% "domtestutils" % "0.11.0"         % Test
   )
 )
 
@@ -72,9 +82,9 @@ lazy val sttp3Dependencies = Seq(
 )
 
 lazy val `laminext-core` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/core"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(
@@ -82,9 +92,9 @@ lazy val `laminext-core` =
     )
 
 lazy val `laminext-cats` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/cats"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(catsDependencies)
@@ -94,9 +104,9 @@ lazy val `laminext-cats` =
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-validation` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/validation"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(catsDependencies)
@@ -105,18 +115,18 @@ lazy val `laminext-validation` =
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-fsm` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/fsm"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(
       description := "Laminar utilities (validation)"
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-sttp3` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/sttp3"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(sttp3Dependencies)
@@ -125,9 +135,9 @@ lazy val `laminext-sttp3` =
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-markdown` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/markdown"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(
@@ -135,46 +145,47 @@ lazy val `laminext-markdown` =
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-videojs` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/videojs"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(
+      npmDependencies in Test += "video.js" -> "7.10.2",
       description := "Laminar utilities (markdown)"
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-tailwind` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/tailwind"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(
-      description := "Misc utilities"
+      description := "Laminar utilities (tailwindcss)"
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-util` =
-  crossProject(JSPlatform)
-    .crossType(CrossType.Pure)
+  project
     .in(file("modules/util"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(
-      description := "Laminar utilities (tailwindcss)"
+      description := "Misc utilities"
     )
 
 lazy val base = project
   .in(file("."))
   .settings(noPublish)
   .aggregate(
-    `laminext-core`.js,
-    `laminext-validation`.js,
-    `laminext-util`.js,
-    `laminext-fsm`.js,
-    `laminext-sttp3`.js,
-    `laminext-videojs`.js,
-    `laminext-markdown`.js,
-    `laminext-tailwind`.js,
-    `laminext-util`.js
+    `laminext-core`,
+    `laminext-validation`,
+    `laminext-util`,
+    `laminext-fsm`,
+    `laminext-sttp3`,
+    `laminext-videojs`,
+    `laminext-markdown`,
+    `laminext-tailwind`,
+    `laminext-util`
   )
