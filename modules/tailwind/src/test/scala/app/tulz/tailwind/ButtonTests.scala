@@ -37,16 +37,4 @@ class ButtonTests extends UnitSpec {
       ).mkString(" ")
   }
 
-  it(".btn.md.fill.blue.disabled") {
-    button.btn.md.fill.red.disabled ====
-      Seq(
-        "testing diff",
-        Theme.default.button.common,
-        Theme.default.button.single,
-        Theme.default.animations.focusTransition,
-        Theme.default.button.size.md,
-        Theme.default.button.color.blue.fill
-      ).mkString(" ")
-  }
-
 }
