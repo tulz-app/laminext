@@ -9,6 +9,7 @@ import com.raquo.laminar.modifiers.EventPropBinder
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
+import scala.scalajs.js
 import scala.util.Try
 
 class EventPropToSignal[Ev <: dom.Event, A](
@@ -141,6 +142,50 @@ class EventPropToSignal[Ev <: dom.Event, A](
       shouldPreventDefault,
       shouldStopPropagation,
       transform.andThen(_.foldLeft(makeInitial)(fn))
+    )
+
+  // @TODO[API] print with dom.console.log automatically only if a JS value detected? Not sure if possible to do well.
+
+  /**
+   * print events using println - use for Scala values
+   */
+  def debugLog(prefix: String = "event", when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
+    new EventPropToSignal(
+      key,
+      shouldUseCapture,
+      shouldPreventDefault,
+      shouldStopPropagation,
+      transform.andThen(_.debugLog(prefix, when))
+    )
+
+  /**
+   * print events using dom.console.log - use for JS values
+   */
+  def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
+    new EventPropToSignal(
+      key,
+      shouldUseCapture,
+      shouldPreventDefault,
+      shouldStopPropagation,
+      transform.andThen(_.debugLog(prefix, when))
+    )
+
+  def debugBreak(when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
+    new EventPropToSignal(
+      key,
+      shouldUseCapture,
+      shouldPreventDefault,
+      shouldStopPropagation,
+      transform.andThen(_.debugBreak(when))
+    )
+
+  def debugSpy(fn: A => Unit): EventPropToSignal[Ev, A] =
+    new EventPropToSignal(
+      key,
+      shouldUseCapture,
+      shouldPreventDefault,
+      shouldStopPropagation,
+      transform.andThen(_.debugSpy(fn))
     )
 
 }

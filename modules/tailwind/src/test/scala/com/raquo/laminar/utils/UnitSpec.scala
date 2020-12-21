@@ -17,7 +17,7 @@ class UnitSpec extends AnyFunSpec with Matchers with LaminarSpec with MountSpec 
       mount(tag())
 
       expectNode(
-        tag.like(cls.is(expectedClass.trim.replaceAll("\\s+", " ")))
+        tag.like(cls.isSorted(expectedClass.trim.replaceAll("\\s+", " ")))
       )
 
       unmount()

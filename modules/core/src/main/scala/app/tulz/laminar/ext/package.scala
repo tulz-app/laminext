@@ -38,9 +38,9 @@ import org.scalajs.dom
 import scala.collection.generic.IsSeq
 import scala.concurrent.Future
 
-package object ext extends SimpleUtilities with HtmlEntities {
+package object ext extends SimpleUtilities with HtmlEntities with SmartClass with ExtraEvents {
 
-  implicit def syntaxSignalCompanion(s: Signal.type): SignalCompanionOps = new SignalCompanionOps
+  implicit def syntaxSignalCompanion(s: Signal.type): SignalCompanionOps.type = SignalCompanionOps
 
   implicit def syntaxFuture[A](f: => Future[A]): FutureOps[A] = new FutureOps[A](f)
 
@@ -121,37 +121,3 @@ package object ext extends SimpleUtilities with HtmlEntities {
   def tee[T](observers: Observer[T]*): Observer[T] = new TeeObserver[T](observers)
 
 }
-
-//  implicit class StrictSignalOfBooleanExt(val s: StrictSignal[Boolean]) extends AnyVal {
-//    def not: Signal[Boolean] = s.map(!_)
-//
-//    def ||(that: Signal[Boolean]): Signal[Boolean] = s.combineWith(that).map {
-//      case (l, r) => l || r
-//    }
-//
-//    def &&(that: Signal[Boolean]): Signal[Boolean] = s.combineWith(that).map {
-//      case (l, r) => l && r
-//    }
-//  }
-
-//  implicit class SignalOfValidatedExt[A, B](val s: Signal[Validated[A, B]]) extends AnyVal {
-//    def isValid: Signal[Boolean]   = s.map(_.isValid)
-//    def isInvalid: Signal[Boolean] = s.map(_.isInvalid)
-//  }
-//
-//  implicit class SignalOfValidatedNelExt[A, B](val s: Signal[ValidatedNel[A, B]]) extends AnyVal {
-//
-//    def combineInvalid(other: Signal[ValidatedNel[A, B]]): Signal[ValidatedNel[A, Unit]] =
-//      s.combineWith(other).map {
-//        case (first, second) =>
-//          first.map(_ => ()).combine(second.map(_ => ()))
-//      }
-//  }
-
-//  implicit class FutureOfValidatedNelExt[E, A](val f: Future[ValidatedNel[E, A]]) extends AnyVal {
-//
-//    def mapValid[AA >: A, B](project: A => B)(implicit ec: ExecutionContext): Future[ValidatedNel[E, B]] = {
-//      f.map(_.map(project))
-//    }
-//
-//  }

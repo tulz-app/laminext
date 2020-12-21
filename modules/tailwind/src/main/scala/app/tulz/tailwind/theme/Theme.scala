@@ -1,13 +1,23 @@
 package app.tulz.tailwind.theme
 
 final case class Theme(
-  animations: Animations = Animations.default,
-  button: Button = Button.default
-)
+  animation: Animation,
+  button: Button,
+  transition: Transition
+) {
+
+  def withButtonCustomClass(custom: String): Theme =
+    this.copy(button = this.button.copy(custom = custom))
+
+}
 
 object Theme {
 
-  val default: Theme = Theme()
+  val default: Theme = Theme(
+    animation = Animation.default,
+    button = Button.default,
+    transition = Transition.default
+  )
 
   private var _theme = default
 

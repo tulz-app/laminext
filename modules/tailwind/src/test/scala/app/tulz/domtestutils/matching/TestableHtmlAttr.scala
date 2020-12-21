@@ -14,23 +14,49 @@ class TestableHtmlAttr[V](val attr: HtmlAttr[V]) extends AnyVal {
     testNode.addCheck(nodeAttrIs(Some(expectedValue)))
   }
 
+  def isSorted(expectedValue: V): Rule = (testNode: ExpectedNode) => {
+    testNode.addCheck(nodeAttrIs(Some(expectedValue), sorted = true))
+  }
+
   def isEmpty: Rule = (testNode: ExpectedNode) => {
     testNode.addCheck(nodeAttrIs(None))
   }
 
-  private[domtestutils] def nodeAttrIs(maybeExpectedValue: Option[V])(node: dom.Node): MaybeError = {
+  private def sortValue[U](value: U): U = {
+    value match {
+      case str: String =>
+        str.split("\\s+").toSeq.sorted.mkString(" ").asInstanceOf[U]
+      case value => value
+    }
+
+  }
+
+  private[domtestutils] def nodeAttrIs(maybeExpectedValue: Option[V], sorted: Boolean = false)(node: dom.Node): MaybeError = {
     node match {
       case (element: dom.html.Element) =>
         val maybeActualValue = getAttr(element)
         (maybeActualValue, maybeExpectedValue) match {
           case (None, None) => None
           case (Some(actualValue), Some(expectedValue)) =>
-            if (actualValue == expectedValue) {
+            val actualValueMaybeSorted =
+              if (sorted) {
+                sortValue(actualValue)
+              } else {
+                actualValue
+              }
+            val expectedValueMaybeSorted =
+              if (sorted) {
+                sortValue(expectedValue)
+              } else {
+                expectedValue
+              }
+            if (actualValueMaybeSorted == expectedValueMaybeSorted) {
               None
             } else {
-              val diff = StringDiff(actualValue.toString, expectedValue.toString)
-              Some(s"Attr `${attr.name}` value is incorrect: actual value ${repr(actualValue)}, expected value ${repr(expectedValue)}\n. Diff:\n${diff}")
+              val diff = StringDiff(actualValueMaybeSorted.toString, expectedValueMaybeSorted.toString)
+              Some(s"Attr `${attr.name}` value is incorrect: actual value ${repr(actualValueMaybeSorted)}, expected value ${repr(expectedValueMaybeSorted)}\n. Diff:\n${diff}")
             }
+
           case (None, Some(expectedValue)) =>
             if (attr.codec.encode(expectedValue) == null) {
               None // Note: `encode` returning `null` is exactly how missing attribute values are defined, e.g. in BooleanAsAttrPresenceCodec

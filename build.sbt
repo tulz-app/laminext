@@ -60,9 +60,9 @@ lazy val bundlerSettings = Seq(
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
     "com.raquo"     %%% "laminar"      % "0.11.0",
-    "org.scalatest" %%% "scalatest"    % "3.2.0"  % Test,
-    "app.tulz"      %%% "stringdiff"   % "0.1.0"  % Test,
-    "com.raquo"     %%% "domtestutils" % "0.11.0" % Test
+    "org.scalatest" %%% "scalatest"    % "3.2.0"          % Test,
+    "app.tulz"      %%% "stringdiff"   % "0.2.0-SNAPSHOT" % Test,
+    "com.raquo"     %%% "domtestutils" % "0.11.0"         % Test
   )
 )
 
@@ -155,7 +155,18 @@ lazy val `laminext-videojs` =
     .settings(commonDependencies)
     .settings(
 //      npmDependencies in Test += "video.js" -> "7.10.2",
-      description := "Laminar utilities (markdown)"
+      description := "Laminar + video.js"
+    ).dependsOn(`laminext-core`)
+
+lazy val `laminext-ui` =
+  project
+    .in(file("modules/ui"))
+    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+    .settings(commonSettings)
+    .settings(commonDependencies)
+    .settings(bundlerSettings)
+    .settings(
+      description := "Laminar UI"
     ).dependsOn(`laminext-core`)
 
 lazy val `laminext-tailwind` =
@@ -166,8 +177,8 @@ lazy val `laminext-tailwind` =
     .settings(commonDependencies)
     .settings(bundlerSettings)
     .settings(
-      description := "Laminar utilities (tailwindcss)"
-    ).dependsOn(`laminext-core`)
+      description := "Laminar UI (tailwindcss)"
+    ).dependsOn(`laminext-core`, `laminext-ui`)
 
 lazy val `laminext-util` =
   project
@@ -190,6 +201,7 @@ lazy val base = project
     `laminext-sttp3`,
     `laminext-videojs`,
     `laminext-markdown`,
+    `laminext-ui`,
     `laminext-tailwind`,
     `laminext-util`
   )

@@ -1,12 +1,12 @@
 package app.tulz.tailwind.theme
 
-case class Animations(
+case class Animation(
   focusTransition: String
 )
 
-object Animations {
+object Animation {
 
-  val default: Animations = Animations(
+  val default: Animation = Animation(
     focusTransition = "transition ease-in-out duration-150"
   )
 

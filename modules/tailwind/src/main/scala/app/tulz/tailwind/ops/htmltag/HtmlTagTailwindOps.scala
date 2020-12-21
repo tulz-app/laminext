@@ -10,11 +10,15 @@ import org.scalajs.dom
 
 class HtmlTagTailwindOps[T <: dom.html.Element](tag: HtmlTag[T]) {
 
-  @inline def btn: AmendedHtmlTag[T, AmButtonExpectSize] =
-    tag.amend[AmButtonExpectSize](
-      cls := Theme.current.button.common,
-      cls := Theme.current.button.single,
-      cls := Theme.current.animations.focusTransition
+  @inline def btn: AmendedHtmlTag[T, AmButtonExpectSizeOrGroup] =
+    tag.amend[AmButtonExpectSizeOrGroup](
+      cls := Seq(
+        Theme.current.button.common,
+        Theme.current.button.custom,
+        Theme.current.button.disabled,
+        Theme.current.button.single,
+        Theme.current.animation.focusTransition
+      ).mkString(" ")
     )
 
 }

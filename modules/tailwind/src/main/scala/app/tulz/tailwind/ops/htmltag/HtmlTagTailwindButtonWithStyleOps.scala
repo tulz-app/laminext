@@ -1,47 +1,16 @@
 package app.tulz.tailwind
 package ops.htmltag
 
-import theme.Theme
 import com.raquo.laminar.api.L._
-import app.tulz.laminar.ext._
 import app.tulz.laminar.ext.AmendedHtmlTag
 import org.scalajs.dom
 
-class HtmlTagTailwindButtonOps[T <: dom.html.Element, Am <: AmButton](tag: AmendedHtmlTag[T, Am]) {
+class HtmlTagTailwindButtonWithStyleOps[T <: dom.html.Element, Am <: AmButtonWithStyle](tag: AmendedHtmlTag[T, Am]) {
 
-//  @inline def disabled: AmendedHtmlTag[T, AmButton] =
-//    tag.amend[AmButton](
-//      cls := Seq(
-//        Theme.current.button.disabled
-//      )
-//    )
-//
-//  @inline def disabled(d: Signal[Boolean]): AmendedHtmlTag[T, AmButton] =
-//    tag.amend[AmButton](
-//      cls <-- d.cls(
-//        Theme.current.button.disabled
-//      )
-//    )
-
-  @inline def group: AmendedHtmlTag[T, AmGroupButton] =
-    tag.amend[AmGroupButton](
-      cls := Seq(
-        Theme.current.button.single       -> false,
-        Theme.current.button.group.common -> true
-      )
+  @inline def shadow: AmendedHtmlTag[T, AmButtonWithStyle] =
+    tag.amend[AmButtonWithStyle](
+      cls := "shadow"
     )
-
-  @inline def fill: AmendedHtmlTag[T, AmButtonFillExpectColor] =
-    tag.amended[AmButtonFillExpectColor]
-
-  @inline def outline: AmendedHtmlTag[T, AmButtonOutlineExpectColor] =
-    tag.amended[AmButtonOutlineExpectColor]
-
-  @inline def text: AmendedHtmlTag[T, AmButtonTransparentExpectColor] =
-    tag.amended[AmButtonTransparentExpectColor]
-
-  @inline def transparrent: AmendedHtmlTag[T, AmButtonTransparentExpectColor] =
-    tag.amended[AmButtonTransparentExpectColor]
 
 //  @inline def textGray100: AmendedHtmlTag[T, AmButton] =
 //    tag.amend[AmButton](
@@ -118,9 +87,5 @@ class HtmlTagTailwindButtonOps[T <: dom.html.Element, Am <: AmButton](tag: Amend
 //      cls := Classes.btn.lightBlue
 //    )
 //
-//  @inline def shadow: AmendedHtmlTag[T, AmButton] =
-//    tag.amend[AmButton](
-//      cls := "shadow"
-//    )
 
 }

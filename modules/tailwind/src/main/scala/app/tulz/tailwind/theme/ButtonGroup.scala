@@ -2,6 +2,7 @@ package app.tulz.tailwind.theme
 
 final case class ButtonGroup(
   common: String,
+  custom: String,
   first: String,
   inner: String,
   last: String,
@@ -11,7 +12,8 @@ final case class ButtonGroup(
 object ButtonGroup {
 
   val default: ButtonGroup = ButtonGroup(
-    common = "",
+    common = "focus:ring-1 focus:z-10",
+    custom = "",
     first = "rounded-l-md",
     inner = "rounded-none",
     last = "rounded-r-md",
