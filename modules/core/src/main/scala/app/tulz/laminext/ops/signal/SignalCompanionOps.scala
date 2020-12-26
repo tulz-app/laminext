@@ -1,13 +1,17 @@
 package app.tulz.laminext.ops.signal
 
-import com.raquo.laminar.api.L._
+import com.raquo.airstream.signal.SeqSignal
+import com.raquo.airstream.signal.Signal
+import com.raquo.airstream.signal.SignalCombines
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+object SignalCompanionOps extends SignalCombines {
 
-object SignalCompanionOps {
+  @inline def seq[A](signals: Seq[Signal[A]]): Signal[Seq[A]] = new SeqSignal[A](signals)
 
-  def seq[A](signals: Seq[Signal[A]]): Signal[Seq[A]] =
-    signals.foldLeft[Signal[Seq[A]]](Val(Seq.empty))((acc, next) => acc.combineWith(next).map2(_ :+ _))
+  @inline
+  def combine[T1, T2](
+    s1: Signal[T1],
+    s2: Signal[T2]
+  ): Signal[(T1, T2)] = s1.combineWith(s2)
 
 }

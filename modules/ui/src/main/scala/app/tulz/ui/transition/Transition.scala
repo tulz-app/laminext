@@ -1,4 +1,5 @@
-package app.tulz.ui.transition
+package app.tulz.ui
+package transition
 
 import com.raquo.laminar.api.L._
 import app.tulz.laminar.ext.onTransitionCancel
@@ -21,57 +22,92 @@ object Transition {
 
     val enterFromClasses =
       Seq(
-        config.hiddenClasses    -> false,
-        config.enterClasses     -> true,
-        config.enterFromClasses -> true,
-        config.enterToClasses   -> false,
-        config.leaveClasses     -> false,
-        config.leaveFromClasses -> false,
-        config.leaveToClasses   -> false
+        config.hidden        -> false,
+        config.nonHidden     -> true,
+        config.showing       -> false,
+        config.inTransition  -> true,
+        config.enter         -> true,
+        config.enterDuration -> true,
+        config.enterTiming   -> true,
+        config.enterFrom     -> true,
+        config.enterTo       -> false,
+        config.leave         -> false,
+        config.leaveDuration -> false,
+        config.leaveTiming   -> false,
+        config.leaveFrom     -> false,
+        config.leaveTo       -> false
       )
 
     val enterToClasses =
       Seq(
-        config.hiddenClasses    -> false,
-        config.enterClasses     -> true,
-        config.enterFromClasses -> false,
-        config.enterToClasses   -> true,
-        config.leaveClasses     -> false,
-        config.leaveFromClasses -> false,
-        config.leaveToClasses   -> false
+        config.nonHidden     -> true,
+        config.hidden        -> false,
+        config.showing       -> false,
+        config.inTransition  -> true,
+        config.enter         -> true,
+        config.enterDuration -> true,
+        config.enterTiming   -> true,
+        config.enterFrom     -> false,
+        config.enterTo       -> true,
+        config.leave         -> false,
+        config.leaveDuration -> false,
+        config.leaveTiming   -> false,
+        config.leaveFrom     -> false,
+        config.leaveTo       -> false
       )
 
     val leaveFromClasses =
       Seq(
-        config.hiddenClasses    -> false,
-        config.enterClasses     -> false,
-        config.enterFromClasses -> false,
-        config.enterToClasses   -> false,
-        config.leaveClasses     -> true,
-        config.leaveFromClasses -> true,
-        config.leaveToClasses   -> false
+        config.nonHidden     -> true,
+        config.hidden        -> false,
+        config.showing       -> false,
+        config.inTransition  -> true,
+        config.enter         -> false,
+        config.enterDuration -> false,
+        config.enterTiming   -> false,
+        config.enterFrom     -> false,
+        config.enterTo       -> false,
+        config.leave         -> true,
+        config.leaveDuration -> true,
+        config.leaveTiming   -> true,
+        config.leaveFrom     -> true,
+        config.leaveTo       -> false
       )
 
     val leaveToClasses =
       Seq(
-        config.hiddenClasses    -> false,
-        config.enterClasses     -> false,
-        config.enterFromClasses -> false,
-        config.enterToClasses   -> false,
-        config.leaveClasses     -> true,
-        config.leaveFromClasses -> false,
-        config.leaveToClasses   -> true
+        config.nonHidden     -> true,
+        config.hidden        -> false,
+        config.showing       -> false,
+        config.inTransition  -> true,
+        config.enter         -> false,
+        config.enterDuration -> false,
+        config.enterTiming   -> false,
+        config.enterFrom     -> false,
+        config.enterTo       -> false,
+        config.leave         -> true,
+        config.leaveDuration -> true,
+        config.leaveTiming   -> true,
+        config.leaveFrom     -> false,
+        config.leaveTo       -> true
       )
 
     def resetClasses(show: Boolean) =
       Seq(
-        config.hiddenClasses    -> !show,
-        config.enterClasses     -> false,
-        config.enterFromClasses -> false,
-        config.enterToClasses   -> false,
-        config.leaveClasses     -> false,
-        config.leaveFromClasses -> false,
-        config.leaveToClasses   -> false
+        config.hidden        -> !show,
+        config.nonHidden     -> show,
+        config.showing       -> show,
+        config.inTransition  -> false,
+        config.enter         -> false,
+        config.enterDuration -> false,
+        config.enterTiming   -> false,
+        config.enterFrom     -> false,
+        config.enterTo       -> false,
+        config.leave         -> false,
+        config.leaveDuration -> false,
+        config.leaveTiming   -> false,
+        config.leaveFrom     -> false,
+        config.leaveTo       -> false
       )
 
     def scheduleEvent = (event: TransitionEvent) => {
@@ -82,7 +118,7 @@ object Transition {
 
     Seq(
       smartClass(classes.signal),
-      show.map { toShow =>
+      show.debugLog("show --> EnterFrom/LeaveFrom").map { toShow =>
         if (toShow) TransitionEvent.EnterFrom else TransitionEvent.LeaveFrom
       } --> bus.writer,
       onMountCallback { _: MountContext[_] =>
@@ -94,7 +130,7 @@ object Transition {
       onTransitionCancel --> { _ =>
         scheduleEvent(TransitionEvent.Reset)
       },
-      bus.events.withCurrentValueOf(show) --> {
+      bus.events.debugLog("transition event").withCurrentValueOf(show) --> {
         case (EnterFrom, _) =>
           classes.writer.onNext(enterFromClasses)
           scheduleEvent(TransitionEvent.EnterTo)
@@ -106,21 +142,10 @@ object Transition {
         case (LeaveTo, _) =>
           classes.writer.onNext(leaveToClasses)
         case (Reset, show) =>
+          println(s"Reset: $show, ${resetClasses(show)}")
           classes.writer.onNext(resetClasses(show))
       }
     )
-  }
-
-  sealed trait TransitionEvent extends Product with Serializable
-
-  object TransitionEvent {
-
-    case object EnterFrom extends TransitionEvent
-    case object EnterTo   extends TransitionEvent
-    case object LeaveFrom extends TransitionEvent
-    case object LeaveTo   extends TransitionEvent
-    case object Reset     extends TransitionEvent
-
   }
 
 }

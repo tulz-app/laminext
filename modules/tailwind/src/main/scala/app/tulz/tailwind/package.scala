@@ -2,10 +2,15 @@ package app.tulz
 
 import app.tulz.laminar.ext.AmAny
 
-package object tailwind extends ButtonSyntax with TransitionSyntax {
+package object tailwind extends BaseSyntax with ButtonSyntax with CardSyntax with TransitionSyntax {
 
-  object transitions extends TransitionSyntax
-  object buttons     extends ButtonSyntax
+  val base: BaseSyntax = BaseSyntax
+
+  val transitions: TransitionSyntax = TransitionSyntax
+
+  val buttons: ButtonSyntax = ButtonSyntax
+
+  val cards: CardSyntax = CardSyntax
 
   trait AmButtonExpectSizeOrGroup           extends AmAny
   trait AmButtonExpectsStyle                extends AmAny
@@ -19,5 +24,11 @@ package object tailwind extends ButtonSyntax with TransitionSyntax {
   trait AmButtonGroupOutlineExpectColor     extends AmAny
   trait AmButtonGroupTransparentExpectColor extends AmAny
   trait AmButtonWithStyle                   extends AmAny
+
+  trait AmCard       extends AmAny
+  trait AmCardHeader extends AmAny
+  trait AmCardBody   extends AmAny
+  trait AmCardFooter extends AmAny
+  trait AmCardTitle  extends AmAny
 
 }

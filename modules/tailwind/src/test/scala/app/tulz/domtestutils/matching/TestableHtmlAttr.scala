@@ -1,6 +1,7 @@
 package app.tulz.domtestutils.matching
 
 import app.tulz.diff.StringDiff
+import app.tulz.diff.TokenDiff
 import com.raquo.domtestutils.Utils.repr
 import com.raquo.domtestutils.matching.ExpectedNode
 import com.raquo.domtestutils.matching.MaybeError
@@ -36,7 +37,8 @@ class TestableHtmlAttr[V](val attr: HtmlAttr[V]) extends AnyVal {
       case (element: dom.html.Element) =>
         val maybeActualValue = getAttr(element)
         (maybeActualValue, maybeExpectedValue) match {
-          case (None, None) => None
+          case (None, None) =>
+            None
           case (Some(actualValue), Some(expectedValue)) =>
             val actualValueMaybeSorted =
               if (sorted) {
@@ -50,11 +52,14 @@ class TestableHtmlAttr[V](val attr: HtmlAttr[V]) extends AnyVal {
               } else {
                 expectedValue
               }
+
             if (actualValueMaybeSorted == expectedValueMaybeSorted) {
               None
             } else {
-              val diff = StringDiff(actualValueMaybeSorted.toString, expectedValueMaybeSorted.toString)
-              Some(s"Attr `${attr.name}` value is incorrect: actual value ${repr(actualValueMaybeSorted)}, expected value ${repr(expectedValueMaybeSorted)}\n. Diff:\n${diff}")
+              val (diffActual, diffExpected) = TokenDiff.ansiBoth(actualValueMaybeSorted.toString, expectedValueMaybeSorted.toString)
+              Some(
+                s"Attr `${attr.name}` value is incorrect: actual value ${repr(actualValueMaybeSorted)}, expected value ${repr(expectedValueMaybeSorted)}.\nActual:\n${diffActual}\nExpected:\n${diffExpected}"
+              )
             }
 
           case (None, Some(expectedValue)) =>

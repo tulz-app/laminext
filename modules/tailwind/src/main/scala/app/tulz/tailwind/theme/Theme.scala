@@ -3,11 +3,27 @@ package app.tulz.tailwind.theme
 final case class Theme(
   animation: Animation,
   button: Button,
-  transition: Transition
+  buttonGroup: BaseAndCustom,
+  card: Card,
+  transition: Transition,
+  modal: Modal
 ) {
 
-  def withButtonCustomClass(custom: String): Theme =
-    this.copy(button = this.button.copy(custom = custom))
+  def customize(
+    animation: Animation => Animation = identity,
+    button: Button => Button = identity,
+    buttonGroup: BaseAndCustom => BaseAndCustom = identity,
+    card: Card => Card = identity,
+    transition: Transition => Transition = identity,
+    modal: Modal => Modal = identity
+  ): Theme = Theme(
+    animation = animation(this.animation),
+    button = button(this.button),
+    buttonGroup = buttonGroup(this.buttonGroup),
+    card = card(this.card),
+    transition = transition(this.transition),
+    modal = modal(this.modal)
+  )
 
 }
 
@@ -16,7 +32,12 @@ object Theme {
   val default: Theme = Theme(
     animation = Animation.default,
     button = Button.default,
-    transition = Transition.default
+    buttonGroup = BaseAndCustom(
+      base = "relative z-0 inline-flex shadow-sm rounded-md"
+    ),
+    card = Card.default,
+    transition = Transition.default,
+    modal = Modal.default
   )
 
   private var _theme = default

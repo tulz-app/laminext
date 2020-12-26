@@ -4,7 +4,7 @@ import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
-class NodeSeqModifier[El <: ReactiveElement[dom.Element]](
+final class NodeSeqModifier[El <: ReactiveElement[dom.Element]](
   seq: Modifier[El]*
 ) extends Modifier[El] {
 

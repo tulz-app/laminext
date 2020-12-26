@@ -1,6 +1,6 @@
 package app.tulz.laminext.ops.svgtag
 
-import app.tulz.laminar.ext.AmendedSvgTag
+import app.tulz.laminext.AmendedSvgTag
 import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.builders.SvgTag
 import com.raquo.laminar.nodes.ReactiveSvgElement

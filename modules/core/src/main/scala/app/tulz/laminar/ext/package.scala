@@ -15,6 +15,7 @@ import app.tulz.laminext.ops.observable.ObservableOfBooleanOps
 import app.tulz.laminext.ops.option.OptionOps
 import app.tulz.laminext.ops.reactiveeventprop.ReactiveEventPropOps
 import app.tulz.laminext.ops.signal._
+import app.tulz.laminext.ops.stream.EventStreamCompanionOps
 import app.tulz.laminext.ops.stream.EventStreamOfEitherOps
 import app.tulz.laminext.ops.stream.EventStreamOfOptionOps
 import app.tulz.laminext.ops.stream.EventStreamOfUnitOps
@@ -38,9 +39,11 @@ import org.scalajs.dom
 import scala.collection.generic.IsSeq
 import scala.concurrent.Future
 
-package object ext extends SimpleUtilities with HtmlEntities with SmartClass with ExtraEvents {
+package object ext extends SimpleUtilities with HtmlEntities with SmartClass with ClassJoin with ClassTokenize with ExtraEvents {
 
   implicit def syntaxSignalCompanion(s: Signal.type): SignalCompanionOps.type = SignalCompanionOps
+
+  implicit def syntaxEventStreamCompanion(e: EventStream.type): EventStreamCompanionOps.type = EventStreamCompanionOps
 
   implicit def syntaxFuture[A](f: => Future[A]): FutureOps[A] = new FutureOps[A](f)
 

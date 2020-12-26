@@ -9,9 +9,8 @@ import com.raquo.laminar.api.L._
 
 package object validation {
 
-  type ValidationError   = String
-  type ValidatedValue[T] = Either[NonEmptyChain[ValidationError], T]
-  type Validation[T]     = T => Either[NonEmptyChain[ValidationError], T]
+  type ValidatedValue[T] = Either[NonEmptyChain[String], T]
+  type Validation[T]     = T => Either[cats.data.NonEmptyChain[String], T]
 
   implicit def syntaxStreamOfStringValidation(stream: EventStream[String]): StreamOfStringValidationOps = new StreamOfStringValidationOps(stream)
 

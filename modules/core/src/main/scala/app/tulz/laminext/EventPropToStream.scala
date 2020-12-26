@@ -23,6 +23,9 @@ class EventPropToStream[Ev <: dom.Event, A](
   val transform: EventStream[Ev] => EventStream[A]
 ) {
 
+  @inline def bind[El <: ReactiveElement.Base](onNext: A => Unit): EventPropBinder[Ev] =
+    new EventPropToStreamPropBinder(this, onNext)
+
   @inline def -->[El <: ReactiveElement.Base](onNext: A => Unit): EventPropBinder[Ev] =
     new EventPropToStreamPropBinder(this, onNext)
 
@@ -103,6 +106,8 @@ class EventPropToStream[Ev <: dom.Event, A](
   def mapTo[B](value: => B): EventPropToStream[Ev, B] = map(_ => value)
 
   def mapToValue[B](value: B): EventPropToStream[Ev, B] = map(_ => value)
+
+  def mapToUnit: EventPropToStream[Ev, Unit] = map(_ => (): Unit)
 
   @inline def flatMap[B](compose: A => EventStream[B])(implicit
     strategy: FlattenStrategy[EventStream, EventStream, EventStream]

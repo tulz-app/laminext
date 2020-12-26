@@ -7,6 +7,11 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 trait SmartClass {
 
   def smartClass(
+    classes: (String, Boolean)*
+  ): Modifier[ReactiveHtmlElement.Base] =
+    cls := classes.flatMap { case (classes, enable) => ClassTokenize.classTokenize(classes).map(_ -> enable) }
+
+  def smartClasses(
     classes: (Seq[String], Signal[Boolean])*
   ): Modifier[ReactiveHtmlElement.Base] = {
     smartClass(

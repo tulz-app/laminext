@@ -55,13 +55,13 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
     }
   }
 
-  def withCurrentValueOfC[AA >: A, B](signal: Signal[B])(implicit composition: Composition[AA, B]): EventStream[composition.Composed] = {
+  def withCurrentValueOfC[B](signal: Signal[B])(implicit composition: Composition[A, B]): EventStream[composition.Composed] = {
     underlying.withCurrentValueOf(signal).map { case (a, b) =>
       TupleComposition.compose(a, b)
     }
   }
 
-  def combineWithC[AA >: A, B](otherStream: EventStream[B])(implicit composition: Composition[AA, B]): EventStream[composition.Composed] = {
+  def combineWithC[B](otherStream: EventStream[B])(implicit composition: Composition[A, B]): EventStream[composition.Composed] = {
     underlying.combineWith(otherStream).map { case (a, b) =>
       TupleComposition.compose(a, b)
     }

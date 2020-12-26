@@ -43,26 +43,25 @@ lazy val commonSettings = Seq(
     "-encoding",
     "utf8"
   ),
-  useYarn := true,
   requireJsDomEnv in Test := true,
   parallelExecution in Test := false,
   scalaJSUseMainModuleInitializer := true,
-  scalaJSLinkerConfig in (Compile, fastOptJS) ~= {
+  scalaJSLinkerConfig in (Compile, fastLinkJS) ~= {
     _.withSourceMap(false)
   }
 )
 
 lazy val bundlerSettings = Seq(
-  jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+//  jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
   installJsdom / version := "16.4.0"
 )
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
     "com.raquo"     %%% "laminar"      % "0.11.0",
-    "org.scalatest" %%% "scalatest"    % "3.2.0"          % Test,
-    "app.tulz"      %%% "stringdiff"   % "0.2.0-SNAPSHOT" % Test,
-    "com.raquo"     %%% "domtestutils" % "0.11.0"         % Test
+    "org.scalatest" %%% "scalatest"    % "3.2.3"  % Test,
+    "app.tulz"      %%% "stringdiff"   % "0.3.1"  % Test,
+    "com.raquo"     %%% "domtestutils" % "0.11.0" % Test
   )
 )
 
@@ -74,15 +73,18 @@ lazy val commonDependencies = baseDependencies ++ Seq(
 
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
-    "org.typelevel" %%% "cats-core" % "2.3.0"
+    "org.typelevel" %%% "cats-core" % "2.3.1"
   )
 )
 
 lazy val sttp3Dependencies = Seq(
   libraryDependencies ++= Seq(
-    "com.softwaremill.sttp.client3" %%% "core" % "3.0.0-RC11"
+    "com.softwaremill.sttp.client3" %%% "core" % "3.0.0-RC13"
   )
 )
+
+val generateTupleCombinatorsFrom = 3
+val generateTupleCombinatorsTo   = 22
 
 lazy val `laminext-core` =
   project
@@ -90,6 +92,31 @@ lazy val `laminext-core` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
+    .settings(
+      Compile / sourceGenerators += Def.task {
+        Seq.concat(
+          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()),
+          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()),
+          new SignalCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
+          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate()
+        )
+      }.taskValue,
+      //
+      //Test / sourceGenerators += Def.task {
+      //  Seq.concat(
+      //    new CombineSignalTestGenerator((Test / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
+      //    new CombineEventStreamTestGenerator((Test / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
+      //    new CompositionTestGenerator((Test / sourceManaged).value).generate()
+      //  )
+      //}.taskValue
+      mappings in (Compile, packageSrc) ++= {
+        val base  = (sourceManaged in Compile).value
+        val files = (managedSources in Compile).value
+        files.map { f =>
+          (f, f.relativeTo(base / "scala").get.getPath)
+        }
+      }
+    )
     .settings(
       description := "Laminar extensions"
     )
@@ -176,6 +203,9 @@ lazy val `laminext-tailwind` =
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(bundlerSettings)
+    .settings(
+      useYarn := true
+    )
     .settings(
       description := "Laminar UI (tailwindcss)"
     ).dependsOn(`laminext-core`, `laminext-ui`)
