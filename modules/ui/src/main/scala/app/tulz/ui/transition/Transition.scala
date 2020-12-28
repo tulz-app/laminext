@@ -118,31 +118,28 @@ object Transition {
 
     Seq(
       smartClass(classes.signal),
-      show.debugLog("show --> EnterFrom/LeaveFrom").map { toShow =>
-        if (toShow) TransitionEvent.EnterFrom else TransitionEvent.LeaveFrom
-      } --> bus.writer,
+      show.map { toShow => if (toShow) EnterFrom else LeaveFrom } --> bus.writer,
       onMountCallback { _: MountContext[_] =>
-        bus.writer.onNext(TransitionEvent.Reset)
+        bus.writer.onNext(Reset)
       },
       onTransitionEnd --> { _ =>
-        scheduleEvent(TransitionEvent.Reset)
+        scheduleEvent(Reset)
       },
       onTransitionCancel --> { _ =>
-        scheduleEvent(TransitionEvent.Reset)
+        scheduleEvent(Reset)
       },
-      bus.events.debugLog("transition event").withCurrentValueOf(show) --> {
+      bus.events.withCurrentValueOf(show) --> {
         case (EnterFrom, _) =>
           classes.writer.onNext(enterFromClasses)
-          scheduleEvent(TransitionEvent.EnterTo)
+          scheduleEvent(EnterTo)
         case (EnterTo, _) =>
           classes.writer.onNext(enterToClasses)
         case (LeaveFrom, _) =>
           classes.writer.onNext(leaveFromClasses)
-          scheduleEvent(TransitionEvent.LeaveTo)
+          scheduleEvent(LeaveTo)
         case (LeaveTo, _) =>
           classes.writer.onNext(leaveToClasses)
         case (Reset, show) =>
-          println(s"Reset: $show, ${resetClasses(show)}")
           classes.writer.onNext(resetClasses(show))
       }
     )
