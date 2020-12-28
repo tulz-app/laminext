@@ -223,6 +223,9 @@ lazy val `laminext-util` =
 lazy val base = project
   .in(file("."))
   .settings(noPublish)
+  .settings(
+    name := "laminext"
+  )
   .aggregate(
     `laminext-core`,
     `laminext-validation`,

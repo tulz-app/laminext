@@ -6,7 +6,9 @@ final case class Theme(
   buttonGroup: BaseAndCustom,
   card: Card,
   transition: Transition,
-  modal: Modal
+  modal: Modal,
+  progressBar: ProgressBar,
+  fileInput: FileInput
 ) {
 
   def customize(
@@ -15,14 +17,18 @@ final case class Theme(
     buttonGroup: BaseAndCustom => BaseAndCustom = identity,
     card: Card => Card = identity,
     transition: Transition => Transition = identity,
-    modal: Modal => Modal = identity
+    modal: Modal => Modal = identity,
+    progressBar: ProgressBar => ProgressBar = identity,
+    fileInput: FileInput => FileInput = identity
   ): Theme = Theme(
     animation = animation(this.animation),
     button = button(this.button),
     buttonGroup = buttonGroup(this.buttonGroup),
     card = card(this.card),
     transition = transition(this.transition),
-    modal = modal(this.modal)
+    modal = modal(this.modal),
+    progressBar = progressBar(this.progressBar),
+    fileInput = fileInput(this.fileInput)
   )
 
 }
@@ -37,7 +43,9 @@ object Theme {
     ),
     card = Card.default,
     transition = Transition.default,
-    modal = Modal.default
+    modal = Modal.default,
+    progressBar = ProgressBar.default,
+    fileInput = FileInput.default(Button.default)
   )
 
   private var _theme = default

@@ -1,0 +1,25 @@
+package app.tulz.tailwind
+package progressbar
+
+import com.raquo.laminar.api.L._
+import app.tulz.laminar.ext._
+import com.raquo.laminar.nodes.ReactiveHtmlElement
+import org.scalajs.dom.html
+
+object ProgressBar {
+
+  def apply(
+    progress: Signal[Double],
+    hidden: Signal[Boolean] = Val(false),
+    thm: theme.ProgressBar = theme.Theme.current.progressBar
+  ): ReactiveHtmlElement[html.Div] =
+    div(
+      cls := thm.wrap.classes,
+      cls <-- hidden.cls("hidden"),
+      div(
+        cls := thm.progress.classes,
+        width <-- progress.map(progress => s"${progress}%")
+      )
+    )
+
+}

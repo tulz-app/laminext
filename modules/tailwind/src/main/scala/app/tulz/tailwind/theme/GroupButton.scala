@@ -38,7 +38,7 @@ object GroupButton {
       base = "rounded-l-md"
     ),
     inner = BaseAndCustom(
-      base = "rounded-none"
+      base = "rounded-none -mx-px"
     ),
     last = BaseAndCustom(
       base = "rounded-r-md"

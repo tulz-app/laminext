@@ -6,7 +6,8 @@ import com.raquo.domtypes.generic.Modifier
 
 class OptionOps[A](o: Option[A]) {
 
-  @inline def renderIfEmpty[El <: Element](m: => Modifier[El]): Modifier[El] = o.map(_ => m)
+  @inline def renderIfEmpty[El <: Element](m: => Modifier[El]): Modifier[El] =
+    new BooleanOps(o.isEmpty).renderIfTrue(m)
 
   @inline def renderIfDefined[El <: Element](m: => Modifier[El]): Modifier[El] =
     new BooleanOps(o.isDefined).renderIfTrue(m)
