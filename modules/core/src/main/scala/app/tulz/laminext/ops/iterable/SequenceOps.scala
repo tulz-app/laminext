@@ -5,7 +5,7 @@ import scala.collection.AbstractView
 import scala.collection.BuildFrom
 import scala.collection.generic.IsSeq
 
-class SequenceOps[Repr, S <: IsSeq[Repr]](coll: Repr, seq: S) {
+final class SequenceOps[Repr, S <: IsSeq[Repr]](coll: Repr, seq: S) {
 
   def join[B >: seq.A, That](sep: B)(implicit bf: BuildFrom[Repr, B, That]): That = {
     val seqOps = seq(coll)

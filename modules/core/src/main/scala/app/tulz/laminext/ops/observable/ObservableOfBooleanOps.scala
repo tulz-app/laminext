@@ -4,7 +4,7 @@ import com.raquo.airstream.core.Observable
 
 final class ObservableOfBooleanOps(o: Observable[Boolean]) {
 
-  def cls(s: String): Observable[List[(String, Boolean)]] =
-    o.map(b => s -> b :: Nil)
+  def cls(s: String): Observable[Seq[(String, Boolean)]] =
+    o.map(b => Seq(s -> b))
 
 }

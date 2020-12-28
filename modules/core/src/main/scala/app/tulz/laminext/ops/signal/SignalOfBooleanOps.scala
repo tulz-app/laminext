@@ -1,50 +1,53 @@
 package app.tulz.laminext.ops.signal
 
+import app.tulz.laminext.ConditionalChildInserter
 import com.raquo.airstream.signal.Signal
 import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.modifiers.Binder
-import com.raquo.laminar.nodes.ChildNode
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-import org.scalajs.dom
 
-final class SignalOfBooleanOps(s: Signal[Boolean]) {
+final class SignalOfBooleanOps(underlying: Signal[Boolean]) {
 
-  def unary_! : Signal[Boolean] = s.map(!_)
+  @inline def unary_! : Signal[Boolean] = underlying.map(!_)
 
-  def not: Signal[Boolean] = s.map(!_)
+  @inline def not: Signal[Boolean] = underlying.map(!_)
 
-  def ||(that: Signal[Boolean]): Signal[Boolean] = s.combineWith(that).map { case (l, r) =>
+  @inline def ||(r: Boolean): Signal[Boolean] = underlying.map { l =>
     l || r
   }
 
-  def &&(that: Signal[Boolean]): Signal[Boolean] = s.combineWith(that).map { case (l, r) =>
+  @inline def ||(that: Signal[Boolean]): Signal[Boolean] = underlying.combineWith(that).map { case (l, r) =>
+    l || r
+  }
+
+  @inline def &&(r: Boolean): Signal[Boolean] = underlying.map { l =>
     l && r
   }
 
-  @inline def renderIfTrue(node: ChildNode[dom.Node]): Modifier[HtmlElement] =
-    child.maybe <-- s.map { b =>
-      if (b) {
-        Some(node)
-      } else {
-        Option.empty
-      }
-    }
+  @inline def &&(that: Signal[Boolean]): Signal[Boolean] = underlying.combineWith(that).map { case (l, r) =>
+    l && r
+  }
 
-  @inline def renderIfFalse(node: ChildNode[dom.Node]): Modifier[HtmlElement] =
-    child.maybe <-- s.map { b =>
-      if (!b) {
-        Some(node)
-      } else {
-        Option.empty
-      }
-    }
+  @inline def childWhenTrue(child: => Child): Inserter[ReactiveHtmlElement.Base] =
+    ConditionalChildInserter(underlying, child)
 
-  def whenTrue(callback: () => Unit): Binder[ReactiveHtmlElement.Base] =
-    new SignalOps(s).bind { value =>
+  @inline def childWhenFalse(child: => Child): Inserter[ReactiveHtmlElement.Base] =
+    ConditionalChildInserter(underlying.map(!_), child)
+
+  @inline def doWhenTrue(callback: () => Unit): Binder[ReactiveHtmlElement.Base] =
+    underlying --> { value =>
       if (value) {
         callback()
       }
     }
+
+  @inline def doWhenFalse(callback: () => Unit): Binder[ReactiveHtmlElement.Base] = {
+    underlying --> { value =>
+      if (!value) {
+        callback()
+      }
+    }
+  }
 
 }

@@ -8,7 +8,7 @@ import com.raquo.laminar.builders.HtmlTag
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import org.scalajs.dom
 
-class HtmlTagOps[T <: dom.html.Element](tag: HtmlTag[T]) {
+final class HtmlTagOps[T <: dom.html.Element](tag: HtmlTag[T]) {
 
   @inline def amended[AmType <: AmAny]: AmendedHtmlTag[T, AmType] =
     new AmendedHtmlTag[T, AmType](tag, Seq.empty)

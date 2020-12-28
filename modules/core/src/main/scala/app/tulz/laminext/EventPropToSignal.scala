@@ -10,9 +10,10 @@ import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
 import scala.scalajs.js
+import scala.util.Failure
 import scala.util.Try
 
-class EventPropToSignal[Ev <: dom.Event, A](
+final class EventPropToSignal[Ev <: dom.Event, A](
   val key: ReactiveEventProp[Ev],
   val shouldUseCapture: Boolean,
   val shouldPreventDefault: Boolean,
@@ -28,6 +29,15 @@ class EventPropToSignal[Ev <: dom.Event, A](
 
   @inline def -->[BusEv >: A, El <: ReactiveElement.Base](eventBus: EventBus[BusEv]): EventPropBinder[Ev] =
     this --> eventBus.writer.onNext _
+
+  def andThen[B](f: Signal[A] => Signal[B]): EventPropToSignal[Ev, B] =
+    new EventPropToSignal(
+      key,
+      shouldUseCapture,
+      shouldPreventDefault,
+      shouldStopPropagation,
+      transform.andThen(f)
+    )
 
   def useCapture: EventPropToSignal[Ev, A] =
     new EventPropToSignal(
@@ -68,22 +78,10 @@ class EventPropToSignal[Ev <: dom.Event, A](
   // Signal proxies
 
   def map[B](project: A => B): EventPropToSignal[Ev, B] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.map(project))
-    )
+    andThen(_.map(project))
 
   def compose[B](operator: Signal[A] => Signal[B]): EventPropToSignal[Ev, B] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.compose(operator))
-    )
+    andThen(_.compose(operator))
 
   def composeChanges[AA >: A](
     operator: EventStream[A] => EventStream[AA]
@@ -100,31 +98,13 @@ class EventPropToSignal[Ev <: dom.Event, A](
     operator: EventStream[A] => EventStream[B],
     initialOperator: Try[A] => Try[B]
   ): EventPropToSignal[Ev, B] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.composeAll(operator, initialOperator))
-    )
+    andThen(_.composeAll(operator, initialOperator))
 
-  def combineWith[AA >: A, B](otherSignal: Signal[B]): EventPropToSignal[Ev, (AA, B)] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.combineWith(otherSignal))
-    )
+  def combineWith[B](otherSignal: Signal[B]): EventPropToSignal[Ev, (A, B)] =
+    andThen(_.combineWith(otherSignal))
 
-  def combineWithC[AA >: A, B](otherSignal: Signal[B])(implicit compose: Composition[AA, B]): EventPropToSignal[Ev, Composition[AA, B]#Composed] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(s => new SignalOps(s).combineWithC(otherSignal))
-    )
+  def combine[B](otherSignal: Signal[B])(implicit compose: Composition[A, B]): EventPropToSignal[Ev, compose.Composed] =
+    andThen(s => new SignalOps(s).combine(otherSignal))
 
   def changes: EventPropToStream[Ev, A] =
     new EventPropToStream(
@@ -136,56 +116,26 @@ class EventPropToSignal[Ev <: dom.Event, A](
     )
 
   def foldLeft[B](makeInitial: A => B)(fn: (B, A) => B): EventPropToSignal[Ev, B] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.foldLeft(makeInitial)(fn))
-    )
+    andThen(_.foldLeft(makeInitial)(fn))
 
-  // @TODO[API] print with dom.console.log automatically only if a JS value detected? Not sure if possible to do well.
+  def foldLeftRecover[B](makeInitial: Try[A] => Try[B])(fn: (Try[B], Try[A]) => Try[B]): EventPropToSignal[Ev, B] =
+    andThen(_.foldLeftRecover(makeInitial)(fn))
 
-  /**
-   * print events using println - use for Scala values
-   */
+  def recover[B >: A](pf: PartialFunction[Throwable, Option[B]]): EventPropToSignal[Ev, B] =
+    andThen(_.recover(pf))
+
+  def recoverToTry: EventPropToSignal[Ev, Try[A]] = map(Try(_)).recover[Try[A]] { case err => Some(Failure(err)) }
+
   def debugLog(prefix: String = "event", when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.debugLog(prefix, when))
-    )
+    andThen(_.debugLog(prefix, when))
 
-  /**
-   * print events using dom.console.log - use for JS values
-   */
   def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.debugLog(prefix, when))
-    )
+    andThen(_.debugLog(prefix, when))
 
   def debugBreak(when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.debugBreak(when))
-    )
+    andThen(_.debugBreak(when))
 
   def debugSpy(fn: A => Unit): EventPropToSignal[Ev, A] =
-    new EventPropToSignal(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform.andThen(_.debugSpy(fn))
-    )
+    andThen(_.debugSpy(fn))
 
 }

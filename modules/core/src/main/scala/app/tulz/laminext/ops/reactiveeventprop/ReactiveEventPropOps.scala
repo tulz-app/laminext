@@ -7,7 +7,7 @@ import com.raquo.laminar.keys.ReactiveEventProp
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
-class ReactiveEventPropOps[Ev <: dom.Event](underlying: ReactiveEventProp[Ev]) {
+final class ReactiveEventPropOps[Ev <: dom.Event](underlying: ReactiveEventProp[Ev]) {
 
   @inline def mapToTrue: EventPropTransformation[Ev, Boolean] = underlying.mapToValue(true)
 
@@ -15,7 +15,7 @@ class ReactiveEventPropOps[Ev <: dom.Event](underlying: ReactiveEventProp[Ev]) {
 
   @inline def mapToUnit: EventPropTransformation[Ev, Unit] = underlying.mapToValue((): Unit)
 
-  @inline def stream[El <: ReactiveElement.Base]: EventPropToStream[Ev, Ev] =
+  def stream[El <: ReactiveElement.Base]: EventPropToStream[Ev, Ev] =
     new EventPropToStream(
       key = underlying,
       shouldUseCapture = false,

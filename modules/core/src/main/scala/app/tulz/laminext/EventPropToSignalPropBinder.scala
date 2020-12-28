@@ -11,7 +11,7 @@ import org.scalajs.dom
 
 import scala.scalajs.js
 
-class EventPropToSignalPropBinder[Ev <: dom.Event, A](
+final class EventPropToSignalPropBinder[Ev <: dom.Event, A](
   propToSignal: EventPropToSignal[Ev, A],
   onNext: A => Unit
 ) extends EventPropBinder[Ev](propToSignal.key, null, propToSignal.shouldUseCapture) {
@@ -19,7 +19,7 @@ class EventPropToSignalPropBinder[Ev <: dom.Event, A](
   private val eventBus                          = new EventBus[Ev]
   override val domValue: js.Function1[Ev, Unit] = Helpers.eventCallback(eventBus, propToSignal.key, propToSignal.shouldPreventDefault, propToSignal.shouldStopPropagation)
 
-  override def bind(element: Base): DynamicSubscription = {
+  override def bind(element: Base): DynamicSubscription =
     ReactiveElement.bindSubscription(element) { c =>
       ReactiveElement.addEventListener(element, this)
       propToSignal.transform(eventBus.events).foreach(onNext)(c.owner)
@@ -30,13 +30,11 @@ class EventPropToSignalPropBinder[Ev <: dom.Event, A](
       )
 
     }
-  }
 
-  override def equals(that: Any): Boolean = {
+  override def equals(that: Any): Boolean =
     that match {
       case setter: EventPropToSignalPropBinder[_, _] if (key == setter.key) && (domValue == setter.domValue) => true
       case _                                                                                                 => false
     }
-  }
 
 }

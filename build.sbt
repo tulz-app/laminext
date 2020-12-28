@@ -96,9 +96,9 @@ lazy val `laminext-core` =
       Compile / sourceGenerators += Def.task {
         Seq.concat(
           (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()),
-          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()),
+          (generateTupleCombinatorsFrom - 1 to generateTupleCombinatorsTo).flatMap(n => new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()),
           new SignalCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
-          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate()
+          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom - 1, to = generateTupleCombinatorsTo).generate()
         )
       }.taskValue,
       //

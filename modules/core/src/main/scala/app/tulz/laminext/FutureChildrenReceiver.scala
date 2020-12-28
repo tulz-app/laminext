@@ -10,8 +10,7 @@ import scala.concurrent.Future
 
 object FutureChildrenReceiver {
 
-  def <--($nodes: Future[Children]): Inserter[ReactiveElement.Base] = {
+  def <--($nodes: Future[Children]): Inserter[ReactiveElement.Base] =
     ChildrenInserter[ReactiveElement.Base](_ => EventStream.fromFuture($nodes), initialInsertContext = None)
-  }
 
 }

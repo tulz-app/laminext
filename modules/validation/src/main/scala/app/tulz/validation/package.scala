@@ -7,7 +7,7 @@ import app.tulz.validation.ops.stream.StreamOfStringValidationOps
 import cats.data.NonEmptyChain
 import com.raquo.laminar.api.L._
 
-package object validation {
+package object validation extends ValidatedElementsSyntax {
 
   type ValidatedValue[T] = Either[NonEmptyChain[String], T]
   type Validation[T]     = T => Either[cats.data.NonEmptyChain[String], T]

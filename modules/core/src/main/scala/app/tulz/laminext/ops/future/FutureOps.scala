@@ -13,9 +13,9 @@ final class FutureOps[A](f: => Future[A]) {
       FutureCompanionOps.delayed(millis)(value)
     }
 
-  def stream: EventStream[A] = EventStream.fromFuture(f)
+  @inline def stream: EventStream[A] = EventStream.fromFuture(f)
 
-  def zipC[AA >: A, B](otherFuture: Future[B])(implicit composition: Composition[AA, B]): Future[composition.Composed] = {
+  def combine[B](otherFuture: Future[B])(implicit composition: Composition[A, B]): Future[composition.Composed] = {
     f.zipWith(otherFuture)(composition.compose)
   }
 

@@ -1,4 +1,4 @@
-package app.tulz.laminext
+package app.tulz.laminext.util
 
 trait ClassTokenize {
 

@@ -13,12 +13,12 @@ object InputElementOps {
         el.events(onPaste),
         el.events(onCut)
       )
-      .mapToValue(())
+      .mapToValue((): Unit)
   }
 
 }
 
-class InputElementOps(val el: Input) {
+final class InputElementOps(el: Input) {
 
   @inline def changes: EventStream[Unit] = InputElementOps.changes(el)
 

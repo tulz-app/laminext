@@ -15,7 +15,7 @@ class EventStreamCombinesGenerator(sourceManaged: File, from: Int, to: Int)
     println()
     for (n <- from to to) {
       println(s"""@inline""")
-      println(s"""def combine[${tupleType(n)}](""")
+      println(s"""def combineN[${tupleType(n)}](""")
       for (i <- 1 to n) {
         println(s"""  s${i}: EventStream[T${i}]${if (i < n) ", " else ""}""".stripMargin)
       }

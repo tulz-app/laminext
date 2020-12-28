@@ -36,9 +36,7 @@ object Modal {
         div(
           //            onClick --> (_.stopPropagation()),
           cls := config.contentWrapInner,
-          child.maybe <-- content.mapOption { overlayContent =>
-            overlayContent.content
-          }
+          child.maybe <-- content.optionMap(_.content)
         )
       )
     ).hiddenIf(content.isEmpty)
@@ -47,13 +45,8 @@ object Modal {
   def initNoScrollClass(): Unit = {
     val style = dom.document.createElement("style").asInstanceOf[dom.html.Style]
     style.`type` = "text/css"
-    style.innerHTML = s""".${noScrollClassName}{
-                         |margin-right: ${calculateScrollbarWidth()}px;
-                         |}
-                         |html.${noScrollClassName} body {
-                         |overflow: hidden !important;
-                         |}
-                         |""".stripMargin
+    style.innerHTML = s""".${noScrollClassName}{margin-right: ${calculateScrollbarWidth()}px;}
+                         |html.${noScrollClassName} body {overflow: hidden !important;}""".stripMargin
     val _ = dom.document.getElementsByTagName("head")(0).appendChild(style)
   }
 

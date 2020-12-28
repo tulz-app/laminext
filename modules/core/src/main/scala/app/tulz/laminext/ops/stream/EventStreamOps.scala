@@ -3,9 +3,12 @@ package app.tulz.laminext.ops.stream
 import com.raquo.laminar.api.L._
 import app.tulz.tuplez.Composition
 import app.tulz.tuplez.TupleComposition
+import com.raquo.airstream.eventstream.DelayForEventStream
+import com.raquo.airstream.eventstream.DropEventStream
 import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.eventstream.TakeEventStream
+import com.raquo.airstream.eventstream.TransitionsEventStream
 import com.raquo.airstream.signal.Signal
-import com.raquo.airstream.MapDelayEventStream
 import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
 
@@ -13,15 +16,7 @@ import scala.util.Failure
 
 final class EventStreamOps[A](underlying: EventStream[A]) {
 
-  def transitions: EventStream[(Option[A], A)] = {
-    EventStream
-      .merge(
-        EventStream.fromValue(Option.empty[A], emitOnce = true),
-        underlying.map(a => Some(a))
-      ).combineWith(
-        new EventStreamOps(underlying).drop(1)
-      )
-  }
+  @inline def transitions: EventStream[(Option[A], A)] = new TransitionsEventStream(underlying)
 
   def failures: EventStream[Throwable] = underlying.recoverToTry.collect { case Failure(err) => err }
 
@@ -29,8 +24,8 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
   @inline def mapToTrue: EventStream[Boolean]  = underlying.mapToValue(true)
   @inline def mapToFalse: EventStream[Boolean] = underlying.mapToValue(false)
 
-  def mapDelay(projectMs: A => Double): EventStream[A] = {
-    new MapDelayEventStream(parent = underlying, projectMs)
+  def delayFor(projectMs: A => Double): EventStream[A] = {
+    new DelayForEventStream(parent = underlying, projectMs)
   }
 
   def skipWhen(b: Signal[Boolean]): EventStream[A] =
@@ -38,22 +33,14 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       .withCurrentValueOf(b)
       .collect { case (v, false) => v }
 
-  def drop(count: Int): EventStream[A] = {
-    var seen = 0
+  def keepWhen(b: Signal[Boolean]): EventStream[A] =
     underlying
-      .map { event =>
-        seen = seen + 1
-        event
-      }.filter(_ => seen >= count)
-  }
+      .withCurrentValueOf(b)
+      .collect { case (v, true) => v }
 
-  def take(count: Int): EventStream[A] = {
-    var seen = 0
-    underlying.filter(_ => seen < count).map { event =>
-      seen = seen + 1
-      event
-    }
-  }
+  @inline def drop(toDrop: Int): EventStream[A] = new DropEventStream[A](underlying, toDrop)
+
+  @inline def take(toTake: Int): EventStream[A] = new TakeEventStream[A](underlying, toTake)
 
   def withCurrentValueOfC[B](signal: Signal[B])(implicit composition: Composition[A, B]): EventStream[composition.Composed] = {
     underlying.withCurrentValueOf(signal).map { case (a, b) =>
@@ -61,15 +48,9 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
     }
   }
 
-  def combineWithC[B](otherStream: EventStream[B])(implicit composition: Composition[A, B]): EventStream[composition.Composed] = {
+  def combine[B](otherStream: EventStream[B])(implicit composition: Composition[A, B]): EventStream[composition.Composed] = {
     underlying.combineWith(otherStream).map { case (a, b) =>
       TupleComposition.compose(a, b)
-    }
-  }
-
-  def sampleStream[B](otherStream: EventStream[B]): EventStream[B] = {
-    underlying.sample(otherStream.toWeakSignal).collect { case Some(b) =>
-      b
     }
   }
 

@@ -1,23 +1,15 @@
 package app.tulz.laminext.ops.boolean
 
 import com.raquo.laminar.api.L._
-import app.tulz.laminar.ext.noop
-import com.raquo.domtypes.generic.Modifier
 
-class BooleanOps(b: Boolean) {
+final class BooleanOps(b: Boolean) {
 
-  @inline def renderIfTrue[El <: Element](m: Modifier[El]*): Modifier[El] =
-    if (b) {
-      m
-    } else {
-      noop
-    }
+  @inline def whenTrue[El <: Element](mods: Modifier[El]*): Modifier[El] =
+    if (b) { mods }
+    else { emptyMod }
 
-  @inline def renderIfFalse[El <: Element](m: => Modifier[El]): Modifier[El] =
-    if (!b) {
-      m
-    } else {
-      noop
-    }
+  @inline def whenFalse[El <: Element](mods: Modifier[El]*): Modifier[El] =
+    if (!b) { mods }
+    else { emptyMod }
 
 }

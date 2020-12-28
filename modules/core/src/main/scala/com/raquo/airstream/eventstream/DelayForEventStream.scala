@@ -1,13 +1,12 @@
-package com.raquo.airstream
+package com.raquo.airstream.eventstream
 
 import com.raquo.airstream.core.Transaction
-import com.raquo.airstream.eventstream.EventStream
 import com.raquo.airstream.features.InternalNextErrorObserver
 import com.raquo.airstream.features.SingleParentObservable
 
 import scala.scalajs.js
 
-class MapDelayEventStream[A](
+class DelayForEventStream[A](
   override protected val parent: EventStream[A],
   projectDelayMillis: A => Double
 ) extends EventStream[A]

@@ -19,7 +19,7 @@ class EventPropToStreamPropBinder[Ev <: dom.Event, A](
   private val eventBus                          = new EventBus[Ev]
   override val domValue: js.Function1[Ev, Unit] = Helpers.eventCallback(eventBus, propToStream.key, propToStream.shouldPreventDefault, propToStream.shouldStopPropagation)
 
-  override def bind(element: Base): DynamicSubscription = {
+  override def bind(element: Base): DynamicSubscription =
     ReactiveElement.bindSubscription(element) { c =>
       ReactiveElement.addEventListener(element, this)
       propToStream.transform(eventBus.events).foreach(onNext)(c.owner)
@@ -29,15 +29,12 @@ class EventPropToStreamPropBinder[Ev <: dom.Event, A](
           val _ = ReactiveElement.removeEventListener(element, this)
         }
       )
-
     }
-  }
 
-  override def equals(that: Any): Boolean = {
+  override def equals(that: Any): Boolean =
     that match {
       case setter: EventPropToStreamPropBinder[_, _] if (key == setter.key) && (domValue == setter.domValue) => true
       case _                                                                                                 => false
     }
-  }
 
 }

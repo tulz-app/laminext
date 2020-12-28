@@ -15,7 +15,7 @@ import scala.scalajs.js
 import scala.util.Try
 import scala.util.chaining._
 
-class EventPropToStream[Ev <: dom.Event, A](
+final class EventPropToStream[Ev <: dom.Event, A](
   val key: ReactiveEventProp[Ev],
   val shouldUseCapture: Boolean,
   val shouldPreventDefault: Boolean,
@@ -35,26 +35,14 @@ class EventPropToStream[Ev <: dom.Event, A](
   @inline def -->[BusEv >: A, El <: ReactiveElement.Base](eventBus: EventBus[BusEv]): EventPropBinder[Ev] =
     this --> eventBus.writer.onNext _
 
-  def toTransformation: EventPropTransformation[Ev, Ev] = {
-    eventPropToEventPropTransformation(key)
-      .tap { p =>
-        if (shouldUseCapture) {
-          p.useCapture
-        } else {
-          p.useBubbleMode
-        }
-      }
-      .tap { p =>
-        if (shouldStopPropagation) {
-          p.stopPropagation
-        }
-      }
-      .tap { p =>
-        if (shouldPreventDefault) {
-          p.preventDefault
-        }
-      }
-  }
+  def andThen[B](f: EventStream[A] => EventStream[B]): EventPropToStream[Ev, B] =
+    new EventPropToStream(
+      key,
+      shouldUseCapture,
+      shouldPreventDefault,
+      shouldStopPropagation,
+      transform.andThen(f)
+    )
 
   def useCapture: EventPropToStream[Ev, A] =
     new EventPropToStream(
@@ -95,13 +83,7 @@ class EventPropToStream[Ev <: dom.Event, A](
   // EventStream proxies
 
   def map[B](project: A => B): EventPropToStream[Ev, B] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.map(project))
-    )
+    andThen(_.map(project))
 
   def mapTo[B](value: => B): EventPropToStream[Ev, B] = map(_ => value)
 
@@ -112,76 +94,27 @@ class EventPropToStream[Ev <: dom.Event, A](
   @inline def flatMap[B](compose: A => EventStream[B])(implicit
     strategy: FlattenStrategy[EventStream, EventStream, EventStream]
   ): EventPropToStream[Ev, B] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(s => strategy.flatten(s.map(compose)))
-    )
+    andThen(s => strategy.flatten(s.map(compose)))
 
   def filter(passes: A => Boolean): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.filter(passes))
-    )
+    andThen(_.filter(passes))
 
   def filterNot(predicate: A => Boolean): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.filterNot(predicate))
-    )
+    andThen(_.filterNot(predicate))
 
   def collect[B](pf: PartialFunction[A, B]): EventPropToStream[Ev, B] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.collect(pf))
-    )
+    andThen(_.collect(pf))
 
-  def delay(ms: Int = 0): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.delay(ms))
-    )
+  def delay(ms: Int = 0): EventPropToStream[Ev, A] = andThen(_.delay(ms))
 
   def delaySync(after: EventStream[_]): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.delaySync(after))
-    )
+    andThen(_.delaySync(after))
 
   def throttle(intervalMillis: Int): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.throttle(intervalMillis))
-    )
+    andThen(_.throttle(intervalMillis))
 
   def debounce(delayFromLastEventMillis: Int): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.debounce(delayFromLastEventMillis))
-    )
+    andThen(_.debounce(delayFromLastEventMillis))
 
   def foldLeft[B](initial: B)(fn: (B, A) => B): EventPropToSignal[Ev, B] =
     new EventPropToSignal(
@@ -190,6 +123,15 @@ class EventPropToStream[Ev <: dom.Event, A](
       shouldPreventDefault,
       shouldStopPropagation,
       transform = transform.andThen(_.foldLeft(initial)(fn))
+    )
+
+  def foldLeftRecover[B](initial: Try[B])(fn: (Try[B], Try[A]) => Try[B]): EventPropToSignal[Ev, B] =
+    new EventPropToSignal(
+      key,
+      shouldUseCapture,
+      shouldPreventDefault,
+      shouldStopPropagation,
+      transform = transform.andThen(_.foldLeftRecover(initial)(fn))
     )
 
   @inline def startWith[B >: A](initial: => B): EventPropToSignal[Ev, B] = toSignal(initial)
@@ -226,92 +168,30 @@ class EventPropToStream[Ev <: dom.Event, A](
     )
 
   def compose[B](operator: EventStream[A] => EventStream[B]): EventPropToStream[Ev, B] =
-    new EventPropToStream[Ev, B](
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.compose(operator))
-    )
+    andThen(_.compose(operator))
 
-  def combineWith[AA >: A, B](otherEventStream: EventStream[B]): EventPropToStream[Ev, (AA, B)] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.combineWith(otherEventStream))
-    )
+  def combineWith[B](otherEventStream: EventStream[B]): EventPropToStream[Ev, (A, B)] =
+    andThen(_.combineWith(otherEventStream))
 
   def withCurrentValueOf[B](signal: Signal[B]): EventPropToStream[Ev, (A, B)] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.withCurrentValueOf(signal))
-    )
+    andThen(_.withCurrentValueOf(signal))
 
   def withCurrentValueOfC[AA >: A, B](signal: Signal[B])(implicit compose: Composition[AA, B]): EventPropToStream[Ev, compose.Composed] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(s => new EventStreamOps(s).withCurrentValueOfC(signal))
-    )
+    andThen(s => new EventStreamOps(s).withCurrentValueOfC(signal))
 
   def sample[B](signal: Signal[B]): EventPropToStream[Ev, B] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.sample(signal))
-    )
+    andThen(_.sample(signal))
 
-  // @TODO[API] print with dom.console.log automatically only if a JS value detected? Not sure if possible to do well.
-
-  /**
-   * print events using println - use for Scala values
-   */
   def debugLog(prefix: String = "event", when: A => Boolean = _ => true): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.debugLog(prefix, when))
-    )
+    andThen(_.debugLog(prefix, when))
 
-  /**
-   * print events using dom.console.log - use for JS values
-   */
   def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.debugLogJs(prefix, when))
-    )
+    andThen(_.debugLogJs(prefix, when))
 
   def debugBreak(when: A => Boolean = _ => true): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.debugBreak(when))
-    )
+    andThen(_.debugBreak(when))
 
   def debugSpy(fn: A => Unit): EventPropToStream[Ev, A] =
-    new EventPropToStream(
-      key,
-      shouldUseCapture,
-      shouldPreventDefault,
-      shouldStopPropagation,
-      transform = transform.andThen(_.debugSpy(fn))
-    )
+    andThen(_.debugSpy(fn))
 
 }

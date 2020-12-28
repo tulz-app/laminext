@@ -1,4 +1,5 @@
-package app.tulz.laminext.internal
+package app.tulz.laminext
+package internal
 
 import com.raquo.laminar.api.L._
 import com.raquo.airstream.eventbus.EventBus
@@ -7,7 +8,7 @@ import org.scalajs.dom
 
 import scala.scalajs.js
 
-private[tulz] object Helpers {
+private[laminext] object Helpers {
 
   def eventCallback[Ev <: dom.Event](
     bus: EventBus[Ev],

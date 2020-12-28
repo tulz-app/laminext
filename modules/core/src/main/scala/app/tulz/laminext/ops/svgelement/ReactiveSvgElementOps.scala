@@ -6,7 +6,7 @@ import com.raquo.laminar.keys.CompositeAttr.CompositeValueMapper
 import com.raquo.laminar.nodes.ReactiveSvgElement
 import org.scalajs.dom
 
-class ReactiveSvgElementOps[T <: dom.svg.Element](el: ReactiveSvgElement[T]) {
+final class ReactiveSvgElementOps[T <: dom.svg.Element](el: ReactiveSvgElement[T]) {
 
   @inline def cls(klass: String): ReactiveSvgElement[T] = {
     el.amend(svg.cls := klass)

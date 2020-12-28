@@ -1,4 +1,4 @@
-package app.tulz.laminext
+package app.tulz.laminext.util
 
 trait ClassJoin {
 
@@ -6,3 +6,5 @@ trait ClassJoin {
     classes.flatMap(_.split("\\s+")).distinct.mkString(" ")
 
 }
+
+object ClassJoin extends ClassJoin

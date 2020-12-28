@@ -13,8 +13,7 @@ object FutureChildReceiver {
 
   val maybe: MaybeFutureChildReceiver.type = MaybeFutureChildReceiver
 
-  def <--($node: Future[ChildNode[dom.Node]]): Inserter[ReactiveElement.Base] = {
+  def <--($node: Future[ChildNode[dom.Node]]): Inserter[ReactiveElement.Base] =
     ChildInserter[ReactiveElement.Base](_ => EventStream.fromFuture($node), initialInsertContext = None)
-  }
 
 }
