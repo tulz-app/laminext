@@ -9,7 +9,6 @@ import com.raquo.laminar.modifiers.EventPropBinder
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
-import scala.scalajs.js
 import scala.util.Failure
 import scala.util.Try
 

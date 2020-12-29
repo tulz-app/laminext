@@ -1,6 +1,5 @@
 package app.tulz.domtestutils.matching
 
-import app.tulz.diff.StringDiff
 import app.tulz.diff.TokenDiff
 import com.raquo.domtestutils.Utils.repr
 import com.raquo.domtestutils.matching.ExpectedNode

@@ -1,10 +1,7 @@
 package app.tulz.laminext.site
 
 import app.tulz.laminext.site.layout.PageWrap
-import app.tulz.laminext.site.pages.IndexPage
-import app.tulz.laminext.site.pages.PageResult
 import com.raquo.airstream.signal.Var
-import com.raquo.laminar.api.L.div
 import com.raquo.laminar.api.L.unsafeWindowOwner
 import io.frontroute._
 import io.frontroute.directives._
@@ -13,11 +10,6 @@ import org.scalajs.dom
 class Routes(
   routeLocationProvider: RouteLocationProvider
 ) {
-
-  private def oneOf(options: Seq[String]): PathMatcher1[String] =
-    segment.collect("oneOf") {
-      case s if options.contains(s) => s
-    }
 
   private val $module = Var[Option[SiteModule]](None)
   private val $page   = Var[Option[Page]](None)

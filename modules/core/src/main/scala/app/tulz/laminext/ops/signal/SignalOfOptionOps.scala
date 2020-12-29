@@ -2,7 +2,6 @@ package app.tulz.laminext.ops.signal
 
 import app.tulz.laminext.ConditionalChildInserter
 import com.raquo.airstream.signal.Signal
-import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 

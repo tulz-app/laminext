@@ -50,7 +50,7 @@ object Cookies {
       Map(
         "expires" -> ttlSeconds
           .map { e =>
-            new Date(Date.now().toInt + e * 1000).toUTCString()
+            new Date(Date.now() + e * 1000).toUTCString()
           }
           .orElse(Some("")),
         "path"   -> Some(path),
@@ -81,7 +81,7 @@ object Cookies {
     cookie
   }
 
-  def remove(key: String, path: CookieAttributes): String =
+  def remove(key: String): String =
     set(key, "", ttlSeconds = Some(-1))
 
   private def extend(arguments: Map[String, Option[String]]*): Map[String, String] = {

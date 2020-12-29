@@ -4,7 +4,6 @@ import app.tulz.laminext.site.Page
 import app.tulz.laminext.site.SiteModule
 import com.raquo.laminar.api.L._
 import app.tulz.laminar.ext._
-import app.tulz.laminext.site.pages.PageResult
 import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 

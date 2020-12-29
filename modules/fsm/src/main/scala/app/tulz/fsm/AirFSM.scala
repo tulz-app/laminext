@@ -17,9 +17,9 @@ class AirFSM[State](initial: State)(
     var currentState                      = Option.empty[State]
     ReactiveElement.bindSubscription(element) { ctx =>
       stateChangeRequests.events.foreach { nextState =>
-        if (control.isDefinedAt(currentState, nextState)) {
+        if (control.isDefinedAt((currentState, nextState))) {
           dom.console.debug(s"state transition: $currentState -> $nextState")
-          val $nextStateChangeRequests = control(currentState, nextState)
+          val $nextStateChangeRequests = control((currentState, nextState))
           if (currentSubscription != null) {
             currentSubscription.kill()
           }

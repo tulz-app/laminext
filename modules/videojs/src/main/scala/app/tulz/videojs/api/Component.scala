@@ -4,8 +4,6 @@ import org.scalajs.dom.Element
 import org.scalajs.dom.raw.NodeList
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSImport
-import scala.scalajs.js.annotation.JSName
 import scala.scalajs.js.|
 
 // TODO: Documentation

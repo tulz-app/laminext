@@ -31,7 +31,7 @@ object Animation {
 
     def enableClass(classToEnable: String): Unit =
       klass.update(
-        _.map(_._1).distinct.filterNot(_ == classToEnable).map(_ -> false) :+ (classToEnable, true)
+        _.map(_._1).distinct.filterNot(_ == classToEnable).map(_ -> false) :+ ((classToEnable, true))
       )
 
     def disableAllClasses(): Unit =

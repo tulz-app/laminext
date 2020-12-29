@@ -1,16 +1,13 @@
 package app.tulz.videojs
 
 import app.tulz.videojs.api._
-import app.tulz.videojs.api.plugins
 import com.raquo.airstream.eventbus.EventBus
 import com.raquo.airstream.ownership.Subscription
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-import org.scalajs.dom
 
 import scala.scalajs.js
-import scala.util.control.NonFatal
 
 object VideoJSPlayer {
 
@@ -20,71 +17,57 @@ object VideoJSPlayer {
   lazy val h265Supported: String =
     video().ref.canPlayType("""video/mp4; codecs="hvc1"""")
 
-  dom.console.log("VideoJS.VERSION", VideoJS.VERSION)
-  dom.console.log("QualityLevels.VERSION", plugins.QualityLevels.VERSION)
-  dom.console.log("HttpSourceSelector.VERSION", plugins.HttpSourceSelector.VERSION)
+  private def playerBus() = new EventBus[Player]
 
   def apply(
     options: VideoJSOptions,
     mods: Modifier[ReactiveHtmlElement.Base]*
   ): (ReactiveHtmlElement.Base, PlayerEvents, Signal[Option[Player]]) = {
-    val playerVar      = Var(Option.empty[Player])
-    var player: Player = null
+    var playerAPI: Option[Player] = None
+    val playerVar                 = Var(Option.empty[Player])
 
-    val readyVar       = Var(false)
-    val loadStartBus   = new EventBus[Player]
-    val playBus        = new EventBus[Unit]()
-    val pauseBus       = new EventBus[Unit]()
-    val endedBus       = new EventBus[Unit]()
-    val timeUpdatedBus = new EventBus[Double]()
-    val seekedBus      = new EventBus[Double]()
+    val readyVar       = Var(Option.empty[Player])
+    val loadStartBus   = playerBus()
+    val playBus        = playerBus()
+    val pauseBus       = playerBus()
+    val endedBus       = playerBus()
+    val timeUpdatedBus = playerBus()
+    val seekedBus      = playerBus()
 
     val onReadyHandler = (player: Player) => {
-      try {
-        player.muted(true)
-        readyVar.writer.onNext(true)
-      } catch {
-        case NonFatal(e) =>
-          dom.console.log("cannot set muted on player")
-      }
+      readyVar.writer.onNext(Some(player))
     }
 
     val onPlayHandler: js.Function = () => {
-      playBus.writer.onNext((): Unit)
+      playerAPI.foreach(playBus.writer.onNext)
     }
 
     val onLoadStartHandler: js.Function = () => {
-      loadStartBus.writer.onNext(player)
+      playerAPI.foreach(loadStartBus.writer.onNext)
     }
 
     val onPauseHandler: js.Function = () => {
-      pauseBus.writer.onNext((): Unit)
+      playerAPI.foreach(pauseBus.writer.onNext)
     }
 
     val onEndedHandler: js.Function = () => {
-      endedBus.writer.onNext((): Unit)
+      playerAPI.foreach(endedBus.writer.onNext)
     }
 
     val onSeekedHandler: js.Function = () => {
-      if (player != null) {
-        seekedBus.writer.onNext(player.currentTime())
-      }
+      playerAPI.foreach(seekedBus.writer.onNext)
     }
 
     val onTimeUpdateHandler: js.Function = () => {
-      if (player != null) {
-        timeUpdatedBus.writer.onNext(player.currentTime())
-      }
+      playerAPI.foreach(timeUpdatedBus.writer.onNext)
     }
 
     val events = new PlayerEvents(
       ready = readyVar.signal,
       loadStart = loadStartBus.events,
       ended = endedBus.events,
-      timeUpdate = EventStream.merge(
-        timeUpdatedBus.events.throttle(1000),
-        seekedBus.events
-      )
+      timeUpdate = timeUpdatedBus.events.throttle(1000),
+      seek = seekedBus.events
     )
 
     val wrapper =
@@ -92,46 +75,36 @@ object VideoJSPlayer {
         cls := "video-js hidden-if-no-js",
         mods,
         onUnmountCallback { _ =>
-          player.dispose()
+          playerAPI.foreach(_.dispose())
         },
-//        if (dom.window.navigator.userAgent != "laminext/ssr") {
         onMountBind { ctx =>
-          try {
-            player = VideoJS(ctx.thisNode.ref, options, VjsUtils.ready(onReadyHandler))
-            //            player.asInstanceOf[plugins.HttpSourceSelectorExt].httpSourceSelector()
+          val player = VideoJS(ctx.thisNode.ref, options, VjsUtils.ready(onReadyHandler))
+          playerAPI = Some(player)
 
-            player.on("play", onPlayHandler)
-            player.on("pause", onPauseHandler)
-            player.on("ended", onEndedHandler)
-            player.on("seeked", onSeekedHandler)
-            player.on("timeupdate", onTimeUpdateHandler)
-            player.on("loadstart", onLoadStartHandler)
+          player.on("play", onPlayHandler)
+          player.on("pause", onPauseHandler)
+          player.on("ended", onEndedHandler)
+          player.on("seeked", onSeekedHandler)
+          player.on("timeupdate", onTimeUpdateHandler)
+          player.on("loadstart", onLoadStartHandler)
 
-            playerVar.writer.onNext(Option(player))
+          playerVar.writer.onNext(Option(player))
 
-            Binder(
-              ReactiveElement.bindSubscription(_) { ctx =>
-                new Subscription(
-                  ctx.owner,
-                  cleanup = () => {
-                    player.off("play", onPlayHandler)
-                    player.off("pause", onPauseHandler)
-                    player.off("ended", onEndedHandler)
-                    player.off("seeked", onSeekedHandler)
-                    player.off("timeupdate", onTimeUpdateHandler)
-                  }
-                )
-              }
-            )
-          } catch {
-            case NonFatal(e) =>
-              dom.console.error(e)
-              throw e
-          }
+          Binder(
+            ReactiveElement.bindSubscription(_) { ctx =>
+              new Subscription(
+                ctx.owner,
+                cleanup = () => {
+                  player.off("play", onPlayHandler)
+                  player.off("pause", onPauseHandler)
+                  player.off("ended", onEndedHandler)
+                  player.off("seeked", onSeekedHandler)
+                  player.off("timeupdate", onTimeUpdateHandler)
+                }
+              )
+            }
+          )
         }
-//        } else {
-//          emptyMod
-//        }
       )
 
     (wrapper, events, playerVar.signal)

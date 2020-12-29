@@ -2,7 +2,6 @@ package app.tulz.website.macros
 
 import java.io.File
 import scala.io.Source
-import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 
 object FileToLiteral {

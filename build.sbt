@@ -29,20 +29,21 @@ lazy val noPublish = Seq(
   publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 )
 
+lazy val adjustScalacOptions = { options: Seq[String] =>
+  options.filterNot(
+    Set(
+      "-Wdead-code",
+      "-Wunused:implicits",
+      "-Wunused:explicits",
+      "-Wunused:params"
+    )
+  )
+}
+
 lazy val basicSettings = Seq(
   scalaVersion := "2.13.4",
   crossScalaVersions := Seq("2.13.4"),
-  scalacOptions := Seq(
-    "-unchecked",
-    "-deprecation",
-    "-feature",
-    "-Xlint:nullary-unit,inaccessible,infer-any,missing-interpolator,private-shadow,type-parameter-shadow,poly-implicit-overload,option-implicit,delayedinit-select,stars-align",
-    "-Xcheckinit",
-    "-Ywarn-value-discard",
-    "-language:implicitConversions",
-    "-encoding",
-    "utf8"
-  )
+  scalacOptions ~= adjustScalacOptions
 )
 
 lazy val commonSettings = basicSettings ++ Seq(
@@ -54,8 +55,12 @@ lazy val commonSettings = basicSettings ++ Seq(
   }
 )
 
+lazy val macrosSettings = Seq(
+  libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+)
+
 lazy val bundlerSettings = Seq(
-//  jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+  jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
   installJsdom / version := "16.4.0"
 )
 
@@ -228,6 +233,7 @@ lazy val `website-macros` = project
   .enablePlugins(ScalaJSPlugin)
   .settings(basicSettings)
   .settings(noPublish)
+  .settings(macrosSettings)
 
 lazy val website = project
   .in(file("website"))

@@ -5,15 +5,12 @@ import app.tulz.tuplez.Composition
 import com.raquo.airstream.core.Observer
 import com.raquo.airstream.features.FlattenStrategy
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.emitter.EventPropTransformation
 import com.raquo.laminar.keys.ReactiveEventProp
 import com.raquo.laminar.modifiers.EventPropBinder
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
-import scala.scalajs.js
 import scala.util.Try
-import scala.util.chaining._
 
 final class EventPropToStream[Ev <: dom.Event, A](
   val key: ReactiveEventProp[Ev],

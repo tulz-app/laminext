@@ -4,7 +4,6 @@ package ops.svgelement
 import com.raquo.laminar.api.L.{cls => _, _}
 import com.raquo.laminar.api.L.svg._
 import com.raquo.airstream.signal.Signal
-import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.nodes.ReactiveSvgElement
 import org.scalajs.dom
 
