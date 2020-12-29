@@ -29,7 +29,7 @@ lazy val noPublish = Seq(
   publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 )
 
-lazy val commonSettings = Seq(
+lazy val basicSettings = Seq(
   scalaVersion := "2.13.4",
   crossScalaVersions := Seq("2.13.4"),
   scalacOptions := Seq(
@@ -42,7 +42,10 @@ lazy val commonSettings = Seq(
     "-language:implicitConversions",
     "-encoding",
     "utf8"
-  ),
+  )
+)
+
+lazy val commonSettings = basicSettings ++ Seq(
   requireJsDomEnv in Test := true,
   parallelExecution in Test := false,
   scalaJSUseMainModuleInitializer := true,
@@ -220,7 +223,30 @@ lazy val `laminext-util` =
       description := "Misc utilities"
     )
 
-lazy val base = project
+lazy val website = project
+  .in(file("website"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(basicSettings)
+  .settings(noPublish)
+  .settings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+    libraryDependencies ++= Seq(
+      "com.lihaoyi"   %%% "sourcecode"           % "0.2.1",
+      "com.raquo"     %%% "laminar"              % "0.11.0",
+      "io.frontroute" %%% "frontroute"           % "0.11.3",
+      "io.mwielocha"  %%% "factorio-core"        % "0.3.1",
+      "io.mwielocha"  %%% "factorio-annotations" % "0.3.1",
+      "io.mwielocha"  %%% "factorio-macro"       % "0.3.1" % "provided"
+    )
+  )
+  .settings(
+    addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
+    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
+  )
+  .dependsOn(`laminext-core`, `laminext-ui`, `laminext-tailwind`)
+
+lazy val root = project
   .in(file("."))
   .settings(noPublish)
   .settings(

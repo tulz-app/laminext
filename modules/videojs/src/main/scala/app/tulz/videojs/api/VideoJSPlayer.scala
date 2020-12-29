@@ -93,7 +93,7 @@ object VideoJSPlayer {
         onUnmountCallback { _ =>
           player.dispose()
         },
-//        if (dom.window.navigator.userAgent != "saa/ssr") {
+//        if (dom.window.navigator.userAgent != "laminext/ssr") {
         onMountBind { ctx =>
           try {
             player = VideoJS(ctx.thisNode.ref, options, VjsUtils.ready(onReadyHandler))

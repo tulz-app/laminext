@@ -1,0 +1,51 @@
+{
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@tailwindcss/forms": "^0.2.1",
+    "highlight.js": "^10.5.0",
+    "marked": "1.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/ui": "^0.7.2",
+    "@types/video.js": "^7.3.11",
+    "autoprefixer": "^10.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "compression": "^1.7.4",
+    "compression-webpack-plugin": "^7.1.0",
+    "concat-with-sourcemaps": "^1.1.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "css-loader": "^5.0.1",
+    "cssnano": "^4.1.10",
+    "extract-css-chunks-webpack-plugin": "^4.9.0",
+    "extract-loader": "^5.1.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "lodash": "^4.17.20",
+    "postcss": "^8.2.1",
+    "postcss-import": "^14.0.0",
+    "postcss-loader": "^4.1.0",
+    "postcss-nested": "^5.0.3",
+    "scalajs-friendly-source-map-loader": "^0.1.5",
+    "source-map-loader": "2.0.0",
+    "stylelint": "^13.8.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "tailwindcss": "^2.0.2",
+    "tailwindcss-animations": "^2.0.0",
+    "terser-webpack-plugin": "^5.0.3",
+    "webpack": "^5.11.1",
+    "webpack-cli": "4.3.0",
+    "webpack-dev-server": "3.11.0"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "start": "webpack serve --progress",
+    "start:prod": "webpack serve --progress",
+    "build": "webpack --progress",
+    "build:prod": "webpack --progress",
+    "build:dev": "webpack --progress"
+  }
+}

@@ -1,0 +1,59 @@
+@responsive {
+
+    .grid-cols-auto {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .left-80 {
+        left: 80px;
+    }
+
+    .left-100 {
+        left: 80px;
+    }
+
+    .left-344 {
+        left: 344px;
+    }
+
+    .w-200 {
+        width: 200px;
+    }
+
+    .w-180 {
+        width: 180px;
+    }
+
+    .max-w-800 {
+        max-width: 800px;
+    }
+
+    .h-158 {
+        height: 158px;
+    }
+
+    .h-125 {
+        height: 125px;
+    }
+
+    @variants hover, focus {
+
+        .grayscale-0 {
+            filter: grayscale(0%);
+        }
+
+        .grayscale-50 {
+            filter: grayscale(50%);
+        }
+    }
+
+    .transition-everything {
+        transition-property: all;
+    }
+
+}
+
+.fixed-numbers {
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}

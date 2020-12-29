@@ -1,0 +1,7 @@
+* {
+    font-variant-ligatures: none;
+}
+
+body {
+    @apply font-serif;
+}
