@@ -3,6 +3,7 @@ package app.tulz.laminext.site.components
 import app.tulz.highlightjs.Highlight
 import app.tulz.laminext.site.examples.CodeExample
 import com.raquo.laminar.api.L._
+import app.tulz.markdown._
 
 object CodeExampleDisplay {
 
@@ -16,7 +17,8 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        example.description
+        cls := "markdown",
+        unsafeMarkdown := example.description
       ),
       div(
         cls := "space-y-2",

@@ -1,10 +1,15 @@
-package app.tulz.laminext.site.examples
+package app.tulz.laminext.site.examples.example1
 
-object TestExample
-    extends CodeExample("Example 1", "No description")({
-// format: off
+import app.tulz.laminext.site.examples.CodeExample
+import app.tulz.website.macros.FileToLiteral
 import com.raquo.laminar.api.L._
 
+object TestExample
+    extends CodeExample(
+      title = "Example 1",
+      description = FileToLiteral("description.md")
+    )({
+// format: off
 val counter = Var(1)
 
 div(

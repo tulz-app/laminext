@@ -1,16 +1,8 @@
 package app.tulz.laminext.site.pages
 
-import app.tulz.highlightjs.Highlight
-import app.tulz.highlightjs.HighlightScala
-import com.raquo.laminar.api.L.{animation => _, transition => _, _}
-import app.tulz.tailwind._
 import app.tulz.laminar.ext._
-import app.tulz.laminext.site.components.CodeExampleDisplay
-import app.tulz.laminext.site.examples.TestExample
-import com.raquo.laminar.nodes.ReactiveHtmlElement
-import org.scalajs.dom
-import org.scalajs.dom.html
-import sourcecode.Text
+import app.tulz.tailwind._
+import com.raquo.laminar.api.L.{animation => _, transition => _, _}
 
 object IndexPage {
 

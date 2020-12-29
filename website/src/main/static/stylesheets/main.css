@@ -11,6 +11,8 @@
 @import 'tailwindcss/utilities';
 @import './utilities.css';
 
+@import './markdown.css';
+
 @import './setup.css';
 
 /*noinspection CssUnknownTarget*/

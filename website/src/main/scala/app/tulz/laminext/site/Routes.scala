@@ -19,29 +19,50 @@ class Routes(
       case s if options.contains(s) => s
     }
 
-  private val renders = Var[Option[Page]](None)
+  private val $module = Var[Option[SiteModule]](None)
+  private val $page   = Var[Option[Page]](None)
 
-  private def render(page: Page): Route =
+  private def render(module: SiteModule, page: Page): Route =
     complete {
 //        appEvents.onNext(AppEvent.hideOverlay())
-      renders.writer.onNext(Some(page))
+      $module.writer.onNext(Some(module))
+      $page.writer.onNext(Some(page))
       dom.window.scrollTo(0, 0)
     }
   private def notFound: Route =
     complete {
-//        appEvents.onNext(AppEvent.hideOverlay())
-      renders.writer.onNext(Some(Page("", "Not Found", () => Left((404, "Not Found")))))
+//      $page.writer.onNext(Some(Page("", "Not Found", () => Left((404, "Not Found")))))
       dom.window.scrollTo(0, 0)
+    }
+
+  private def modulePrefix =
+    pathPrefix(segment).flatMap { moduleName =>
+      provide(Site.findModule(moduleName)).collect { case Some(module) =>
+        Tuple1(module)
+      }
+    }
+
+  private def modulePagePrefix(module: SiteModule) =
+    pathPrefix(segment).flatMap { pageName =>
+      provide(module.findPage(pageName)).collect { case Some(page) =>
+        Tuple1(page)
+      }
     }
 
   private val route =
     concat(
-      extractUnmatchedPath { unmatched =>
-        provide(Site.findPage(unmatched)) {
-          case Some(page) =>
-            render(page)
-          case None => reject
-        }
+      pathEnd {
+        render(Site.indexModule, Site.indexModule.index)
+      },
+      modulePrefix { module =>
+        concat(
+          pathEnd {
+            render(module, module.index)
+          },
+          modulePagePrefix(module) { page =>
+            render(module, page)
+          }
+        )
       },
       notFound
     )
@@ -49,7 +70,7 @@ class Routes(
   def start(): Unit = {
     val appContainer = dom.document.querySelector("#app")
 //    val modalContainer = dom.document.querySelector("#overlay")
-    val appContent = PageWrap($page = renders.signal)
+    val appContent = PageWrap($module.signal, $page.signal)
 
     appContainer.innerHTML = ""
     com.raquo.laminar.api.L.render(appContainer, appContent)

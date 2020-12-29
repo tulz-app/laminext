@@ -223,6 +223,12 @@ lazy val `laminext-util` =
       description := "Misc utilities"
     )
 
+lazy val `website-macros` = project
+  .in(file("website-macros"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(basicSettings)
+  .settings(noPublish)
+
 lazy val website = project
   .in(file("website"))
   .enablePlugins(ScalaJSPlugin)
@@ -244,7 +250,7 @@ lazy val website = project
     addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
-  .dependsOn(`laminext-core`, `laminext-ui`, `laminext-tailwind`)
+  .dependsOn(`website-macros`, `laminext-core`, `laminext-ui`, `laminext-tailwind`, `laminext-markdown`)
 
 lazy val root = project
   .in(file("."))

@@ -1,6 +1,7 @@
 package app.tulz.laminext.site.layout
 
 import app.tulz.laminext.site.Page
+import app.tulz.laminext.site.SiteModule
 import com.raquo.laminar.api.L._
 import app.tulz.laminar.ext._
 import app.tulz.laminext.site.pages.PageResult
@@ -10,13 +11,14 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 object PageWrap {
 
   def apply(
+    $module: Signal[Option[SiteModule]],
     $page: Signal[Option[Page]]
   ): ReactiveHtmlElement.Base = {
     val titleElement   = org.scalajs.dom.document.head.querySelector("title")
     val $pageAndResult = $page.optionMap(p => (p, p.render()))
     div(
       cls := "h-screen flex flex-col",
-      PageHeader($page),
+      PageHeader($module, $page),
       noScript(
         div(
           cls := "max-w-5xl border-l-4 border-red-400 bg-red-50 text-red-900 mx-auto p-4 font-condensed",
@@ -25,7 +27,7 @@ object PageWrap {
       ),
       div(
         cls := "flex-1 flex overflow-hidden",
-        PageNavigation($page),
+        PageNavigation($module, $page),
         div(
           cls := "flex-1 bg-cool-gray-200 overflow-auto p-4",
           div(
