@@ -24,28 +24,34 @@ object InputValuesExample
       )
 
       div(
+        cls := "space-y-4",
         div(
+          cls := "text-indigo-700",
           "Try tab'ing between inputs, cutting and pasting."
         ),
         div(
-          span("input 1:"),
+          div(
+            code("input 1:")
+          ),
           inputElement1
         ),
         div(
           cls := "flex space-x-1 items-center",
-          span("input1.valueSignal:"),
+          code("input1.valueSignal:"),
           code(
             cls := "text-blue-600",
             child.text <-- inputElement1.valueSignal
           )
         ),
         div(
-          span("input 2:"),
+          div(
+            code("input 2:")
+          ),
           inputElement2
         ),
         div(
           cls := "flex space-x-1 items-center",
-          span("input2.valueSignal:"),
+          code("input2.valueSignal:"),
           code(
             cls := "text-blue-600",
             child.text <-- inputElement2.valueSignal

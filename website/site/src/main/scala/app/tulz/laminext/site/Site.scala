@@ -44,7 +44,7 @@ object Site {
           docPage("signal-of-boolean-ops", "Signal of Boolean Ops", FileToLiteral("/doc/core/signal-of-boolean-ops.md")),
           docPage("signal-of-option-ops", "Signal of Option Ops", FileToLiteral("/doc/core/signal-of-option-ops.md")),
           docPage("signal-of-either-ops", "Signal of Either Ops", FileToLiteral("/doc/core/signal-of-either-ops.md")),
-          docPage("signal-of-option-of-signal-ops", "Signal of Option[Signal] Ops", FileToLiteral("/doc/core/signal-of-option-of-signal-ops.md")),
+          docPage("signal-of-option-of-signal-ops", "Signal of Option of Signal Shift", FileToLiteral("/doc/core/signal-of-option-of-signal-ops.md")),
           docPage("signal-ops", "Signal Ops", FileToLiteral("/doc/core/signal-ops.md")),
           docPage("var-of-boolean-ops", "Var of Boolean Ops", FileToLiteral("/doc/core/var-of-boolean-ops.md"))
         ),

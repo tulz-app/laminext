@@ -16,14 +16,16 @@ val counter = Var(1)
 div(
   cls := "space-y-1",
   div(
-    cls := "flex space-x-1 items-center",
-    span("Counter: "),
-    span(
+    cls := "flex space-x-4 items-center",
+    code("Counter: "),
+    code(
+      cls := "text-blue-600",
       child.text <-- counter.signal.map(_.toString)
     )
   ),
   div(
     button(
+      cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
       onClick --> { _ => counter.update(_ + 1) },
       "increase"
     )

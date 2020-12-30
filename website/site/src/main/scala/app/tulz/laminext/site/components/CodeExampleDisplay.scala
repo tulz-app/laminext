@@ -30,7 +30,7 @@ object CodeExampleDisplay {
   def apply(example: CodeExample): Element = {
     val sourceCollapsed = storedBoolean(example.id, initial = false)
     div(
-      cls := "flex flex-col space-y-4",
+      cls := "flex flex-col space-y-4 mb-20",
       div(
         h1(
           cls := "text-2xl font-bold text-cool-gray-900",
@@ -77,7 +77,15 @@ object CodeExampleDisplay {
               onClick.mapToUnit --> sourceCollapsed.toggleObserver,
               "expand"
             )
-          ).visibleIf(sourceCollapsed.signal)
+          ).visibleIf(sourceCollapsed.signal),
+          div(
+            cls := "p-2 bg-gradient-to-b from-cool-gray-500 to-cool-gray-600 opacity-75",
+            button(
+              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-cool-gray-200 text-cool-gray-200 font-semibold",
+              onClick.mapToUnit --> sourceCollapsed.toggleObserver,
+              "collapse"
+            )
+          ).hiddenIf(sourceCollapsed.signal)
         )
       ),
       div(

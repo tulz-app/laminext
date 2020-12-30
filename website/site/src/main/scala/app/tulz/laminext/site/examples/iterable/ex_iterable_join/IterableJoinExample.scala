@@ -16,15 +16,20 @@ object IterableJoinExample
       val spans2 = (1 to 6).map(_.toString).map(span(_))
 
       div(
+        cls := "space-y-4",
         div(
-          span("spans: "),
+          div(
+            code("spans1: ")
+          ),
           div(
             cls := "space-x-4",
             spans1
           )
         ),
         div(
-          span("spans.join(span(\"—\")): "),
+          div(
+            code("spans2.join(span(\"—\")): ")
+          ),
           div(
             cls := "space-x-4",
             spans2.join(() => span("—"))

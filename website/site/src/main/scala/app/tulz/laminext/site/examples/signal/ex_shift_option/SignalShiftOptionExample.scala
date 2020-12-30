@@ -21,18 +21,18 @@ object SignalShiftOptionExample
         placeholder := "new value"
       )
       val updateButton = button(
-        cls := "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+        cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
         "update inner signal"
       )
       val putButton = button(
-        cls := "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+        cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
         "put inner signal into outer signal",
         onClick --> { _ =>
           outer.writer.onNext(Some(inner.signal))
         }
       )
       val removeButton = button(
-        cls := "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+        cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
         "remove inner signal from outer signal",
         onClick --> { _ =>
           outer.writer.onNext(Option.empty)
@@ -41,7 +41,7 @@ object SignalShiftOptionExample
 
       div(
         updateButton.events(onClick).mapTo(inputElement.ref.value) --> inner.writer,
-        cls := "space-y-1",
+        cls := "space-y-4",
         div(
           inputElement
         ),
@@ -54,24 +54,24 @@ object SignalShiftOptionExample
           removeButton
         ),
         div(
-          cls := "flex space-x-1 items-center",
-          span("inner: "),
+          cls := "flex space-x-4 items-center",
+          code("inner:"),
           code(
             cls := "text-blue-600",
             child.text <-- inner.signal
           )
         ),
         div(
-          cls := "flex space-x-1 items-center",
-          span("outer: "),
+          cls := "flex space-x-4 items-center",
+          code("outer:"),
           code(
             cls := "text-blue-600",
             child.text <-- outer.signal.map(_.toString())
           )
         ),
         div(
-          cls := "flex space-x-1 items-center",
-          span("outer.shiftOption:"),
+          cls := "flex space-x-4 items-center",
+          code("outer.shiftOption:"),
           code(
             cls := "text-blue-600",
             child.text <-- outer.signal.shiftOption.map(_.toString())
