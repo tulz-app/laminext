@@ -1,3 +1,6 @@
+import java.nio.file.Path
+import EmbeddedFilesGenerator._
+
 ThisBuild / organization := "app.tulz"
 ThisBuild / homepage := Some(url("https://github.com/tulz-app/laminext"))
 ThisBuild / licenses += ("MIT", url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md"))
@@ -35,6 +38,7 @@ lazy val adjustScalacOptions = { options: Seq[String] =>
       "-Wdead-code",
       "-Wunused:implicits",
       "-Wunused:explicits",
+      "-Wunused:imports",
       "-Wunused:params"
     )
   )
@@ -229,15 +233,16 @@ lazy val `laminext-util` =
     )
 
 lazy val `website-macros` = project
-  .in(file("website-macros"))
+  .in(file("website/macros"))
   .enablePlugins(ScalaJSPlugin)
   .settings(basicSettings)
   .settings(noPublish)
   .settings(macrosSettings)
 
 lazy val website = project
-  .in(file("website"))
+  .in(file("website/site"))
   .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(EmbeddedFilesGenerator)
   .settings(basicSettings)
   .settings(noPublish)
   .settings(
@@ -251,6 +256,11 @@ lazy val website = project
       "io.mwielocha"  %%% "factorio-annotations" % "0.3.1",
       "io.mwielocha"  %%% "factorio-macro"       % "0.3.1" % "provided"
     )
+  )
+  .settings(
+    embedFilesGlob := "**/*.md",
+    embedFilesDirectories ++= (Compile / sourceDirectories).value,
+    (Compile / sourceGenerators) += embedFiles
   )
   .settings(
     addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),

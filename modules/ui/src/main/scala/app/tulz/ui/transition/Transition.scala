@@ -2,6 +2,7 @@ package app.tulz.ui
 package transition
 
 import com.raquo.laminar.api.L._
+import app.tulz.laminar.ext._
 import app.tulz.laminar.ext.onTransitionCancel
 import app.tulz.laminar.ext.onTransitionEnd
 import app.tulz.laminar.ext.smartClass
@@ -118,7 +119,6 @@ object Transition {
 
     Seq(
       smartClass(classes.signal),
-      show.map { toShow => if (toShow) EnterFrom else LeaveFrom } --> bus.writer,
       onMountCallback { _: MountContext[_] =>
         bus.writer.onNext(Reset)
       },
@@ -141,7 +141,12 @@ object Transition {
           classes.writer.onNext(leaveToClasses)
         case (Reset, show) =>
           classes.writer.onNext(resetClasses(show))
-      }
+      },
+      show.transitions.map {
+        case (Some(_), true)  => EnterFrom
+        case (Some(_), false) => LeaveFrom
+        case (None, _)        => Reset
+      } --> bus.writer
     )
   }
 

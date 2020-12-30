@@ -1,0 +1,71 @@
+.markdown {
+
+    h1 {
+        @apply text-2xl font-bold text-cool-gray-800
+    }
+
+    h2 {
+        @apply text-xl font-bold text-cool-gray-800
+    }
+
+    h3 {
+        @apply text-lg font-semibold text-cool-gray-800
+    }
+
+    h4 {
+        @apply text-base font-medium text-cool-gray-900
+    }
+
+    h4 {
+        @apply text-base font-normal text-cool-gray-900
+    }
+
+    code {
+        @apply w-full text-sm
+    }
+
+    p + p,
+    p + pre,
+    p + h1,
+    p + h2,
+    p + h3,
+    p + h4,
+
+    pre + p,
+    pre + pre,
+    pre + h1,
+    pre + h2,
+    pre + h3,
+    pre + h4,
+
+    h1 + p,
+    h1 + pre,
+    h1 + h1,
+    h1 + h2,
+    h1 + h3,
+    h1 + h4,
+
+    h2 + p,
+    h2 + pre,
+    h2 + h1,
+    h2 + h2,
+    h2 + h3,
+    h2 + h4,
+
+    h3 + p,
+    h3 + pre,
+    h3 + h1,
+    h3 + h2,
+    h3 + h3,
+    h3 + h4,
+
+    h4 + p,
+    h4 + pre,
+    h4 + h1,
+    h4 + h2,
+    h4 + h3,
+    h4 + h4 {
+        @apply mt-4
+    }
+
+}

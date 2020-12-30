@@ -3,3 +3,4 @@ target
 .bsp
 
 node_modules
+yarn-error.log

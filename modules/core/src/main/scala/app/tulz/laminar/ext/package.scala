@@ -139,4 +139,8 @@ package object ext extends HtmlEntities with SmartClass with ClassJoin with Clas
     (bus.events, () => { bus.writer.onNext((): Unit) })
   }
 
+  def storedBoolean(name: String, initial: Boolean = true): StoredBoolean = new StoredBoolean(name, initial)
+
+  def storedString(name: String, initial: String): StoredString = new StoredString(name, initial)
+
 }
