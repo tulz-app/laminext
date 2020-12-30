@@ -5,9 +5,7 @@ import app.tulz.laminext.ops.boolean.BooleanOps
 import app.tulz.laminext.ops.element.InputElementOps
 import app.tulz.laminext.ops.element.TextAreaElementOps
 import app.tulz.laminext.ops.eventproptransformation.EventPropTransformationOps
-import app.tulz.laminext.ops.future.FutureCompanionOps
 import app.tulz.laminext.ops.future.FutureOfEitherOps
-import app.tulz.laminext.ops.future.FutureOps
 import app.tulz.laminext.ops.htmlelement.ReactiveHtmlElementOps
 import app.tulz.laminext.ops.htmltag.HtmlTagOps
 import app.tulz.laminext.ops.iterable.SequenceOps
@@ -49,10 +47,6 @@ package object ext extends HtmlEntities with SmartClass with ClassJoin with Clas
   implicit def syntaxSignalCompanion(s: Signal.type): SignalCompanionOps.type = SignalCompanionOps
 
   implicit def syntaxEventStreamCompanion(e: EventStream.type): EventStreamCompanionOps.type = EventStreamCompanionOps
-
-  implicit def syntaxFuture[A](f: => Future[A]): FutureOps[A] = new FutureOps[A](f)
-
-  implicit def syntaxFutureCompanion(f: Future.type): FutureCompanionOps.type = FutureCompanionOps
 
   implicit def syntaxFutureOfEither[A, B](f: => Future[Either[A, B]]): FutureOfEitherOps[A, B] = new FutureOfEitherOps[A, B](f)
 

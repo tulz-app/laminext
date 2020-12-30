@@ -15,5 +15,4 @@
 
 @import './setup.css';
 
-/*noinspection CssUnknownTarget*/
-/*@import 'highlight.js/styles/stackoverflow-light.css';*/
+@import './markdown.css';

@@ -9,7 +9,7 @@ object TestExample
       id = "example-1",
       title = "Example 1",
       description = FileToLiteral("description.md")
-    )({
+    )(() => {
 // format: off
 val counter = Var(1)
 

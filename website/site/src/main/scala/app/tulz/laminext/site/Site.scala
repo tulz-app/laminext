@@ -6,13 +6,13 @@ import app.tulz.laminext.site.pages.CodeExamplePage
 import app.tulz.laminext.site.pages.DocumentationPage
 import app.tulz.laminext.site.pages.IndexPage
 import app.tulz.website.macros.FileToLiteral
+import app.tulz.laminext.site.examples
 
 object Site {
 
   private def examplePage(
-    path: String,
-    example: CodeExample[_]
-  ): Page = Page(path, example.title, CodeExamplePage(example))
+    example: CodeExample
+  ): Page = Page(example.id, example.title, CodeExamplePage(example))
 
   private def docPage(
     path: String,
@@ -29,11 +29,7 @@ object Site {
           docPage("doc-1", "Doc 1", FileToLiteral("/doc/test-doc.md"))
         ),
         "Examples" -> Seq(
-          examplePage("example-1", TestExample),
-          examplePage("example-2", TestExample),
-          examplePage("example-3", TestExample),
-          examplePage("example-4", TestExample),
-          examplePage("example-5", TestExample)
+          examplePage(TestExample)
         )
       )
     )
@@ -42,7 +38,12 @@ object Site {
     indexModule,
     SiteModule(
       path = "core",
-      index = Page("", "Core", IndexPage.render)
+      index = docPage("", "Core", FileToLiteral("/doc/core/index.md")),
+      navigation = Seq(
+        "Examples" -> Seq(
+          examplePage(examples.signal.ex_transitions.SignalTransitionsExample)
+        )
+      )
     ),
     SiteModule(
       path = "ui",
@@ -67,10 +68,6 @@ object Site {
     SiteModule(
       path = "videojs",
       index = Page("", "video.js", IndexPage.render)
-    ),
-    SiteModule(
-      path = "sttp3",
-      index = Page("", "sttp3", IndexPage.render)
     ),
     SiteModule(
       path = "news",

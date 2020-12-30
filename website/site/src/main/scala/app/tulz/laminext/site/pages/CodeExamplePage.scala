@@ -5,7 +5,7 @@ import app.tulz.laminext.site.examples.CodeExample
 
 object CodeExamplePage {
 
-  def apply(example: CodeExample[_]): PageRender = page(example.title) { () =>
+  def apply(example: CodeExample): PageRender = page(example.title) { () =>
     CodeExampleDisplay(example)
   }
 

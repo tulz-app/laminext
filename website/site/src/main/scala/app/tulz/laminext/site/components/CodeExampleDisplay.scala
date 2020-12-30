@@ -9,7 +9,25 @@ import app.tulz.markdown._
 
 object CodeExampleDisplay {
 
-  def apply(example: CodeExample[_]): Element = {
+  private def fixIndentation(src: String): String = {
+    val lines =
+      src
+        .split('\n')
+        .drop(1)
+        .dropRight(1)
+
+    val minIndent =
+      lines
+        .filterNot(_.trim.isEmpty)
+        .map(_.takeWhile(_.isWhitespace))
+        .map(_.length)
+        .minOption
+        .getOrElse(0)
+
+    lines.map(_.drop(minIndent)).mkString("\n")
+  }
+
+  def apply(example: CodeExample): Element = {
     val sourceCollapsed = storedBoolean(example.id, initial = false)
     div(
       cls := "flex flex-col space-y-4",
@@ -49,13 +67,13 @@ object CodeExampleDisplay {
               onMountCallback { ctx =>
                 Highlight.highlightBlock(ctx.thisNode.ref)
               },
-              example.code.source
+              fixIndentation(example.code.source)
             )
           ),
           div(
-            cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-cool-gray-400 to-cool-gray-600 text-white opacity-75",
+            cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-cool-gray-500 to-cool-gray-600 opacity-75",
             button(
-              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-blue-500",
+              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-cool-gray-200 text-cool-gray-50 font-semibold",
               onClick.mapToUnit --> sourceCollapsed.toggleObserver,
               "expand"
             )
@@ -71,7 +89,7 @@ object CodeExampleDisplay {
         div(
           cls := "border-4 border-dashed border-cool-gray-300 rounded-lg -m-2 p-4",
           onMountUnmountCallbackWithState(
-            mount = ctx => render(ctx.thisNode.ref, example.code.value),
+            mount = ctx => render(ctx.thisNode.ref, example.code.value()),
             unmount = (_, root: Option[RootNode]) => root.foreach(_.unmount())
           )
         )
