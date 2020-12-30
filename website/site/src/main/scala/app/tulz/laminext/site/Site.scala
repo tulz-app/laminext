@@ -40,6 +40,19 @@ object Site {
       path = "core",
       index = docPage("", "Core", FileToLiteral("/doc/core/index.md")),
       navigation = Seq(
+        "Signal" -> Seq(
+          docPage("signal-of-boolean-ops", "Signal of Boolean Ops", FileToLiteral("/doc/core/signal-of-boolean-ops.md")),
+          docPage("signal-of-option-ops", "Signal of Option Ops", FileToLiteral("/doc/core/signal-of-option-ops.md")),
+          docPage("signal-of-either-ops", "Signal of Either Ops", FileToLiteral("/doc/core/signal-of-either-ops.md")),
+          docPage("signal-of-option-of-signal-ops", "Signal of Option[Signal] Ops", FileToLiteral("/doc/core/signal-of-option-of-signal-ops.md")),
+          docPage("signal-ops", "Signal Ops", FileToLiteral("/doc/core/signal-ops.md")),
+          docPage("var-of-boolean-ops", "Var of Boolean Ops", FileToLiteral("/doc/core/var-of-boolean-ops.md"))
+        ),
+        "Misc" -> Seq(
+          docPage("boolean-ops", "Boolean Ops", FileToLiteral("/doc/core/boolean-ops.md")),
+          docPage("option-ops", "Option Ops", FileToLiteral("/doc/core/option-ops.md")),
+          docPage("element-ops", "Element Ops", FileToLiteral("/doc/core/element-ops.md"))
+        ),
         "Examples" -> Seq(
           examplePage(examples.signal.ex_transitions.SignalTransitionsExample),
           examplePage(examples.signal.ex_boolean_toggle.VarOfBooleanToggleExample),

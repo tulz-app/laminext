@@ -23,6 +23,8 @@ final class SignalOfEitherOps[A, B](underlying: Signal[Either[A, B]]) {
 
   @inline def leftMap[C](project: A => C): Signal[Either[C, B]] = underlying.map(_.left.map(project))
 
+  @inline def eitherToOption: Signal[Option[B]] = underlying.map(_.toOption)
+
   @inline def eitherFold[C](fa: A => C, fb: B => C): Signal[C] = underlying.map(_.fold(fa, fb))
 
   @inline def eitherSwap: Signal[Either[B, A]] = underlying.map(_.swap)
