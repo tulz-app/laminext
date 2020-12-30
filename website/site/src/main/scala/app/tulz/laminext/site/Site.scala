@@ -41,7 +41,13 @@ object Site {
       index = docPage("", "Core", FileToLiteral("/doc/core/index.md")),
       navigation = Seq(
         "Examples" -> Seq(
-          examplePage(examples.signal.ex_transitions.SignalTransitionsExample)
+          examplePage(examples.signal.ex_transitions.SignalTransitionsExample),
+          examplePage(examples.signal.ex_boolean_toggle.VarOfBooleanToggleExample),
+          examplePage(examples.signal.ex_shift_option.SignalShiftOptionExample),
+          examplePage(examples.signal.ex_signal_of_option.SignalOfOptionExample),
+          examplePage(examples.iterable.ex_iterable_join.IterableJoinExample),
+          examplePage(examples.element.ex_input_values.InputValuesExample),
+          examplePage(examples.eventproptransformation.ex_eventprop_stream.EventPropStreamExample)
         )
       )
     ),

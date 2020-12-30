@@ -6,7 +6,7 @@ import app.tulz.website.macros.FileToLiteral
 object SignalTransitionsExample
     extends CodeExample(
       id = "signal-transitions",
-      title = "Signal Transitions",
+      title = "Signal transitions",
       description = FileToLiteral("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
@@ -43,7 +43,7 @@ object SignalTransitionsExample
         ),
         div(
           cls := "flex space-x-1 items-center",
-          span("Signal.transitions: "),
+          span("Signal.transitions:"),
           code(
             cls := "text-blue-600",
             child.text <-- aVar.signal.transitions.map(_.toString())
