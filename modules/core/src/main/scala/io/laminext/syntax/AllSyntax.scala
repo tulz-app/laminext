@@ -1,0 +1,36 @@
+package io.laminext.syntax
+
+import io.laminext.ExtraEvents
+import io.laminext.HtmlEntities
+import io.laminext.util.SmartClass
+
+trait AllSyntax
+    extends SignalCompanionSyntax
+    with SignalSyntax
+    with SignalOfEitherSyntax
+    with SignalOfOptionSyntax
+    with SignalOfOptionOfSignalSyntax
+    with SignalOfBooleanSyntax
+    with EventStreamSyntax
+    with EventStreamOfUnitSyntax
+    with EventStreamOfEitherSyntax
+    with EventStreamOfOptionSyntax
+    with EventStreamCompanionSyntax
+    with ObservableOfBooleanSyntax
+    with VarOfBooleanSyntax
+    with EventPropTransformationSyntax
+    with ReactiveEventPropSyntax
+    with FutureOfEitherSyntax
+    with HtmlTagSyntax
+    with SvgTagSyntax
+    with ReactiveHtmlTagSyntax
+    with ReactiveSvgElementSyntax
+    with InputElementSyntax
+    with TextAreaSyntax
+    with OptionSyntax
+    with OptionOfSignalSyntax
+    with SeqSyntax
+    with MiscSyntax
+    with HtmlEntities
+    with SmartClass
+    with ExtraEvents

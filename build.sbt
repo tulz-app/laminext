@@ -1,7 +1,7 @@
 import java.nio.file.Path
 import EmbeddedFilesGenerator._
 
-ThisBuild / organization := "app.tulz"
+ThisBuild / organization := "io.laminext"
 ThisBuild / homepage := Some(url("https://github.com/tulz-app/laminext"))
 ThisBuild / licenses += ("MIT", url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md"))
 ThisBuild / developers := List(
@@ -98,7 +98,7 @@ lazy val sttp3Dependencies = Seq(
 val generateTupleCombinatorsFrom = 3
 val generateTupleCombinatorsTo   = 22
 
-lazy val `laminext-core` =
+lazy val `core` =
   project
     .in(file("modules/core"))
     .enablePlugins(ScalaJSPlugin)
@@ -107,10 +107,20 @@ lazy val `laminext-core` =
     .settings(
       Compile / sourceGenerators += Def.task {
         Seq.concat(
-          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()),
-          (generateTupleCombinatorsFrom - 1 to generateTupleCombinatorsTo).flatMap(n => new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()),
-          new SignalCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
-          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom - 1, to = generateTupleCombinatorsTo).generate()
+          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n =>
+            new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()
+          ),
+          (generateTupleCombinatorsFrom - 1 to generateTupleCombinatorsTo).flatMap(n =>
+            new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()
+          ),
+          new SignalCombinesGenerator((Compile / sourceManaged).value,
+                                      from = generateTupleCombinatorsFrom,
+                                      to = generateTupleCombinatorsTo
+          ).generate(),
+          new EventStreamCombinesGenerator((Compile / sourceManaged).value,
+                                           from = generateTupleCombinatorsFrom - 1,
+                                           to = generateTupleCombinatorsTo
+          ).generate()
         )
       }.taskValue,
       //
@@ -133,7 +143,7 @@ lazy val `laminext-core` =
       description := "Laminar extensions"
     )
 
-lazy val `laminext-cats` =
+lazy val `cats` =
   project
     .in(file("modules/cats"))
     .enablePlugins(ScalaJSPlugin)
@@ -143,9 +153,9 @@ lazy val `laminext-cats` =
     .settings(noPublish) // nothing here yet
     .settings(
       description := "Laminar utilities (cats)"
-    ).dependsOn(`laminext-core`)
+    ).dependsOn(`core`)
 
-lazy val `laminext-validation` =
+lazy val `validation` =
   project
     .in(file("modules/validation"))
     .enablePlugins(ScalaJSPlugin)
@@ -154,18 +164,18 @@ lazy val `laminext-validation` =
     .settings(catsDependencies)
     .settings(
       description := "Laminar utilities (validation)"
-    ).dependsOn(`laminext-core`)
+    ).dependsOn(`core`)
 
-lazy val `laminext-fsm` =
+lazy val `fsm` =
   project
     .in(file("modules/fsm"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(
       description := "Laminar utilities (validation)"
-    ).dependsOn(`laminext-core`)
+    ).dependsOn(`core`)
 
-lazy val `laminext-sttp3` =
+lazy val `sttp3` =
   project
     .in(file("modules/sttp3"))
     .enablePlugins(ScalaJSPlugin)
@@ -174,9 +184,9 @@ lazy val `laminext-sttp3` =
     .settings(sttp3Dependencies)
     .settings(
       description := "Laminar utilities (sttp3)"
-    ).dependsOn(`laminext-core`)
+    ).dependsOn(`core`)
 
-lazy val `laminext-markdown` =
+lazy val `markdown` =
   project
     .in(file("modules/markdown"))
     .enablePlugins(ScalaJSPlugin)
@@ -184,20 +194,29 @@ lazy val `laminext-markdown` =
     .settings(commonDependencies)
     .settings(
       description := "Laminar utilities (markdown)"
-    ).dependsOn(`laminext-core`)
+    ).dependsOn(`core`)
 
-lazy val `laminext-videojs` =
+lazy val `videojs` =
   project
     .in(file("modules/videojs"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(
-//      npmDependencies in Test += "video.js" -> "7.10.2",
       description := "Laminar + video.js"
-    ).dependsOn(`laminext-core`)
+    ).dependsOn(`core`)
 
-lazy val `laminext-ui` =
+lazy val `highlight` =
+  project
+    .in(file("modules/highlight"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(commonDependencies)
+    .settings(
+      description := "Laminar + highlight.js"
+    ).dependsOn(`core`)
+
+lazy val `ui` =
   project
     .in(file("modules/ui"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
@@ -206,9 +225,9 @@ lazy val `laminext-ui` =
     .settings(bundlerSettings)
     .settings(
       description := "Laminar UI"
-    ).dependsOn(`laminext-core`)
+    ).dependsOn(`core`)
 
-lazy val `laminext-tailwind` =
+lazy val `tailwind` =
   project
     .in(file("modules/tailwind"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
@@ -220,9 +239,9 @@ lazy val `laminext-tailwind` =
     )
     .settings(
       description := "Laminar UI (tailwindcss)"
-    ).dependsOn(`laminext-core`, `laminext-ui`)
+    ).dependsOn(`core`, `ui`)
 
-lazy val `laminext-util` =
+lazy val `util` =
   project
     .in(file("modules/util"))
     .enablePlugins(ScalaJSPlugin)
@@ -266,7 +285,7 @@ lazy val website = project
     addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
-  .dependsOn(`website-macros`, `laminext-core`, `laminext-ui`, `laminext-tailwind`, `laminext-markdown`)
+  .dependsOn(`website-macros`, `core`, `ui`, `tailwind`, `markdown`, `highlight`)
 
 lazy val root = project
   .in(file("."))
@@ -275,14 +294,15 @@ lazy val root = project
     name := "laminext"
   )
   .aggregate(
-    `laminext-core`,
-    `laminext-validation`,
-    `laminext-util`,
-    `laminext-fsm`,
-    `laminext-sttp3`,
-    `laminext-videojs`,
-    `laminext-markdown`,
-    `laminext-ui`,
-    `laminext-tailwind`,
-    `laminext-util`
+    `core`,
+    `validation`,
+    `util`,
+    `fsm`,
+    `sttp3`,
+    `videojs`,
+    `highlight`,
+    `markdown`,
+    `ui`,
+    `tailwind`,
+    `util`
   )

@@ -1,7 +1,5 @@
 package app.tulz
 
-package object markdown {
+import io.laminext.markdown.UnsafeMarkdownReceiver
 
-  val unsafeMarkdown: UnsafeMarkdownReceiver.type = UnsafeMarkdownReceiver
-
-}
+package object markdown {}

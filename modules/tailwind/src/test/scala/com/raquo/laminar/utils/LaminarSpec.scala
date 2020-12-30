@@ -1,6 +1,6 @@
 package com.raquo.laminar.utils
 
-import app.tulz.domtestutils.matching.TestableHtmlAttr
+import io.laminext.domtestutils.matching.TestableHtmlAttr
 import com.raquo.domtestutils.EventSimulator
 import com.raquo.domtestutils.MountOps
 import com.raquo.domtestutils.matching.RuleImplicits
