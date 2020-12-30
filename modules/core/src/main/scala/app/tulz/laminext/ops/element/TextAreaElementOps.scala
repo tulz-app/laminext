@@ -10,7 +10,8 @@ object TextAreaElementOps {
         el.events(onChange),
         el.events(onBlur),
         el.events(onInput),
-        el.events(onPaste)
+        el.events(onPaste),
+        el.events(onCut)
       )
       .mapToValue(())
 

@@ -11,12 +11,6 @@ val sOrBoolean: Signal[Boolean]  = s1 || true
 val sAndBoolean: Signal[Boolean] = s1 && false
 
 div(
-  when(s1) {
-    span("s1 is true")
-  },
-  whenNot(s1) {
-    span("s1 is false")
-  },
   s1.childWhenTrue {
     span("s1 is true")
   },
