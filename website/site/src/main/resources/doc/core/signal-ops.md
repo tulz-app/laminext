@@ -5,6 +5,8 @@ val transitions: Signal[(Option[String], String)] = s.transitions
 
 See [example](/core/signal-transitions).
 
+---
+
 ```scala
 val s: Signal[String] = ???
 

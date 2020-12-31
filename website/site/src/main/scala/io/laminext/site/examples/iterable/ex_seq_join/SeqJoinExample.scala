@@ -1,12 +1,12 @@
-package io.laminext.site.examples.iterable.ex_iterable_join
+package io.laminext.site.examples.iterable.ex_seq_join
 
 import io.laminext.site.examples.CodeExample
 import app.tulz.website.macros.FileToLiteral
 
-object IterableJoinExample
+object SeqJoinExample
     extends CodeExample(
-      id = "iterable-join",
-      title = "Iterable Join",
+      id = "seq-join",
+      title = "Seq Join",
       description = FileToLiteral("description.md")
     )(() => {
       import io.laminext.syntax.all._

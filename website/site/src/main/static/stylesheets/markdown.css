@@ -288,3 +288,18 @@
     color: #161e2e;
 }
 
+
+.prose-custom code:not(.hljs){
+    @apply text-cool-gray-900;
+    @apply font-medium;
+    @apply text-sm;
+    @apply bg-cool-gray-200;
+}
+
+.prose-custom code:not(.hljs)::before{
+    content: "`";
+}
+
+.prose-custom code:not(.hljs)::after{
+    content: "`";
+}

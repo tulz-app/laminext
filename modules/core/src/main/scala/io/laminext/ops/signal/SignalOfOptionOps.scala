@@ -23,10 +23,10 @@ final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
   @inline def optionMap[B](project: A => B): Signal[Option[B]] =
     underlying.map(_.map(project))
 
-  def optionFlatMap[B](project: A => Option[B]): Signal[Option[B]] =
+  @inline def optionFlatMap[B](project: A => Option[B]): Signal[Option[B]] =
     underlying.map(_.flatMap(project))
 
-  def withDefault(default: => A): Signal[A] =
+  @inline def withDefault(default: => A): Signal[A] =
     underlying.map(_.getOrElse(default))
 
 }

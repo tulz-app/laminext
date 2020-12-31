@@ -31,7 +31,7 @@ object PageHeader {
     )
 
     div(
-      cls := "bg-cool-gray-900 text-white flex p-4 items-center space-x-8",
+      cls := "bg-cool-gray-900 text-white flex py-4 px-8 items-center space-x-8 ",
       nav(
         cls := "flex-1 flex space-x-4 justify-start",
         Site.modules.map { module =>
@@ -100,6 +100,12 @@ object PageHeader {
               )
             }
           )
+        )
+      ),
+      div(
+        a(
+          href := "https://github.com/tulz-app/laminext",
+          Icons.github(svg.cls := "h-8")
         )
       )
     )

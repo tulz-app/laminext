@@ -20,7 +20,7 @@ object DocumentationDisplay {
         cls := "prose-custom max-w-none",
         unsafeMarkdown := markdown,
         onMountCallback { ctx =>
-          ctx.thisNode.ref.querySelectorAll("code").foreach { codeElement =>
+          ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
             Highlight.highlightBlock(codeElement)
           }
         }

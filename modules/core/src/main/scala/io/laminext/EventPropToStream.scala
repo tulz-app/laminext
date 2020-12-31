@@ -92,11 +92,15 @@ final class EventPropToStream[Ev <: dom.Event, A](
   def map[B](project: A => B): EventPropToStream[Ev, B] =
     andThen(_.map(project))
 
-  def mapTo[B](value: => B): EventPropToStream[Ev, B] = map(_ => value)
+  @inline def mapTo[B](value: => B): EventPropToStream[Ev, B] = map(_ => value)
 
-  def mapToValue[B](value: B): EventPropToStream[Ev, B] = map(_ => value)
+  @inline def mapToValue[B](value: B): EventPropToStream[Ev, B] = map(_ => value)
 
-  def mapToUnit: EventPropToStream[Ev, Unit] = map(_ => (): Unit)
+  @inline def mapToUnit: EventPropToStream[Ev, Unit] = map(_ => (): Unit)
+
+  @inline def mapToTrue: EventPropToStream[Ev, Boolean] = map(_ => true)
+
+  @inline def mapToFalse: EventPropToStream[Ev, Boolean] = map(_ => false)
 
   @inline def flatMap[B](compose: A => EventStream[B])(implicit
     strategy: FlattenStrategy[EventStream, EventStream, EventStream]
@@ -200,14 +204,10 @@ final class EventPropToStream[Ev <: dom.Event, A](
   def sample[B](signal: Signal[B]): EventPropToStream[Ev, B] =
     andThen(_.sample(signal))
 
-  def debugLog(prefix: String = "event",
-               when: A => Boolean = _ => true
-  ): EventPropToStream[Ev, A] =
+  def debugLog(prefix: String = "event", when: A => Boolean = _ => true): EventPropToStream[Ev, A] =
     andThen(_.debugLog(prefix, when))
 
-  def debugLogJs(prefix: String = "event",
-                 when: A => Boolean = _ => true
-  ): EventPropToStream[Ev, A] =
+  def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): EventPropToStream[Ev, A] =
     andThen(_.debugLogJs(prefix, when))
 
   def debugBreak(when: A => Boolean = _ => true): EventPropToStream[Ev, A] =
