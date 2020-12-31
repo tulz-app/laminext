@@ -16,7 +16,7 @@ class Routes(
   private val $page   = Var[Option[Page]](None)
 
   private val highlightStyle =
-    storedString("highlight-style", "stackoverflow-light")
+    storedString("highlight-style", "an-old-hope")
 
   private def render(module: SiteModule, page: Page): Route =
     complete {

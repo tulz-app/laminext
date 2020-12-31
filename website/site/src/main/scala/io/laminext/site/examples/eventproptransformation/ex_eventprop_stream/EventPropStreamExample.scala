@@ -5,7 +5,7 @@ import app.tulz.website.macros.FileToLiteral
 
 object EventPropStreamExample
     extends CodeExample(
-      id = "eventprop-stream",
+      id = "example-eventprop-stream",
       title = "EventProp as Stream",
       description = FileToLiteral("description.md")
     )(() => {

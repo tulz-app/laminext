@@ -3,7 +3,7 @@ val s: EventStream[String] = ???
 val transitions: EventStream[(Option[String], String)] = s.transitions
 ```
 
-See [example](/core/signal-transitions) (for Signal).
+See [example](/core/example-signal-transitions) (for Signal).
 
 ---
 

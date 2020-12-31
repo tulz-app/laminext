@@ -5,7 +5,7 @@ import app.tulz.website.macros.FileToLiteral
 
 object SeqJoinExample
     extends CodeExample(
-      id = "seq-join",
+      id = "example-seq-join",
       title = "Seq Join",
       description = FileToLiteral("description.md")
     )(() => {

@@ -5,7 +5,7 @@ import app.tulz.website.macros.FileToLiteral
 
 object SignalTransitionsExample
     extends CodeExample(
-      id = "signal-transitions",
+      id = "example-signal-transitions",
       title = "Signal Transitions",
       description = FileToLiteral("description.md")
     )(() => {

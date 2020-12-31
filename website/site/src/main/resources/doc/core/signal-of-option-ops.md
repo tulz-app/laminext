@@ -1,4 +1,4 @@
-See [example](/core/signal-of-option).
+See [example](/core/example-signal-of-option).
 
 
 ```scala

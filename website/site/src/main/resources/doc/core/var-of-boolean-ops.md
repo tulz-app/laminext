@@ -4,4 +4,4 @@ val aVar = Var(false)
 aVar.toggle()
 ```
 
-See [example](/core/var-of-boolean-toggle).
+See [example](/core/example-var-of-boolean-toggle).

@@ -9,7 +9,6 @@ object PageFooter {
   ): ReactiveHtmlElement.Base =
     div(
       cls := "bg-cool-gray-900 text-white p-4",
-      "footer"
     )
 
 }

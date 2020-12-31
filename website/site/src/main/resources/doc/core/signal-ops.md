@@ -3,7 +3,7 @@ val s: Signal[String] = ???
 val transitions: Signal[(Option[String], String)] = s.transitions
 ```
 
-See [example](/core/signal-transitions).
+See [example](/core/example-signal-transitions).
 
 ---
 

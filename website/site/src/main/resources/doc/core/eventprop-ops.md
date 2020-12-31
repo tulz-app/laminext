@@ -1,6 +1,6 @@
 Allows to use event props like they were streams.
 
-See [example](/core/eventprop-stream).
+See [example](/core/example-eventprop-stream).
 
 ```scala
 div(
@@ -22,7 +22,7 @@ div(
   // most of the stream (and signal) combinators are proxied as well:
   // filter, collect, delay, delaySync, throttle, debounce, foldLeft, foldLeftRecover, startWith, 
   // startWithTry, startWithNone, toSignal, toSignalWithTry, toWeakSignal, combineWith, sample,
-  // debugLog*, ...
+  // debug*, ...
 )
 ```
 

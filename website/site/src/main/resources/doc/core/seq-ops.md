@@ -1,1 +1,1 @@
-See [example](/core/seq-join).
+See [example](/core/example-seq-join).

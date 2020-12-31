@@ -5,7 +5,7 @@ import app.tulz.website.macros.FileToLiteral
 
 object VarOfBooleanToggleExample
     extends CodeExample(
-      id = "var-of-boolean-toggle",
+      id = "example-var-of-boolean-toggle",
       title = "Var of Boolean Toggle",
       description = FileToLiteral("description.md")
     )(() => {

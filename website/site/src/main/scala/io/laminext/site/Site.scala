@@ -1,12 +1,9 @@
 package io.laminext.site
 
 import io.laminext.site.examples.CodeExample
-import io.laminext.site.examples.example1.TestExample
 import io.laminext.site.pages.CodeExamplePage
 import io.laminext.site.pages.DocumentationPage
-import io.laminext.site.pages.IndexPage
 import app.tulz.website.macros.FileToLiteral
-import io.laminext.site.examples
 
 object Site {
 
@@ -70,31 +67,31 @@ object Site {
     ),
     SiteModule(
       path = "ui",
-      index = Page("", "UI", IndexPage.render)
+      index = docPage("", "UI", FileToLiteral("/doc/todo.md"))
     ),
     SiteModule(
       path = "tailwind",
-      index = Page("", "Tailwind", IndexPage.render)
+      index = docPage("", "Tailwind", FileToLiteral("/doc/todo.md"))
     ),
     SiteModule(
       path = "util",
-      index = Page("", "Util", IndexPage.render)
+      index = docPage("", "Util", FileToLiteral("/doc/todo.md"))
     ),
     SiteModule(
       path = "fsm",
-      index = Page("", "FSM", IndexPage.render)
+      index = docPage("", "FSM", FileToLiteral("/doc/todo.md"))
     ),
     SiteModule(
       path = "markdown",
-      index = Page("", "Markdown", IndexPage.render)
+      index = docPage("", "Markdown", FileToLiteral("/doc/todo.md"))
     ),
     SiteModule(
       path = "videojs",
-      index = Page("", "video.js", IndexPage.render)
+      index = docPage("", "video.js", FileToLiteral("/doc/todo.md"))
     ),
     SiteModule(
       path = "highlight",
-      index = Page("", "highlight.js", IndexPage.render)
+      index = docPage("", "highlight.js", FileToLiteral("/doc/todo.md"))
     )
   )
 

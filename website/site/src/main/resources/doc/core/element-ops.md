@@ -9,4 +9,4 @@ val textValue:  Signal[String]  = textElement.valueSignal
 
 ```
 
-See [example](/core/input-values).
+See [example](/core/example-input-values).

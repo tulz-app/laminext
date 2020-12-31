@@ -5,7 +5,7 @@ import app.tulz.website.macros.FileToLiteral
 
 object InputValuesExample
     extends CodeExample(
-      id = "input-values",
+      id = "example-input-values",
       title = "Input Values",
       description = FileToLiteral("description.md")
     )(() => {
