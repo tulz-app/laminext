@@ -107,20 +107,12 @@ lazy val `core` =
     .settings(
       Compile / sourceGenerators += Def.task {
         Seq.concat(
-          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n =>
-            new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()
-          ),
+          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()),
           (generateTupleCombinatorsFrom - 1 to generateTupleCombinatorsTo).flatMap(n =>
             new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()
           ),
-          new SignalCombinesGenerator((Compile / sourceManaged).value,
-                                      from = generateTupleCombinatorsFrom,
-                                      to = generateTupleCombinatorsTo
-          ).generate(),
-          new EventStreamCombinesGenerator((Compile / sourceManaged).value,
-                                           from = generateTupleCombinatorsFrom - 1,
-                                           to = generateTupleCombinatorsTo
-          ).generate()
+          new SignalCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
+          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom - 1, to = generateTupleCombinatorsTo).generate()
         )
       }.taskValue,
       //
@@ -270,7 +262,7 @@ lazy val website = project
     libraryDependencies ++= Seq(
       "com.lihaoyi"   %%% "sourcecode"           % "0.2.1",
       "com.raquo"     %%% "laminar"              % "0.11.0",
-      "io.frontroute" %%% "frontroute"           % "0.11.3",
+      "io.frontroute" %%% "frontroute"           % "0.11.4",
       "io.mwielocha"  %%% "factorio-core"        % "0.3.1",
       "io.mwielocha"  %%% "factorio-annotations" % "0.3.1",
       "io.mwielocha"  %%% "factorio-macro"       % "0.3.1" % "provided"

@@ -31,7 +31,7 @@ object Site {
       navigation = Seq(
         "Signal" -> Seq(
           docPage("signal", "Signal", FileToLiteral("/doc/core/signal-ops.md")),
-          docPage("signal-of-boolean", "Signal of Boolean Ops", FileToLiteral("/doc/core/signal-of-boolean-ops.md")),
+          docPage("signal-of-boolean", "Signal of Boolean", FileToLiteral("/doc/core/signal-of-boolean-ops.md")),
           docPage("signal-of-option", "Signal of Option", FileToLiteral("/doc/core/signal-of-option-ops.md")),
           docPage("signal-of-either", "Signal of Either", FileToLiteral("/doc/core/signal-of-either-ops.md")),
           docPage("signal-of-option-of-signal", "Signal of Option of Signal", FileToLiteral("/doc/core/signal-of-option-of-signal-ops.md")),
@@ -55,8 +55,9 @@ object Site {
           docPage("element", "Element", FileToLiteral("/doc/core/element-ops.md"))
         ),
         "Examples" -> Seq(
-          examplePage(examples.signal.ex_transitions.SignalTransitionsExample),
-          examplePage(examples.signal.ex_boolean_toggle.VarOfBooleanToggleExample),
+          examplePage(examples.signal.ex_signal_transitions.SignalTransitionsExample),
+          examplePage(examples.signal.ex_var_of_boolean_toggle.VarOfBooleanToggleExample),
+          examplePage(examples.signal.ex_signal_of_boolean_class_switch.SignalOfBooleanClassSwitchExample),
           examplePage(examples.signal.ex_shift_option.SignalShiftOptionExample),
           examplePage(examples.signal.ex_signal_of_option.SignalOfOptionExample),
           examplePage(examples.iterable.ex_seq_join.SeqJoinExample),
@@ -67,7 +68,12 @@ object Site {
     ),
     SiteModule(
       path = "ui",
-      index = docPage("", "UI", FileToLiteral("/doc/todo.md"))
+      index = docPage("", "UI", FileToLiteral("/doc/ui/index.md")),
+      navigation = Seq(
+        "Examples" -> Seq(
+          examplePage(examples.ui.ex_animation.AnimationExample),
+        )
+      )
     ),
     SiteModule(
       path = "tailwind",

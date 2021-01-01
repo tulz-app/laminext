@@ -30,6 +30,14 @@ final class SignalOfBooleanOps(underlying: Signal[Boolean]) {
       l && r
     }
 
+  @inline def classSwitch(whenTrue: String, whenFalse: String): Binder[ReactiveHtmlElement.Base] =
+    cls <-- underlying.map { bool =>
+      Seq(
+        whenTrue  -> bool,
+        whenFalse -> !bool
+      )
+    }
+
   @inline def childWhenTrue(
     child: => Child
   ): Inserter[ReactiveHtmlElement.Base] =

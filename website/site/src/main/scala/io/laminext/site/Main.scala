@@ -1,6 +1,8 @@
 package io.laminext.site
 
 import io.laminext.highlight.Highlight
+import io.laminext.highlight.HighlightJavaScript
+import io.laminext.highlight.HighlightJson
 import io.laminext.highlight.HighlightScala
 import io.laminext.tailwind.modal.Modal
 import org.scalajs.dom
@@ -19,6 +21,8 @@ object Main {
     removeNoJsClass(wiring.ssrContext)
     insertJsClass(wiring.ssrContext)
     Highlight.registerLanguage("scala", HighlightScala)
+    Highlight.registerLanguage("javascript", HighlightJavaScript)
+    Highlight.registerLanguage("json", HighlightJson)
     wiring.routes.start()
   }
 

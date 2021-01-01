@@ -7,6 +7,7 @@ import com.raquo.laminar.api.L.{transition => _, _}
 import io.laminext.tailwind.syntax._
 import io.laminext.syntax.all._
 import io.laminext.markdown.syntax._
+import org.scalajs.dom.ext._
 
 object CodeExampleDisplay {
 
@@ -63,7 +64,12 @@ object CodeExampleDisplay {
       ),
       div(
         cls := "markdown",
-        unsafeMarkdown := example.description
+        unsafeMarkdown := example.description,
+        onMountCallback { ctx =>
+          ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
+            Highlight.highlightBlock(codeElement)
+          }
+        }
       ),
       div(
         cls := "space-y-2",

@@ -1,4 +1,4 @@
-package io.laminext.site.examples.signal.ex_boolean_toggle
+package io.laminext.site.examples.signal.ex_var_of_boolean_toggle
 
 import io.laminext.site.examples.CodeExample
 import app.tulz.website.macros.FileToLiteral

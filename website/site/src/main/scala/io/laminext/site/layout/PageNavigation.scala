@@ -14,50 +14,43 @@ object PageNavigation {
     $page: Signal[Option[Page]]
   ): ReactiveHtmlElement.Base =
     nav(
-      cls := "w-96 p-4 overflow-auto bg-cool-gray-800 text-white",
+      cls := "w-80 p-4 overflow-auto bg-cool-gray-800 text-white",
       child.maybe <-- $module.optionMap { module =>
         div(
           cls := "space-y-4",
-          a(
-            cls <-- $page.map { currentPage =>
-              Seq(
-                "px-2 py-2 -ml-2 flex text-xl font-semibold rounded-md" -> true,
-                "text-cool-gray-300 hover:bg-cool-gray-700 hover:text-white " -> !currentPage
-                  .exists(_.path.isEmpty),
-                "bg-cool-gray-900 text-white" -> currentPage.exists(
-                  _.path.isEmpty
-                )
-              )
-            },
-            href := (if (module.path == Site.indexModule.path) "/"
-                     else s"/${module.path}"),
-            module.index.title
+          div(
+            cls := "-mx-2 px-2 py-2 hover:bg-cool-gray-700 group",
+            a(
+              cls := "border-l-4 -ml-2 pl-2 border-transparent flex text-xl font-bold",
+              $page.map(_.exists(_.path.isEmpty)).classSwitch(
+                whenTrue = "text-cool-gray-100 border-cool-gray-100",
+                whenFalse = "text-cool-gray-400 group-hover:text-cool-gray-100"
+              ),
+              href := (if (module.path == Site.indexModule.path) "/" else s"/${module.path}"),
+              module.index.title
+            )
           ),
           module.navigation.map { case (title, pages) =>
             div(
               cls := "space-y-1",
               div(
-                cls := "text-xl font-medium text-cool-gray-200",
+                cls := "text-xl font-semibold text-cool-gray-400 tracking-wide",
                 title
               ),
-              div(
-                cls := "ml-2",
-                pages.map { page =>
+              pages.map { page =>
+                div(
+                  cls := "-mx-4 pl-6 pr-2 py-2 hover:bg-cool-gray-700 group",
                   a(
-                    cls <-- $page.map { currentPage =>
-                      Seq(
-                        "px-2 py-2 flex text-sm font-medium rounded-md" -> true,
-                        "text-cool-gray-300 hover:bg-cool-gray-700 hover:text-white " -> !currentPage
-                          .exists(_.path == page.path),
-                        "bg-cool-gray-900 text-white" -> currentPage
-                          .exists(_.path == page.path)
-                      )
-                    },
+                    cls := "border-l-4 -ml-4 pl-4 border-transparent flex font-medium tracking-wide",
+                    $page.map(_.exists(_.path == page.path)).classSwitch(
+                      whenTrue = "text-white border-cool-gray-100",
+                      whenFalse = "text-cool-gray-300 group-hover:text-white"
+                    ),
                     href := s"/${module.path}/${page.path}",
                     page.title
                   )
-                }
-              )
+                )
+              }
             )
           }
         )

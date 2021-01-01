@@ -26,3 +26,17 @@ div(
 )
 ```
 
+---
+
+```scala
+val signal: Signal[Boolean] = ???
+
+div(
+  signal.classSwitch(
+    whenTrue = "class-1",
+    whenFalse = "class-2",
+  )
+)
+```
+
+See [example](/core/example-signal-of-boolean-class-switch).

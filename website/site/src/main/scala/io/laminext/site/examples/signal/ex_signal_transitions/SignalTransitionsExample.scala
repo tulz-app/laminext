@@ -1,4 +1,4 @@
-package io.laminext.site.examples.signal.ex_transitions
+package io.laminext.site.examples.signal.ex_signal_transitions
 
 import io.laminext.site.examples.CodeExample
 import app.tulz.website.macros.FileToLiteral
