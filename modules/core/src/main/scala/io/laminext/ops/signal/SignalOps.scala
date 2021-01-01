@@ -4,13 +4,19 @@ import com.raquo.laminar.api.L._
 import app.tulz.tuplez.Composition
 import app.tulz.tuplez.TupleComposition
 import com.raquo.airstream.signal.Signal
-import com.raquo.airstream.signal.TransitionsSignal
 import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
 
 final class SignalOps[A](underlying: Signal[A]) {
 
-  @inline def transitions: Signal[(Option[A], A)] = new TransitionsSignal(underlying)
+  @inline def transitions: Signal[(Option[A], A)] = {
+    var previous = Option.empty[A]
+    underlying.map { underlyingNext =>
+      val next = (previous, underlyingNext)
+      previous = Some(underlyingNext)
+      next
+    }
+  }
 
   @inline def valueIs(value: A): Signal[Boolean] =
     underlying.map(_ == value)

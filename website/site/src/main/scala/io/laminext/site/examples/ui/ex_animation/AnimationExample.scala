@@ -12,7 +12,7 @@ object AnimationExample
       import com.raquo.laminar.api.L._
       import io.laminext.ui.animation.Animation
 
-      val bounceSignal = Var(Option.empty[String])
+      val bounce = Var(Option.empty[String])
 
       div(
         cls := "p-4 flex flex-col space-y-4",
@@ -21,7 +21,7 @@ object AnimationExample
             cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
             "toggle",
             onClick --> { _ =>
-              bounceSignal.update(s =>
+              bounce.update(s =>
                 if (s.isEmpty) {
                   Some("animate-wiggle")
                 } else {
@@ -36,12 +36,12 @@ object AnimationExample
           code("bounceSignal:"),
           code(
             cls := "text-blue-600",
-            child.text <-- bounceSignal.signal.map(_.toString)
+            child.text <-- bounce.signal.map(_.toString)
           )
         ),
         div(
           cls := "p-8 w-64  bg-blue-600 text-blue-50",
-          Animation(bounceSignal.signal),
+          Animation(bounce.signal),
           "I should bounce!"
         )
       )

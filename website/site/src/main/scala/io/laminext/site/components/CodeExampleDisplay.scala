@@ -63,7 +63,7 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls := "markdown",
+        cls := "prose-custom",
         unsafeMarkdown := example.description,
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>

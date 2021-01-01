@@ -72,6 +72,7 @@ object Site {
       navigation = Seq(
         "Examples" -> Seq(
           examplePage(examples.ui.ex_animation.AnimationExample),
+          examplePage(examples.ui.ex_transition.TransitionExample),
         )
       )
     ),

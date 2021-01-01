@@ -130,33 +130,25 @@ object Transition {
         bus.events.withCurrentValueOf(show) --> {
           case (EnterFrom, _) =>
             config.onEnterFrom(el.ref)
+            classes.writer.onNext(enterFromClasses)
+            scheduleEvent(EnterTo)
           case (EnterTo, _) =>
             config.onEnterTo(el.ref)
+            classes.writer.onNext(enterToClasses)
           case (LeaveFrom, _) =>
             config.onLeaveFrom(el.ref)
+            classes.writer.onNext(leaveFromClasses)
+            scheduleEvent(LeaveTo)
           case (LeaveTo, _) =>
             config.onLeaveTo(el.ref)
-          case (Reset, _) =>
+            classes.writer.onNext(leaveToClasses)
+          case (Reset, show) =>
+            classes.writer.onNext(resetClasses(show))
+            scheduleEvent(AfterReset)
           case (AfterReset, show) =>
             config.onReset(el.ref, show)
             observer.onNext(show)
         }
-      },
-      bus.events.withCurrentValueOf(show) --> {
-        case (EnterFrom, _) =>
-          classes.writer.onNext(enterFromClasses)
-          scheduleEvent(EnterTo)
-        case (EnterTo, _) =>
-          classes.writer.onNext(enterToClasses)
-        case (LeaveFrom, _) =>
-          classes.writer.onNext(leaveFromClasses)
-          scheduleEvent(LeaveTo)
-        case (LeaveTo, _) =>
-          classes.writer.onNext(leaveToClasses)
-        case (Reset, show) =>
-          classes.writer.onNext(resetClasses(show))
-          scheduleEvent(AfterReset)
-        case (AfterReset, _) =>
       },
       show.transitions.map {
         case (Some(_), true)  => EnterFrom

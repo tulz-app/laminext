@@ -17,7 +17,7 @@ object DocumentationDisplay {
 //        )
 //      ),
       div(
-        cls := "prose-custom max-w-none",
+        cls := "prose-custom",
         unsafeMarkdown := markdown,
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>

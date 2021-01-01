@@ -19,11 +19,19 @@ object VarOfBooleanToggleExample
         "toggle",
         onClick --> { _ => aVar.toggle() }
       )
+      val toggleButton2 = button(
+        cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+        "toggle (via .toggleObserver)",
+        onClick --> aVar.toggleObserver
+      )
 
       div(
         cls := "space-y-4",
         div(
           toggleButton
+        ),
+        div(
+          toggleButton2
         ),
         div(
           cls := "flex space-x-4 items-center",
