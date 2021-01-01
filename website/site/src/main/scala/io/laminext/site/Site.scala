@@ -82,7 +82,12 @@ object Site {
     ),
     SiteModule(
       path = "util",
-      index = docPage("", "Util", FileToLiteral("/doc/todo.md"))
+      index = docPage("", "Util", FileToLiteral("/doc/util/index.md")),
+      navigation = Seq(
+        "Examples" -> Seq(
+          examplePage(examples.util.ex_human_readable_size.HumanReadableSizeExample),
+        )
+      )
     ),
     SiteModule(
       path = "fsm",

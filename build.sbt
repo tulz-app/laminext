@@ -277,7 +277,7 @@ lazy val website = project
     addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
-  .dependsOn(`website-macros`, `core`, `ui`, `tailwind`, `markdown`, `highlight`)
+  .dependsOn(`website-macros`, `core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`)
 
 lazy val root = project
   .in(file("."))
@@ -296,5 +296,4 @@ lazy val root = project
     `markdown`,
     `ui`,
     `tailwind`,
-    `util`
   )
