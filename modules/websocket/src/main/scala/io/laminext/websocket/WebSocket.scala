@@ -3,68 +3,115 @@ package io.laminext.websocket
 import com.raquo.airstream.ownership.Subscription
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
+import org.scalajs.dom
 import org.scalajs.dom.raw
 
 import scala.collection.mutable
+import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 import scala.util.control.NonFatal
+import scala.concurrent.duration._
 
-// TODO: reconnection (flag)
 class WebSocket[Receive, Send](
   url: String,
-  initialize: WebSocketInitialize,
-  send: WebSocketSend[Send],
-  receive: WebSocketReceive[Receive],
-  bufferWhenDisconnected: Boolean = true
+  initializer: WebSocketInitialize,
+  sender: WebSocketSend[Send],
+  receiver: WebSocketReceive[Receive],
+  bufferWhenDisconnected: Boolean = true,
+  bufferSize: Int = 50,
+  autoReconnect: Boolean = true,
+  reconnectDelay: FiniteDuration = 1.second,
+  reconnectDelayOffline: FiniteDuration = 20.second,
+  reconnectRetries: Int = 10
 ) {
 
-  def dropWhenDisconnected: WebSocket[Receive, Send] =
-    new WebSocket[Receive, Send](url, initialize, send, receive, bufferWhenDisconnected = false)
+  private var reconnectRetriesLeft: Int = reconnectRetries
 
+  def configure(
+    bufferWhenDisconnected: Boolean = this.bufferWhenDisconnected,
+    bufferSize: Int = this.bufferSize,
+    autoReconnect: Boolean = this.autoReconnect,
+    reconnectDelay: FiniteDuration = this.reconnectDelay,
+    reconnectDelayOffline: FiniteDuration = this.reconnectDelayOffline,
+    reconnectRetries: Int = this.reconnectRetries
+  ): WebSocket[Receive, Send] =
+    new WebSocket[Receive, Send](
+      url = url,
+      initializer = initializer,
+      sender = sender,
+      receiver = receiver,
+      bufferWhenDisconnected = bufferWhenDisconnected,
+      bufferSize = bufferSize,
+      autoReconnect = autoReconnect,
+      reconnectDelay = reconnectDelay,
+      reconnectDelayOffline = reconnectDelayOffline,
+      reconnectRetries = reconnectRetries
+    )
+
+  private var firstConnection                      = true
   private var bindsCount                           = 0
   private var maybeWS: js.UndefOr[raw.WebSocket]   = js.undefined
   private val sendBuffer: mutable.ArrayDeque[Send] = mutable.ArrayDeque.empty
   private val eventBus                             = new EventBus[WebSocketEvent[Receive]]()
-  private val receivedBus                          = new EventBus[Receive]
 
   private def initWebSocket(): Unit = {
-    try {
-      val ws = new raw.WebSocket(url)
-      maybeWS = ws
+    if (js.isUndefined(maybeWS)) {
+      try {
+        val ws = new raw.WebSocket(url)
+        maybeWS = ws
 
-      initialize(ws)
+        initializer(ws)
 
-      ws.onopen = { _ =>
-        eventBus.writer.onNext(WebSocketEvent.Connected(ws))
-      }
-      ws.onerror = { event =>
-        eventBus.writer.onNext(WebSocketEvent.Error(WebSocketError(event.asInstanceOf[raw.ErrorEvent].message)))
-      }
-      ws.onmessage = { event =>
-        receive(event) match {
-          case Right(message) =>
-            eventBus.writer.onNext(WebSocketEvent.Message(message))
-            receivedBus.writer.onNext(message)
-          case Left(error) =>
-            eventBus.writer.onNext(WebSocketEvent.Error(error))
-            receivedBus.writer.onError(error)
+        ws.onopen = { _ =>
+          reconnectRetriesLeft = reconnectRetries
+          eventBus.writer.onNext(WebSocketEvent.Connected(ws, firstConnection))
+          firstConnection = false
+          trySend()
         }
+        ws.onerror = { _ =>
+          eventBus.writer.onNext(WebSocketEvent.Error(WebSocketError))
+        }
+        ws.onmessage = { event =>
+          receiver(event) match {
+            case Right(message) =>
+              eventBus.writer.onNext(WebSocketEvent.Received(message))
+            case Left(error) =>
+              eventBus.writer.onNext(WebSocketEvent.Error(error))
+          }
+        }
+        ws.onclose = { event =>
+          maybeWS = js.undefined
+          val willReconnect = event.code != 1000 && autoReconnect && reconnectRetriesLeft > 0 // 1000 – websocket closed normally
+          eventBus.writer.onNext(WebSocketEvent.Closed(ws, willReconnect))
+          if (willReconnect) {
+            reconnectRetriesLeft = reconnectRetriesLeft - 1
+            val delay = if (dom.window.navigator.onLine) {
+              reconnectDelay.toMillis.toDouble
+            } else {
+              reconnectDelayOffline.toMillis.toDouble
+            }
+            val _ = js.timers.setTimeout(delay) {
+              if (bindsCount > 0) {
+                initWebSocket()
+              }
+            }
+          }
+        }
+      } catch {
+        case NonFatal(error) =>
+          eventBus.writer.onNext(WebSocketEvent.Error(error))
       }
-      ws.onclose = { _ =>
-        eventBus.writer.onNext(WebSocketEvent.Closed(ws))
-      }
-    } catch {
-      case NonFatal(error) =>
-        eventBus.writer.onNext(WebSocketEvent.Error(error))
     }
   }
 
   private def stopWebSocket(): Unit = {
+    maybeWS.foreach(_.close())
     maybeWS = js.undefined
   }
 
   private def binderStarted(): Unit = {
     if (bindsCount == 0) {
+      reconnectRetriesLeft = reconnectRetries
       initWebSocket()
     }
     bindsCount += 1
@@ -78,126 +125,20 @@ class WebSocket[Receive, Send](
   }
 
   private def trySend(): Unit = {
-    if (js.isUndefined(maybeWS) && !bufferWhenDisconnected) {
-      sendBuffer.clear()
+    if (js.isUndefined(maybeWS)) {
+      if (!bufferWhenDisconnected) {
+        sendBuffer.clear()
+      } else if (sendBuffer.size > bufferSize) {
+        sendBuffer.drop(sendBuffer.size - bufferSize)
+      }
     }
     maybeWS.foreach { ws =>
       sendBuffer.foreach { message =>
-        send(ws, message)
+        sender(ws, message)
       }
       sendBuffer.clear()
     }
   }
-
-  def send(message: Send): Unit = {
-    sendBuffer.append(message)
-    trySend()
-  }
-  def sendObserver: Observer[Send] = Observer(send(_))
-
-  def send[El <: ReactiveElement.Base](messages: Observable[Send]): Binder[El] =
-    (element: El) =>
-      ReactiveElement.bindSubscription(element) { ctx =>
-        binderStarted()
-        val subscription = messages.foreach { message =>
-          sendBuffer.addOne(message)
-          trySend()
-        }(ctx.owner)
-        new Subscription(
-          ctx.owner,
-          cleanup = () => {
-            binderStopped()
-            subscription.kill() // is this necessary?
-          }
-        )
-      }
-
-  def receivedBinder[El <: ReactiveElement.Base](
-    onNext: Receive => Unit,
-    onError: Throwable => Unit
-  ): Binder[El] =
-    (element: El) =>
-      ReactiveElement.bindSubscription(element) { ctx =>
-        binderStarted()
-        val subscription = eventBus.events.foreach {
-          case WebSocketEvent.Message(message) =>
-            onNext(message)
-          case WebSocketEvent.Error(error) =>
-            onError(error)
-          case _ =>
-          // nothing
-        }(ctx.owner)
-        new Subscription(
-          ctx.owner,
-          cleanup = () => {
-            binderStopped()
-            subscription.kill() // is this necessary?
-          }
-        )
-      }
-
-  def connectedBinder[El <: ReactiveElement.Base](
-    onNext: raw.WebSocket => Unit,
-  ): Binder[El] =
-    (element: El) =>
-      ReactiveElement.bindSubscription(element) { ctx =>
-        binderStarted()
-        val subscription = eventBus.events.foreach {
-          case WebSocketEvent.Connected(ws) =>
-            onNext(ws)
-          case _ =>
-          // nothing
-        }(ctx.owner)
-        new Subscription(
-          ctx.owner,
-          cleanup = () => {
-            binderStopped()
-            subscription.kill() // is this necessary?
-          }
-        )
-      }
-
-  def closedBinder[El <: ReactiveElement.Base](
-    onNext: raw.WebSocket => Unit,
-  ): Binder[El] =
-    (element: El) =>
-      ReactiveElement.bindSubscription(element) { ctx =>
-        binderStarted()
-        val subscription = eventBus.events.foreach {
-          case WebSocketEvent.Closed(ws) =>
-            onNext(ws)
-          case _ =>
-          // nothing
-        }(ctx.owner)
-        new Subscription(
-          ctx.owner,
-          cleanup = () => {
-            binderStopped()
-            subscription.kill() // is this necessary?
-          }
-        )
-      }
-
-  def errorBinder[El <: ReactiveElement.Base](
-    onNext: Throwable => Unit,
-  ): Binder[El] =
-    (element: El) =>
-      ReactiveElement.bindSubscription(element) { ctx =>
-        binderStarted()
-        val subscription = eventBus.events.foreach {
-          case WebSocketEvent.Error(error) =>
-            onNext(error)
-          case _ =>
-          // nothing
-        }(ctx.owner)
-        new Subscription(
-          ctx.owner,
-          cleanup = () => {
-            binderStopped()
-            subscription.kill() // is this necessary?
-          }
-        )
-      }
 
   def connect[El <: ReactiveElement.Base]: Binder[El] =
     (element: El) =>
@@ -211,13 +152,43 @@ class WebSocket[Receive, Send](
         )
       }
 
-  def send: SendReceiver[Send] = new SendReceiver[Send](this)
+  def disconnectNow(): Unit = disconnect.onNext(null)
 
-  def received: ReceivedBinders[Receive]   = new ReceivedBinders[Receive](this)
-  def connected: ConnectedBinders[Receive] = new ConnectedBinders[Receive](this)
-  def closed: ClosedBinders[Receive]       = new ClosedBinders[Receive](this)
-  def error: ErrorBinders[Receive]         = new ErrorBinders[Receive](this)
+  val disconnect: Observer[Any] = Observer { _ =>
+    reconnectRetriesLeft = 0
+    stopWebSocket()
+  }
 
-  def receivedStream: EventStream[Receive] = receivedBus.events
+  def reconnectNow(): Unit = reconnect.onNext(null)
+
+  val reconnect: Observer[Any] = Observer { _ =>
+    reconnectRetriesLeft = reconnectRetries
+    initWebSocket()
+  }
+
+  def sendOne(message: Send): Unit = {
+    send.onNext(message)
+  }
+
+  val send: Observer[Send] = Observer(message => {
+    sendBuffer.append(message)
+    trySend()
+  })
+
+  val received: EventStream[Receive] = eventBus.events.collect { case WebSocketEvent.Received(message) => message }
+
+  val connected: EventStream[(raw.WebSocket, Boolean)] = eventBus.events.collect { case WebSocketEvent.Connected(ws, reconnect) => (ws, reconnect) }
+
+  val closed: EventStream[(raw.WebSocket, Boolean)] = eventBus.events.collect { case WebSocketEvent.Closed(ws, willReconnect) => (ws, willReconnect) }
+
+  val errors: EventStream[Throwable] = eventBus.events.collect { case WebSocketEvent.Error(error) => error }
+
+  val events: EventStream[WebSocketEvent[Receive]] = eventBus.events
+
+  val isConnected: Signal[Boolean] = eventBus.events.foldLeft(false) {
+    case (_, WebSocketEvent.Connected(_, _)) => true
+    case (_, WebSocketEvent.Closed(_, _))    => false
+    case (current, _)                        => current
+  }
 
 }

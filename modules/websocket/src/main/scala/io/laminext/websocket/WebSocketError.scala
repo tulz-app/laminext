@@ -1,3 +1,3 @@
 package io.laminext.websocket
 
-case class WebSocketError(message: String) extends Exception(message)
+case object WebSocketError extends Exception("WebSocket error")

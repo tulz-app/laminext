@@ -261,7 +261,7 @@ lazy val website = project
     libraryDependencies ++= Seq(
       "com.lihaoyi"   %%% "sourcecode"           % "0.2.1",
       "com.raquo"     %%% "laminar"              % "0.11.0",
-      "io.frontroute" %%% "frontroute"           % "0.11.4",
+      "io.frontroute" %%% "frontroute"           % "0.11.5",
       "com.yurique"   %%% "embedded-files-macro" % "0.1.0",
       "io.mwielocha"  %%% "factorio-core"        % "0.3.1",
       "io.mwielocha"  %%% "factorio-annotations" % "0.3.1",
