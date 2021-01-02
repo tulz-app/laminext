@@ -1,13 +1,13 @@
 package io.laminext.site.examples.signal.ex_signal_transitions
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object SignalTransitionsExample
     extends CodeExample(
       id = "example-signal-transitions",
       title = "Signal Transitions",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.all._

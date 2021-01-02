@@ -1,13 +1,13 @@
 package io.laminext.site.examples.signal.ex_var_of_boolean_toggle
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object VarOfBooleanToggleExample
     extends CodeExample(
       id = "example-var-of-boolean-toggle",
       title = "Var of Boolean Toggle",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import io.laminext.syntax.all._
       import com.raquo.laminar.api.L._

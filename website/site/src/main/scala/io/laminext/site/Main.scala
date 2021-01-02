@@ -1,5 +1,6 @@
 package io.laminext.site
 
+import io.frontroute.LinkHandler
 import io.laminext.highlight.Highlight
 import io.laminext.highlight.HighlightJavaScript
 import io.laminext.highlight.HighlightJson

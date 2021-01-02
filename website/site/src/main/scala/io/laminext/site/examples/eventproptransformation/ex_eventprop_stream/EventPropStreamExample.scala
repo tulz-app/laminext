@@ -1,13 +1,13 @@
 package io.laminext.site.examples.eventproptransformation.ex_eventprop_stream
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object EventPropStreamExample
     extends CodeExample(
       id = "example-eventprop-stream",
       title = "EventProp as Stream",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.all._

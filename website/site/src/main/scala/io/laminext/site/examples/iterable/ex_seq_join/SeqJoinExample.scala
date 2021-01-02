@@ -1,13 +1,13 @@
 package io.laminext.site.examples.iterable.ex_seq_join
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object SeqJoinExample
     extends CodeExample(
       id = "example-seq-join",
       title = "Seq Join",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import io.laminext.syntax.all._
       import com.raquo.laminar.api.L._

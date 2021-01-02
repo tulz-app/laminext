@@ -1,13 +1,13 @@
 package io.laminext.site.examples.ui.ex_transition
 
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
 
 object TransitionExample
     extends CodeExample(
       id = "example-transition",
       title = "Transition",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.all._

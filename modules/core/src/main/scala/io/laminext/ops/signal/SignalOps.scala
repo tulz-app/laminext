@@ -36,4 +36,9 @@ final class SignalOps[A](underlying: Signal[A]) {
       }
     }
 
+  def previousAndCurrent: Signal[(Option[A], Option[A])] =
+    underlying.foldLeft(initial => (Option.empty[A], Some(initial))) { (previous, current) =>
+      (previous._2, Some(current))
+    }
+
 }

@@ -1,13 +1,13 @@
 package io.laminext.site.examples.element.ex_input_values
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object InputValuesExample
     extends CodeExample(
       id = "example-input-values",
       title = "Input Values",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import io.laminext.syntax.all._
       import com.raquo.laminar.api.L._

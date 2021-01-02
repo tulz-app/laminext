@@ -59,4 +59,56 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
   @inline def bindCollect(onNext: PartialFunction[A, Unit]): Binder[ReactiveElement.Base] =
     underlying.filter(e => onNext.isDefinedAt(e)) --> onNext
 
+  def previousAndCurrent: Signal[(Option[A], Option[A])] = {
+    underlying.foldLeft((Option.empty[A], Option.empty[A])) { (previous, current) =>
+      (previous._2, Some(current))
+    }
+  }
+
+  def distinct: EventStream[A] = {
+    var previous = Option.empty[A]
+    underlying.filter { event =>
+      previous match {
+        case Some(prev) if prev == event => false
+        case _ =>
+          previous = Some(event)
+          true
+      }
+    }
+  }
+
+  def previousAndCurrentTupleWithReset(reset: EventStream[Any]): Signal[(Option[A], Option[A])] = {
+    EventStream
+      .merge(
+        underlying.map(Some(_)),
+        reset.mapToValue(None)
+      ).foldLeft((Option.empty[A], Option.empty[A])) { (previous, maybeCurrent) =>
+        maybeCurrent match {
+          case Some(current) => (previous._2, Some(current))
+          case None          => (None, None)
+        }
+      }
+  }
+
+  def switchedBy(on: A, off: A, initial: Boolean = false): Signal[Boolean] =
+    underlying.foldLeft(initial) { (prev, event) =>
+      if (event == on) {
+        true
+      } else if (event == off) {
+        false
+      } else {
+        prev
+      }
+    }
+
+  def switchedBy[T](toggle: PartialFunction[A, (T, Boolean)], initial: Boolean): Signal[Map[T, Boolean]] =
+    underlying.foldLeft(Map.empty[T, Boolean].withDefaultValue(initial)) { (map, event) =>
+      if (toggle.isDefinedAt(event)) {
+        val (v, state) = toggle(event)
+        map.updated(v, state)
+      } else {
+        map
+      }
+    }
+
 }

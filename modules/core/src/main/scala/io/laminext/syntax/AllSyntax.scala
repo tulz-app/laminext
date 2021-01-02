@@ -9,6 +9,7 @@ trait AllSyntax
     with SignalSyntax
     with SignalOfEitherSyntax
     with SignalOfOptionSyntax
+    with SignalOfTuple2Syntax
     with SignalOfOptionOfSignalSyntax
     with SignalOfBooleanSyntax
     with EventStreamSyntax

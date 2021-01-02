@@ -1,13 +1,13 @@
 package io.laminext.site.examples.ui.ex_animation
 
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
 
 object AnimationExample
     extends CodeExample(
       id = "example-animation",
       title = "Animation",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.ui.animation.Animation

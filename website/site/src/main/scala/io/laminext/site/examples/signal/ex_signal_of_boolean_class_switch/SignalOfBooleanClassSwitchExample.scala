@@ -1,13 +1,13 @@
 package io.laminext.site.examples.signal.ex_signal_of_boolean_class_switch
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object SignalOfBooleanClassSwitchExample
     extends CodeExample(
       id = "example-signal-of-boolean-class-switch",
       title = "Signal of Boolean Class Switch",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import io.laminext.syntax.all._
       import com.raquo.laminar.api.L._

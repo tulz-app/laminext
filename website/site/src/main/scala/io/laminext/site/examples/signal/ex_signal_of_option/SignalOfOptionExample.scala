@@ -1,13 +1,13 @@
 package io.laminext.site.examples.signal.ex_signal_of_option
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object SignalOfOptionExample
     extends CodeExample(
       id = "example-signal-of-option",
       title = "Signal of Option",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import io.laminext.syntax.all._
       import com.raquo.laminar.api.L._

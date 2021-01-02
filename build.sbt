@@ -1,6 +1,3 @@
-import java.nio.file.Path
-import EmbeddedFilesGenerator._
-
 ThisBuild / organization := "io.laminext"
 ThisBuild / homepage := Some(url("https://github.com/tulz-app/laminext"))
 ThisBuild / licenses += ("MIT", url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md"))
@@ -65,7 +62,8 @@ lazy val macrosSettings = Seq(
 
 lazy val bundlerSettings = Seq(
   jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
-  installJsdom / version := "16.4.0"
+  installJsdom / version := "16.4.0",
+  useYarn := true
 )
 
 lazy val baseDependencies = Seq(
@@ -163,9 +161,10 @@ lazy val `fsm` =
     .in(file("modules/fsm"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
+    .settings(baseDependencies)
     .settings(
       description := "Laminar utilities (validation)"
-    ).dependsOn(`core`)
+    )
 
 lazy val `sttp3` =
   project
@@ -186,7 +185,7 @@ lazy val `markdown` =
     .settings(commonDependencies)
     .settings(
       description := "Laminar utilities (markdown)"
-    ).dependsOn(`core`)
+    )
 
 lazy val `videojs` =
   project
@@ -206,7 +205,7 @@ lazy val `highlight` =
     .settings(commonDependencies)
     .settings(
       description := "Laminar + highlight.js"
-    ).dependsOn(`core`)
+    )
 
 lazy val `ui` =
   project
@@ -227,11 +226,18 @@ lazy val `tailwind` =
     .settings(commonDependencies)
     .settings(bundlerSettings)
     .settings(
-      useYarn := true
-    )
-    .settings(
       description := "Laminar UI (tailwindcss)"
     ).dependsOn(`core`, `ui`)
+
+lazy val `websocket` =
+  project
+    .in(file("modules/websocket"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(
+      description := "Laminar websockets"
+    ).dependsOn(`core`)
 
 lazy val `util` =
   project
@@ -243,17 +249,10 @@ lazy val `util` =
       description := "Misc utilities"
     )
 
-lazy val `website-macros` = project
-  .in(file("website/macros"))
-  .enablePlugins(ScalaJSPlugin)
-  .settings(basicSettings)
-  .settings(noPublish)
-  .settings(macrosSettings)
-
 lazy val website = project
   .in(file("website/site"))
   .enablePlugins(ScalaJSPlugin)
-  .enablePlugins(EmbeddedFilesGenerator)
+  .enablePlugins(EmbeddedFilesPlugin)
   .settings(basicSettings)
   .settings(noPublish)
   .settings(
@@ -263,21 +262,22 @@ lazy val website = project
       "com.lihaoyi"   %%% "sourcecode"           % "0.2.1",
       "com.raquo"     %%% "laminar"              % "0.11.0",
       "io.frontroute" %%% "frontroute"           % "0.11.4",
+      "com.yurique"   %%% "embedded-files-macro" % "0.1.0",
       "io.mwielocha"  %%% "factorio-core"        % "0.3.1",
       "io.mwielocha"  %%% "factorio-annotations" % "0.3.1",
       "io.mwielocha"  %%% "factorio-macro"       % "0.3.1" % "provided"
     )
   )
   .settings(
-    embedFilesGlob := "**/*.md",
-    embedFilesDirectories ++= (Compile / sourceDirectories).value,
+    embedTextGlobs := Seq("**/*.md"),
+    embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
     (Compile / sourceGenerators) += embedFiles
   )
   .settings(
     addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
-  .dependsOn(`website-macros`, `core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`)
+  .dependsOn(`core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`, `websocket`)
 
 lazy val root = project
   .in(file("."))

@@ -1,13 +1,13 @@
 package io.laminext.site.examples.util.ex_human_readable_size
 
 import io.laminext.site.examples.CodeExample
-import app.tulz.website.macros.FileToLiteral
+import com.yurique.embedded.FileAsString
 
 object HumanReadableSizeExample
     extends CodeExample(
       id = "example-human-readable-size",
       title = "Human Readable Size",
-      description = FileToLiteral("description.md")
+      description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.all._
