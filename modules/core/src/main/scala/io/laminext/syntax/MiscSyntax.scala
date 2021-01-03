@@ -7,11 +7,15 @@ import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.NodeSeqModifier
+import io.laminext.ResizeObserverReceiver
+import io.laminext.SetTimeoutReceiver
 import io.laminext.StoredBoolean
 import io.laminext.StoredString
 import io.laminext.TeeObserver
 import io.laminext.UnsafeAppendRawChildModifier
 import org.scalajs.dom
+
+import scala.concurrent.duration.FiniteDuration
 
 trait MiscSyntax {
 
@@ -39,6 +43,12 @@ trait MiscSyntax {
     if (!b) { mods }
     else { emptyMod }
 
+  @inline def whenEmpty[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
+    when(o.isEmpty)(mods: _*)
+
+  @inline def whenDefined[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
+    when(o.isDefined)(mods: _*)
+
   @inline def tee[T](observers: Observer[T]*): Observer[T] =
     new TeeObserver[T](observers)
 
@@ -58,5 +68,16 @@ trait MiscSyntax {
 
   def storedString(name: String, initial: String): StoredString =
     new StoredString(name, initial)
+
+  def setTimeout[T](
+    timeout: FiniteDuration,
+    value: T,
+  ): SetTimeoutReceiver[T] = new SetTimeoutReceiver(value, timeout)
+
+  def setTimeout(
+    timeout: FiniteDuration,
+  ): SetTimeoutReceiver[Unit] = new SetTimeoutReceiver((): Unit, timeout)
+
+  def resizeObserver: ResizeObserverReceiver.type = ResizeObserverReceiver
 
 }

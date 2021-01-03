@@ -1,6 +1,7 @@
 package io.laminext.validation
 
 import cats.data.NonEmptyChain
+import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.all._
 
@@ -47,20 +48,29 @@ trait ValidatedElementsSyntax {
         .merge(
           el.events(onBlur).mapToTrue,
           el.events(onFocus)
-            .withCurrentValueOf(validatedValue)
-            .withCurrentValueOfC(focusedAtLeastOnce)
-            .map { case (_, validatedValue, focusedAtLeastOnce) =>
+            .sample(
+              Signal.combine(
+                validatedValue,
+                focusedAtLeastOnce
+              )
+            )
+            .map { case (validatedValue, focusedAtLeastOnce) =>
               validatedValue.isLeft && focusedAtLeastOnce
             }
         )
         .toSignal(false)
 
-    val errors = validatedValue
-      .combineWith(blurredAtLeastOnce)
-      .map {
-        case (Left(errors), true) => Some(errors)
-        case _                    => Option.empty
-      }
+    val errors = {
+      Signal
+        .combine(
+          validatedValue,
+          blurredAtLeastOnce
+        )
+        .map {
+          case (Left(errors), true) => Some(errors)
+          case _                    => Option.empty
+        }
+    }
 
     (validatedValue, errors)
   }

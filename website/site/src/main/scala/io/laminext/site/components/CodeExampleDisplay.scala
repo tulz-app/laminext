@@ -6,7 +6,7 @@ import io.laminext.tailwind.theme
 import com.raquo.laminar.api.L.{transition => _, _}
 import io.laminext.tailwind.syntax._
 import io.laminext.syntax.all._
-import io.laminext.markdown.syntax._
+import io.laminext.markdown._
 import org.scalajs.dom.ext._
 
 object CodeExampleDisplay {

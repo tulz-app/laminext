@@ -3,7 +3,9 @@ package io.laminext.ops.signal
 import io.laminext.ConditionalChildInserter
 import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.api.L._
+import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
+import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
 
@@ -28,5 +30,23 @@ final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
 
   @inline def withDefault(default: => A): Signal[A] =
     underlying.map(_.getOrElse(default))
+
+  @inline def doWhenDefined(
+    callback: () => Unit
+  ): Binder[ReactiveHtmlElement.Base] =
+    underlying --> { value =>
+      if (value.isDefined) {
+        callback()
+      }
+    }
+
+  @inline def doWhenEmpty(
+    callback: () => Unit
+  ): Binder[ReactiveHtmlElement.Base] =
+    underlying --> { value =>
+      if (value.isEmpty) {
+        callback()
+      }
+    }
 
 }

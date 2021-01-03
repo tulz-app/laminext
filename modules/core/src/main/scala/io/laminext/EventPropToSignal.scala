@@ -1,6 +1,5 @@
 package io.laminext
 
-import io.laminext.ops.signal.SignalOps
 import app.tulz.tuplez.Composition
 import com.raquo.airstream.core.Observer
 import com.raquo.laminar.api.L._
@@ -105,13 +104,17 @@ final class EventPropToSignal[Ev <: dom.Event, A](
   ): EventPropToSignal[Ev, B] =
     andThen(_.composeAll(operator, initialOperator))
 
-  def combineWith[B](otherSignal: Signal[B]): EventPropToSignal[Ev, (A, B)] =
-    andThen(_.combineWith(otherSignal))
+  def combineWith[T1, Out](
+    s1: Signal[T1]
+  )(
+    combinator: (A, T1) => Out
+  ): EventPropToSignal[Ev, Out] =
+    andThen(_.combineWith(s1)(combinator))
 
-  def combine[B](otherSignal: Signal[B])(implicit
-    compose: Composition[A, B]
-  ): EventPropToSignal[Ev, compose.Composed] =
-    andThen(s => new SignalOps(s).combine(otherSignal))
+  def combine[T1](
+    s1: Signal[T1]
+  )(implicit c: Composition[A, T1]): EventPropToSignal[Ev, c.Composed] =
+    andThen(_.combine(s1))
 
   def changes: EventPropToStream[Ev, A] =
     new EventPropToStream(
@@ -140,14 +143,10 @@ final class EventPropToSignal[Ev <: dom.Event, A](
   def recoverToTry: EventPropToSignal[Ev, Try[A]] =
     map(Try(_)).recover[Try[A]] { case err => Some(Failure(err)) }
 
-  def debugLog(prefix: String = "event",
-               when: A => Boolean = _ => true
-  ): EventPropToSignal[Ev, A] =
+  def debugLog(prefix: String = "event", when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
     andThen(_.debugLog(prefix, when))
 
-  def debugLogJs(prefix: String = "event",
-                 when: A => Boolean = _ => true
-  ): EventPropToSignal[Ev, A] =
+  def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =
     andThen(_.debugLog(prefix, when))
 
   def debugBreak(when: A => Boolean = _ => true): EventPropToSignal[Ev, A] =

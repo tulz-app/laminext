@@ -1,6 +1,5 @@
 package io.laminext
 
-import io.laminext.ops.stream.EventStreamOps
 import app.tulz.tuplez.Composition
 import com.raquo.airstream.core.Observer
 import com.raquo.airstream.features.FlattenStrategy
@@ -188,20 +187,22 @@ final class EventPropToStream[Ev <: dom.Event, A](
   ): EventPropToStream[Ev, B] =
     andThen(_.compose(operator))
 
-  def combineWith[B](
-    otherEventStream: EventStream[B]
-  ): EventPropToStream[Ev, (A, B)] =
-    andThen(_.combineWith(otherEventStream))
+  def combineWith[T1, Out](
+    s1: EventStream[T1]
+  )(implicit c: Composition[A, T1]): EventPropToStream[Ev, c.Composed] =
+    andThen(_.combine(s1))
 
-  def withCurrentValueOf[B](signal: Signal[B]): EventPropToStream[Ev, (A, B)] =
+  def combineWith[T1, Out](
+    otherEventStream: EventStream[T1]
+  )(
+    combinator: (A, T1) => Out
+  ): EventPropToStream[Ev, Out] =
+    andThen(_.combineWith(otherEventStream)(combinator))
+
+  def withCurrentValueOf[T1](signal: Signal[T1]): EventPropToStream[Ev, (A, T1)] =
     andThen(_.withCurrentValueOf(signal))
 
-  def withCurrentValueOfC[AA >: A, B](signal: Signal[B])(implicit
-    compose: Composition[AA, B]
-  ): EventPropToStream[Ev, compose.Composed] =
-    andThen(s => new EventStreamOps(s).withCurrentValueOfC(signal))
-
-  def sample[B](signal: Signal[B]): EventPropToStream[Ev, B] =
+  def sample[T1](signal: Signal[T1]): EventPropToStream[Ev, T1] =
     andThen(_.sample(signal))
 
   def debugLog(prefix: String = "event", when: A => Boolean = _ => true): EventPropToStream[Ev, A] =

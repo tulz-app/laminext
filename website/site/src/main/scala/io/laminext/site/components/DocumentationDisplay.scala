@@ -1,7 +1,7 @@
 package io.laminext.site.components
 
 import io.laminext.highlight.Highlight
-import io.laminext.markdown.syntax._
+import io.laminext.markdown._
 import com.raquo.laminar.api.L._
 import org.scalajs.dom.ext._
 

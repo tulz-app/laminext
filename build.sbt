@@ -68,7 +68,7 @@ lazy val bundlerSettings = Seq(
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    "com.raquo"     %%% "laminar"      % "0.11.0",
+    "com.raquo"     %%% "laminar"      % "0.11.1-SNAPSHOT",
     "org.scalatest" %%% "scalatest"    % "3.2.3"  % Test,
     "app.tulz"      %%% "stringdiff"   % "0.3.1"  % Test,
     "com.raquo"     %%% "domtestutils" % "0.11.0" % Test
@@ -103,16 +103,16 @@ lazy val `core` =
     .settings(commonSettings)
     .settings(commonDependencies)
     .settings(
-      Compile / sourceGenerators += Def.task {
-        Seq.concat(
-          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()),
-          (generateTupleCombinatorsFrom - 1 to generateTupleCombinatorsTo).flatMap(n =>
-            new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()
-          ),
-          new SignalCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
-          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom - 1, to = generateTupleCombinatorsTo).generate()
-        )
-      }.taskValue,
+//      Compile / sourceGenerators += Def.task {
+//        Seq.concat(
+//          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()),
+//          (generateTupleCombinatorsFrom - 1 to generateTupleCombinatorsTo).flatMap(n =>
+//            new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()
+//          ),
+//          new SignalCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
+//          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom - 1, to = generateTupleCombinatorsTo).generate()
+//        )
+//      }.taskValue,
       //
       //Test / sourceGenerators += Def.task {
       //  Seq.concat(
@@ -121,13 +121,13 @@ lazy val `core` =
       //    new CompositionTestGenerator((Test / sourceManaged).value).generate()
       //  )
       //}.taskValue
-      mappings in (Compile, packageSrc) ++= {
-        val base  = (sourceManaged in Compile).value
-        val files = (managedSources in Compile).value
-        files.map { f =>
-          (f, f.relativeTo(base / "scala").get.getPath)
-        }
-      }
+//      mappings in (Compile, packageSrc) ++= {
+//        val base  = (sourceManaged in Compile).value
+//        val files = (managedSources in Compile).value
+//        files.map { f =>
+//          (f, f.relativeTo(base / "scala").get.getPath)
+//        }
+//      }
     )
     .settings(
       description := "Laminar extensions"

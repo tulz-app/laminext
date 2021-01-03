@@ -1,6 +1,7 @@
 package io.laminext
+package domtypes
 
-import com.raquo.laminar.api.L._
+import com.raquo.laminar.api.L.EventProp
 import com.raquo.domtypes.jsdom.defs.events.TypedTargetEvent
 import com.raquo.laminar.keys.ReactiveEventProp
 import org.scalajs.dom

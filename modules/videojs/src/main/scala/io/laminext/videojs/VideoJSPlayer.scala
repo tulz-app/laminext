@@ -22,20 +22,18 @@ object VideoJSPlayer {
   def apply(
     options: VideoJSOptions,
     mods: Modifier[ReactiveHtmlElement.Base]*
-  ): (ReactiveHtmlElement.Base, PlayerEvents, Signal[Option[Player]]) = {
+  ): (ReactiveHtmlElement.Base, PlayerEvents) = {
     var playerAPI: Option[Player] = None
-    val playerVar                 = Var(Option.empty[Player])
-
-    val readyVar       = Var(Option.empty[Player])
-    val loadStartBus   = playerBus()
-    val playBus        = playerBus()
-    val pauseBus       = playerBus()
-    val endedBus       = playerBus()
-    val timeUpdatedBus = playerBus()
-    val seekedBus      = playerBus()
+    val readyPlayerVar            = Var(Option.empty[Player])
+    val loadStartBus              = playerBus()
+    val playBus                   = playerBus()
+    val pauseBus                  = playerBus()
+    val endedBus                  = playerBus()
+    val timeUpdatedBus            = playerBus()
+    val seekedBus                 = playerBus()
 
     val onReadyHandler = (player: Player) => {
-      readyVar.writer.onNext(Some(player))
+      readyPlayerVar.writer.onNext(Some(player))
     }
 
     val onPlayHandler: js.Function = () => {
@@ -63,7 +61,7 @@ object VideoJSPlayer {
     }
 
     val events = new PlayerEvents(
-      ready = readyVar.signal,
+      player = readyPlayerVar.signal,
       loadStart = loadStartBus.events,
       ended = endedBus.events,
       timeUpdate = timeUpdatedBus.events.throttle(1000),
@@ -88,8 +86,6 @@ object VideoJSPlayer {
           player.on("timeupdate", onTimeUpdateHandler)
           player.on("loadstart", onLoadStartHandler)
 
-          playerVar.writer.onNext(Option(player))
-
           Binder(
             ReactiveElement.bindSubscription(_) { ctx =>
               new Subscription(
@@ -107,6 +103,6 @@ object VideoJSPlayer {
         }
       )
 
-    (wrapper, events, playerVar.signal)
+    (wrapper, events)
   }
 }
