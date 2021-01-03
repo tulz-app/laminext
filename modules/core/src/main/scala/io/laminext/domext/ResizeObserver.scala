@@ -1,4 +1,4 @@
-package io.laminext.domtypes
+package io.laminext.domext
 
 import org.scalajs.dom.ClientRect
 import org.scalajs.dom.raw.HTMLElement

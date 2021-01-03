@@ -3,8 +3,8 @@ package binders
 
 import com.raquo.airstream.ownership.DynamicSubscription
 import com.raquo.laminar.nodes.ReactiveElement
-import io.laminext.domtypes.ResizeObserver
-import io.laminext.domtypes.ResizeObserverEntry
+import io.laminext.domext.ResizeObserver
+import io.laminext.domext.ResizeObserverEntry
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.raw.SVGElement

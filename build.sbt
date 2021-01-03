@@ -75,12 +75,6 @@ lazy val baseDependencies = Seq(
   )
 )
 
-lazy val commonDependencies = baseDependencies ++ Seq(
-  libraryDependencies ++= Seq(
-    "app.tulz" %%% "tuplez" % "0.2.0"
-  )
-)
-
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
     "org.typelevel" %%% "cats-core" % "2.3.1"
@@ -101,34 +95,7 @@ lazy val `core` =
     .in(file("modules/core"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
-    .settings(
-//      Compile / sourceGenerators += Def.task {
-//        Seq.concat(
-//          (generateTupleCombinatorsFrom to generateTupleCombinatorsTo).flatMap(n => new CombineSignalGenerator((Compile / sourceManaged).value, n).generate()),
-//          (generateTupleCombinatorsFrom - 1 to generateTupleCombinatorsTo).flatMap(n =>
-//            new CombineEventStreamGenerator((Compile / sourceManaged).value, n).generate()
-//          ),
-//          new SignalCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
-//          new EventStreamCombinesGenerator((Compile / sourceManaged).value, from = generateTupleCombinatorsFrom - 1, to = generateTupleCombinatorsTo).generate()
-//        )
-//      }.taskValue,
-      //
-      //Test / sourceGenerators += Def.task {
-      //  Seq.concat(
-      //    new CombineSignalTestGenerator((Test / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
-      //    new CombineEventStreamTestGenerator((Test / sourceManaged).value, from = generateTupleCombinatorsFrom, to = generateTupleCombinatorsTo).generate(),
-      //    new CompositionTestGenerator((Test / sourceManaged).value).generate()
-      //  )
-      //}.taskValue
-//      mappings in (Compile, packageSrc) ++= {
-//        val base  = (sourceManaged in Compile).value
-//        val files = (managedSources in Compile).value
-//        files.map { f =>
-//          (f, f.relativeTo(base / "scala").get.getPath)
-//        }
-//      }
-    )
+    .settings(baseDependencies)
     .settings(
       description := "Laminar extensions"
     )
@@ -138,7 +105,7 @@ lazy val `cats` =
     .in(file("modules/cats"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(catsDependencies)
     .settings(noPublish) // nothing here yet
     .settings(
@@ -150,7 +117,7 @@ lazy val `validation` =
     .in(file("modules/validation"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(catsDependencies)
     .settings(
       description := "Laminar utilities (validation)"
@@ -171,7 +138,7 @@ lazy val `sttp3` =
     .in(file("modules/sttp3"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(sttp3Dependencies)
     .settings(
       description := "Laminar utilities (sttp3)"
@@ -182,7 +149,7 @@ lazy val `markdown` =
     .in(file("modules/markdown"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(
       description := "Laminar utilities (markdown)"
     )
@@ -192,7 +159,7 @@ lazy val `videojs` =
     .in(file("modules/videojs"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(
       description := "Laminar + video.js"
     ).dependsOn(`core`)
@@ -202,7 +169,7 @@ lazy val `highlight` =
     .in(file("modules/highlight"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(
       description := "Laminar + highlight.js"
     )
@@ -212,7 +179,7 @@ lazy val `ui` =
     .in(file("modules/ui"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(bundlerSettings)
     .settings(
       description := "Laminar UI"
@@ -223,7 +190,7 @@ lazy val `tailwind` =
     .in(file("modules/tailwind"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
-    .settings(commonDependencies)
+    .settings(baseDependencies)
     .settings(bundlerSettings)
     .settings(
       description := "Laminar UI (tailwindcss)"
