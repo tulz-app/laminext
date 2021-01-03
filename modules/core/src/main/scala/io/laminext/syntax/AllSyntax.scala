@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import io.laminext.HtmlEntities
-import io.laminext.domtypes.ExtraEvents
+import io.laminext.domext.ExtraEvents
 import io.laminext.util.SmartClass
 
 trait AllSyntax

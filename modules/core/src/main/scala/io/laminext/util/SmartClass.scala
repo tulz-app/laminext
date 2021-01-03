@@ -13,15 +13,6 @@ trait SmartClass {
       ClassTokenize(classes).map(_ -> enable)
     }
 
-//  def smartClasses(
-//    classes: (Seq[String], Signal[Boolean])*
-//  ): Modifier[ReactiveHtmlElement.Base] =
-//    smartClass(
-//      SignalCompanionOps.seq(classes.map(_._2)).map { classesAndToggles =>
-//        classes.map(_._1).zip(classesAndToggles)
-//      }
-//    )
-
   def smartClass(
     classes: Signal[Seq[(Seq[String], Boolean)]]
   ): Modifier[ReactiveHtmlElement.Base] =

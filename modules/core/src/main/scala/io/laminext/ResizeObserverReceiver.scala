@@ -5,7 +5,7 @@ import com.raquo.airstream.eventbus.EventBus
 import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.binders.BinderWithStartStop
 import io.laminext.binders.ResizeObserverBinder
-import io.laminext.domtypes.ResizeObserverEntry
+import io.laminext.domext.ResizeObserverEntry
 
 object ResizeObserverReceiver {
 

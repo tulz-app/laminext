@@ -1,5 +1,5 @@
 package io.laminext
-package domtypes
+package domext
 
 import com.raquo.laminar.api.L.EventProp
 import com.raquo.domtypes.jsdom.defs.events.TypedTargetEvent
