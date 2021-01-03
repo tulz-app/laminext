@@ -2,7 +2,7 @@ package io.laminext.ops.svgelement
 
 import com.raquo.airstream.core.Observable
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.keys.CompositeAttr.CompositeValueMapper
+import com.raquo.laminar.keys.CompositeKey.CompositeValueMapper
 import com.raquo.laminar.nodes.ReactiveSvgElement
 import org.scalajs.dom
 

@@ -2,7 +2,6 @@ package io.laminext
 package util
 
 import com.raquo.laminar.api.L._
-import io.laminext.ops.signal.SignalCompanionOps
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 trait SmartClass {
@@ -14,14 +13,14 @@ trait SmartClass {
       ClassTokenize(classes).map(_ -> enable)
     }
 
-  def smartClasses(
-    classes: (Seq[String], Signal[Boolean])*
-  ): Modifier[ReactiveHtmlElement.Base] =
-    smartClass(
-      SignalCompanionOps.seq(classes.map(_._2)).map { classesAndToggles =>
-        classes.map(_._1).zip(classesAndToggles)
-      }
-    )
+//  def smartClasses(
+//    classes: (Seq[String], Signal[Boolean])*
+//  ): Modifier[ReactiveHtmlElement.Base] =
+//    smartClass(
+//      SignalCompanionOps.seq(classes.map(_._2)).map { classesAndToggles =>
+//        classes.map(_._1).zip(classesAndToggles)
+//      }
+//    )
 
   def smartClass(
     classes: Signal[Seq[(Seq[String], Boolean)]]

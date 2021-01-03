@@ -12,7 +12,7 @@ package object validation extends ValidatedElementsSyntax {
   type ValidatedValue[T] = Either[NonEmptyChain[String], T]
   type Validation[T]     = T => Either[cats.data.NonEmptyChain[String], T]
 
-  object syntax {
+  object syntax extends ValidatedElementsSyntax {
 
     implicit def syntaxStreamOfStringValidation(stream: EventStream[String]): StreamOfStringValidationOps =
       new StreamOfStringValidationOps(stream)

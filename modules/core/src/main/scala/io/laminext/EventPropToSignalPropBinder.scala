@@ -14,9 +14,10 @@ import scala.scalajs.js
 final class EventPropToSignalPropBinder[Ev <: dom.Event, A](
   propToSignal: EventPropToSignal[Ev, A],
   onNext: A => Unit
-) extends EventPropBinder[Ev](propToSignal.key,
-                              null,
-                              propToSignal.shouldUseCapture
+) extends EventPropBinder[Ev](
+      propToSignal.key,
+      null,
+      propToSignal.shouldUseCapture
     ) {
 
   private val eventBus = new EventBus[Ev]
@@ -42,8 +43,7 @@ final class EventPropToSignalPropBinder[Ev <: dom.Event, A](
 
   override def equals(that: Any): Boolean =
     that match {
-      case setter: EventPropToSignalPropBinder[_, _]
-          if (key == setter.key) && (domValue == setter.domValue) =>
+      case setter: EventPropToSignalPropBinder[_, _] if (key == setter.key) && (domValue == setter.domValue) =>
         true
       case _ => false
     }

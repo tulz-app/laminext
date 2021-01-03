@@ -42,18 +42,6 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
 
   @inline def take(toTake: Int): EventStream[A] = new TakeEventStream[A](underlying, toTake)
 
-  def withCurrentValueOfC[B](signal: Signal[B])(implicit composition: Composition[A, B]): EventStream[composition.Composed] = {
-    underlying.withCurrentValueOf(signal).map { case (a, b) =>
-      TupleComposition.compose(a, b)
-    }
-  }
-
-  def combine[B](otherStream: EventStream[B])(implicit composition: Composition[A, B]): EventStream[composition.Composed] = {
-    underlying.combineWith(otherStream).map { case (a, b) =>
-      TupleComposition.compose(a, b)
-    }
-  }
-
   @inline def bind(onNext: A => Unit): Binder[ReactiveElement.Base] = underlying --> onNext
 
   @inline def bindCollect(onNext: PartialFunction[A, Unit]): Binder[ReactiveElement.Base] =

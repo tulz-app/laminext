@@ -1,12 +1,11 @@
 package io.laminext.syntax
 
-import io.laminext.ExtraEvents
 import io.laminext.HtmlEntities
+import io.laminext.domtypes.ExtraEvents
 import io.laminext.util.SmartClass
 
 trait AllSyntax
-    extends SignalCompanionSyntax
-    with SignalSyntax
+    extends SignalSyntax
     with SignalOfEitherSyntax
     with SignalOfOptionSyntax
     with SignalOfTuple2Syntax
@@ -16,7 +15,6 @@ trait AllSyntax
     with EventStreamOfUnitSyntax
     with EventStreamOfEitherSyntax
     with EventStreamOfOptionSyntax
-    with EventStreamCompanionSyntax
     with ObservableOfBooleanSyntax
     with VarOfBooleanSyntax
     with EventPropTransformationSyntax
@@ -28,10 +26,14 @@ trait AllSyntax
     with ReactiveSvgElementSyntax
     with InputElementSyntax
     with TextAreaSyntax
-    with OptionSyntax
     with OptionOfSignalSyntax
     with SeqSyntax
     with MiscSyntax
     with HtmlEntities
     with SmartClass
     with ExtraEvents
+    with ReceiversSyntax {
+
+  type AmAny = io.laminext.AmAny
+
+}

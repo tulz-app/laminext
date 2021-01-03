@@ -14,9 +14,10 @@ import scala.scalajs.js
 class EventPropToStreamPropBinder[Ev <: dom.Event, A](
   propToStream: EventPropToStream[Ev, A],
   onNext: A => Unit
-) extends EventPropBinder[Ev](propToStream.key,
-                              null,
-                              propToStream.shouldUseCapture
+) extends EventPropBinder[Ev](
+      propToStream.key,
+      null,
+      propToStream.shouldUseCapture
     ) {
 
   private val eventBus = new EventBus[Ev]
@@ -41,8 +42,7 @@ class EventPropToStreamPropBinder[Ev <: dom.Event, A](
 
   override def equals(that: Any): Boolean =
     that match {
-      case setter: EventPropToStreamPropBinder[_, _]
-          if (key == setter.key) && (domValue == setter.domValue) =>
+      case setter: EventPropToStreamPropBinder[_, _] if (key == setter.key) && (domValue == setter.domValue) =>
         true
       case _ => false
     }

@@ -1,4 +1,5 @@
 package io.laminext
+package binders
 
 import com.raquo.airstream.ownership.DynamicSubscription
 import com.raquo.airstream.ownership.Subscription
@@ -8,8 +9,6 @@ import com.raquo.laminar.nodes.ReactiveElement
 abstract class BinderWithStartStop[-El <: ReactiveElement.Base] extends Binder[El] {
 
   protected var subscribed = false
-
-  def doBind(): Unit
 
   def doStart(): Unit
 
