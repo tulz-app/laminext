@@ -18,4 +18,4 @@ libraryDependencies += "net.exoego" %% "scalajs-env-jsdom-nodejs" % "2.0.0"
 
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.16")
 
-addSbtPlugin("com.yurique" % "sbt-embedded-files" % "0.1.0")
+addSbtPlugin("com.yurique" % "sbt-embedded-files" % "0.1.1")

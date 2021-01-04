@@ -15,9 +15,6 @@ class Routes(
   private val $module = Var[Option[SiteModule]](None)
   private val $page   = Var[Option[Page]](None)
 
-  private val highlightStyle =
-    storedString("highlight-style", "an-old-hope")
-
   private def render(module: SiteModule, page: Page): Route =
     complete {
 //        appEvents.onNext(AppEvent.hideOverlay())
@@ -66,7 +63,7 @@ class Routes(
   def start(): Unit = {
     val appContainer = dom.document.querySelector("#app")
 //    val modalContainer = dom.document.querySelector("#overlay")
-    val appContent = PageWrap($module.signal, $page.signal, highlightStyle.signal, highlightStyle.setObserver)
+    val appContent = PageWrap($module.signal, $page.signal)
 
     appContainer.innerHTML = ""
     com.raquo.laminar.api.L.render(appContainer, appContent)

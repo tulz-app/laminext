@@ -1,6 +1,12 @@
 package io.laminext.site
 
+import io.laminext.syntax.all.storedString
+import io.laminext.StoredString
+
 object Styles {
+
+  val highlightStyle: StoredString = storedString("highlight-style", "an-old-hope")
+
   val styles = Seq(
     "a11y-dark",
     "a11y-light",

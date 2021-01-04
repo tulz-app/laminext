@@ -27,4 +27,8 @@ final class StoredBoolean(name: String, initial: Boolean = true) {
 
   def update(f: Boolean => Boolean): Unit = updateBus.writer.onNext(f)
 
+  val setObserver: Observer[Boolean] = updateBus.writer.contramap(newValue => _ => newValue)
+
+  def set(newValue: Boolean): Unit = setObserver.onNext(newValue)
+
 }

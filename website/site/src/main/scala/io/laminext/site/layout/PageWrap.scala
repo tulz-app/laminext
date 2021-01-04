@@ -2,6 +2,7 @@ package io.laminext.site.layout
 
 import io.laminext.site.Page
 import io.laminext.site.SiteModule
+import io.laminext.site.Styles
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.all._
 import com.raquo.airstream.signal.Signal
@@ -11,19 +12,17 @@ object PageWrap {
 
   def apply(
     $module: Signal[Option[SiteModule]],
-    $page: Signal[Option[Page]],
-    $highlightStyle: Signal[String],
-    highlightStyleObserver: Observer[String]
+    $page: Signal[Option[Page]]
   ): ReactiveHtmlElement.Base = {
     val titleElement   = org.scalajs.dom.document.head.querySelector("title")
     val $pageAndResult = $page.optionMap(p => (p, p.render()))
     div(
       linkTag(
         rel := "stylesheet",
-        href <-- $highlightStyle.map(s => s"/stylesheets/highlightjs/${s}.css")
+        href <-- Styles.highlightStyle.signal.map(s => s"/stylesheets/highlightjs/${s}.css")
       ),
       cls := "h-screen flex flex-col",
-      PageHeader($module, $page, $highlightStyle, highlightStyleObserver),
+      PageHeader($module, $page),
       noScript(
         div(
           cls := "max-w-5xl border-l-4 border-red-400 bg-red-50 text-red-900 mx-auto p-4 font-condensed",

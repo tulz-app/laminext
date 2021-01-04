@@ -5,9 +5,6 @@ package layout
 import com.raquo.laminar.api.L.{transition => _, _}
 import io.laminext.tailwind.syntax._
 import io.laminext.syntax.all._
-import io.laminext.site.Page
-import io.laminext.site.Site
-import io.laminext.site.SiteModule
 import io.laminext.site.icons.Icons
 import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.nodes.ReactiveHtmlElement
@@ -16,9 +13,7 @@ object PageHeader {
 
   def apply(
     $module: Signal[Option[SiteModule]],
-    $page: Signal[Option[Page]],
-    $highlightStyle: Signal[String],
-    highlightStyleObserver: Observer[String]
+    $page: Signal[Option[Page]]
   ): ReactiveHtmlElement.Base = {
     val styleDropDownOpen = Var(false)
     val styleSearch       = Var("")
@@ -84,7 +79,7 @@ object PageHeader {
             Styles.styles.map { styleName =>
               button(
                 cls := "block flex items-center space-x-2 w-full px-4 py-2 text-left text-cool-gray-700 hover:bg-cool-gray-200 hover:text-cool-gray-900",
-                onClick.mapTo(styleName) --> highlightStyleObserver,
+                onClick.mapTo(styleName) --> Styles.highlightStyle.setObserver,
                 role := "menuitem",
                 span(
                   cls := "flex-1",
@@ -93,7 +88,7 @@ object PageHeader {
                 span(
                   Icons
                     .check(svg.cls := "h-6 text-green-500 fill-current")
-                    .visibleIf($highlightStyle.valueIs(styleName)),
+                    .visibleIf(Styles.highlightStyle.signal.valueIs(styleName)),
                 )
               ).hiddenIf(
                 styleSearch.signal.map(search => !styleName.contains(search))

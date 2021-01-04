@@ -53,7 +53,7 @@ class WebSocket[Receive, Send](
   private var maybeWS: js.UndefOr[raw.WebSocket]   = js.undefined
   private val sendBuffer: mutable.ArrayDeque[Send] = mutable.ArrayDeque.empty
   private val eventBus                             = new EventBus[WebSocketEvent[Receive]]()
-
+  private val connectedVar                         = Var(false)
   private def initWebSocket(): Unit = {
     if (js.isUndefined(maybeWS)) {
       try {
@@ -66,6 +66,7 @@ class WebSocket[Receive, Send](
           reconnectRetriesLeft = reconnectRetries
           eventBus.writer.onNext(WebSocketEvent.Connected(ws, firstConnection))
           firstConnection = false
+          connectedVar.writer.onNext(true)
           trySend()
         }
         ws.onerror = { _ =>
@@ -83,6 +84,7 @@ class WebSocket[Receive, Send](
           maybeWS = js.undefined
           val willReconnect = event.code != 1000 && autoReconnect && reconnectRetriesLeft > 0 // 1000 – websocket closed normally
           eventBus.writer.onNext(WebSocketEvent.Closed(ws, willReconnect))
+          connectedVar.writer.onNext(true)
           if (willReconnect) {
             reconnectRetriesLeft = reconnectRetriesLeft - 1
             val delay = if (dom.window.navigator.onLine) {
@@ -185,10 +187,6 @@ class WebSocket[Receive, Send](
 
   val events: EventStream[WebSocketEvent[Receive]] = eventBus.events
 
-  val isConnected: Signal[Boolean] = eventBus.events.foldLeft(false) {
-    case (_, WebSocketEvent.Connected(_, _)) => true
-    case (_, WebSocketEvent.Closed(_, _))    => false
-    case (current, _)                        => current
-  }
+  val isConnected: Signal[Boolean] = connectedVar.signal
 
 }
