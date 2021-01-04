@@ -7,7 +7,12 @@ import com.raquo.laminar.api.L.{transition => _, _}
 import io.laminext.tailwind.syntax._
 import io.laminext.syntax.all._
 import io.laminext.markdown._
+import io.laminext.site.Styles
+import org.scalajs.dom
 import org.scalajs.dom.ext._
+import org.scalajs.dom.html
+
+import scala.scalajs.js
 
 object CodeExampleDisplay {
 
@@ -54,6 +59,29 @@ object CodeExampleDisplay {
 
   def apply(example: CodeExample): Element = {
     val sourceCollapsed = storedBoolean(example.id, initial = false)
+    val dimContext      = storedBoolean("dim-context", initial = false)
+    val hasContext      = example.code.source.contains("/* <focus> */")
+
+    val codeNode = (dim: Boolean) => {
+      val theCode = pre(
+        cls := "w-full text-sm",
+        fixIndentation(example.code.source)
+      )
+      div(
+        theCode,
+        onMountCallback { ctx =>
+          Highlight.highlightBlock(ctx.thisNode.ref.childNodes.head)
+          if (hasContext) {
+            hideFocusMarkers(ctx.thisNode.ref.childNodes.head.asInstanceOf[html.Element])
+            val _ = js.timers.setTimeout(0) {
+              val updatedNode = setOpacityRecursively(theCode.ref, 0, dim)
+              val _           = ctx.thisNode.ref.replaceChild(updatedNode, ctx.thisNode.ref.childNodes.head)
+            }
+          }
+        }
+      )
+    }
+
     div(
       cls := "flex flex-col space-y-4 mb-20",
       div(
@@ -74,11 +102,28 @@ object CodeExampleDisplay {
       div(
         cls := "space-y-2",
         div(
-          cls := "flex space-x-4",
+          cls := "flex space-x-4 items-center",
           h2(
             cls := "flex-1 text-xl font-semibold text-cool-gray-900",
             "Source code:"
           ),
+          when(hasContext) {
+            label.btn.sm.text.blue(
+              cls := "flex-shrink-0 flex space-x-1 items-center cursor-pointer",
+              input(
+                tpe := "checkbox",
+                checked <-- dimContext.signal,
+                inContext { el =>
+                  el.events(onClick) --> { _ =>
+                    dimContext.set(el.ref.checked)
+                  }
+                }
+              ),
+              span(
+                "dim context"
+              )
+            )
+          },
           span(
             cls := "flex-shrink-0",
             button.btn.sm.text.blue(
@@ -92,13 +137,9 @@ object CodeExampleDisplay {
           div(
             cls := "overflow-auto",
             transition(show = !sourceCollapsed.signal, collapseTransition),
-            pre(
-              cls := "w-full text-sm",
-              onMountCallback { ctx =>
-                Highlight.highlightBlock(ctx.thisNode.ref)
-              },
-              fixIndentation(example.code.source)
-            )
+            child <-- Styles.highlightStyle.signal.combine(dimContext.signal).map { case (_, dim) =>
+              codeNode(dim)
+            }
           ),
           div(
             cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-cool-gray-500 to-cool-gray-600 opacity-75",
@@ -134,5 +175,58 @@ object CodeExampleDisplay {
       )
     )
   }
+
+  private def opaqueColor(color: String, opaque: Int, dim: Boolean): String = {
+    if (opaque == 0 && dim) {
+      if (color.startsWith("rgb(")) {
+        color.replace("rgb(", "rgba(").replace(")", ", .4)")
+      } else {
+        color
+      }
+    } else {
+      color
+    }
+  }
+
+  private def setOpacityRecursively(element: html.Element, opaque: Int, dim: Boolean): dom.Node = {
+    val elementColor = dom.window.getComputedStyle(element).color
+    val newElement   = element.cloneNode(false).asInstanceOf[html.Element]
+    if (opaque == 0) {
+      newElement.style.color = opaqueColor(elementColor, opaque, dim)
+    }
+
+    var childrenOpaque = opaque
+    val newChildNodes = element.childNodes.flatMap { child =>
+      if (child.nodeName == "#text") {
+        val span = dom.document.createElement("span").asInstanceOf[html.Element]
+        span.innerText = child.textContent
+        span.style.color = opaqueColor(elementColor, childrenOpaque, dim)
+        Some(span)
+      } else {
+        if (child.innerText == "/* <focus> */") {
+          childrenOpaque += 1
+          None
+        } else if (child.innerText == "/* </focus> */") {
+          childrenOpaque -= 1
+          None
+        } else {
+          Some(setOpacityRecursively(child.asInstanceOf[html.Element], childrenOpaque, dim))
+        }
+      }
+    }
+    newChildNodes.foreach(newElement.appendChild)
+    newElement
+  }
+
+  private def hideFocusMarkers(element: html.Element): Unit =
+    element.childNodes.foreach { child =>
+      if (child.nodeName != "#text") {
+        if (child.innerText == "/* <focus> */" || child.innerText == "/* </focus> */") {
+          child.asInstanceOf[html.Element].style.display = "none"
+        } else {
+          hideFocusMarkers(child.asInstanceOf[html.Element])
+        }
+      }
+    }
 
 }

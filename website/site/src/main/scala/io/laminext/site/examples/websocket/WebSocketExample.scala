@@ -14,7 +14,9 @@ object WebSocketExample
       import io.laminext.syntax.all._
       import io.laminext.websocket
 
+      /* <focus> */
       val ws = websocket.url("wss://echo.websocket.org").string
+      /* </focus> */
 
       val inputElement = input(
         tpe := "text",
@@ -30,21 +32,21 @@ object WebSocketExample
           button(
             cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
             "send",
-            onClick.stream.sample(inputElement.valueSignal) --> ws.send
+            /* <focus> */ onClick.stream.sample(inputElement.valueSignal) --> ws.send /* </focus> */
           ),
           button(
             cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
             "disconnect",
-            cls <-- ws.isConnected.clsSwitch("hover:bg-blue-50", "opacity-75 cursor-not-allowed"),
-            disabled <-- ws.isConnected.map(!_),
-            onClick --> ws.disconnect
+            /* <focus> */ cls <-- ws.isConnected.clsSwitch("hover:bg-blue-50", "opacity-75 cursor-not-allowed"), /* </focus> */
+            /* <focus> */ disabled <-- ws.isConnected.map(!_), /* </focus> */
+            /* <focus> */ onClick --> ws.disconnect /* </focus> */
           ),
           button(
             cls := "inline-flex items-center px-3 py-2 border border-blue-200 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-            cls <-- ws.isConnected.clsSwitch("opacity-75 cursor-not-allowed", "hover:bg-blue-50"),
             "connect",
-            disabled <-- ws.isConnected,
-            onClick --> ws.reconnect
+            /* <focus> */ cls <-- ws.isConnected.clsSwitch("opacity-75 cursor-not-allowed", "hover:bg-blue-50"), /* </focus> */
+            /* <focus> */ disabled <-- ws.isConnected, /* </focus> */
+            /* <focus> */ onClick --> ws.reconnect /* </focus> */
           )
         ),
         div(
@@ -53,7 +55,7 @@ object WebSocketExample
           ),
           div(
             code(
-              child.text <-- ws.isConnected.map(_.toString)
+              /* <focus> */ child.text <-- ws.isConnected.map(_.toString) /* </focus> */
             )
           )
         ),
@@ -66,11 +68,13 @@ object WebSocketExample
             ),
             div(
               cls := "flex flex-col space-y-4 p-4 max-h-48 overflow-auto bg-cool-gray-900 text-green-300",
+              /* <focus> */
               children.command <-- ws.received.map { message =>
                 CollectionCommand.Append(
                   code(message)
                 )
               }
+              /* </focus> */
             )
           ),
           div(
@@ -80,11 +84,13 @@ object WebSocketExample
             ),
             div(
               cls := "flex flex-col space-y-4 p-4 max-h-48 overflow-auto bg-cool-gray-900 text-green-300",
+              /* <focus> */
               children.command <-- ws.events.map { event =>
                 CollectionCommand.Append(
                   code(event.toString)
                 )
               }
+              /* </focus> */
             )
           )
         ),
