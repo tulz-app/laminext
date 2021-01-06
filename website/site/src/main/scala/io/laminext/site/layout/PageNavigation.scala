@@ -21,9 +21,9 @@ object PageNavigation {
           div(
             cls := "-mx-2 px-2 py-2 hover:bg-cool-gray-700 group",
             a(
-              cls := "border-l-4 -ml-2 pl-2 border-transparent flex text-xl font-bold",
+              cls := "border-l-4 -ml-2 pl-2 border-transparent flex text-xl font-display font-bold",
               $page.map(_.exists(_.path.isEmpty)).classSwitch(
-                whenTrue = "text-cool-gray-100 border-cool-gray-100",
+                whenTrue = "text-cool-gray-100 border-cool-gray-400",
                 whenFalse = "text-cool-gray-400 group-hover:text-cool-gray-100"
               ),
               href := (if (module.path == Site.indexModule.path) "/" else s"/${module.path}"),
@@ -32,16 +32,16 @@ object PageNavigation {
           ),
           module.navigation.map { case (title, pages) =>
             div(
-              cls := "space-y-1",
+//              cls := "space-y-1",
               div(
-                cls := "text-xl font-semibold text-cool-gray-400 tracking-wide",
+                cls := "pl-1 text-xl font-display font-semibold text-cool-gray-400 tracking-wide",
                 title
               ),
               pages.map { page =>
                 div(
                   cls := "-mx-4 pl-6 pr-2 py-2 hover:bg-cool-gray-700 group",
                   a(
-                    cls := "border-l-4 -ml-4 pl-4 border-transparent flex font-medium tracking-wide",
+                    cls := "border-l-4 -ml-4 pl-4 border-transparent flex font-display font-medium tracking-wide",
                     $page.map(_.exists(_.path == page.path)).classSwitch(
                       whenTrue = "text-white border-cool-gray-100",
                       whenFalse = "text-cool-gray-300 group-hover:text-white"

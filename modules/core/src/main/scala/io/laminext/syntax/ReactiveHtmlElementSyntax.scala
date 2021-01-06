@@ -4,7 +4,7 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 import io.laminext.ops.htmlelement.ReactiveHtmlElementOps
 import org.scalajs.dom
 
-trait ReactiveHtmlTagSyntax {
+trait ReactiveHtmlElementSyntax {
 
   implicit def syntaxReactiveHtmlElement[T <: dom.html.Element](
     el: ReactiveHtmlElement[T]

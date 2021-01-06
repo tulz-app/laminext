@@ -7,6 +7,10 @@ import com.yurique.embedded.FileAsString
 
 object Site {
 
+  private def indexExamplePage(
+    example: CodeExample
+  ): Page = Page("", example.title, CodeExamplePage(example))
+
   private def examplePage(
     example: CodeExample
   ): Page = Page(example.id, example.title, CodeExamplePage(example))
@@ -62,7 +66,7 @@ object Site {
           examplePage(examples.signal.ex_signal_of_option.SignalOfOptionExample),
           examplePage(examples.iterable.ex_seq_join.SeqJoinExample),
           examplePage(examples.element.ex_input_values.InputValuesExample),
-          examplePage(examples.eventproptransformation.ex_eventprop_stream.EventPropStreamExample)
+          examplePage(examples.eventproptransformation.ex_eventprop_stream.ThisEventsExample)
         )
       )
     ),
@@ -106,11 +110,18 @@ object Site {
       index = docPage("", "highlight.js", FileAsString("/doc/todo.md"))
     ),
     SiteModule(
-      path = "websockets",
-      index = docPage("", "WebSockets", FileAsString("/doc/todo.md")),
+      path = "fetch",
+      index = indexExamplePage(examples.fetch.FetchExample),
       navigation = Seq(
         "Examples" -> Seq(
-          examplePage(examples.websocket.WebSocketExample),
+        )
+      )
+    ),
+    SiteModule(
+      path = "websockets",
+      index = indexExamplePage(examples.websocket.WebSocketExample),
+      navigation = Seq(
+        "Examples" -> Seq(
         )
       )
     )

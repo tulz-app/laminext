@@ -29,7 +29,7 @@ object HumanReadableSizeExample
           code("human readable:"),
           code(
             cls := "text-blue-600",
-            child.text <-- inputElement.valueSignal.map(HumanReadableSize.format)
+            child.text <-- inputElement.value.map(HumanReadableSize.format)
           )
         )
       )

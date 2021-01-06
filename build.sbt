@@ -21,7 +21,10 @@ ThisBuild / pomIncludeRepository := { _ => false }
 ThisBuild / sonatypeProfileName := "yurique"
 ThisBuild / publishArtifact in Test := false
 ThisBuild / publishMavenStyle := true
-ThisBuild / releaseCrossBuild := true
+ThisBuild / releaseCrossBuild := false
+ThisBuild / scalaVersion := "2.13.4"
+ThisBuild / crossScalaVersions := Seq("2.13.4")
+ThisBuild / releaseCrossBuild := false
 
 lazy val noPublish = Seq(
   publishLocal / skip := true,
@@ -42,8 +45,6 @@ lazy val adjustScalacOptions = { options: Seq[String] =>
 }
 
 lazy val basicSettings = Seq(
-  scalaVersion := "2.13.4",
-  crossScalaVersions := Seq("2.13.4"),
   scalacOptions ~= adjustScalacOptions
 )
 
@@ -203,8 +204,18 @@ lazy val `websocket` =
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(
-      description := "Laminar websockets"
-    ).dependsOn(`core`)
+      description := "Laminar websocket client"
+    )
+
+lazy val `fetch` =
+  project
+    .in(file("modules/fetch"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(
+      description := "Laminar fetch client"
+    )
 
 lazy val `util` =
   project
@@ -244,7 +255,7 @@ lazy val website = project
     addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
-  .dependsOn(`core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`, `websocket`)
+  .dependsOn(`core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`, `websocket`, `fetch`)
 
 lazy val root = project
   .in(file("."))
@@ -263,4 +274,5 @@ lazy val root = project
     `markdown`,
     `ui`,
     `tailwind`,
+    `fetch`
   )

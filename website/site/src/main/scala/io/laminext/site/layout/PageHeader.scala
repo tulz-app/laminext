@@ -2,12 +2,13 @@ package io.laminext.site
 
 package layout
 
-import com.raquo.laminar.api.L.{transition => _, _}
+import com.raquo.laminar.api.L._
 import io.laminext.tailwind.syntax._
 import io.laminext.syntax.all._
 import io.laminext.site.icons.Icons
 import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.nodes.ReactiveHtmlElement
+import io.laminext.tailwind.TW
 
 object PageHeader {
 
@@ -22,7 +23,7 @@ object PageHeader {
       placeholder := "search..."
     )
     searchInput.amend(
-      searchInput.valueSignal --> styleSearch.writer
+      searchInput.value --> styleSearch.writer
     )
 
     div(
@@ -31,15 +32,11 @@ object PageHeader {
         cls := "flex-1 flex space-x-4 justify-start",
         Site.modules.map { module =>
           a(
-            cls <-- $module.map { currentModule =>
-              Seq(
-                "border-b-2 px-2 border-transparent flex text-lg font-medium" -> true,
-                "text-cool-gray-300 hover:border-cool-gray-300 hover:text-white " -> !currentModule
-                  .exists(_.path == module.path),
-                "border-cool-gray-300 text-white" -> currentModule
-                  .exists(_.path == module.path)
-              )
-            },
+            cls := "border-b-2 px-2 border-transparent flex text-lg font-display font-medium tracking-wide",
+            $module.map(_.exists(_.path == module.path)).classSwitch(
+              "border-cool-gray-300 text-white",
+              "text-cool-gray-300 hover:border-cool-gray-300 hover:text-white "
+            ),
             href := s"/${module.path}",
             module.index.title
           )
@@ -65,7 +62,7 @@ object PageHeader {
           )
         ),
         div(
-          transition(styleDropDownOpen.signal),
+          TW.transition(styleDropDownOpen.signal),
           cls := "origin-top-right absolute max-h-128 overflow-auto right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20 p-2",
           div(
             cls := "py-1",

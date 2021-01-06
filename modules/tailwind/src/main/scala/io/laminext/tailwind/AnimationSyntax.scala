@@ -6,7 +6,7 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 trait AnimationSyntax {
 
-  object animate {
+  object animation {
 
     @inline def apply(
       animationClass: Signal[Option[String]],

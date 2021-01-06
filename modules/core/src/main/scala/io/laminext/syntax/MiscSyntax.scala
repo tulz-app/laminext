@@ -5,13 +5,15 @@ import com.raquo.airstream.eventbus.EventBus
 import com.raquo.airstream.eventstream.EventStream
 import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.api.L._
+import com.raquo.laminar.emitter.EventPropTransformation
 import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.NodeSeqModifier
 import io.laminext.ResizeObserverReceiver
-import io.laminext.SetTimeoutReceiver
+import io.laminext.SetTimeoutBinders
 import io.laminext.StoredBoolean
 import io.laminext.StoredString
 import io.laminext.TeeObserver
+import io.laminext.ThisEventsStreamBinder
 import io.laminext.UnsafeAppendRawChildModifier
 import org.scalajs.dom
 
@@ -63,21 +65,24 @@ trait MiscSyntax {
     (bus.events, () => { bus.writer.onNext((): Unit) })
   }
 
-  def storedBoolean(name: String, initial: Boolean = true): StoredBoolean =
+  @inline def storedBoolean(name: String, initial: Boolean = true): StoredBoolean =
     new StoredBoolean(name, initial)
 
-  def storedString(name: String, initial: String): StoredString =
+  @inline def storedString(name: String, initial: String): StoredString =
     new StoredString(name, initial)
 
-  def setTimeout[T](
+  @inline def after[T](
     timeout: FiniteDuration,
     value: T,
-  ): SetTimeoutReceiver[T] = new SetTimeoutReceiver(value, timeout)
+  ): SetTimeoutBinders[T] = new SetTimeoutBinders(value, timeout)
 
-  def setTimeout(
+  @inline def after(
     timeout: FiniteDuration,
-  ): SetTimeoutReceiver[Unit] = new SetTimeoutReceiver((): Unit, timeout)
+  ): SetTimeoutBinders[Unit] = new SetTimeoutBinders((): Unit, timeout)
 
-  def resizeObserver: ResizeObserverReceiver.type = ResizeObserverReceiver
+  @inline def resizeObserver: ResizeObserverReceiver.type = ResizeObserverReceiver
+
+  @inline def thisEvents[Ev <: dom.Event](t: EventPropTransformation[Ev, Ev]): ThisEventsStreamBinder[Ev, Ev] =
+    new ThisEventsStreamBinder[Ev, Ev](t, identity)
 
 }

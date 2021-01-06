@@ -8,7 +8,7 @@ import io.laminext.binders.SetTimeoutBinder
 
 import scala.concurrent.duration.FiniteDuration
 
-class SetTimeoutReceiver[V](
+class SetTimeoutBinders[V](
   value: V,
   timeout: FiniteDuration
 ) {
@@ -23,6 +23,22 @@ class SetTimeoutReceiver[V](
 
   @inline def -->[El <: ReactiveElement.Base](eventBus: EventBus[V]): BinderWithStartStop[El] = {
     new SetTimeoutBinder(value, timeout, t => eventBus.writer.onNext(t))
+  }
+
+}
+
+object SetTimeoutBinders {
+
+  implicit class UnitTimeoutBindersOps(val binders: SetTimeoutBinders[Unit]) extends AnyVal {
+
+    @inline def apply[El <: ReactiveElement.Base](onNext: => Unit): BinderWithStartStop[El] = binders --> { _ => onNext }
+
+  }
+
+  implicit class TimeoutBindersOps[V](val binders: SetTimeoutBinders[V]) extends AnyVal {
+
+    @inline def apply[El <: ReactiveElement.Base](onNext: V => Unit): BinderWithStartStop[El] = binders --> onNext
+
   }
 
 }
