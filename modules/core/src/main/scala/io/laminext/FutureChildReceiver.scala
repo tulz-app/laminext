@@ -1,7 +1,7 @@
 package io.laminext
 
+import com.raquo.laminar.api.L._
 import com.raquo.airstream.eventstream.EventStream
-import com.raquo.laminar.modifiers.ChildInserter
 import com.raquo.laminar.modifiers.Inserter
 import com.raquo.laminar.nodes.ChildNode
 import com.raquo.laminar.nodes.ReactiveElement
@@ -13,7 +13,7 @@ object FutureChildReceiver {
 
   val maybe: MaybeFutureChildReceiver.type = MaybeFutureChildReceiver
 
-  def <--($node: Future[ChildNode[dom.Node]]): Inserter[ReactiveElement.Base] =
-    ChildInserter[ReactiveElement.Base](_ => EventStream.fromFuture($node), initialInsertContext = None)
+  @inline def <--(future: Future[ChildNode[dom.Node]]): Inserter[ReactiveElement.Base] =
+    child <-- EventStream.fromFuture(future)
 
 }

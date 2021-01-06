@@ -14,12 +14,12 @@ object InputValuesExample
 
       val inputElement1 = input(
         tpe := "text",
-        cls := "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "input 1"
       )
       val inputElement2 = input(
         tpe := "text",
-        cls := "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "input 2"
       )
 
@@ -39,7 +39,7 @@ object InputValuesExample
           cls := "flex space-x-1 items-center",
           code("input1.valueSignal:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- inputElement1.value
           )
         ),
@@ -53,7 +53,7 @@ object InputValuesExample
           cls := "flex space-x-1 items-center",
           code("input2.valueSignal:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- inputElement2.value
           )
         )

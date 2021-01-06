@@ -17,7 +17,7 @@ object SignalShiftOptionExample
 
       val inputElement = input(
         tpe := "text",
-        cls := "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "new value"
       )
       val updateButton = button(
@@ -58,7 +58,7 @@ object SignalShiftOptionExample
           cls := "flex space-x-4 items-center",
           code("inner:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- inner.signal
           )
         ),
@@ -66,7 +66,7 @@ object SignalShiftOptionExample
           cls := "flex space-x-4 items-center",
           code("outer:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- outer.signal.map(_.toString())
           )
         ),
@@ -74,7 +74,7 @@ object SignalShiftOptionExample
           cls := "flex space-x-4 items-center",
           code("outer.shiftOption:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- outer.signal.shiftOption.map(_.toString())
           )
         )

@@ -3,7 +3,7 @@ package io.laminext
 import com.raquo.laminar.api.L._
 import org.scalajs.dom.raw.Event
 
-object ElementChanges {
+object InputChangeEvents {
 
   def changes(el: Element): EventStream[Event] =
     EventStream

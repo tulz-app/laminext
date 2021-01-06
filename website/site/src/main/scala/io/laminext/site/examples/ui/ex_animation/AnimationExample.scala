@@ -35,7 +35,7 @@ object AnimationExample
           cls := "flex space-x-4 items-center",
           code("bounceSignal:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- bounce.signal.map(_.toString)
           )
         ),

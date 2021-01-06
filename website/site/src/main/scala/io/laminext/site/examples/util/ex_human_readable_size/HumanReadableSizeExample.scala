@@ -15,7 +15,7 @@ object HumanReadableSizeExample
 
       val inputElement = input(
         tpe := "number",
-        cls := "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "new value"
       )
 
@@ -28,7 +28,7 @@ object HumanReadableSizeExample
           cls := "flex space-x-4 items-center",
           code("human readable:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- inputElement.value.map(HumanReadableSize.format)
           )
         )

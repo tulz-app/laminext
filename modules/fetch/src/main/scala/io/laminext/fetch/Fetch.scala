@@ -45,8 +45,8 @@ object Fetch {
 
   @inline def post(
     url: String,
-    headers: js.UndefOr[Map[String, String]] = js.undefined,
     body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
+    headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
       url = url,
@@ -57,8 +57,8 @@ object Fetch {
 
   @inline def put(
     url: String,
-    headers: js.UndefOr[Map[String, String]] = js.undefined,
     body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
+    headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
       url = url,
@@ -69,8 +69,8 @@ object Fetch {
 
   @inline def patch(
     url: String,
+    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined
   ): FetchEventStreamBuilder =
     apply(
       url = url,

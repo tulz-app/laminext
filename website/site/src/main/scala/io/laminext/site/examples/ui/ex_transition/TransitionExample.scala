@@ -42,7 +42,7 @@ object TransitionExample
           cls := "flex space-x-4 items-center",
           code("show:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- show.signal.map(_.toString)
           )
         ),
@@ -50,7 +50,7 @@ object TransitionExample
           cls := "flex space-x-4 items-center",
           code("actually showing:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- actuallyShowing.signal.map(_.toString)
           )
         ),
