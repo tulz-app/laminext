@@ -48,7 +48,7 @@ object SignalOfOptionExample
           cls := "flex space-x-4 items-center",
           code("signal:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- signal.map(_.toString)
           )
         ),
@@ -56,7 +56,7 @@ object SignalOfOptionExample
           cls := "flex space-x-4 items-center",
           code("signal.isEmpty:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- signal.isEmpty.map(_.toString())
           )
         ),
@@ -64,7 +64,7 @@ object SignalOfOptionExample
           cls := "flex space-x-4 items-center",
           code("signal.isDefined:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- signal.isDefined.map(_.toString())
           )
         ),
@@ -72,7 +72,7 @@ object SignalOfOptionExample
           cls := "flex space-x-4 items-center",
           code("signal.optionMap(_.toUpperCase):"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- signal.optionMap(_.toUpperCase).map(_.toString())
           )
         ),
@@ -82,16 +82,16 @@ object SignalOfOptionExample
             "signal.optionFlatMap(s => Option(s.toUpperCase).filterNot(_.isEmpty)):"
           ),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- signal
               .optionFlatMap(s => Option(s.toUpperCase).filterNot(_.isEmpty)).map(_.toString())
           )
         ),
         div(
           cls := "flex space-x-4 items-center",
-          span("signal.withDefault(\"DEFAULT\"): "),
+          code("signal.withDefault(\"DEFAULT\"): "),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- signal.withDefault("DEFAULT")
           )
         )

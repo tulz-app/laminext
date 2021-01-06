@@ -58,7 +58,7 @@ object SignalShiftOptionExample
           cls := "flex space-x-4 items-center",
           code("inner:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- inner.signal
           )
         ),
@@ -66,7 +66,7 @@ object SignalShiftOptionExample
           cls := "flex space-x-4 items-center",
           code("outer:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- outer.signal.map(_.toString())
           )
         ),
@@ -74,7 +74,7 @@ object SignalShiftOptionExample
           cls := "flex space-x-4 items-center",
           code("outer.shiftOption:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- outer.signal.shiftOption.map(_.toString())
           )
         )

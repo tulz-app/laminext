@@ -39,7 +39,7 @@ object InputValuesExample
           cls := "flex space-x-1 items-center",
           code("input1.valueSignal:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- inputElement1.value
           )
         ),
@@ -53,7 +53,7 @@ object InputValuesExample
           cls := "flex space-x-1 items-center",
           code("input2.valueSignal:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- inputElement2.value
           )
         )
