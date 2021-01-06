@@ -40,7 +40,7 @@ object InputValuesExample
           code("input1.valueSignal:"),
           code(
             cls := "text-blue-600",
-            child.text <-- inputElement1.valueSignal
+            child.text <-- inputElement1.value
           )
         ),
         div(
@@ -54,7 +54,7 @@ object InputValuesExample
           code("input2.valueSignal:"),
           code(
             cls := "text-blue-600",
-            child.text <-- inputElement2.valueSignal
+            child.text <-- inputElement2.value
           )
         )
       )

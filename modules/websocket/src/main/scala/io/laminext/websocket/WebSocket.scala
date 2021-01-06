@@ -10,53 +10,46 @@ import scala.collection.mutable
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 import scala.util.control.NonFatal
-import scala.concurrent.duration._
+
+object WebSocket {
+
+  def url[Receive, Send](url: String): WebSocketReceiveBuilder =
+    new WebSocketReceiveBuilder(url)
+
+  def path[Receive, Send](path: String): WebSocketReceiveBuilder = {
+    val wsProtocol = if (dom.document.location.protocol == "https:") "wss" else "ws"
+    url(s"$wsProtocol://${dom.document.location.host}$path")
+  }
+
+}
 
 class WebSocket[Receive, Send](
   url: String,
   initializer: WebSocketInitialize,
   sender: WebSocketSend[Send],
   receiver: WebSocketReceive[Receive],
-  bufferWhenDisconnected: Boolean = true,
-  bufferSize: Int = 50,
-  autoReconnect: Boolean = true,
-  reconnectDelay: FiniteDuration = 1.second,
-  reconnectDelayOffline: FiniteDuration = 20.second,
-  reconnectRetries: Int = 10
+  managed: Boolean,
+  bufferWhenDisconnected: Boolean,
+  bufferSize: Int,
+  autoReconnect: Boolean,
+  reconnectDelay: FiniteDuration,
+  reconnectDelayOffline: FiniteDuration,
+  reconnectRetries: Int
 ) {
 
   private var reconnectRetriesLeft: Int = reconnectRetries
 
-  def configure(
-    bufferWhenDisconnected: Boolean = this.bufferWhenDisconnected,
-    bufferSize: Int = this.bufferSize,
-    autoReconnect: Boolean = this.autoReconnect,
-    reconnectDelay: FiniteDuration = this.reconnectDelay,
-    reconnectDelayOffline: FiniteDuration = this.reconnectDelayOffline,
-    reconnectRetries: Int = this.reconnectRetries
-  ): WebSocket[Receive, Send] =
-    new WebSocket[Receive, Send](
-      url = url,
-      initializer = initializer,
-      sender = sender,
-      receiver = receiver,
-      bufferWhenDisconnected = bufferWhenDisconnected,
-      bufferSize = bufferSize,
-      autoReconnect = autoReconnect,
-      reconnectDelay = reconnectDelay,
-      reconnectDelayOffline = reconnectDelayOffline,
-      reconnectRetries = reconnectRetries
-    )
-
-  private var firstConnection                      = true
   private var bindsCount                           = 0
   private var maybeWS: js.UndefOr[raw.WebSocket]   = js.undefined
   private val sendBuffer: mutable.ArrayDeque[Send] = mutable.ArrayDeque.empty
   private val eventBus                             = new EventBus[WebSocketEvent[Receive]]()
   private val connectedVar                         = Var(false)
+  private val connectingVar                        = Var(false)
+
   private def initWebSocket(): Unit = {
     if (js.isUndefined(maybeWS)) {
       try {
+        connectingVar.writer.onNext(true)
         val ws = new raw.WebSocket(url)
         maybeWS = ws
 
@@ -64,9 +57,9 @@ class WebSocket[Receive, Send](
 
         ws.onopen = { _ =>
           reconnectRetriesLeft = reconnectRetries
-          eventBus.writer.onNext(WebSocketEvent.Connected(ws, firstConnection))
-          firstConnection = false
+          eventBus.writer.onNext(WebSocketEvent.Connected(ws))
           connectedVar.writer.onNext(true)
+          connectingVar.writer.onNext(false)
           trySend()
         }
         ws.onerror = { _ =>
@@ -82,9 +75,10 @@ class WebSocket[Receive, Send](
         }
         ws.onclose = { event =>
           maybeWS = js.undefined
-          val willReconnect = event.code != 1000 && autoReconnect && reconnectRetriesLeft > 0 // 1000 – websocket closed normally
+          val willReconnect = managed && event.code != 1000 && autoReconnect && reconnectRetriesLeft > 0 // 1000 – websocket closed normally
           eventBus.writer.onNext(WebSocketEvent.Closed(ws, willReconnect))
-          connectedVar.writer.onNext(true)
+          connectedVar.writer.onNext(false)
+          connectingVar.writer.onNext(false)
           if (willReconnect) {
             reconnectRetriesLeft = reconnectRetriesLeft - 1
             val delay = if (dom.window.navigator.onLine) {
@@ -112,7 +106,7 @@ class WebSocket[Receive, Send](
   }
 
   private def binderStarted(): Unit = {
-    if (bindsCount == 0) {
+    if (bindsCount == 0 && managed) {
       reconnectRetriesLeft = reconnectRetries
       initWebSocket()
     }
@@ -121,7 +115,7 @@ class WebSocket[Receive, Send](
 
   private def binderStopped(): Unit = {
     bindsCount -= 1
-    if (bindsCount == 0) {
+    if (bindsCount == 0 && managed) {
       stopWebSocket()
     }
   }
@@ -154,18 +148,23 @@ class WebSocket[Receive, Send](
         )
       }
 
-  def disconnectNow(): Unit = disconnect.onNext(null)
+  def disconnectNow(): Unit =
+    disconnect.onNext(null)
 
   val disconnect: Observer[Any] = Observer { _ =>
-    reconnectRetriesLeft = 0
-    stopWebSocket()
+    if (!managed) {
+      reconnectRetriesLeft = 0
+      stopWebSocket()
+    }
   }
 
   def reconnectNow(): Unit = reconnect.onNext(null)
 
   val reconnect: Observer[Any] = Observer { _ =>
-    reconnectRetriesLeft = reconnectRetries
-    initWebSocket()
+    if (!managed) {
+      reconnectRetriesLeft = reconnectRetries
+      initWebSocket()
+    }
   }
 
   def sendOne(message: Send): Unit = {
@@ -179,7 +178,7 @@ class WebSocket[Receive, Send](
 
   val received: EventStream[Receive] = eventBus.events.collect { case WebSocketEvent.Received(message) => message }
 
-  val connected: EventStream[(raw.WebSocket, Boolean)] = eventBus.events.collect { case WebSocketEvent.Connected(ws, reconnect) => (ws, reconnect) }
+  val connected: EventStream[raw.WebSocket] = eventBus.events.collect { case WebSocketEvent.Connected(ws) => ws }
 
   val closed: EventStream[(raw.WebSocket, Boolean)] = eventBus.events.collect { case WebSocketEvent.Closed(ws, willReconnect) => (ws, willReconnect) }
 
@@ -188,5 +187,7 @@ class WebSocket[Receive, Send](
   val events: EventStream[WebSocketEvent[Receive]] = eventBus.events
 
   val isConnected: Signal[Boolean] = connectedVar.signal
+
+  val isConnecting: Signal[Boolean] = connectingVar.signal
 
 }

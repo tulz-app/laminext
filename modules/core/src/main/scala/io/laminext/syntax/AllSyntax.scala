@@ -22,7 +22,7 @@ trait AllSyntax
     with FutureOfEitherSyntax
     with HtmlTagSyntax
     with SvgTagSyntax
-    with ReactiveHtmlTagSyntax
+    with ReactiveHtmlElementSyntax
     with ReactiveSvgElementSyntax
     with InputElementSyntax
     with TextAreaSyntax

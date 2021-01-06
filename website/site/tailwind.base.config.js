@@ -12,9 +12,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        display: ['Oxanium', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
         serif: ['Inter', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
         mono: [
-          'Roboto Mono',
+          'JetBrains Mono',
           'ui-monospace',
           'SFMono-Regular',
           'Menlo',

@@ -13,7 +13,7 @@ object Transition {
     show: Signal[Boolean],
     config: TransitionConfig,
     observer: Observer[Boolean] = Observer.empty
-  ): Modifier[ReactiveHtmlElement.Base] = {
+  ): Modifier[HtmlElement] = {
     val classes = Var[Seq[(Seq[String], Boolean)]](Seq.empty)
     val bus     = new EventBus[TransitionEvent]()
 

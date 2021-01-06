@@ -3,7 +3,8 @@ package io.laminext.site.components
 import io.laminext.highlight.Highlight
 import io.laminext.site.examples.CodeExample
 import io.laminext.tailwind.theme
-import com.raquo.laminar.api.L.{transition => _, _}
+import io.laminext.tailwind.TW
+import com.raquo.laminar.api.L._
 import io.laminext.tailwind.syntax._
 import io.laminext.syntax.all._
 import io.laminext.markdown._
@@ -86,7 +87,7 @@ object CodeExampleDisplay {
       cls := "flex flex-col space-y-4 mb-20",
       div(
         h1(
-          cls := "text-2xl font-bold text-cool-gray-900",
+          cls := "font-display text-3xl font-bold text-cool-gray-900 tracking-wider",
           example.title
         )
       ),
@@ -136,7 +137,7 @@ object CodeExampleDisplay {
           cls := "overflow-hidden shadow relative",
           div(
             cls := "overflow-auto",
-            transition(show = !sourceCollapsed.signal, collapseTransition),
+            TW.transition(show = !sourceCollapsed.signal, collapseTransition),
             child <-- Styles.highlightStyle.signal.combine(dimContext.signal).map { case (_, dim) =>
               codeNode(dim)
             }

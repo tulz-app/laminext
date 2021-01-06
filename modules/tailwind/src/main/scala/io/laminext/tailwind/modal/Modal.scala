@@ -3,11 +3,9 @@ package modal
 
 import syntax._
 import theme.Theme
-import com.raquo.laminar.api.L.{transition => _, _}
+import com.raquo.laminar.api.L._
 import io.laminext.syntax.all._
-import com.raquo.laminar.nodes.ReactiveHtmlElement
 import org.scalajs.dom
-import org.scalajs.dom.html
 
 object Modal {
 
@@ -16,7 +14,7 @@ object Modal {
   def apply(
     content: Signal[Option[ModalContent]],
     config: theme.Modal = Theme.current.modal
-  ): ReactiveHtmlElement[html.Div] = {
+  ): Element = {
     div(
       cls := config.container,
       content.bind { maybeContent =>
@@ -27,13 +25,13 @@ object Modal {
         }
       },
       div(
-        transition(content.isDefined, config.overlayTransition),
-        onClick.stream.withCurrentValueOf(content).bind { case (_, maybeContent) =>
+        TW.transition(content.isDefined, config.overlayTransition),
+        thisEvents(onClick).withCurrentValueOf(content).forEach { case (_, maybeContent) =>
           maybeContent.flatMap(_.closeObserver).foreach(_.onNext((): Unit))
         }
       ),
       div(
-        transition(content.isDefined, config.contentWrapTransition),
+        TW.transition(content.isDefined, config.contentWrapTransition),
         div(
           cls := config.contentWrapInner,
           child.maybe <-- content.optionMap(_.content)

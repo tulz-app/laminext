@@ -1,13 +1,10 @@
-package io.laminext.validation.ops.stream
+package io.laminext.validation
+package ops.stream
 
-import io.laminext.validation.ValidatedValue
-import io.laminext.validation.Validations
 import com.raquo.airstream.eventstream.EventStream
 
 class StreamOfBooleanValidationOps(s: EventStream[Boolean]) {
 
-  def validatedIsTrue(message: String): EventStream[ValidatedValue[Boolean]] = s.map(Validations.isTrue(message))
-
-  def validatedIsFalse(message: String): EventStream[ValidatedValue[Boolean]] = s.map(Validations.isFalse(message))
+  def validatedIsTrue(validation: Validation[Boolean]): EventStream[ValidatedValue[Boolean]] = s.map(validation)
 
 }

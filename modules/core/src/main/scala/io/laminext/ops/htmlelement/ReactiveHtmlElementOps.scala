@@ -1,4 +1,5 @@
-package io.laminext.ops.htmlelement
+package io.laminext
+package ops.htmlelement
 
 import com.raquo.airstream.core.Observable
 import com.raquo.laminar.keys.CompositeKey.CompositeValueMapper

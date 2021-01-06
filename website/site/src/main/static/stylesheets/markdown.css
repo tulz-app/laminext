@@ -83,6 +83,10 @@
     content: close-quote;
 }
 
+.prose-custom h1,h2,h3,h4 {
+    @apply font-display;
+}
+
 .prose-custom h1{
     color: #111827;
     font-weight: 800;
