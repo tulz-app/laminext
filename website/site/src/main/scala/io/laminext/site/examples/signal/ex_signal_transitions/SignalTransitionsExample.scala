@@ -34,7 +34,7 @@ object SignalTransitionsExample
           cls := "flex space-x-4 items-center",
           code("signal:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- aVar.signal
           )
         ),
@@ -42,7 +42,7 @@ object SignalTransitionsExample
           cls := "flex space-x-4 items-center",
           code("signal.transitions:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- aVar.signal.transitions.map(_.toString())
           )
         )

@@ -28,7 +28,7 @@ object HumanReadableSizeExample
           cls := "flex space-x-4 items-center",
           code("human readable:"),
           code(
-            cls := "text-blue-800",
+            cls := "text-blue-700 font-medium",
             child.text <-- inputElement.value.map(HumanReadableSize.format)
           )
         )
