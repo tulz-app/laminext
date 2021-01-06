@@ -45,22 +45,21 @@ final class SignalOfBooleanOps(underlying: Signal[Boolean]) {
     ConditionalChildInserter(underlying.map(!_), child)
 
   @inline def doWhenTrue(
-    callback: () => Unit
+    callback: => Unit
   ): Binder[ReactiveHtmlElement.Base] =
     underlying --> { value =>
       if (value) {
-        callback()
+        callback
       }
     }
 
   @inline def doWhenFalse(
-    callback: () => Unit
-  ): Binder[ReactiveHtmlElement.Base] = {
+    callback: => Unit
+  ): Binder[ReactiveHtmlElement.Base] =
     underlying --> { value =>
       if (!value) {
-        callback()
+        callback
       }
     }
-  }
 
 }

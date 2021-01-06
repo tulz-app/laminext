@@ -167,7 +167,7 @@ object CodeExampleDisplay {
           "Live demo:"
         ),
         div(
-          cls := "border-4 border-dashed border-cool-gray-300 rounded-lg -m-2 p-4",
+          cls := "border-4 border-dashed border-blue-400 bg-blue-300 text-blue-900 rounded-lg -m-2 p-4",
           onMountUnmountCallbackWithState(
             mount = ctx => render(ctx.thisNode.ref, example.code.value()),
             unmount = (_, root: Option[RootNode]) => root.foreach(_.unmount())

@@ -29,7 +29,7 @@ object SignalOfBooleanClassSwitchExample
           cls := "flex space-x-4 items-center  ",
           code("signal:"),
           code(
-            cls := "text-blue-600",
+            cls := "text-blue-800",
             child.text <-- booleanVar.signal.map(_.toString)
           )
         ),
