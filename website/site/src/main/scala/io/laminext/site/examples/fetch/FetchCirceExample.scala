@@ -10,7 +10,7 @@ import scala.util.Success
 object FetchCirceExample
     extends CodeExample(
       id = "example-fetch-circe",
-      title = "Circe example",
+      title = "circe example",
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._

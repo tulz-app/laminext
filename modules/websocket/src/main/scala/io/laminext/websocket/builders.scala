@@ -1,5 +1,6 @@
 package io.laminext.websocket
 
+import internal._
 import org.scalajs.dom
 import org.scalajs.dom.Blob
 
@@ -95,7 +96,7 @@ final class WebSocketReceiveArrayBufferBuilder(url: String) {
 
 }
 
-final class WebSocketReceiveBuilder(url: String) {
+final class WebSocketReceiveBuilder(private[websocket] val url: String) {
 
   @inline def string: WebSocketBuilder[String, String] = new WebSocketBuilder(url, initialize.text, send.string, receive.string)
 

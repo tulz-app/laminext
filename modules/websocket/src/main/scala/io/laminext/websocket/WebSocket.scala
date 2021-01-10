@@ -1,5 +1,6 @@
 package io.laminext.websocket
 
+import internal._
 import com.raquo.airstream.ownership.Subscription
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement

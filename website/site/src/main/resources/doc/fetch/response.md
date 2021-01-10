@@ -1,6 +1,6 @@
 ## Underlying response object
 
-The underlying `fetch` API initially provides the response as a `org.scalajs.dom.experimental.Response`.
+The underlying Fetch API initially provides the response as a `org.scalajs.dom.experimental.Response`.
 
 It contains the basic information about the response available before reading the response body:
 
@@ -88,6 +88,7 @@ val myReader: Response => MyData = ???
 val s: EventStream[FetchResponse[MyData]] = Fetch.post("https://...").build(myReader) 
 ```
 
-### Circe support
+### circe support
 
-If you use circe, there's a `fetch-circe` module available. See [Circe support](/fetch/circe).
+If you use [circe](https://circe.github.io/circe/), there's a `fetch-circe` module available. See [circe support](/fetch/circe).
+

@@ -80,7 +80,7 @@ object Site {
           docPage("request-body", "Request body", FileAsString("/doc/fetch/request-body.md")),
           docPage("request-settings", "Other request settings", FileAsString("/doc/fetch/request-settings.md")),
           docPage("response", "Handling the response", FileAsString("/doc/fetch/response.md")),
-          docPage("circe", "Circe support", FileAsString("/doc/fetch/circe.md")),
+          docPage("circe", "circe support", FileAsString("/doc/fetch/circe.md")),
         ),
         "Examples" -> Seq(
           examplePage(examples.fetch.FetchPostExample),
@@ -93,7 +93,11 @@ object Site {
       index = docPage("", "WebSocket", FileAsString("/doc/websocket/index.md")),
       navigation = Seq(
         "" -> Seq(
+          docPage("circe", "circe support", FileAsString("/doc/websocket/circe.md")),
+        ),
+        "Examples" -> Seq(
           examplePage(examples.websocket.WebSocketExample),
+          examplePage(examples.websocket.WebSocketCirceExample),
         )
       )
     ),

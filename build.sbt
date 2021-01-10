@@ -22,8 +22,8 @@ ThisBuild / sonatypeProfileName := "yurique"
 ThisBuild / publishArtifact in Test := false
 ThisBuild / publishMavenStyle := true
 ThisBuild / releaseCrossBuild := false
-ThisBuild / scalaVersion := "2.13.4"
-ThisBuild / crossScalaVersions := Seq("2.13.4")
+ThisBuild / scalaVersion := BuildSettings.version.scala213
+ThisBuild / crossScalaVersions := Seq(BuildSettings.version.scala213)
 ThisBuild / releaseCrossBuild := false
 
 lazy val noPublish = Seq(
@@ -41,6 +41,8 @@ lazy val adjustScalacOptions = { options: Seq[String] =>
       "-Wunused:imports",
       "-Wunused:params"
     )
+  ) ++ Seq(
+    "-Ymacro-annotations"
   )
 }
 
@@ -63,28 +65,22 @@ lazy val macrosSettings = Seq(
 
 lazy val bundlerSettings = Seq(
   jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
-  installJsdom / version := "16.4.0",
+  installJsdom / version := BuildSettings.version.jsdom,
   useYarn := true
 )
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    "com.raquo"     %%% "laminar"      % "0.11.1-SNAPSHOT",
-    "org.scalatest" %%% "scalatest"    % "3.2.3"  % Test,
-    "app.tulz"      %%% "stringdiff"   % "0.3.1"  % Test,
-    "com.raquo"     %%% "domtestutils" % "0.11.0" % Test
+    "com.raquo"     %%% "laminar"      % BuildSettings.version.laminar,
+    "org.scalatest" %%% "scalatest"    % BuildSettings.version.`scala-test` % Test,
+    "app.tulz"      %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test,
+    "com.raquo"     %%% "domtestutils" % BuildSettings.version.domtestutils % Test
   )
 )
 
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
-    "org.typelevel" %%% "cats-core" % "2.3.1"
-  )
-)
-
-lazy val sttp3Dependencies = Seq(
-  libraryDependencies ++= Seq(
-    "com.softwaremill.sttp.client3" %%% "core" % "3.0.0-RC13"
+    "org.typelevel" %%% "cats-core" % BuildSettings.version.cats
   )
 )
 
@@ -133,17 +129,6 @@ lazy val `fsm` =
     .settings(
       description := "Laminar utilities (validation)"
     )
-
-lazy val `sttp3` =
-  project
-    .in(file("modules/sttp3"))
-    .enablePlugins(ScalaJSPlugin)
-    .settings(commonSettings)
-    .settings(baseDependencies)
-    .settings(sttp3Dependencies)
-    .settings(
-      description := "Laminar utilities (sttp3)"
-    ).dependsOn(`core`)
 
 lazy val `markdown` =
   project
@@ -207,6 +192,23 @@ lazy val `websocket` =
       description := "Websocket client"
     )
 
+lazy val `websocket-circe` =
+  project
+    .in(file("modules/websocket-circe"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(
+      libraryDependencies ++= Seq(
+        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
+        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
+      )
+    )
+    .settings(
+      description := "circe support for websocket client"
+    )
+    .dependsOn(`websocket`)
+
 lazy val `fetch` =
   project
     .in(file("modules/fetch"))
@@ -225,8 +227,8 @@ lazy val `fetch-circe` =
     .settings(baseDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        "io.circe" %%% "circe-core"   % "0.13.0",
-        "io.circe" %%% "circe-parser" % "0.13.0"
+        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
+        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
       )
     )
     .settings(
@@ -254,14 +256,14 @@ lazy val website = project
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
     libraryDependencies ++= Seq(
-      "com.lihaoyi"   %%% "sourcecode"           % "0.2.1",
-      "com.raquo"     %%% "laminar"              % "0.11.0",
-      "io.frontroute" %%% "frontroute"           % "0.11.5",
-      "com.yurique"   %%% "embedded-files-macro" % "0.1.1",
-      "io.circe"      %%% "circe-generic"        % "0.13.0",
-      "io.mwielocha"  %%% "factorio-core"        % "0.3.1",
-      "io.mwielocha"  %%% "factorio-annotations" % "0.3.1",
-      "io.mwielocha"  %%% "factorio-macro"       % "0.3.1" % "provided"
+      "com.raquo"     %%% "laminar"              % BuildSettings.version.laminar,
+      "io.frontroute" %%% "frontroute"           % BuildSettings.version.frontroute,
+      "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files`,
+      "com.lihaoyi"   %%% "sourcecode"           % BuildSettings.version.sourcecode,
+      "io.circe"      %%% "circe-generic"        % BuildSettings.version.circe,
+      "io.mwielocha"  %%% "factorio-core"        % BuildSettings.version.factorio,
+      "io.mwielocha"  %%% "factorio-annotations" % BuildSettings.version.factorio,
+      "io.mwielocha"  %%% "factorio-macro"       % BuildSettings.version.factorio % "provided"
     )
   )
   .settings(
@@ -270,10 +272,24 @@ lazy val website = project
     (Compile / sourceGenerators) += embedFiles
   )
   .settings(
-    addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
-    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
+    addCompilerPlugin(("org.typelevel" %% "kind-projector" % BuildSettings.version.`kind-projector`).cross(CrossVersion.full)),
+    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % BuildSettings.version.`better-monadic-for`)
   )
-  .dependsOn(`core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`, `websocket`, `fetch`, `fetch-circe`)
+  .dependsOn(
+    `core`,
+    `validation`,
+    `util`,
+    `fsm`,
+    `videojs`,
+    `highlight`,
+    `markdown`,
+    `ui`,
+    `tailwind`,
+    `websocket`,
+    `websocket-circe`,
+    `fetch`,
+    `fetch-circe`
+  )
 
 lazy val root = project
   .in(file("."))
@@ -286,12 +302,13 @@ lazy val root = project
     `validation`,
     `util`,
     `fsm`,
-    `sttp3`,
     `videojs`,
     `highlight`,
     `markdown`,
     `ui`,
     `tailwind`,
     `fetch`,
-    `fetch-circe`
+    `fetch-circe`,
+    `websocket`,
+    `websocket-circe`
   )

@@ -8,9 +8,7 @@ import io.frontroute._
 import io.frontroute.directives._
 import org.scalajs.dom
 
-class Routes(
-  routeLocationProvider: RouteLocationProvider
-) {
+class Routes(locationProvider: LocationProvider) {
 
   private val $module = Var[Option[SiteModule]](None)
   private val $page   = Var[Option[Page]](None)
@@ -69,7 +67,7 @@ class Routes(
     com.raquo.laminar.api.L.render(appContainer, appContent)
 //    com.raquo.laminar.api.L.render(modalContainer, Modal($modalContent))
 
-    runRoute(route, routeLocationProvider)(unsafeWindowOwner)
+    runRoute(route, locationProvider)(unsafeWindowOwner)
 
     BrowserNavigation.emitPopStateEvent()
   }
