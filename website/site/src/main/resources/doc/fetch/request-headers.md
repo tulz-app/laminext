@@ -23,3 +23,6 @@ import io.laminext.fetch.Fetch
 
 Fetch.get("https://...").updateHeaders(_.updated("Authorization", "Bearer ..."))
 ```
+
+
+Next, [Request body](/fetch/request-body).

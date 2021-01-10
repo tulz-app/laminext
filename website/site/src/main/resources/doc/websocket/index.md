@@ -103,7 +103,7 @@ the websocket will connect when the first element is mounted, and disconnect whe
 If `managed` is `false`, then you control the websocket using its `.disconnectNow()`/`.reconnectNow()` methods, or the 
 `disconnect`/`reconnect` observers.
 
-### Buffer sent messages when disconnectd
+### Buffer sent messages when disconnected
 
 ```scala
 import io.laminext.websocket._
@@ -190,4 +190,7 @@ ws.events // EventStream[WebSocketEvent[Receive]]
 
 ```
 
+## circe support
+
+If you use [circe](https://circe.github.io/circe/), there's a `websocket-circe` module available. See [circe support](/websocket/circe).
 

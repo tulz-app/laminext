@@ -3,7 +3,7 @@ package io.laminext.site
 import com.raquo.laminar.api.L._
 import factorio._
 import io.frontroute.BrowserNavigation
-import io.frontroute.RouteLocationProvider
+import io.frontroute.LocationProvider
 import org.scalajs.dom
 
 class Wiring(
@@ -17,7 +17,7 @@ object Wiring {
   class MainBlueprint {
 
     @provides
-    def provideLocationProvider: RouteLocationProvider = BrowserNavigation.locationProvider(windowEvents.onPopState)
+    val provideLocationProvider: LocationProvider = LocationProvider.browser(windowEvents.onPopState)
 
     @provides
     val ssrContext: SsrContext = SsrContext(

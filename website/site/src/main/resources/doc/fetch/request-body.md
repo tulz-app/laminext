@@ -15,10 +15,13 @@ import org.scalajs.dom.experimental.BodyInit
 
 trait RequestBody {
   def apply(): js.UndefOr[BodyInit]
+  def updateHeaders(headers: js.UndefOr[Map[String, String]]): js.UndefOr[Map[String, String]] = headers
 }
 ```
 
 (`BodyInit` is defined as `type BodyInit = Blob | BufferSource | FormData | String`)
+
+(`updateHeaders` can be overriden in your custom `RequestBody`, `fetch-circe` adds a `content-type: application/json`, for example)
 
 There are default implicit conversions from `Blob`, `BufferSource`, `FormData`, and `String` to `RequestBody`, so you
 can pass values of those types directly.
@@ -42,3 +45,5 @@ Fetch.patch("https://...", body = formData)
 
 Fetch(HttpMethod.POST, "https://...", body = blob)
 ```
+
+Next, [Other request settings](/fetch/request-settings).
