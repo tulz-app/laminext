@@ -5,14 +5,13 @@ import com.yurique.embedded.FileAsString
 import io.laminext.fetch.FetchResponse
 import io.laminext.site.examples.CodeExample
 
-import scala.concurrent.duration.DurationInt
 import scala.util.Failure
 import scala.util.Success
 
-object FetchExample
+object FetchPostExample
     extends CodeExample(
-      id = "example-fetch",
-      title = "fetch",
+      id = "example-fetch-post",
+      title = "POST example",
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._

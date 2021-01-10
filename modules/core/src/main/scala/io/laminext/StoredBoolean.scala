@@ -19,7 +19,7 @@ final class StoredBoolean(name: String, initial: Boolean = true) {
         newValue
       }
 
-  val toggleObserver: Observer[Unit] = updateBus.writer.contramap(_ => !_)
+  val toggleObserver: Observer[Any] = updateBus.writer.contramap(_ => !_)
 
   def toggle(): Unit = updateBus.writer.onNext(!_)
 

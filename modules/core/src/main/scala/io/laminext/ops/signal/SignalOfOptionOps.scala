@@ -22,6 +22,9 @@ final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
   @inline def optionContains[B >: A](value: B): Signal[Boolean] =
     underlying.map(_.contains(value))
 
+  @inline def optionExists(predicate: A => Boolean): Signal[Boolean] =
+    underlying.map(_.exists(predicate))
+
   @inline def optionMap[B](project: A => B): Signal[Option[B]] =
     underlying.map(_.map(project))
 

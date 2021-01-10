@@ -6,8 +6,8 @@ import io.laminext.site.examples.CodeExample
 
 object WebSocketExample
     extends CodeExample(
-      id = "example-websocket",
-      title = "WebSocket",
+      id = "example-websocket-echo",
+      title = "Echo example",
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
