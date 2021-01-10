@@ -83,7 +83,7 @@ object WebSocketExample
               /* <focus> */
               children.command <-- ws.received.map { message =>
                 CollectionCommand.Append(
-                  code(message)
+                  code(pprint.apply(message).plainText)
                 )
               }
               /* </focus> */
@@ -99,7 +99,7 @@ object WebSocketExample
               /* <focus> */
               children.command <-- ws.events.map { event =>
                 CollectionCommand.Append(
-                  code(event.toString)
+                  code(pprint.apply(event).plainText)
                 )
               }
               /* </focus> */

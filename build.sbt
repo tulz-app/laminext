@@ -260,6 +260,7 @@ lazy val website = project
       "io.frontroute" %%% "frontroute"           % BuildSettings.version.frontroute,
       "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files`,
       "com.lihaoyi"   %%% "sourcecode"           % BuildSettings.version.sourcecode,
+      "com.lihaoyi"   %%% "pprint"               % BuildSettings.version.pprint,
       "io.circe"      %%% "circe-generic"        % BuildSettings.version.circe,
       "io.mwielocha"  %%% "factorio-core"        % BuildSettings.version.factorio,
       "io.mwielocha"  %%% "factorio-annotations" % BuildSettings.version.factorio,

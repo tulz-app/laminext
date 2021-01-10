@@ -66,7 +66,7 @@ object FetchCirceExample
                     ),
                     div(
                       cls := "text-green-400 text-xs",
-                      code(response.data.spaces2)
+                      pre(response.data.spaces2)
                     )
                   )
                 )
