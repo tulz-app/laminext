@@ -23,7 +23,7 @@ object ValidationExample
 
       /* <focus> */
       val validatedInput2 = input(
-        tpe := "email",
+        tpe := "text",
         cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "enter something BIG"
       ).validated(
@@ -31,6 +31,18 @@ object ValidationExample
           V.nonBlank("Must not be blank!"),
           V.custom("Must be upper-case!")(string => string.toUpperCase == string)
         )
+      )
+      /* </focus> */
+
+      /* <focus> */
+      val validatedInput3 = input(
+        tpe := "text",
+        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+        placeholder := "enter something else"
+      ).validated(
+        V.nonBlank("Must not be blank!") &&
+          (V.custom[String]("Must be upper-case!")(string => string.toUpperCase == string) ||
+            V.custom[String]("Must be lower-case!")(string => string.toLowerCase == string))
       )
       /* </focus> */
 
@@ -42,7 +54,7 @@ object ValidationExample
           child.maybe <-- validatedInput1.validationError.optionMap(errors =>
             span(
               cls := "text-red-700 text-sm",
-              errors.toChain.toList.map(error => div(error))
+              errors.map(error => div(error))
             )
           )
           /* </focus> */
@@ -53,7 +65,18 @@ object ValidationExample
           child.maybe <-- validatedInput2.validationError.optionMap(errors =>
             span(
               cls := "text-red-700 text-sm",
-              errors.toChain.toList.map(error => div(error))
+              errors.map(error => div(error))
+            )
+          )
+          /* </focus> */
+        ),
+        div(validatedInput3),
+        div(
+          /* <focus> */
+          child.maybe <-- validatedInput3.validationError.optionMap(errors =>
+            span(
+              cls := "text-red-700 text-sm",
+              errors.map(error => div(error))
             )
           )
           /* </focus> */
@@ -91,6 +114,24 @@ object ValidationExample
             cls := "text-blue-700 font-medium",
             /* <focus> */
             child.text <-- validatedInput2.validatedValue.map(_.toString)
+            /* </focus> */
+          )
+        ),
+        div(
+          cls := "flex space-x-4 items-center",
+          code("validatedInput3.el.value:"),
+          code(
+            cls := "text-blue-700 font-medium",
+            child.text <-- validatedInput3.el.value
+          )
+        ),
+        div(
+          cls := "flex space-x-4 items-center",
+          code("validatedInput3.validatedValue:"),
+          code(
+            cls := "text-blue-700 font-medium",
+            /* <focus> */
+            child.text <-- validatedInput3.validatedValue.map(_.toString)
             /* </focus> */
           )
         )

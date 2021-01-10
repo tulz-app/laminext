@@ -115,7 +115,6 @@ lazy val `validation` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(catsDependencies)
     .settings(
       description := "Laminar utilities (validation)"
     ).dependsOn(`core`)
