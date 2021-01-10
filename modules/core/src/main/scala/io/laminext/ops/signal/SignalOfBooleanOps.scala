@@ -34,6 +34,9 @@ final class SignalOfBooleanOps(underlying: Signal[Boolean]) {
       )
     }
 
+  @inline def switch[T](whenTrue: T, whenFalse: T): Signal[T] =
+    underlying.map(if (_) whenTrue else whenFalse)
+
   @inline def childWhenTrue(
     child: => Child
   ): Inserter[ReactiveHtmlElement.Base] =

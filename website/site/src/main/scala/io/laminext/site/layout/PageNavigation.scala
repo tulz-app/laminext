@@ -14,38 +14,29 @@ object PageNavigation {
     $page: Signal[Option[Page]]
   ): ReactiveHtmlElement.Base =
     nav(
-      cls := "w-80 p-4 overflow-auto bg-cool-gray-800 text-white",
+      cls := "w-80 py-4 overflow-auto bg-cool-gray-800 text-white",
       child.maybe <-- $module.optionMap { module =>
         div(
           cls := "space-y-4",
-          div(
-            cls := "-mx-2 px-2 py-2 hover:bg-cool-gray-700 group",
+          navigationItem($page, module.index)(
             a(
-              cls := "border-l-4 -ml-2 pl-2 border-transparent flex text-xl font-display font-bold",
-              $page.map(_.exists(_.path.isEmpty)).classSwitch(
-                whenTrue = "text-cool-gray-100 border-cool-gray-400",
-                whenFalse = "text-cool-gray-400 group-hover:text-cool-gray-100"
-              ),
-              href := (if (module.path == Site.indexModule.path) "/" else s"/${module.path}"),
+              cls := "ml-2 flex text-xl font-display font-bold",
+              href := s"/${module.path}",
               module.index.title
             )
           ),
           module.navigation.map { case (title, pages) =>
             div(
-//              cls := "space-y-1",
-              div(
-                cls := "pl-1 text-xl font-display font-semibold text-cool-gray-400 tracking-wide",
-                title
-              ),
-              pages.map { page =>
+              when(title.nonEmpty) {
                 div(
-                  cls := "-mx-4 pl-6 pr-2 py-2 hover:bg-cool-gray-700 group",
+                  cls := "ml-4 text-xl font-display font-semibold text-cool-gray-400 tracking-wide",
+                  title
+                )
+              },
+              pages.map { page =>
+                navigationItem($page, page)(
                   a(
-                    cls := "border-l-4 -ml-4 pl-4 border-transparent flex font-display font-medium tracking-wide",
-                    $page.map(_.exists(_.path == page.path)).classSwitch(
-                      whenTrue = "text-white border-cool-gray-100",
-                      whenFalse = "text-cool-gray-300 group-hover:text-white"
-                    ),
+                    cls := "ml-6 flex font-display font-medium tracking-wide",
                     href := s"/${module.path}/${page.path}",
                     page.title
                   )
@@ -55,6 +46,19 @@ object PageNavigation {
           }
         )
       }
+    )
+
+  private def navigationItem(
+    $currentPage: Signal[Option[Page]],
+    page: Page
+  )(mods: Modifier[Element]*) =
+    div(
+      cls := "px-2 py-1",
+      $currentPage.optionExists(_.path == page.path).classSwitch(
+        whenTrue = "text-white bg-cool-gray-700",
+        whenFalse = "text-cool-gray-200 hover:text-white hover:bg-cool-gray-700"
+      ),
+      mods
     )
 
 }

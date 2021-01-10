@@ -9,6 +9,7 @@ import io.laminext.tailwind.syntax._
 import io.laminext.syntax.all._
 import io.laminext.markdown._
 import io.laminext.site.Styles
+import io.laminext.site.TemplateVars
 import org.scalajs.dom
 import org.scalajs.dom.ext._
 import org.scalajs.dom.html
@@ -93,7 +94,7 @@ object CodeExampleDisplay {
       ),
       div(
         cls := "prose-custom",
-        unsafeMarkdown := example.description,
+        unsafeMarkdown := TemplateVars(example.description),
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
             Highlight.highlightBlock(codeElement)
@@ -128,8 +129,9 @@ object CodeExampleDisplay {
           span(
             cls := "flex-shrink-0",
             button.btn.sm.text.blue(
-              child.text <-- sourceCollapsed.signal.map(if (_) "expand" else "collapse"),
-              onClick --> { _ => sourceCollapsed.toggle() }
+              cls := "w-20 justify-center",
+              child.text <-- sourceCollapsed.signal.switch("expand", "collapse"),
+              onClick --> sourceCollapsed.toggleObserver
             )
           )
         ),

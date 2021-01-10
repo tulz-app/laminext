@@ -7,9 +7,9 @@ import com.yurique.embedded.FileAsString
 
 object Site {
 
-  private def indexExamplePage(
-    example: CodeExample
-  ): Page = Page("", example.title, CodeExamplePage(example))
+//  private def indexExamplePage(
+//    example: CodeExample
+//  ): Page = Page("", example.title, CodeExamplePage(example))
 
   private def examplePage(
     example: CodeExample
@@ -23,8 +23,8 @@ object Site {
 
   val indexModule: SiteModule =
     SiteModule(
-      path = "laminext",
-      index = docPage("", "laminext", FileAsString("/doc/laminext/index.md"))
+      path = "",
+      index = docPage("", "laminext", FileAsString("/doc/index.md"))
     )
 
   val modules: Seq[SiteModule] = Seq(
@@ -71,6 +71,33 @@ object Site {
       )
     ),
     SiteModule(
+      path = "fetch",
+      index = docPage("", "fetch", FileAsString("/doc/fetch/index.md")),
+      navigation = Seq(
+        "" -> Seq(
+          docPage("request-method", "Request method", FileAsString("/doc/fetch/request-method.md")),
+          docPage("request-headers", "Request headers", FileAsString("/doc/fetch/request-headers.md")),
+          docPage("request-body", "Request body", FileAsString("/doc/fetch/request-body.md")),
+          docPage("request-settings", "Other request settings", FileAsString("/doc/fetch/request-settings.md")),
+          docPage("response", "Handling the response", FileAsString("/doc/fetch/response.md")),
+          docPage("circe", "Circe support", FileAsString("/doc/fetch/circe.md")),
+        ),
+        "Examples" -> Seq(
+          examplePage(examples.fetch.FetchPostExample),
+          examplePage(examples.fetch.FetchCirceExample),
+        )
+      )
+    ),
+    SiteModule(
+      path = "websocket",
+      index = docPage("", "WebSocket", FileAsString("/doc/todo.md")),
+      navigation = Seq(
+        "" -> Seq(
+          examplePage(examples.websocket.WebSocketExample),
+        )
+      )
+    ),
+    SiteModule(
       path = "ui",
       index = docPage("", "UI", FileAsString("/doc/ui/index.md")),
       navigation = Seq(
@@ -79,6 +106,14 @@ object Site {
           examplePage(examples.ui.ex_transition.TransitionExample),
         )
       )
+    ),
+    SiteModule(
+      path = "validation",
+      index = docPage("", "Validation", FileAsString("/doc/todo.md")),
+    ),
+    SiteModule(
+      path = "fsm",
+      index = docPage("", "FSM", FileAsString("/doc/todo.md"))
     ),
     SiteModule(
       path = "tailwind",
@@ -94,37 +129,21 @@ object Site {
       )
     ),
     SiteModule(
-      path = "fsm",
-      index = docPage("", "FSM", FileAsString("/doc/todo.md"))
+      path = "videojs",
+      index = docPage("", "video.js", FileAsString("/doc/todo.md"))
     ),
     SiteModule(
       path = "markdown",
       index = docPage("", "Markdown", FileAsString("/doc/todo.md"))
     ),
     SiteModule(
-      path = "videojs",
-      index = docPage("", "video.js", FileAsString("/doc/todo.md"))
-    ),
-    SiteModule(
       path = "highlight",
       index = docPage("", "highlight.js", FileAsString("/doc/todo.md"))
     ),
     SiteModule(
-      path = "fetch",
-      index = indexExamplePage(examples.fetch.FetchExample),
-      navigation = Seq(
-        "Examples" -> Seq(
-        )
-      )
+      path = "util",
+      index = docPage("", "Util", FileAsString("/doc/todo.md"))
     ),
-    SiteModule(
-      path = "websockets",
-      index = indexExamplePage(examples.websocket.WebSocketExample),
-      navigation = Seq(
-        "Examples" -> Seq(
-        )
-      )
-    )
   )
 
   def findModule(path: String): Option[SiteModule] =

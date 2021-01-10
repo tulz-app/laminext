@@ -27,30 +27,24 @@ object PageHeader {
     )
 
     div(
-      cls := "bg-cool-gray-900 text-white flex py-4 px-8 items-center space-x-8 ",
+      cls := "flex bg-cool-gray-900 text-white py-4 px-8 items-center space-x-8",
       nav(
-        cls := "flex-1 flex space-x-4 justify-start",
-        Site.modules.map { module =>
-          a(
-            cls := "border-b-2 px-2 border-transparent flex text-lg font-display font-medium tracking-wide",
-            $module.map(_.exists(_.path == module.path)).classSwitch(
-              "border-cool-gray-300 text-white",
-              "text-cool-gray-300 hover:border-cool-gray-300 hover:text-white "
-            ),
-            href := s"/${module.path}",
-            module.index.title
-          )
-        }
+        cls := "w-80 flex space-x-4 items-center justify-start",
+        Site.modules.take(1).map(moduleLink($module))
+      ),
+      nav(
+        cls := "flex-1 flex space-x-4 justify-start items-center",
+        Site.modules.drop(1).map(moduleLink($module))
       ),
       div(
         cls := "relative inline-block text-left",
         div(
           button.btn.sm.text.white(
             `type` := "button",
+            Icons.highlighter(svg.cls := "h-4 text-cool-gray-300"),
             aria.hasPopup := true,
             aria.expanded <-- styleDropDownOpen.signal,
             onClick --> { _ => styleDropDownOpen.toggle() },
-            "code theme",
             Icons
               .chevronDown(
                 svg.cls := "-mr-1 ml-2 h-4 fill-current text-cool-gray-300"
@@ -97,10 +91,22 @@ object PageHeader {
       div(
         a(
           href := "https://github.com/tulz-app/laminext",
-          Icons.github(svg.cls := "h-8")
+          Icons.github(svg.cls := "h-6 text-cool-gray-300")
         )
       )
     )
   }
+
+  private def moduleLink(currentModule: Signal[Option[SiteModule]])(module: SiteModule) =
+    a(
+      cls := "border-b-2 px-2 border-transparent flex font-display tracking-wide",
+      currentModule
+        .map(_.exists(_.path == module.path)).classSwitch(
+          "border-cool-gray-300 text-white",
+          "text-cool-gray-300 hover:border-cool-gray-300 hover:text-white "
+        ),
+      href := s"/${module.path}",
+      module.index.title
+    )
 
 }

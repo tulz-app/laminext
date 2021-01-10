@@ -1,10 +1,12 @@
 package io.laminext.site.layout
 
 import io.laminext.site.Page
+import io.laminext.site.Site
 import io.laminext.site.SiteModule
 import io.laminext.site.Styles
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.all._
+import io.laminext.tailwind.syntax._
 import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
@@ -31,7 +33,7 @@ object PageWrap {
       ),
       div(
         cls := "flex-1 flex overflow-hidden",
-        PageNavigation($module, $page),
+        PageNavigation($module, $page).hiddenIf($module.optionContains(Site.indexModule)),
         div(
           cls := "flex-1 bg-cool-gray-200 overflow-auto p-4",
           div(

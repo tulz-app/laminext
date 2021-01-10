@@ -1,7 +1,6 @@
 package io.laminext.fetch
 
 import com.raquo.airstream.eventstream.EventStream
-import org.scalajs.dom
 import org.scalajs.dom.experimental.Fetch.fetch
 import org.scalajs.dom.experimental.AbortController
 import org.scalajs.dom.experimental.HttpMethod
@@ -18,8 +17,6 @@ import scala.scalajs.js
 import scala.scalajs.js.timers.clearTimeout
 import scala.scalajs.js.timers.setTimeout
 import scala.scalajs.js.timers.SetTimeoutHandle
-import scala.scalajs.js.|
-import scala.scalajs.js.Promise
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import com.raquo.airstream.custom.CustomSource
@@ -31,7 +28,7 @@ object FetchEventStream {
     url: String,
     method: HttpMethod,
     headers: js.UndefOr[Map[String, String]],
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String],
+    body: RequestBody,
     referrer: js.UndefOr[String],
     referrerPolicy: js.UndefOr[ReferrerPolicy],
     mode: js.UndefOr[RequestMode],
@@ -41,7 +38,7 @@ object FetchEventStream {
     integrity: js.UndefOr[String],
     keepalive: js.UndefOr[Boolean],
     timeout: js.UndefOr[FiniteDuration],
-    extract: Response => Promise[A],
+    extract: Response => Future[A],
   ): EventStream[FetchResponse[A]] = {
     CustomStreamSource[FetchResponse[A]]((fireValue, fireError, _, _) => {
       val abortController                             = new AbortController()
@@ -63,7 +60,7 @@ object FetchEventStream {
           }
           dict
         }
-        init.body = body
+        init.body = body()
         init.referrer = referrer
         init.referrerPolicy = referrerPolicy
         init.mode = mode
@@ -94,7 +91,7 @@ object FetchEventStream {
               response => {
                 timeoutHandle.foreach(clearTimeout)
                 timeoutHandle = js.undefined
-                extract(response).toFuture.onComplete { extracted =>
+                extract(response).onComplete { extracted =>
                   extracted.fold[Unit](
                     handleError,
                     extracted => {

@@ -22,4 +22,16 @@ final case class FetchResponse[A](
   `type`: ResponseType,
   data: A,
   url: String,
-)
+) {
+
+  def map[B](project: A => B): FetchResponse[B] = FetchResponse(
+    ok = ok,
+    status = status,
+    statusText = statusText,
+    headers = headers,
+    `type` = `type`,
+    data = project(data),
+    url = url
+  )
+
+}

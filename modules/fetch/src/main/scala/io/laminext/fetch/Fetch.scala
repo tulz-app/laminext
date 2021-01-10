@@ -12,9 +12,8 @@ import org.scalajs.dom.experimental.RequestRedirect
 import org.scalajs.dom.experimental.Response
 
 import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.Future
 import scala.scalajs.js
-import scala.scalajs.js.|
-import scala.scalajs.js.Promise
 import scala.scalajs.js.typedarray.ArrayBuffer
 import scala.scalajs.js.typedarray.Uint8Array
 
@@ -24,7 +23,7 @@ object Fetch {
     method: HttpMethod,
     url: String,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
+    body: RequestBody = RequestBody.noBody,
   ): FetchEventStreamBuilder =
     new FetchEventStreamBuilder(
       _url = url,
@@ -45,7 +44,7 @@ object Fetch {
 
   @inline def post(
     url: String,
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
+    body: RequestBody = RequestBody.noBody,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -57,7 +56,7 @@ object Fetch {
 
   @inline def put(
     url: String,
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
+    body: RequestBody = RequestBody.noBody,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -69,7 +68,7 @@ object Fetch {
 
   @inline def patch(
     url: String,
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
+    body: RequestBody = RequestBody.noBody,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -125,7 +124,7 @@ final class FetchEventStreamBuilder(
   private var _url: String,
   private var _method: HttpMethod,
   private var _headers: js.UndefOr[Map[String, String]] = js.undefined,
-  private var _body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
+  private var _body: RequestBody = RequestBody.noBody,
   private var _referrer: js.UndefOr[String] = js.undefined,
   private var _referrerPolicy: js.UndefOr[ReferrerPolicy] = js.undefined,
   private var _mode: js.UndefOr[RequestMode] = js.undefined,
@@ -138,7 +137,7 @@ final class FetchEventStreamBuilder(
 ) {
 
   @inline def build[A](
-    extract: Response => Promise[A]
+    extract: Response => Future[A]
   ): EventStream[FetchResponse[A]] =
     FetchEventStream(
       url = _url,
@@ -157,21 +156,25 @@ final class FetchEventStreamBuilder(
       extract = extract
     )
 
-  @inline def raw: EventStream[FetchResponse[Response]] = build(response => Promise.resolve[Response](response))
+  @inline def raw: EventStream[FetchResponse[Response]] = build(response => Future.successful(response))
 
-  @inline def readableStream: EventStream[FetchResponse[ReadableStream[Uint8Array]]] =
-    build(response => Promise.resolve[ReadableStream[Uint8Array]](response.body))
+  @inline def text: EventStream[FetchResponse[String]] = build(_.text().toFuture)
 
-  @inline def text: EventStream[FetchResponse[String]] = build(_.text())
+  @inline def json: EventStream[FetchResponse[js.Any]] = build(_.json().toFuture)
 
-  @inline def json: EventStream[FetchResponse[js.Any]] = build(_.json())
+  @inline def blob: EventStream[FetchResponse[dom.Blob]] = build(_.blob().toFuture)
 
-  @inline def blob: EventStream[FetchResponse[dom.Blob]] = build(_.blob())
+  @inline def arrayBuffer: EventStream[FetchResponse[ArrayBuffer]] = build(_.arrayBuffer().toFuture)
 
-  @inline def arrayBuffer: EventStream[FetchResponse[ArrayBuffer]] = build(_.arrayBuffer())
+  def headers(
+    headers: js.UndefOr[Map[String, String]] = this._headers,
+  ): FetchEventStreamBuilder = {
+    this._headers = headers
+    this
+  }
 
   def body(
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String]
+    body: RequestBody,
   ): FetchEventStreamBuilder = {
     this._body = body
     this
@@ -241,19 +244,19 @@ final class FetchEventStreamBuilder(
   }
 
   def configure(
-    url: String,
-    method: HttpMethod,
-    headers: js.UndefOr[Map[String, String]] = js.undefined,
-    body: js.UndefOr[dom.Blob | dom.crypto.BufferSource | dom.FormData | String] = js.undefined,
-    referrer: js.UndefOr[String] = js.undefined,
-    referrerPolicy: js.UndefOr[ReferrerPolicy] = js.undefined,
-    mode: js.UndefOr[RequestMode] = js.undefined,
-    credentials: js.UndefOr[RequestCredentials] = js.undefined,
-    cache: js.UndefOr[RequestCache] = js.undefined,
-    redirect: js.UndefOr[RequestRedirect] = js.undefined,
-    integrity: js.UndefOr[String] = js.undefined,
-    keepalive: js.UndefOr[Boolean] = js.undefined,
-    timeout: js.UndefOr[FiniteDuration] = js.undefined
+    url: String = this._url,
+    method: HttpMethod = this._method,
+    headers: js.UndefOr[Map[String, String]] = this._headers,
+    body: RequestBody = this._body,
+    referrer: js.UndefOr[String] = this._referrer,
+    referrerPolicy: js.UndefOr[ReferrerPolicy] = this._referrerPolicy,
+    mode: js.UndefOr[RequestMode] = this._mode,
+    credentials: js.UndefOr[RequestCredentials] = this._credentials,
+    cache: js.UndefOr[RequestCache] = this._cache,
+    redirect: js.UndefOr[RequestRedirect] = this._redirect,
+    integrity: js.UndefOr[String] = this._integrity,
+    keepalive: js.UndefOr[Boolean] = this._keepalive,
+    timeout: js.UndefOr[FiniteDuration] = this._timeout
   ): FetchEventStreamBuilder = {
     this._url = url
     this._method = method

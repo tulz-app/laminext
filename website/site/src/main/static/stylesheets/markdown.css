@@ -1,8 +1,8 @@
-.prose-custom{
+.prose-custom {
     color: #374151;
 }
 
-.prose-custom [class~="lead"]{
+.prose-custom [class~="lead"] {
     color: #4b5563;
     font-size: 1.25em;
     line-height: 1.6;
@@ -10,42 +10,42 @@
     margin-bottom: 1.2em;
 }
 
-.prose-custom a{
+.prose-custom a {
     color: #5850ec;
     text-decoration: none;
     font-weight: 600;
 }
 
-.prose-custom strong{
+.prose-custom strong {
     color: #161e2e;
     font-weight: 600;
 }
 
-.prose-custom ol{
+.prose-custom ol {
     counter-reset: list-counter;
     margin-top: 1.25em;
     margin-bottom: 1.25em;
 }
 
-.prose-custom ol > li{
+.prose-custom ol > li {
     position: relative;
     counter-increment: list-counter;
     padding-left: 1.75em;
 }
 
-.prose-custom ol > li::before{
+.prose-custom ol > li::before {
     content: counter(list-counter) ".";
     position: absolute;
     font-weight: 400;
     color: #6b7280;
 }
 
-.prose-custom ul > li{
+.prose-custom ul > li {
     position: relative;
     padding-left: 1.75em;
 }
 
-.prose-custom ul > li::before{
+.prose-custom ul > li::before {
     content: "";
     position: absolute;
     background-color: #d2d6dc;
@@ -56,38 +56,38 @@
     left: 0.25em;
 }
 
-.prose-custom hr{
+.prose-custom hr {
     border-color: #e5e7eb;
     border-top-width: 1px;
     margin-top: 3em;
     margin-bottom: 3em;
 }
 
-.prose-custom blockquote{
+.prose-custom blockquote {
     font-weight: 500;
     font-style: italic;
     color: #161e2e;
     border-left-width: 0.25rem;
     border-left-color: #e5e7eb;
-    quotes: "\201C""\201D""\2018""\2019";
+    quotes: "\201C" "\201D" "\2018" "\2019";
     margin-top: 1.6em;
     margin-bottom: 1.6em;
     padding-left: 1em;
 }
 
-.prose-custom blockquote p:first-of-type::before{
+.prose-custom blockquote p:first-of-type::before {
     content: open-quote;
 }
 
-.prose-custom blockquote p:last-of-type::after{
+.prose-custom blockquote p:last-of-type::after {
     content: close-quote;
 }
 
-.prose-custom h1,h2,h3,h4 {
+.prose-custom h1, h2, h3, h4 {
     @apply font-display;
 }
 
-.prose-custom h1{
+.prose-custom h1 {
     color: #111827;
     font-weight: 800;
     font-size: 2.25em;
@@ -96,7 +96,7 @@
     line-height: 1.1111111;
 }
 
-.prose-custom h2{
+.prose-custom h2 {
     color: #111827;
     font-weight: 700;
     font-size: 1.5em;
@@ -105,7 +105,7 @@
     line-height: 1.3333333;
 }
 
-.prose-custom h3{
+.prose-custom h3 {
     color: #111827;
     font-weight: 600;
     font-size: 1.25em;
@@ -114,7 +114,7 @@
     line-height: 1.6;
 }
 
-.prose-custom h4{
+.prose-custom h4 {
     color: #111827;
     font-weight: 600;
     margin-top: 1.5em;
@@ -122,14 +122,14 @@
     line-height: 1.5;
 }
 
-.prose-custom figure figcaption{
+.prose-custom figure figcaption {
     color: #6b7280;
     font-size: 0.875em;
     line-height: 1.4285714;
     margin-top: 0.8571429em;
 }
 
-.prose-custom table{
+.prose-custom table {
     width: 100%;
     table-layout: auto;
     text-align: left;
@@ -139,30 +139,30 @@
     line-height: 1.7142857;
 }
 
-.prose-custom thead{
+.prose-custom thead {
     color: #161e2e;
     font-weight: 600;
     border-bottom-width: 1px;
     border-bottom-color: #d2d6dc;
 }
 
-.prose-custom thead th{
+.prose-custom thead th {
     vertical-align: bottom;
     padding-right: 0.5714286em;
     padding-bottom: 0.5714286em;
     padding-left: 0.5714286em;
 }
 
-.prose-custom tbody tr{
+.prose-custom tbody tr {
     border-bottom-width: 1px;
     border-bottom-color: #e5e7eb;
 }
 
-.prose-custom tbody tr:last-child{
+.prose-custom tbody tr:last-child {
     border-bottom-width: 0;
 }
 
-.prose-custom tbody td{
+.prose-custom tbody td {
     vertical-align: top;
     padding-top: 0.5714286em;
     padding-right: 0.5714286em;
@@ -170,140 +170,145 @@
     padding-left: 0.5714286em;
 }
 
-.prose-custom{
+.prose-custom {
     font-size: 1rem;
     line-height: 1.75;
 }
 
-.prose-custom p{
+.prose-custom p {
     margin-top: 1.25em;
     margin-bottom: 1.25em;
 }
 
-.prose-custom img{
+.prose-custom pre {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+}
+
+.prose-custom img {
     margin-top: 2em;
     margin-bottom: 2em;
 }
 
-.prose-custom video{
+.prose-custom video {
     margin-top: 2em;
     margin-bottom: 2em;
 }
 
-.prose-custom figure{
+.prose-custom figure {
     margin-top: 2em;
     margin-bottom: 2em;
 }
 
-.prose-custom figure > *{
+.prose-custom figure > * {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.prose-custom h2 code{
+.prose-custom h2 code {
     font-size: 0.875em;
 }
 
-.prose-custom h3 code{
+.prose-custom h3 code {
     font-size: 0.9em;
 }
 
-.prose-custom ul{
+.prose-custom ul {
     margin-top: 1.25em;
     margin-bottom: 1.25em;
 }
 
-.prose-custom li{
+.prose-custom li {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
 
-.prose-custom ol > li:before{
+.prose-custom ol > li:before {
     left: 0;
 }
 
-.prose-custom > ul > li p{
+.prose-custom > ul > li p {
     margin-top: 0.75em;
     margin-bottom: 0.75em;
 }
 
-.prose-custom > ul > li > *:first-child{
+.prose-custom > ul > li > *:first-child {
     margin-top: 1.25em;
 }
 
-.prose-custom > ul > li > *:last-child{
+.prose-custom > ul > li > *:last-child {
     margin-bottom: 1.25em;
 }
 
-.prose-custom > ol > li > *:first-child{
+.prose-custom > ol > li > *:first-child {
     margin-top: 1.25em;
 }
 
-.prose-custom > ol > li > *:last-child{
+.prose-custom > ol > li > *:last-child {
     margin-bottom: 1.25em;
 }
 
-.prose-custom ul ul, .prose-custom ul ol, .prose-custom ol ul, .prose-custom ol ol{
+.prose-custom ul ul, .prose-custom ul ol, .prose-custom ol ul, .prose-custom ol ol {
     margin-top: 0.75em;
     margin-bottom: 0.75em;
 }
 
-.prose-custom hr + *{
+.prose-custom hr + * {
     margin-top: 0;
 }
 
-.prose-custom h2 + *{
+.prose-custom h2 + * {
     margin-top: 0;
 }
 
-.prose-custom h3 + *{
+.prose-custom h3 + * {
     margin-top: 0;
 }
 
-.prose-custom h4 + *{
+.prose-custom h4 + * {
     margin-top: 0;
 }
 
-.prose-custom thead th:first-child{
+.prose-custom thead th:first-child {
     padding-left: 0;
 }
 
-.prose-custom thead th:last-child{
+.prose-custom thead th:last-child {
     padding-right: 0;
 }
 
-.prose-custom tbody td:first-child{
+.prose-custom tbody td:first-child {
     padding-left: 0;
 }
 
-.prose-custom tbody td:last-child{
+.prose-custom tbody td:last-child {
     padding-right: 0;
 }
 
-.prose-custom > :first-child{
+.prose-custom > :first-child {
     margin-top: 0;
 }
 
-.prose-custom > :last-child{
+.prose-custom > :last-child {
     margin-bottom: 0;
 }
 
-.prose-custom h1, .prose-custom h2, .prose-custom h3, .prose-custom h4{
+.prose-custom h1, .prose-custom h2, .prose-custom h3, .prose-custom h4 {
     color: #161e2e;
 }
 
 
-.prose-custom code:not(.hljs){
+.prose-custom code:not(.hljs) {
     @apply text-cool-gray-900;
     @apply font-medium;
     @apply text-sm;
     @apply bg-cool-gray-200;
 }
 
-.prose-custom code:not(.hljs)::before{
+.prose-custom code:not(.hljs)::before {
     content: "`";
 }
 
-.prose-custom code:not(.hljs)::after{
+.prose-custom code:not(.hljs)::after {
     content: "`";
 }

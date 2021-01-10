@@ -204,7 +204,7 @@ lazy val `websocket` =
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(
-      description := "Laminar websocket client"
+      description := "Websocket client"
     )
 
 lazy val `fetch` =
@@ -214,8 +214,25 @@ lazy val `fetch` =
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(
-      description := "Laminar fetch client"
+      description := "Fetch client"
     )
+
+lazy val `fetch-circe` =
+  project
+    .in(file("modules/fetch-circe"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(
+      libraryDependencies ++= Seq(
+        "io.circe" %%% "circe-core"   % "0.13.0",
+        "io.circe" %%% "circe-parser" % "0.13.0"
+      )
+    )
+    .settings(
+      description := "circe support for the fetch client"
+    )
+    .dependsOn(`fetch`)
 
 lazy val `util` =
   project
@@ -241,6 +258,7 @@ lazy val website = project
       "com.raquo"     %%% "laminar"              % "0.11.0",
       "io.frontroute" %%% "frontroute"           % "0.11.5",
       "com.yurique"   %%% "embedded-files-macro" % "0.1.1",
+      "io.circe"      %%% "circe-generic"        % "0.13.0",
       "io.mwielocha"  %%% "factorio-core"        % "0.3.1",
       "io.mwielocha"  %%% "factorio-annotations" % "0.3.1",
       "io.mwielocha"  %%% "factorio-macro"       % "0.3.1" % "provided"
@@ -255,7 +273,7 @@ lazy val website = project
     addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.2").cross(CrossVersion.full)),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
   )
-  .dependsOn(`core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`, `websocket`, `fetch`)
+  .dependsOn(`core`, `validation`, `util`, `fsm`, `videojs`, `highlight`, `markdown`, `ui`, `tailwind`, `websocket`, `fetch`, `fetch-circe`)
 
 lazy val root = project
   .in(file("."))
@@ -274,5 +292,6 @@ lazy val root = project
     `markdown`,
     `ui`,
     `tailwind`,
-    `fetch`
+    `fetch`,
+    `fetch-circe`
   )
