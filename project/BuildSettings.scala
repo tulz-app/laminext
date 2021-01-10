@@ -19,6 +19,7 @@ object BuildSettings {
     val factorio             = "0.3.1"
     val `kind-projector`     = "0.11.2"
     val `better-monadic-for` = "0.3.1"
+    val pprint               = "0.6.0"
 
   }
 
