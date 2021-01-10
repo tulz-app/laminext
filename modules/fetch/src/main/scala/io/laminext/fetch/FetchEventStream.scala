@@ -3,6 +3,7 @@ package io.laminext.fetch
 import com.raquo.airstream.eventstream.EventStream
 import org.scalajs.dom.experimental.Fetch.fetch
 import org.scalajs.dom.experimental.AbortController
+import org.scalajs.dom.experimental.BodyInit
 import org.scalajs.dom.experimental.HttpMethod
 import org.scalajs.dom.experimental.ReferrerPolicy
 import org.scalajs.dom.experimental.RequestCache
@@ -28,7 +29,7 @@ object FetchEventStream {
     url: String,
     method: HttpMethod,
     headers: js.UndefOr[Map[String, String]],
-    body: RequestBody,
+    body: js.UndefOr[BodyInit],
     referrer: js.UndefOr[String],
     referrerPolicy: js.UndefOr[ReferrerPolicy],
     mode: js.UndefOr[RequestMode],
@@ -60,7 +61,7 @@ object FetchEventStream {
           }
           dict
         }
-        init.body = body()
+        init.body = body
         init.referrer = referrer
         init.referrerPolicy = referrerPolicy
         init.mode = mode

@@ -138,12 +138,13 @@ final class FetchEventStreamBuilder(
 
   @inline def build[A](
     extract: Response => Future[A]
-  ): EventStream[FetchResponse[A]] =
+  ): EventStream[FetchResponse[A]] = {
+    this._body()
     FetchEventStream(
       url = _url,
       method = _method,
-      headers = _headers,
-      body = _body,
+      headers = _body.updateHeaders(_headers),
+      body = _body(),
       referrer = _referrer,
       referrerPolicy = _referrerPolicy,
       mode = _mode,
@@ -155,6 +156,7 @@ final class FetchEventStreamBuilder(
       timeout = _timeout,
       extract = extract
     )
+  }
 
   @inline def raw: EventStream[FetchResponse[Response]] = build(response => Future.successful(response))
 
