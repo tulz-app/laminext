@@ -1,4 +1,10 @@
-# Util
+```scala
+libraryDependencies += "io.laminext" %%% "util" % "{{laminextVersion}}"
+```
+
+```scala
+import io.laminext.util._
+```
 
 ## `UrlString`
 

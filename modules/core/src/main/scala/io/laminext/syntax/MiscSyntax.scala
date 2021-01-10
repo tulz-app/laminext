@@ -54,15 +54,15 @@ trait MiscSyntax {
   @inline def tee[T](observers: Observer[T]*): Observer[T] =
     new TeeObserver[T](observers)
 
-  def withBus[T](body: Observer[T] => Unit): EventStream[T] = {
+  def buildStream[T](body: Observer[T] => Unit): EventStream[T] = {
     val bus = new EventBus[T]
     body(bus.writer)
     bus.events
   }
 
-  def createTrigger(): (EventStream[Unit], () => Unit) = {
-    val bus = new EventBus[Unit]()
-    (bus.events, () => { bus.writer.onNext((): Unit) })
+  @inline def createTrigger(): (EventStream[Unit], () => Unit) = {
+    val (stream, callback) = EventStream.withCallback[Unit]
+    (stream, () => { callback((): Unit) })
   }
 
   @inline def storedBoolean(name: String, initial: Boolean = true): StoredBoolean =

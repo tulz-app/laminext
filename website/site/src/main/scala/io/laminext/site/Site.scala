@@ -115,36 +115,32 @@ object Site {
         examplePage(examples.validation.ex_validation.ValidationExample),
       )
     ),
-    SiteModule(
-      path = "fsm",
-      index = docPage("", "FSM", FileAsString("/doc/todo.md"))
-    ),
+//    SiteModule(
+//      path = "fsm",
+//      index = docPage("", "FSM", FileAsString("/doc/todo.md"))
+//    ),
     SiteModule(
       path = "tailwind",
       index = docPage("", "Tailwind", FileAsString("/doc/todo.md"))
     ),
+//    SiteModule(
+//      path = "videojs",
+//      index = docPage("", "video.js", FileAsString("/doc/todo.md"))
+//    ),
+//    SiteModule(
+//      path = "markdown",
+//      index = docPage("", "Markdown", FileAsString("/doc/todo.md"))
+//    ),
+//    SiteModule(
+//      path = "highlight",
+//      index = docPage("", "highlight.js", FileAsString("/doc/todo.md"))
+//    ),
     SiteModule(
       path = "util",
       index = docPage("", "Util", FileAsString("/doc/util/index.md")),
       "Examples" -> Seq(
         examplePage(examples.util.ex_human_readable_size.HumanReadableSizeExample),
       )
-    ),
-    SiteModule(
-      path = "videojs",
-      index = docPage("", "video.js", FileAsString("/doc/todo.md"))
-    ),
-    SiteModule(
-      path = "markdown",
-      index = docPage("", "Markdown", FileAsString("/doc/todo.md"))
-    ),
-    SiteModule(
-      path = "highlight",
-      index = docPage("", "highlight.js", FileAsString("/doc/todo.md"))
-    ),
-    SiteModule(
-      path = "util",
-      index = docPage("", "Util", FileAsString("/doc/todo.md"))
     ),
   )
 
