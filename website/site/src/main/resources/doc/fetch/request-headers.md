@@ -15,3 +15,11 @@ import io.laminext.fetch.Fetch
 
 Fetch.get("https://...").headers(Map("Authorization" -> "Bearer ..."))
 ```
+
+Or to use the `updateHeaders` method:
+
+```scala
+import io.laminext.fetch.Fetch
+
+Fetch.get("https://...").updateHeaders(_.updated("Authorization", "Bearer ..."))
+```
