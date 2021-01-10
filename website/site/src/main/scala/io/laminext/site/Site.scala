@@ -90,7 +90,7 @@ object Site {
     ),
     SiteModule(
       path = "websocket",
-      index = docPage("", "WebSocket", FileAsString("/doc/todo.md")),
+      index = docPage("", "WebSocket", FileAsString("/doc/websocket/index.md")),
       navigation = Seq(
         "" -> Seq(
           examplePage(examples.websocket.WebSocketExample),

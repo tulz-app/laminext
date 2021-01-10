@@ -48,7 +48,7 @@ final class WebSocketReceiveStringBuilder(url: String) {
     new WebSocketBuilder(url, initialize.text, send.text(encode), receive.string)
   @inline def sendBlob: WebSocketBuilder[String, Blob] =
     new WebSocketBuilder(url, initialize.blob, send.blob, receive.string)
-  @inline def sendArray: WebSocketBuilder[String, ArrayBuffer] =
+  @inline def sendArrayBuffer: WebSocketBuilder[String, ArrayBuffer] =
     new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.string)
 
 }
@@ -64,7 +64,7 @@ final class WebSocketReceiveTextBuilder[Receive](
     new WebSocketBuilder(url, initialize.text, send.text(encode), receive.text(decode))
   @inline def sendBlob: WebSocketBuilder[Receive, Blob] =
     new WebSocketBuilder(url, initialize.blob, send.blob, receive.text(decode))
-  @inline def sendArray: WebSocketBuilder[Receive, ArrayBuffer] =
+  @inline def sendArrayBuffer: WebSocketBuilder[Receive, ArrayBuffer] =
     new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.text(decode))
 
 }
@@ -77,7 +77,7 @@ final class WebSocketReceiveBlobBuilder(url: String) {
     new WebSocketBuilder(url, initialize.text, send.text(encode), receive.blob)
   @inline def sendBlob: WebSocketBuilder[Blob, Blob] =
     new WebSocketBuilder(url, initialize.blob, send.blob, receive.blob)
-  @inline def sendArray: WebSocketBuilder[Blob, ArrayBuffer] =
+  @inline def sendArrayBuffer: WebSocketBuilder[Blob, ArrayBuffer] =
     new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.blob)
 
 }
@@ -90,7 +90,7 @@ final class WebSocketReceiveArrayBufferBuilder(url: String) {
     new WebSocketBuilder(url, initialize.text, send.text(encode), receive.arraybuffer)
   @inline def sendBlob: WebSocketBuilder[ArrayBuffer, Blob] =
     new WebSocketBuilder(url, initialize.blob, send.blob, receive.arraybuffer)
-  @inline def sendArray: WebSocketBuilder[ArrayBuffer, ArrayBuffer] =
+  @inline def sendArrayBuffer: WebSocketBuilder[ArrayBuffer, ArrayBuffer] =
     new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.arraybuffer)
 
 }
@@ -115,7 +115,7 @@ final class WebSocketReceiveBuilder(url: String) {
     new WebSocketReceiveTextBuilder[Receive](url, decode)
   @inline def receiveBlob: WebSocketReceiveBlobBuilder =
     new WebSocketReceiveBlobBuilder(url)
-  @inline def receiveArray: WebSocketReceiveArrayBufferBuilder =
+  @inline def receiveArrayBuffer: WebSocketReceiveArrayBufferBuilder =
     new WebSocketReceiveArrayBufferBuilder(url)
 
 }
