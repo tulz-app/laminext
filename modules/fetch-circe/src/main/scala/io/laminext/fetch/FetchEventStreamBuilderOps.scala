@@ -19,10 +19,13 @@ class FetchEventStreamBuilderOps(b: FetchEventStreamBuilder) {
         }
       }
 
-  implicit def decode[A](implicit decoder: Decoder[A]): EventStream[FetchResponse[A]] = b.build(decodeResponse[A](_))
+  private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder =
+    b.updateHeaders(_.updated("accept", "application/json"))
+
+  implicit def decode[A](implicit decoder: Decoder[A]): EventStream[FetchResponse[A]] = acceptJson(b).build(decodeResponse[A](_))
 
   implicit def decodeEither[Err, Resp](implicit decoderErr: Decoder[Err], decoderResp: Decoder[Resp]): EventStream[FetchResponse[Either[Err, Resp]]] =
-    b.build { response =>
+    acceptJson(b).build { response =>
       if (response.ok) {
         decodeResponse[Resp](response).map(Right(_))
       } else {
@@ -31,7 +34,7 @@ class FetchEventStreamBuilderOps(b: FetchEventStreamBuilder) {
     }
 
   implicit def decodeOkay[A](implicit decoder: Decoder[A]): EventStream[FetchResponse[A]] =
-    b.build { response =>
+    acceptJson(b).build { response =>
       if (response.ok) {
         decodeResponse(response)
       } else {

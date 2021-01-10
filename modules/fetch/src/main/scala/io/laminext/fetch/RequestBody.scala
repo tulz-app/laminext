@@ -8,6 +8,7 @@ import scala.scalajs.js
 trait RequestBody {
 
   def apply(): js.UndefOr[BodyInit]
+  def updateHeaders(headers: js.UndefOr[Map[String, String]]): js.UndefOr[Map[String, String]] = headers
 
 }
 
