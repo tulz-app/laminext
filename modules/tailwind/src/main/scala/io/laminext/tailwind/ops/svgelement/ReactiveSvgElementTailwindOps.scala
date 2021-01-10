@@ -1,9 +1,8 @@
 package io.laminext.tailwind
 package ops.svgelement
 
-import com.raquo.laminar.api.L.{cls => _, _}
-import com.raquo.laminar.api.L.svg._
-import com.raquo.airstream.signal.Signal
+import com.raquo.laminar.api.L
+import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveSvgElement
 import org.scalajs.dom
 
@@ -11,14 +10,14 @@ class ReactiveSvgElementTailwindOps[T <: dom.svg.Element](el: ReactiveSvgElement
 
   def hiddenIf(s: Signal[Boolean]): ReactiveSvgElement[T] =
     el.amend(
-      cls <-- s.map { hiding =>
+      L.svg.cls <-- s.map { hiding =>
         Seq("hidden" -> hiding)
       }
     )
 
   def visibleIf(s: Signal[Boolean]): ReactiveSvgElement[T] =
     el.amend(
-      cls <-- s.map { showing =>
+      L.svg.cls <-- s.map { showing =>
         Seq("hidden" -> !showing)
       }
     )

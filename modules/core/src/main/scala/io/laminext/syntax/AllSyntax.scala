@@ -5,7 +5,10 @@ import io.laminext.domext.ExtraEvents
 import io.laminext.util.SmartClass
 
 trait AllSyntax
-    extends SignalSyntax
+    extends ObservableSyntax
+    with ObservableOfBooleanSyntax
+    with ObservableOfOptionSyntax
+    with SignalSyntax
     with SignalOfEitherSyntax
     with SignalOfOptionSyntax
     with SignalOfTuple2Syntax
@@ -15,7 +18,6 @@ trait AllSyntax
     with EventStreamOfUnitSyntax
     with EventStreamOfEitherSyntax
     with EventStreamOfOptionSyntax
-    with ObservableOfBooleanSyntax
     with VarOfBooleanSyntax
     with EventPropTransformationSyntax
     with ReactiveEventPropSyntax

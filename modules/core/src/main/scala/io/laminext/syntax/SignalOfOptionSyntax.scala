@@ -1,6 +1,6 @@
 package io.laminext.syntax
 
-import com.raquo.airstream.signal.Signal
+import com.raquo.laminar.api.L._
 import io.laminext.ops.signal.SignalOfOptionOps
 
 trait SignalOfOptionSyntax {

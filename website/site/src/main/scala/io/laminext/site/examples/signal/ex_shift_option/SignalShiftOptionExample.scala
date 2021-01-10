@@ -20,39 +20,30 @@ object SignalShiftOptionExample
         cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "new value"
       )
-      val updateButton = button(
-        cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-        "update inner signal"
-      )
-      val putButton = button(
-        cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-        "put inner signal into outer signal",
-        onClick --> { _ =>
-          outer.writer.onNext(Some(inner.signal))
-        }
-      )
-      val removeButton = button(
-        cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-        "remove inner signal from outer signal",
-        onClick --> { _ =>
-          outer.writer.onNext(Option.empty)
-        }
-      )
-
       div(
-        updateButton
-          .events(onClick).mapTo(inputElement.ref.value) --> inner.writer,
         cls := "space-y-4",
         div(
           inputElement
         ),
         div(
-          updateButton
+          button(
+            cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+            "update inner signal",
+            thisEvents(onClick).mapTo(inputElement.ref.value) --> inner.writer
+          )
         ),
         div(
           cls := "flex space-x-4",
-          putButton,
-          removeButton
+          button(
+            cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+            "put inner signal into outer signal",
+            onClick.mapTo(Some(inner.signal)) --> outer.writer
+          ),
+          button(
+            cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+            "remove inner signal from outer signal",
+            onClick.mapTo(Option.empty) --> outer.writer
+          )
         ),
         div(
           cls := "flex space-x-4 items-center",
@@ -75,7 +66,9 @@ object SignalShiftOptionExample
           code("outer.shiftOption:"),
           code(
             cls := "text-blue-700 font-medium",
+            /* <focus> */
             child.text <-- outer.signal.shiftOption.map(_.toString())
+            /* </focus> */
           )
         )
       )

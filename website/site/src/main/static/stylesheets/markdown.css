@@ -301,7 +301,7 @@
 .prose-custom code:not(.hljs) {
     @apply text-cool-gray-900;
     @apply font-medium;
-    @apply text-sm;
+    /*@apply text-sm;*/
     @apply bg-cool-gray-200;
 }
 

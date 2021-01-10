@@ -13,17 +13,14 @@ object ThisEventsExample
       import io.laminext.syntax.all._
       import org.scalajs.dom
 
-      val aVar = Var("initial")
-
       val inputElement = input(
         tpe := "text",
         cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
-        placeholder := "new value"
+        placeholder := "set value"
       )
 
       div(
         cls := "space-y-4",
-        inputElement.value --> aVar.writer,
         div(
           inputElement
         ),
@@ -32,8 +29,8 @@ object ThisEventsExample
             cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
             "click me",
             /* <focus> */
-            thisEvents(onClick)
-              .sample(aVar.signal)
+            thisEvents(onClick.preventDefault)
+              .sample(inputElement.value)
               .map(_.toUpperCase)
               .collect {
                 case s if s.trim.nonEmpty => s

@@ -14,6 +14,7 @@ object TransitionExample
       import io.laminext.ui.transition.Transition
       import io.laminext.ui.transition.TransitionConfig
 
+      /* <focus> */
       val transitionConfig = TransitionConfig(
         inTransition = "transform transition-all motion-reduce:transition-none motion-reduce:transform-none",
         enterDuration = "duration-1000",
@@ -25,6 +26,7 @@ object TransitionExample
         leaveFrom = "opacity-100 scale-100",
         leaveTo = "opacity-0 scale-75"
       )
+      /* </focus> */
 
       val show            = Var(true)
       val actuallyShowing = Var(true)
@@ -56,7 +58,9 @@ object TransitionExample
         ),
         div(
           cls := "p-8 w-64  bg-blue-600 text-blue-50",
+          /* <focus> */
           Transition(show.signal, transitionConfig, observer = actuallyShowing.writer),
+          /* </focus> */
           "I should transition!"
         )
       )

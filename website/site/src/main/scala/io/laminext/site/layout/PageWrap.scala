@@ -7,7 +7,6 @@ import io.laminext.site.Styles
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.all._
 import io.laminext.tailwind.syntax._
-import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 object PageWrap {

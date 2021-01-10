@@ -1,23 +1,12 @@
 package io.laminext.ops.signal
 
-import io.laminext.ConditionalChildInserter
-import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.modifiers.Binder
-import com.raquo.laminar.nodes.ReactiveElement
-import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
 
   @inline def isDefined: Signal[Boolean] = underlying.map(_.isDefined)
 
   @inline def isEmpty: Signal[Boolean] = underlying.map(_.isEmpty)
-
-  @inline def childIfEmpty(child: => Child): Inserter[ReactiveElement.Base] =
-    ConditionalChildInserter(underlying.map(_.isEmpty), child)
-
-  @inline def childIfDefined(child: => Child): Inserter[ReactiveElement.Base] =
-    ConditionalChildInserter(underlying.map(_.isDefined), child)
 
   @inline def optionContains[B >: A](value: B): Signal[Boolean] =
     underlying.map(_.contains(value))
@@ -34,22 +23,9 @@ final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
   @inline def withDefault(default: => A): Signal[A] =
     underlying.map(_.getOrElse(default))
 
-  @inline def doWhenDefined(
-    callback: () => Unit
-  ): Binder[ReactiveHtmlElement.Base] =
-    underlying --> { value =>
-      if (value.isDefined) {
-        callback()
-      }
-    }
-
-  @inline def doWhenEmpty(
-    callback: () => Unit
-  ): Binder[ReactiveHtmlElement.Base] =
-    underlying --> { value =>
-      if (value.isEmpty) {
-        callback()
-      }
-    }
+  def someFlatMap[B](mapping: A => Signal[B]): Signal[Option[B]] = underlying.flatMap {
+    case Some(a) => mapping(a).map(Some(_))
+    case None    => Val(Option.empty[B])
+  }
 
 }
