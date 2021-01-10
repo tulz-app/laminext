@@ -1,34 +1,40 @@
 package io.laminext.validation
 
-import cats.syntax.all._
-import cats.data.NonEmptyChain
-
 object Validations {
 
-  def all(
-    validations: String => Either[NonEmptyChain[String], String]*
-  ): String => Either[NonEmptyChain[String], String] =
-    s => validations.map(_(s)).parSequence.map(_ => s)
+  def all[A](
+    validations: Validation[A]*
+  ): Validation[A] =
+    s => {
+//      validations.map(_(s)).parSequence.map(_ => s)
+      val allValidations = validations.map(_(s))
+      val allErrors = allValidations.collect { case Left(error) =>
+        error
+      }
+      if (allErrors.nonEmpty) {
+        Left[ValidationError, A](allErrors.flatten)
+      } else {
+        Right(s)
+      }
+    }
 
-  @inline def custom(message: String)(check: String => Boolean): String => Either[NonEmptyChain[String], String] =
+  @inline def custom[A](message: String)(check: A => Boolean): Validation[A] =
     s =>
-      if (check(s)) { s.asRight }
-      else { NonEmptyChain.one(message).asLeft }
+      if (check(s)) { Right(s) }
+      else { Left(Seq(message)) }
 
-  def nonBlank(message: String = "required"): String => Either[NonEmptyChain[String], String] =
+  def nonBlank(message: String = "required"): Validation[String] =
     custom(message)(_.trim.nonEmpty)
 
-  def email(message: String = "required"): String => Either[NonEmptyChain[String], String] =
+  def email(message: String = "required"): Validation[String] =
     custom(message)(EmailValidator.isValidEmail)
 
-  val pass: String => Either[NonEmptyChain[String], String] =
+  val pass: Validation[String] =
     custom("")(_ => true)
 
-  def isTrue(message: String): Boolean => Either[NonEmptyChain[String], Boolean] =
-    b =>
-      if (b) { b.asRight }
-      else { NonEmptyChain.one(message).asLeft }
+  def isTrue(message: String): Validation[Boolean] =
+    custom[Boolean](message)(identity)
 
-  def isFalse(message: String): Boolean => Either[NonEmptyChain[String], Boolean] = b => isTrue(message)(!b)
+  @inline def isFalse(message: String): Validation[Boolean] = b => isTrue(message)(!b)
 
 }

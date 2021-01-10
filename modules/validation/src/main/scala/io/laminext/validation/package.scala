@@ -1,38 +1,34 @@
 package io.laminext
 
-import io.laminext.validation.ops.signal.SignalOfBooleanValidationOps
-import io.laminext.validation.ops.signal.SignalOfStringValidationOps
-import io.laminext.validation.ops.stream.StreamOfBooleanValidationOps
-import io.laminext.validation.ops.stream.StreamOfStringValidationOps
-import cats.data.NonEmptyChain
+import io.laminext.validation.ops.signal.SignalValidationOps
+import io.laminext.validation.ops.stream.EventStreamValidationOps
 import com.raquo.laminar.api.L._
 import io.laminext.validation.ops.element.InputValidationOps
 import io.laminext.validation.ops.element.TextAreaValidationOps
+import io.laminext.validation.ops.validation.ValidationOps
 
 package object validation {
 
-  type ValidatedValue[T] = Either[NonEmptyChain[String], T]
-  type Validation[T]     = T => Either[cats.data.NonEmptyChain[String], T]
+  type ValidatedValue[T] = Either[ValidationError, T]
+  type ValidationError   = Seq[String]
+  type Validation[T]     = T => ValidatedValue[T]
 
   object syntax {
 
-    implicit def syntaxStreamOfStringValidation(stream: EventStream[String]): StreamOfStringValidationOps =
-      new StreamOfStringValidationOps(stream)
+    implicit def syntaxSignalValidation[A](signal: Signal[A]): SignalValidationOps[A] =
+      new SignalValidationOps[A](signal)
 
-    implicit def syntaxSignalOfStringValidation(signal: Signal[String]): SignalOfStringValidationOps =
-      new SignalOfStringValidationOps(signal)
-
-    implicit def syntaxStreamOfBooleanValidation(stream: EventStream[Boolean]): StreamOfBooleanValidationOps =
-      new StreamOfBooleanValidationOps(stream)
-
-    implicit def syntaxSignalOfBooleanValidation(signal: Signal[Boolean]): SignalOfBooleanValidationOps =
-      new SignalOfBooleanValidationOps(signal)
+    implicit def syntaxEventStreamValidation[A](stream: EventStream[A]): EventStreamValidationOps[A] =
+      new EventStreamValidationOps[A](stream)
 
     implicit def syntaxInputValidatedValue(el: Input): InputValidationOps =
       new InputValidationOps(el)
 
     implicit def syntaxTextAreaValidatedValue(el: TextArea): TextAreaValidationOps =
       new TextAreaValidationOps(el)
+
+    implicit def syntaxValidations[A](v: Validation[A]): ValidationOps[A] =
+      new ValidationOps[A](v)
 
     val V: Validations.type = Validations
 

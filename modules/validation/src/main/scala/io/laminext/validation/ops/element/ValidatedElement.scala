@@ -1,7 +1,6 @@
 package io.laminext.validation
 package ops.element
 
-import cats.data.NonEmptyChain
 import com.raquo.airstream.signal.Signal
 import com.raquo.airstream.eventstream.EventStream
 import com.raquo.laminar.api.L.onBlur
@@ -12,8 +11,8 @@ import org.scalajs.dom
 
 class ValidatedElement[+Ref <: dom.html.Element, A](
   val el: ReactiveHtmlElement[Ref],
-  val validatedValue: Signal[Either[NonEmptyChain[String], A]],
-  val validationError: Signal[Option[NonEmptyChain[String]]]
+  val validatedValue: Signal[ValidatedValue[A]],
+  val validationError: Signal[Option[ValidationError]]
 )
 
 object ValidatedElement {
@@ -25,7 +24,7 @@ object ValidatedElement {
   def apply[Ref <: dom.html.Element, A](
     el: ReactiveHtmlElement[Ref],
     value: Signal[A],
-    validation: A => Either[NonEmptyChain[String], A]
+    validation: Validation[A]
   ): ValidatedElement[Ref, A] = {
     val validatedValue = value.map(validation)
 
