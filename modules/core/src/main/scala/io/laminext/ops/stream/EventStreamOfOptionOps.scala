@@ -19,6 +19,9 @@ final class EventStreamOfOptionOps[A](underlying: EventStream[Option[A]]) {
   @inline def optionContains[B >: A](value: B): EventStream[Boolean] =
     underlying.map(_.contains(value))
 
+  @inline def optionExists(predicate: A => Boolean): EventStream[Boolean] =
+    underlying.map(_.exists(predicate))
+
   @inline def optionMap[B](project: A => B): EventStream[Option[B]] =
     underlying.map(_.map(project))
 
@@ -27,5 +30,10 @@ final class EventStreamOfOptionOps[A](underlying: EventStream[Option[A]]) {
 
   @inline def withDefault(default: => A): EventStream[A] =
     underlying.map(_.getOrElse(default))
+
+  def someFlatMap[B](mapping: A => EventStream[B]): EventStream[Option[B]] = underlying.flatMap {
+    case Some(a) => mapping(a).map(Some(_))
+    case None    => EventStream.fromValue(Option.empty[B])
+  }
 
 }

@@ -29,8 +29,8 @@ and the `data` of type `A` which depends on which response reader you specify:
 ### Raw response
 
 ```scala
+import com.raquo.laminar.api.L._
 import io.laminext.fetch._
-import com.raquo.airstream.eventstream.EventStream
 import org.scalajs.dom.experimental.Response
 
 val s: EventStream[FetchResponse[Response]] = Fetch.post("https://...").raw 
@@ -39,8 +39,8 @@ val s: EventStream[FetchResponse[Response]] = Fetch.post("https://...").raw
 ### Text 
 
 ```scala
+import com.raquo.laminar.api.L._
 import io.laminext.fetch._
-import com.raquo.airstream.eventstream.EventStream
 
 val s: EventStream[FetchResponse[String]] = Fetch.post("https://...").text 
 ```
@@ -48,8 +48,8 @@ val s: EventStream[FetchResponse[String]] = Fetch.post("https://...").text
 ### JSON (js-native) 
 
 ```scala
+import com.raquo.laminar.api.L._
 import io.laminext.fetch._
-import com.raquo.airstream.eventstream.EventStream
 
 val s: EventStream[FetchResponse[Any]] = Fetch.post("https://...").json 
 ```
@@ -57,8 +57,8 @@ val s: EventStream[FetchResponse[Any]] = Fetch.post("https://...").json
 ### Blob 
 
 ```scala
+import com.raquo.laminar.api.L._
 import io.laminext.fetch._
-import com.raquo.airstream.eventstream.EventStream
 import org.scalajs.dom
 
 val s: EventStream[FetchResponse[dom.Blob]] = Fetch.post("https://...").blob 
@@ -67,8 +67,8 @@ val s: EventStream[FetchResponse[dom.Blob]] = Fetch.post("https://...").blob
 ### Array buffer 
 
 ```scala
+import com.raquo.laminar.api.L._
 import io.laminext.fetch._
-import com.raquo.airstream.eventstream.EventStream
 import scala.scalajs.js.typedarray.ArrayBuffer
 
 val s: EventStream[FetchResponse[ArrayBuffer]] = Fetch.post("https://...").arrayBuffer 
@@ -79,8 +79,8 @@ val s: EventStream[FetchResponse[ArrayBuffer]] = Fetch.post("https://...").array
 You can provide a custom response reader: defined by a `Response => Promise[A]` function.
 
 ```scala
+import com.raquo.laminar.api.L._
 import io.laminext.fetch._
-import com.raquo.airstream.eventstream.EventStream
 import org.scalajs.dom.experimental.Response
 
 val myReader: Response => MyData = ??? 

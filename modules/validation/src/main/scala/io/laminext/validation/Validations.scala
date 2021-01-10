@@ -21,7 +21,7 @@ object Validations {
   def email(message: String = "required"): String => Either[NonEmptyChain[String], String] =
     custom(message)(EmailValidator.isValidEmail)
 
-  def pass: String => Either[NonEmptyChain[String], String] =
+  val pass: String => Either[NonEmptyChain[String], String] =
     custom("")(_ => true)
 
   def isTrue(message: String): Boolean => Either[NonEmptyChain[String], Boolean] =

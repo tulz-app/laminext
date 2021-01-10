@@ -1,6 +1,5 @@
 package io.laminext.ops.signal
 
-import com.raquo.airstream.signal.Signal
 import com.raquo.laminar.api.L._
 
 final class SignalOfOptionOfSignalOps[A](s: Signal[Option[Signal[A]]]) {

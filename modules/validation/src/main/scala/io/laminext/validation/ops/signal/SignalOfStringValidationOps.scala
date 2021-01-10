@@ -1,7 +1,7 @@
 package io.laminext.validation
 package ops.signal
 
-import com.raquo.airstream.signal.Signal
+import com.raquo.laminar.api.L._
 
 class SignalOfStringValidationOps(s: Signal[String]) {
 

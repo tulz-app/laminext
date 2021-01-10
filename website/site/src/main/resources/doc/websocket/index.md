@@ -145,7 +145,6 @@ or use the `.send` observer:
 
 ```scala
 import com.raquo.laminar.api.L._
-import com.raquo.airstream.eventstream.EventStream
 import io.laminext.websocket._
 
 val ws = WebSocket.path("/my-ws-endpoint").string.build()
@@ -167,7 +166,6 @@ Additionally, the websocket provides the following event streams:
 
 ```scala
 import com.raquo.laminar.api.L._
-import com.raquo.airstream.eventstream.EventStream
 import io.laminext.websocket._
 
 val ws = WebSocket.path("/my-ws-endpoint").string.build()

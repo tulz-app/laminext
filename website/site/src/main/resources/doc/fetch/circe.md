@@ -22,8 +22,8 @@ Fetch.post("https://...", body = MyRequest())
 This will always try to decode the response body, regardless of the response status code.
 
 ```scala
-import io.laminext.fetch._  
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.laminar.api.L._
+import io.laminext.fetch._
 import io.circe.generic.JsonCodec
 
 @JsonCodec
@@ -39,8 +39,8 @@ This will only try to decode the response body if the returned status code is `2
 Otherwise, the event stream will emit a `NonOkayResponse` error. 
 
 ```scala
-import io.laminext.fetch._  
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.laminar.api.L._
+import io.laminext.fetch._
 import io.circe.generic.JsonCodec
 
 @JsonCodec
@@ -54,8 +54,8 @@ val responseStream: EventStream[FetchResponse[MyResponse]] = Fetch.get("https://
 This will decode the okay (`2xx`) and non-okay responses into different types and "return" an `Either[ErrorResponse, OkayResponse]`.
 
 ```scala
-import io.laminext.fetch._  
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.laminar.api.L._
+import io.laminext.fetch._
 import io.circe.generic.JsonCodec
 
 @JsonCodec
