@@ -90,7 +90,7 @@ div(
 )
 ```
 
-## `withBus`
+## `buildStream`
 
 ```scala
 import com.raquo.laminar.api.L._
