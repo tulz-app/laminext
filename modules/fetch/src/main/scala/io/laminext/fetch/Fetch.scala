@@ -167,9 +167,16 @@ final class FetchEventStreamBuilder(
   @inline def arrayBuffer: EventStream[FetchResponse[ArrayBuffer]] = build(_.arrayBuffer().toFuture)
 
   def headers(
-    headers: js.UndefOr[Map[String, String]] = this._headers,
+    headers: js.UndefOr[Map[String, String]],
   ): FetchEventStreamBuilder = {
     this._headers = headers
+    this
+  }
+
+  def updateHeaders(
+    project: Map[String, String] => Map[String, String],
+  ): FetchEventStreamBuilder = {
+    this._headers = project(this._headers.getOrElse(Map.empty))
     this
   }
 
