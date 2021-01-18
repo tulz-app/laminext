@@ -1,8 +1,7 @@
 package io.laminext.site
 
 import com.raquo.laminar.api.L._
-import factorio._
-import io.frontroute.BrowserNavigation
+//import factorio._
 import io.frontroute.LocationProvider
 import org.scalajs.dom
 
@@ -13,13 +12,13 @@ class Wiring(
 
 object Wiring {
 
-  @blueprint
+//  @blueprint
   class MainBlueprint {
 
-    @provides
+//    @provides
     val provideLocationProvider: LocationProvider = LocationProvider.browser(windowEvents.onPopState)
 
-    @provides
+//    @provides
     val ssrContext: SsrContext = SsrContext(
       ssr = dom.window.navigator.userAgent == "laminext/ssr"
     )
@@ -27,8 +26,14 @@ object Wiring {
   }
 
   def apply(): Wiring = {
-    val assembler = Assembler[Wiring](new MainBlueprint)
-    assembler()
+//    val assembler = Assembler[Wiring](new MainBlueprint)
+//    assembler()
+    new Wiring(
+      ssrContext = SsrContext(
+        ssr = dom.window.navigator.userAgent == "laminext/ssr"
+      ),
+      routes = new Routes(LocationProvider.browser(windowEvents.onPopState))
+    )
   }
 
 }

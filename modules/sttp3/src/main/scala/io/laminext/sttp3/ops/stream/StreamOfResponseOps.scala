@@ -1,6 +1,6 @@
 package io.laminext.sttp3.ops.stream
 
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 import sttp.client3.Response
 
 class StreamOfResponseOps[E, R](underlying: EventStream[Response[Either[E, R]]]) {

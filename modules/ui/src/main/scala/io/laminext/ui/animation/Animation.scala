@@ -41,7 +41,7 @@ object Animation {
         case Some(klass) => Start(klass)
         case None        => Reset
       } --> bus.writer,
-      onMountCallback { _: MountContext[_] =>
+      onMountCallback { (_: MountContext[_]) =>
         bus.writer.onNext(Reset)
       },
       onAnimationEnd --> { _ =>

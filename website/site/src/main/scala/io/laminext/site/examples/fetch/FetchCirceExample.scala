@@ -85,4 +85,5 @@ object FetchCirceExample
           )
         )
       )
+      div()
     })

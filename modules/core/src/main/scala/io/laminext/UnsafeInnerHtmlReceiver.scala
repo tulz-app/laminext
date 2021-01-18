@@ -1,7 +1,7 @@
 package io.laminext
 
 import com.raquo.laminar.api.L._
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 import com.raquo.domtypes.generic.Modifier
 
 object UnsafeInnerHtmlReceiver {

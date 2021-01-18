@@ -4,7 +4,7 @@ import app.tulz.tuplez.Composition
 import com.raquo.airstream.core.Observer
 import com.raquo.airstream.eventbus.EventBus
 import com.raquo.airstream.eventbus.WriteBus
-import com.raquo.airstream.features.FlattenStrategy
+import com.raquo.airstream.flatten.FlattenStrategy
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.emitter.EventPropTransformation
 import com.raquo.laminar.nodes.ReactiveElement
@@ -122,14 +122,14 @@ class ThisEventsStreamBinder[Ev <: dom.Event, A](
   @inline def sample[T1](signal: Signal[T1]): ThisEventsStreamBinder[Ev, T1] =
     andThen(_.sample(signal))
 
-  @inline def debugLog(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
-    andThen(_.debugLog(prefix, when))
-
-  @inline def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
-    andThen(_.debugLogJs(prefix, when))
-
-  @inline def debugBreak(when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
-    andThen(_.debugBreak(when))
+//  @inline def debugLog(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
+//    andThen(_.debugLog(prefix, when))
+//
+//  @inline def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
+//    andThen(_.debugLogJs(prefix, when))
+//
+//  @inline def debugBreak(when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
+//    andThen(_.debugBreak(when))
 
   @inline def debugSpy(fn: A => Unit): ThisEventsStreamBinder[Ev, A] =
     andThen(_.debugSpy(fn))

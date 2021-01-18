@@ -1,39 +1,8 @@
-ThisBuild / organization := "io.laminext"
-ThisBuild / homepage := Some(url("https://github.com/tulz-app/laminext"))
-ThisBuild / licenses += ("MIT", url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md"))
-ThisBuild / developers := List(
-  Developer(
-    id = "yurique",
-    name = "Iurii Malchenko",
-    email = "i@yurique.com",
-    url = url("https://github.com/yurique")
-  )
-)
-ThisBuild / scmInfo := Some(
-  ScmInfo(
-    url("https://github.com/tulz-app/tuplez"),
-    "scm:git@github.com/tulz-app/laminext.git"
-  )
-)
-ThisBuild / releasePublishArtifactsAction := PgpKeys.publishSigned.value
-ThisBuild / publishTo := sonatypePublishToBundle.value
-ThisBuild / pomIncludeRepository := { _ => false }
-ThisBuild / sonatypeProfileName := "yurique"
-ThisBuild / publishArtifact in Test := false
-ThisBuild / publishMavenStyle := true
-ThisBuild / releaseCrossBuild := false
-ThisBuild / scalaVersion := BuildSettings.version.scala213
-ThisBuild / crossScalaVersions := Seq(BuildSettings.version.scala213)
-ThisBuild / releaseCrossBuild := false
+ThisBuild / scalaVersion := ScalaVersions.v213
+ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3M3, ScalaVersions.v3RC1)
 
-lazy val noPublish = Seq(
-  publishLocal / skip := true,
-  publish / skip := true,
-  publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
-)
-
-lazy val adjustScalacOptions = { options: Seq[String] =>
-  options.filterNot(
+lazy val basicSettings = Seq(
+  scalacOptions ~= (_.filterNot(
     Set(
       "-Wdead-code",
       "-Wunused:implicits",
@@ -41,13 +10,31 @@ lazy val adjustScalacOptions = { options: Seq[String] =>
       "-Wunused:imports",
       "-Wunused:params"
     )
-  ) ++ Seq(
-    "-Ymacro-annotations"
-  )
-}
-
-lazy val basicSettings = Seq(
-  scalacOptions ~= adjustScalacOptions
+  )),
+  scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) =>
+      Seq(
+        "-Ymacro-annotations"
+      )
+    case Some((3, _)) => Seq()
+    case _            => Seq()
+  }),
+  scalacOptions in (Compile, doc) ~= (_.filterNot(
+    Set(
+      "-scalajs",
+      "-deprecation",
+      "-explain-types",
+      "-explain",
+      "-feature",
+      "-language:existentials,experimental.macros,higherKinds,implicitConversions",
+      "-unchecked",
+      "-Xfatal-warnings",
+      "-Ykind-projector",
+      "-from-tasty",
+      "-encoding",
+      "utf8",
+    )
+  ))
 )
 
 lazy val commonSettings = basicSettings ++ Seq(
@@ -71,16 +58,16 @@ lazy val bundlerSettings = Seq(
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    "com.raquo"     %%% "laminar"      % BuildSettings.version.laminar,
-    "org.scalatest" %%% "scalatest"    % BuildSettings.version.`scala-test` % Test,
-    "app.tulz"      %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test,
-    "com.raquo"     %%% "domtestutils" % BuildSettings.version.domtestutils % Test
+    "com.raquo"      %%% "laminar"      % BuildSettings.version.laminar,
+    ("org.scalatest" %%% "scalatest"    % BuildSettings.version.`scala-test` % Test).withDottyCompat(scalaVersion.value),
+    ("app.tulz"      %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test).withDottyCompat(scalaVersion.value),
+    ("com.raquo"     %%% "domtestutils" % BuildSettings.version.domtestutils % Test).withDottyCompat(scalaVersion.value)
   )
 )
 
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
-    "org.typelevel" %%% "cats-core" % BuildSettings.version.cats
+    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats).withDottyCompat(scalaVersion.value)
   )
 )
 
@@ -199,8 +186,8 @@ lazy val `websocket-circe` =
     .settings(baseDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
-        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
+        ("io.circe" %%% "circe-core"   % BuildSettings.version.circe).withDottyCompat(scalaVersion.value),
+        ("io.circe" %%% "circe-parser" % BuildSettings.version.circe).withDottyCompat(scalaVersion.value)
       )
     )
     .settings(
@@ -226,8 +213,8 @@ lazy val `fetch-circe` =
     .settings(baseDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
-        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
+        ("io.circe" %%% "circe-core"   % BuildSettings.version.circe).withDottyCompat(scalaVersion.value),
+        ("io.circe" %%% "circe-parser" % BuildSettings.version.circe).withDottyCompat(scalaVersion.value)
       )
     )
     .settings(
@@ -259,11 +246,7 @@ lazy val website = project
       "io.frontroute" %%% "frontroute"           % BuildSettings.version.frontroute,
       "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files`,
       "com.lihaoyi"   %%% "sourcecode"           % BuildSettings.version.sourcecode,
-      "com.lihaoyi"   %%% "pprint"               % BuildSettings.version.pprint,
-      "io.circe"      %%% "circe-generic"        % BuildSettings.version.circe,
-      "io.mwielocha"  %%% "factorio-core"        % BuildSettings.version.factorio,
-      "io.mwielocha"  %%% "factorio-annotations" % BuildSettings.version.factorio,
-      "io.mwielocha"  %%% "factorio-macro"       % BuildSettings.version.factorio % "provided"
+      ("io.circe"     %%% "circe-generic"        % BuildSettings.version.circe).withDottyCompat(scalaVersion.value)
     )
   )
   .settings(
@@ -272,8 +255,8 @@ lazy val website = project
     (Compile / sourceGenerators) += embedFiles
   )
   .settings(
-    addCompilerPlugin(("org.typelevel" %% "kind-projector" % BuildSettings.version.`kind-projector`).cross(CrossVersion.full)),
-    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % BuildSettings.version.`better-monadic-for`)
+//    addCompilerPlugin(("org.typelevel" %% "kind-projector" % BuildSettings.version.`kind-projector`).cross(CrossVersion.full)),
+//    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % BuildSettings.version.`better-monadic-for`)
   )
   .dependsOn(
     `core`,
@@ -290,6 +273,12 @@ lazy val website = project
     `fetch`,
     `fetch-circe`
   )
+
+lazy val noPublish = Seq(
+  publishLocal / skip := true,
+  publish / skip := true,
+  publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
+)
 
 lazy val root = project
   .in(file("."))

@@ -1,7 +1,7 @@
 package io.laminext.ops.signal
 
 import com.raquo.airstream.core.Observer
-import com.raquo.airstream.signal.Var
+import com.raquo.airstream.state.Var
 
 final class VarOfBooleanOps(underlying: Var[Boolean]) {
 

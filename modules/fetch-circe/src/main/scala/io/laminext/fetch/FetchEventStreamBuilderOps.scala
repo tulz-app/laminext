@@ -1,6 +1,6 @@
 package io.laminext.fetch
 
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 import io.circe.Decoder
 import org.scalajs.dom.experimental.Response
 

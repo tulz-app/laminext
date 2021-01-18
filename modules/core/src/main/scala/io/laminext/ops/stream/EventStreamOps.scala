@@ -3,7 +3,7 @@ package io.laminext.ops.stream
 import com.raquo.laminar.api.L._
 import com.raquo.airstream.eventstream.DelayForEventStream
 import com.raquo.airstream.eventstream.DropEventStream
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 import com.raquo.airstream.eventstream.TakeEventStream
 import com.raquo.airstream.eventstream.TransitionsEventStream
 
