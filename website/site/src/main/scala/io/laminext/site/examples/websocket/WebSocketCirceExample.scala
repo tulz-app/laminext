@@ -71,7 +71,7 @@ object WebSocketCirceExample
               /* <focus> */
               children.command <-- ws.received.map { message =>
                 CollectionCommand.Append(
-                  code(pprint.apply(message).plainText)
+                  code(message.toString)
                 )
               }
               /* </focus> */
@@ -87,7 +87,7 @@ object WebSocketCirceExample
               /* <focus> */
               children.command <-- ws.events.map { event =>
                 CollectionCommand.Append(
-                  code(pprint.apply(event).plainText)
+                  code(event.toString)
                 )
               }
               /* </focus> */

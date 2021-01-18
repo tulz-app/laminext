@@ -75,14 +75,14 @@ class ThisEventsSignalBinder[Ev <: dom.Event, A](
   @inline def recoverToTry: ThisEventsSignalBinder[Ev, Try[A]] =
     map(Try(_)).recover[Try[A]] { case err => Some(Failure(err)) }
 
-  @inline def debugLog(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsSignalBinder[Ev, A] =
-    andThen(_.debugLog(prefix, when))
-
-  @inline def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsSignalBinder[Ev, A] =
-    andThen(_.debugLog(prefix, when))
-
-  @inline def debugBreak(when: A => Boolean = _ => true): ThisEventsSignalBinder[Ev, A] =
-    andThen(_.debugBreak(when))
+//  @inline def debugLog(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsSignalBinder[Ev, A] =
+//    andThen(_.debugLog(prefix, when))
+//
+//  @inline def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsSignalBinder[Ev, A] =
+//    andThen(_.debugLog(prefix, when))
+//
+//  @inline def debugBreak(when: A => Boolean = _ => true): ThisEventsSignalBinder[Ev, A] =
+//    andThen(_.debugBreak(when))
 
   @inline def debugSpy(fn: A => Unit): ThisEventsSignalBinder[Ev, A] =
     andThen(_.debugSpy(fn))

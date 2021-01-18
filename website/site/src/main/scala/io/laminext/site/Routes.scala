@@ -1,7 +1,7 @@
 package io.laminext.site
 
 import io.laminext.site.layout.PageWrap
-import com.raquo.airstream.signal.Var
+import com.raquo.airstream.state.Var
 import com.raquo.laminar.api.L.unsafeWindowOwner
 import io.laminext.syntax.all._
 import io.frontroute._

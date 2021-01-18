@@ -9,7 +9,8 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-const scalaOutputPath = path.resolve(__dirname, './target/scala-2.13');
+// const scalaOutputPath = path.resolve(__dirname, './target/scala-2.13');
+const scalaOutputPath = path.resolve(__dirname, './target/scala-3.0.0-RC1');
 
 const devServerHost = '127.0.0.1';
 const devServerPort = 30088;

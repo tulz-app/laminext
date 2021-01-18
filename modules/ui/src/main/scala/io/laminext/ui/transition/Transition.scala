@@ -117,7 +117,7 @@ object Transition {
 
     Seq(
       smartClass(classes.signal),
-      onMountCallback { _: MountContext[_] =>
+      onMountCallback { (_: MountContext[_]) =>
         bus.writer.onNext(Reset)
       },
       onTransitionEnd --> { _ =>
@@ -126,7 +126,7 @@ object Transition {
       onTransitionCancel --> { _ =>
         scheduleEvent(Reset)
       },
-      inContext { el: HtmlElement =>
+      inContext { (el: HtmlElement) =>
         bus.events.withCurrentValueOf(show) --> {
           case (EnterFrom, _) =>
             config.onEnterFrom(el.ref)

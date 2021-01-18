@@ -1,6 +1,6 @@
 package io.laminext
 
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 import io.laminext.sttp3.ops.stream.StreamOfResponseOps
 import sttp.client3.Response
 

@@ -1,6 +1,6 @@
 package io.laminext.syntax
 
-import com.raquo.airstream.signal.Var
+import com.raquo.airstream.state.Var
 import io.laminext.ops.signal.VarOfBooleanOps
 
 trait VarOfBooleanSyntax {

@@ -1,6 +1,6 @@
 package io.laminext.ops.stream
 
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 
 final class EventStreamOfEitherOps[A, B](underlying: EventStream[Either[A, B]]) {
 

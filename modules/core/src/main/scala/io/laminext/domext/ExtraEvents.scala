@@ -8,13 +8,13 @@ import org.scalajs.dom
 
 trait ExtraEvents {
 
-  val onAnimationStart: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("animationstart")
+//  val onAnimationStart: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("animationstart")
 
-  val onAnimationIteration: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("animationiteration")
+//  val onAnimationIteration: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("animationiteration")
 
   val onAnimationCancel: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("animationcancel")
 
-  val onAnimationEnd: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("animationend")
+//  val onAnimationEnd: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("animationend")
 
   val onTransitionRun: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("transitionrun")
 
@@ -22,6 +22,6 @@ trait ExtraEvents {
 
   val onTransitionCancel: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("transitioncancel")
 
-  val onTransitionEnd: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("transitionend")
+//  val onTransitionEnd: ReactiveEventProp[TypedTargetEvent[dom.Element]] = new EventProp("transitionend")
 
 }

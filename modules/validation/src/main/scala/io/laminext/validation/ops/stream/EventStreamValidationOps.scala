@@ -1,7 +1,7 @@
 package io.laminext.validation
 package ops.stream
 
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 
 class EventStreamValidationOps[A](s: EventStream[A]) {
 

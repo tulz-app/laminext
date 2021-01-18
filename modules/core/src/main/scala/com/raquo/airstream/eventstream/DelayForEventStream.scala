@@ -1,8 +1,10 @@
 package com.raquo.airstream.eventstream
 
+import com.raquo.airstream.core.EventStream
 import com.raquo.airstream.core.Transaction
-import com.raquo.airstream.features.InternalNextErrorObserver
-import com.raquo.airstream.features.SingleParentObservable
+import com.raquo.airstream.core.WritableEventStream
+import com.raquo.airstream.common.InternalNextErrorObserver
+import com.raquo.airstream.common.SingleParentObservable
 
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
@@ -11,6 +13,7 @@ class DelayForEventStream[A](
   override protected val parent: EventStream[A],
   projectDelayMillis: A => FiniteDuration
 ) extends EventStream[A]
+    with WritableEventStream[A]
     with SingleParentObservable[A, A]
     with InternalNextErrorObserver[A] {
 

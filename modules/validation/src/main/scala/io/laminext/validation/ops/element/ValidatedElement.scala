@@ -1,8 +1,8 @@
 package io.laminext.validation
 package ops.element
 
-import com.raquo.airstream.signal.Signal
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.Signal
+import com.raquo.airstream.core.EventStream
 import com.raquo.laminar.api.L.onBlur
 import com.raquo.laminar.api.L.onFocus
 import com.raquo.laminar.nodes.ReactiveHtmlElement

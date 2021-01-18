@@ -1,6 +1,6 @@
 package io.laminext.fetch
 
-import com.raquo.airstream.eventstream.EventStream
+import com.raquo.airstream.core.EventStream
 import org.scalajs.dom.experimental.Fetch.fetch
 import org.scalajs.dom.experimental.AbortController
 import org.scalajs.dom.experimental.BodyInit
@@ -75,7 +75,7 @@ object FetchEventStream {
       }
 
       CustomSource.Config(
-        onStart = {
+        onStart = () => {
           val response = sendRequest()
 
           timeout.foreach { timeout =>
@@ -114,7 +114,7 @@ object FetchEventStream {
             )
           }
         },
-        onStop = {
+        onStop = () => {
           abortController.abort()
         }
       )
