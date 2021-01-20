@@ -7,9 +7,9 @@ import scala.collection.generic.IsSeq
 
 final class SeqOps[Repr, S <: IsSeq[Repr]](coll: Repr, val seq: S) {
 
-  def join[B >: seq.A, That](
+  def join[B >: seq.A](
     sep: () => B
-  )(implicit bf: BuildFrom[Repr, B, That]): That = {
+  )(implicit bf: BuildFrom[Repr, B, Seq[B]]): Seq[B] = {
     val seqOps = seq(coll)
     bf.fromSpecific(coll)(new AbstractView[B] {
       def iterator: AbstractIterator[B] = new AbstractIterator[B] {

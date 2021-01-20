@@ -13,9 +13,8 @@ object WebSocketCirceExample
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.all._
       import io.laminext.websocket._
-      import io.circe.generic.JsonCodec
+      import io.circe.generic.auto._
 
-      @JsonCodec
       case class Data(s: String)
 
       /* <focus> */

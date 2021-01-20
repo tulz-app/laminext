@@ -8,7 +8,7 @@ object BuildSettings {
     val stringdiff   = "0.3.1"
     val domtestutils = "0.11.0"
     val cats         = "2.3.1"
-    val circe        = "0.13.0"
+    val circe        = "0.14.0-M3"
 
     // -- website
 
