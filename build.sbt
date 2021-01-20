@@ -241,6 +241,7 @@ lazy val website = project
   .settings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+//    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),
     libraryDependencies ++= Seq(
       "com.raquo"     %%% "laminar"              % BuildSettings.version.laminar,
       "io.frontroute" %%% "frontroute"           % BuildSettings.version.frontroute,
