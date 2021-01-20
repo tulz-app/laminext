@@ -186,8 +186,8 @@ lazy val `websocket-circe` =
     .settings(baseDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        ("io.circe" %%% "circe-core"   % BuildSettings.version.circe).withDottyCompat(scalaVersion.value),
-        ("io.circe" %%% "circe-parser" % BuildSettings.version.circe).withDottyCompat(scalaVersion.value)
+        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
+        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
       )
     )
     .settings(
@@ -213,8 +213,8 @@ lazy val `fetch-circe` =
     .settings(baseDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        ("io.circe" %%% "circe-core"   % BuildSettings.version.circe).withDottyCompat(scalaVersion.value),
-        ("io.circe" %%% "circe-parser" % BuildSettings.version.circe).withDottyCompat(scalaVersion.value)
+        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
+        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
       )
     )
     .settings(
@@ -246,7 +246,7 @@ lazy val website = project
       "io.frontroute" %%% "frontroute"           % BuildSettings.version.frontroute,
       "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files`,
       "com.lihaoyi"   %%% "sourcecode"           % BuildSettings.version.sourcecode,
-      ("io.circe"     %%% "circe-generic"        % BuildSettings.version.circe).withDottyCompat(scalaVersion.value)
+      "io.circe"      %%% "circe-generic"        % BuildSettings.version.circe
     )
   )
   .settings(
@@ -272,6 +272,20 @@ lazy val website = project
     `websocket-circe`,
     `fetch`,
     `fetch-circe`
+  )
+
+lazy val sandbox = project
+  .in(file("sandbox"))
+  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(EmbeddedFilesPlugin)
+  .settings(basicSettings)
+  .settings(noPublish)
+  .settings(
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+    libraryDependencies ++= Seq(
+      "com.raquo" %%% "laminar" % BuildSettings.version.laminar,
+    )
   )
 
 lazy val noPublish = Seq(

@@ -31,8 +31,7 @@ object SeqJoinExample
             code("spans2.join(span(\"—\")): ")
           ),
           div(
-            cls := "space-x-4",
-            /* <focus> */
+            cls := "space-x-4", /* <focus> */
             spans2.join(() => span("—"))
             /* </focus> */
           )
