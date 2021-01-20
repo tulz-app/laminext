@@ -5,8 +5,7 @@ module.exports = (api) => {
       api.mode === 'production' ?
         require('tailwindcss')('./tailwind.prod.config.js') :
         require('tailwindcss')('./tailwind.dev.config.js'),
-      require('postcss-nested')({}),
-      require('autoprefixer')({}),
+      require('postcss-preset-env')({}),
       api.mode === 'production' ?
         require('cssnano')() :
         false
