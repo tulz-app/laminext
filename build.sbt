@@ -233,7 +233,7 @@ lazy val `util` =
     )
 
 lazy val website = project
-  .in(file("website/site"))
+  .in(file("website"))
   .enablePlugins(ScalaJSPlugin)
   .enablePlugins(EmbeddedFilesPlugin)
   .settings(basicSettings)
