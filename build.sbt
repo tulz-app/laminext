@@ -71,9 +71,6 @@ lazy val catsDependencies = Seq(
   )
 )
 
-val generateTupleCombinatorsFrom = 3
-val generateTupleCombinatorsTo   = 22
-
 lazy val `core` =
   project
     .in(file("modules/core"))
