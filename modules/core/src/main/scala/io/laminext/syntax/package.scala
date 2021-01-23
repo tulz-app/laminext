@@ -2,6 +2,7 @@ package io.laminext
 
 package object syntax {
 
-  object all extends AllSyntax
+  object core      extends CoreSyntax
+  object dangerous extends DangerousSyntax
 
 }

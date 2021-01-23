@@ -1,7 +1,7 @@
 package io.laminext.tailwind
 package ops.htmltag
 
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import io.laminext.AmendedHtmlTagPartial
 import com.raquo.laminar.builders.HtmlTag
 import org.scalajs.dom

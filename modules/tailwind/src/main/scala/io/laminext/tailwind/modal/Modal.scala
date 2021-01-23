@@ -4,7 +4,7 @@ package modal
 import syntax._
 import theme.Theme
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import org.scalajs.dom
 
 object Modal {

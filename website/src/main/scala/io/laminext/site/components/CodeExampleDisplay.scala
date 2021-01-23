@@ -6,7 +6,7 @@ import io.laminext.tailwind.theme
 import io.laminext.tailwind.TW
 import com.raquo.laminar.api.L._
 import io.laminext.tailwind.syntax._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import io.laminext.markdown._
 import io.laminext.site.Styles
 import io.laminext.site.TemplateVars

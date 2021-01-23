@@ -3,7 +3,7 @@ package ops.htmltag
 
 import theme.Theme
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import io.laminext.AmendedHtmlTag
 import io.laminext.AmendedHtmlTagPartial
 import com.raquo.laminar.builders.HtmlTag

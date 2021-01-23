@@ -9,7 +9,7 @@ object SignalOfBooleanClassSwitchExample
       title = "Signal of Boolean Class Switch",
       description = FileAsString("description.md")
     )(() => {
-      import io.laminext.syntax.all._
+      import io.laminext.syntax.core._
       import com.raquo.laminar.api.L._
 
       val booleanVar = Var(false)

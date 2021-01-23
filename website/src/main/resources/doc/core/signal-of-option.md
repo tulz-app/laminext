@@ -6,7 +6,7 @@ See [example](/core/example-signal-of-option).
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait A
 
@@ -21,7 +21,7 @@ val signalIsDefined: Signal[Boolean] = signal.isDefined
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[Option[String]] = ???
 val containsHello: Signal[Boolean] = signal.optionContains("hello")
@@ -33,7 +33,7 @@ val containsHello: Signal[Boolean] = signal.optionContains("hello")
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[Option[String]] = ???
 val containsHello: Signal[Boolean] = signal.optionExists(_.toLowerCase == "hello")
@@ -45,7 +45,7 @@ val containsHello: Signal[Boolean] = signal.optionExists(_.toLowerCase == "hello
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[Option[String]] = ???
 val mapped: Signal[Option[Int]] = signal.optionMap(_.length)
@@ -57,7 +57,7 @@ val mapped: Signal[Option[Int]] = signal.optionMap(_.length)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[Option[String]] = ???
 val flatMapped: Signal[Option[Int]] = signal.optionFlatMap(string => Option(string).filter(_.length > 5).map(_.length))
@@ -70,7 +70,7 @@ val flatMapped: Signal[Option[Int]] = signal.optionFlatMap(string => Option(stri
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[Option[String]] = ???
 val withDefault: Signal[String] = signal.withDefault("I'm the default!")
@@ -87,7 +87,7 @@ Unlike the previous functions, this one takes a function that returns another `S
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait A
 trait B

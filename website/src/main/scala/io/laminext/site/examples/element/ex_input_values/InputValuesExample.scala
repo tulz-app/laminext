@@ -9,7 +9,7 @@ object InputValuesExample
       title = "Input Values",
       description = FileAsString("description.md")
     )(() => {
-      import io.laminext.syntax.all._
+      import io.laminext.syntax.core._
       import com.raquo.laminar.api.L._
 
       val inputElement1 = input(

@@ -4,7 +4,7 @@ package layout
 
 import com.raquo.laminar.api.L._
 import io.laminext.tailwind.syntax._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import io.laminext.site.icons.Icons
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import io.laminext.tailwind.TW

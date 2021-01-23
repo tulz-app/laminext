@@ -4,7 +4,7 @@ Returns an event stream that emits whenever the element's value changes (typing,
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val inputElement = input()
 
@@ -15,7 +15,7 @@ val changes: EventStream[Unit] = inputElement.changes
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val inputElement = input()
 val textElement = textArea()
@@ -28,7 +28,7 @@ val textValue:  Signal[String] = textElement.value
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val checkboxElement = input(`type` := "checkbox")
 

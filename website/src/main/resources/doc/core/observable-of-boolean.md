@@ -2,7 +2,7 @@
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val obs: Observable[Boolean] = ???
 
@@ -18,7 +18,7 @@ See [example](/core/example-signal-of-boolean-class-switch).
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val obs: Observable[Boolean] = ???
 
@@ -34,7 +34,7 @@ div(
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val obs: Observable[Boolean] = ???
 
@@ -52,7 +52,7 @@ div(
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val obs: Observable[Boolean] = ???
 

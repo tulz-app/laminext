@@ -9,7 +9,7 @@ object SeqJoinExample
       title = "Seq Join",
       description = FileAsString("description.md")
     )(() => {
-      import io.laminext.syntax.all._
+      import io.laminext.syntax.core._
       import com.raquo.laminar.api.L._
 
       val spans1 = (1 to 6).map(_.toString).map(span(_))

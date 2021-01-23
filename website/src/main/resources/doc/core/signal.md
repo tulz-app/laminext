@@ -6,7 +6,7 @@ Get a signal of tuples: previous value (optional) and the current value.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[String] = ???
 
@@ -21,7 +21,7 @@ See [example](/core/example-signal-transitions).
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[String] = ???
 
@@ -34,7 +34,7 @@ val valueIsHello: Signal[Boolean] = signal.valueIs("hello")
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[String] = ???
 

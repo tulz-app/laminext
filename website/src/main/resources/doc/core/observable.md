@@ -7,7 +7,7 @@
 ```scala
 import org.scalajs.dom
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val obs: Observable[String] = ???
 

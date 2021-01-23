@@ -2,7 +2,7 @@ package io.laminext.ui
 package transition
 
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 import scala.scalajs.js
@@ -121,9 +121,6 @@ object Transition {
         bus.writer.onNext(Reset)
       },
       onTransitionEnd --> { _ =>
-        scheduleEvent(Reset)
-      },
-      onTransitionCancel --> { _ =>
         scheduleEvent(Reset)
       },
       inContext { (el: HtmlElement) =>

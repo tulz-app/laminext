@@ -3,7 +3,7 @@ package io.laminext.site.layout
 import io.laminext.site.Page
 import io.laminext.site.Site
 import io.laminext.site.SiteModule
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 

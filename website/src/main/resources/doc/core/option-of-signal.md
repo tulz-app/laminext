@@ -4,7 +4,7 @@ Transforms an `Option[Signal[A]]` into a `Signal[Option[A]]`.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val option: Option[Signal[String]] = ???
 

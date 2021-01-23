@@ -40,7 +40,7 @@ Combine a sequence of modifiers into a `Modifier`.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val flag: Boolean = ???
 
@@ -62,7 +62,7 @@ Use when you know what you're doing.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import org.scalajs.dom.raw
 
 val rawNode: raw.Node = ???
@@ -76,7 +76,7 @@ div(
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 def component(observer: Observer[String]): Element = ???
 
@@ -94,7 +94,7 @@ div(
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[String] = buildStream[String] { b =>
   b.onNext("a")
@@ -108,7 +108,7 @@ Just a thin wrapper around the `EventStream.withCallback`. Makes the intent more
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val (triggerStream, triggerFunc) = createTrigger()
 // triggerStream: EventStream[Unit]
@@ -121,7 +121,7 @@ Creates "var"-like objects that store their values in the local storage.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val myStoredString = storedString("my-id", initial = "")
 
@@ -141,7 +141,7 @@ A `setTimeout` wrapper.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import scala.concurrent.duration._
 import org.scalajs.dom
 
@@ -157,7 +157,7 @@ div(
 ```scala
 import com.raquo.laminar.api.L._
 import io.laminext.domext.ResizeObserverEntry
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import org.scalajs.dom
 
 div(
@@ -175,7 +175,7 @@ div(
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import scala.concurrent.Future
 
 div(
@@ -190,7 +190,7 @@ Use when you know what you're doing.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[String] = ???
 

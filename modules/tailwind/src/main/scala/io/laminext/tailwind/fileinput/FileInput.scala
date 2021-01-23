@@ -3,7 +3,7 @@ package fileinput
 
 import syntax._
 import theme.Theme
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import com.raquo.domtypes.jsdom.defs.events.TypedTargetEvent
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.api.L
