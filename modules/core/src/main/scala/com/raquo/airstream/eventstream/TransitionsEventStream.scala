@@ -2,14 +2,12 @@ package com.raquo.airstream.eventstream
 
 import com.raquo.airstream.core.EventStream
 import com.raquo.airstream.core.Transaction
-import com.raquo.airstream.core.WritableEventStream
 import com.raquo.airstream.common.InternalNextErrorObserver
 import com.raquo.airstream.common.SingleParentObservable
 
 class TransitionsEventStream[A](
   override protected val parent: EventStream[A]
 ) extends EventStream[(Option[A], A)]
-    with WritableEventStream[(Option[A], A)]
     with SingleParentObservable[A, (Option[A], A)]
     with InternalNextErrorObserver[A] {
 
