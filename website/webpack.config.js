@@ -1,8 +1,6 @@
 const path = require('path');
 const _ = require('lodash');
 
-const compression = require('compression');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
@@ -33,19 +31,18 @@ function common(mode) {
     mode,
     resolve: {
       modules: [
-        "node_modules",
-        path.resolve(__dirname, "node_modules")
+        'node_modules',
+        path.resolve(__dirname, 'node_modules'),
+        path.resolve(__dirname, 'src/main/static/stylesheets')
       ],
     },
     output: {
       publicPath: '/',
-      filename: '[name].[hash].js',
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].bundle.[contenthash].js',
       library: 'laminext',
       libraryTarget: 'var'
     },
-    entry: [
-      path.resolve(__dirname, './src/main/static/stylesheets/main.css')
-    ],
     module: {
       rules: [
         {
@@ -61,20 +58,7 @@ function common(mode) {
         },
         {
           test: /\.css$/,
-          use: [
-            {
-              loader: ExtractCssChunks.loader,
-              options: {
-                filename: '[name].[contenthash:8].[ext]'
-              }
-            },
-            {
-              loader: 'css-loader'
-            },
-            {
-              loader: 'postcss-loader',
-            },
-          ]
+          use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -83,16 +67,6 @@ function common(mode) {
             options: {
               name: '[name].[ext]',
               outputPath: 'fonts/'
-            }
-          }]
-        },
-        {
-          test: /\.(png|jpg)(\?v=\d+\.\d+\.\d+)?$/,
-          use: [{
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'images/'
             }
           }]
         }
@@ -123,26 +97,12 @@ function prod() {
     entry: [
       path.resolve(__dirname, `${scalaOutputPath}/website-opt/main.js`),
     ],
-    devtool: 'source-map',
     optimization: {
       minimize: true,
       minimizer: [new TerserPlugin()],
     },
     plugins: [
-      // new CleanWebpackPlugin({
-      //   options: {
-      //     output: {
-      //       path: './dist'
-      //     }
-      //   }
-      // }),
-      new ExtractCssChunks(
-        {
-          filename: '[name].[contenthash:8].css',
-          chunkFilename: '[id].css'
-          // hot: true // optional as the plugin cannot automatically detect if you are using HOT, not for production use
-        }
-      ),
+      new CleanWebpackPlugin(),
       new CompressionPlugin({
         test: /\.(js|css|html|svg|json|woff|woff2)$/,
         deleteOriginalAssets: false,
@@ -167,15 +127,6 @@ function dev() {
     devtool: 'cheap-module-source-map',
     entry: [
       path.resolve(__dirname, `${scalaOutputPath}/website-fastopt/main.js`),
-    ],
-    plugins: [
-      new ExtractCssChunks(
-        {
-          filename: '[name].[contenthash:8].css',
-          chunkFilename: '[id].css'
-          // hot: true
-        }
-      ),
     ]
   };
 }
@@ -190,7 +141,7 @@ module.exports = function () {
   switch (process.env.npm_lifecycle_event) {
     case 'build:prod':
     case 'build':
-      console.log('production build');
+      console.info('production build');
       return _.mergeWith(
         {},
         common('production'),
@@ -199,7 +150,7 @@ module.exports = function () {
       );
 
     case 'build:dev':
-      console.log('development build');
+      console.info('development build');
       return _.mergeWith(
         {},
         common('development'),
@@ -208,7 +159,7 @@ module.exports = function () {
       );
 
     case 'start:prod':
-      console.log('production dev server');
+      console.info('production dev server');
       return _.mergeWith(
         {},
         common('production'),
@@ -220,7 +171,7 @@ module.exports = function () {
     case 'start':
     case 'start:dev':
     default:
-      console.log('development dev server');
+      console.info('development dev server');
       return _.mergeWith(
         {},
         common('development'),

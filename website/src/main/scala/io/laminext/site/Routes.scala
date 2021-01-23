@@ -3,7 +3,7 @@ package io.laminext.site
 import io.laminext.site.layout.PageWrap
 import com.raquo.airstream.state.Var
 import com.raquo.laminar.api.L.unsafeWindowOwner
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import io.frontroute._
 import io.frontroute.directives._
 import org.scalajs.dom

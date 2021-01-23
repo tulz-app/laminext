@@ -6,7 +6,7 @@ Boolean operations.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val s1: Signal[Boolean] = ???
 val s2: Signal[Boolean] = ???
@@ -26,7 +26,7 @@ val sAndBoolean: Signal[Boolean] = s1 && false
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val signal: Signal[Boolean] = ???
 

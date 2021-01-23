@@ -6,7 +6,7 @@ import com.raquo.airstream.core.EventStream
 import com.raquo.laminar.api.L.onBlur
 import com.raquo.laminar.api.L.onFocus
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import org.scalajs.dom
 
 class ValidatedElement[+Ref <: dom.html.Element, A](

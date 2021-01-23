@@ -14,6 +14,8 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 @JSExportTopLevel("App")
 object Main {
 
+  val mainCss: MainCss.type = MainCss
+
   @JSExport
   def start(): Unit = {
     Modal.initNoScrollClass()

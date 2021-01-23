@@ -1,7 +1,6 @@
 package io.laminext.site
 
-import io.laminext.syntax.all.storedString
-import io.laminext.StoredString
+import io.laminext.syntax.core._
 
 object Styles {
 

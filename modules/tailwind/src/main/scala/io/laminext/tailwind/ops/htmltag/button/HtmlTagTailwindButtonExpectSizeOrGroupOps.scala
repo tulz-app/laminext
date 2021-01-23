@@ -1,7 +1,7 @@
 package io.laminext.tailwind
 package ops.htmltag.button
 
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import io.laminext.AmendedHtmlTagPartial
 import io.laminext.tailwind.theme.Theme
 import com.raquo.laminar.api.L._

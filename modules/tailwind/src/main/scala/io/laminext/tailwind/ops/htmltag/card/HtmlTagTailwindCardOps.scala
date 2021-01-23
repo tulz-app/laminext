@@ -1,7 +1,7 @@
 package io.laminext.tailwind.ops
 package htmltag.card
 
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import io.laminext.AmendedHtmlTag
 import io.laminext.AmendedHtmlTagPartial
 import io.laminext.tailwind.AmCard

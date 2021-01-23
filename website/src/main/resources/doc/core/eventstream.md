@@ -4,7 +4,7 @@ Get an `EventStream[(Option[A], A)]` with tuples of the previous and the latest 
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 val stream: EventStream[String] = ???
 val transitions: EventStream[(Option[String], String)] = stream.transitions
 ```
@@ -17,7 +17,7 @@ Returns a `Signal[(Option[A], Option[A])]` containing the optional values for th
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 val stream: EventStream[String] = ???
 val transitions: EventStream[(Option[String], Option[String])] = stream.previousAndCurrent
 ```
@@ -30,7 +30,7 @@ When the `reset` stream emits, the "latest" value becomes `None`.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[String] = ???
 val resets: EventStream[_] = ???
@@ -42,7 +42,7 @@ val transitions: EventStream[(Option[String], Option[String])] = stream.previous
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[String] = ???
 
@@ -53,7 +53,7 @@ val errors: EventStream[Throwable] = stream.errors
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[String] = ???
 
@@ -66,7 +66,7 @@ val falses: EventStream[Boolean] = stream.mapToFalse
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 import scala.concurrent.duration._
 
 val stream: EventStream[Int] = ???
@@ -81,7 +81,7 @@ value of the signal is `true`.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Int] = ???
 val booleanSignal: Signal[Boolean] = ???
@@ -94,7 +94,7 @@ val keep: EventStream[Int] = stream.keepWhen(booleanSignal)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Int] = ???
 
@@ -106,7 +106,7 @@ val withoutFirst10: EventStream[Int] = stream.drop(10)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Int] = ???
 
@@ -122,7 +122,7 @@ When the `off` event is emitted, the signal's value is set to `false`.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 sealed trait MyEvent
 case object OnEvent extends MyEvent
@@ -142,7 +142,7 @@ by that function whenever this stream emits (if the function is `definedAt`).
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 case class OnOffEvent(on: Boolean) 
 

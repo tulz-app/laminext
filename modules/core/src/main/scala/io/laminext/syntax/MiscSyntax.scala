@@ -14,16 +14,11 @@ import io.laminext.StoredBoolean
 import io.laminext.StoredString
 import io.laminext.TeeObserver
 import io.laminext.ThisEventsStreamBinder
-import io.laminext.UnsafeAppendRawChildModifier
 import org.scalajs.dom
 
 import scala.concurrent.duration.FiniteDuration
 
 trait MiscSyntax {
-
-  @inline def unsafeAppendRawChild[El <: Element](
-    child: org.scalajs.dom.raw.Node
-  ): Modifier[El] = new UnsafeAppendRawChildModifier[El](child)
 
   @inline def nodeSeq[El <: ReactiveElement[dom.Element]](
     seq: Modifier[El]*

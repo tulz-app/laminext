@@ -1,10 +1,11 @@
 package io.laminext.syntax
 
+import io.laminext.AmAny
 import io.laminext.HtmlEntities
-import io.laminext.domext.ExtraEvents
 import io.laminext.util.SmartClass
+import org.scalajs.dom
 
-trait AllSyntax
+trait CoreSyntax
     extends ObservableSyntax
     with ObservableOfBooleanSyntax
     with ObservableOfOptionSyntax
@@ -33,9 +34,12 @@ trait AllSyntax
     with MiscSyntax
     with HtmlEntities
     with SmartClass
-    with ExtraEvents
     with ReceiversSyntax {
 
-  type AmAny = io.laminext.AmAny
+  type AmAny                                                  = io.laminext.AmAny
+  type StoredString                                           = io.laminext.StoredString
+  type StoredBoolean                                          = io.laminext.StoredBoolean
+  type AmendedHtmlTag[R <: dom.html.Element, AmType <: AmAny] = io.laminext.AmendedHtmlTag[R, AmType]
+  type AmendedSvgTag[R <: dom.svg.Element]                    = io.laminext.AmendedSvgTag[R]
 
 }

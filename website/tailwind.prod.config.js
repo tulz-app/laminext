@@ -5,8 +5,8 @@ const config = _.mergeWith({}, base, {
   purge: {
     enabled: true,
     content: [
-      './website/target/scala-2.13/website-fullopt/*.js',
-      './website/src/main/static/html/*.ejs',
+      './target/scala-2.13/website-opt/*.js',
+      './src/main/static/html/*.ejs',
     ]
   },
 });

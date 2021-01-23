@@ -10,7 +10,7 @@ object ThisEventsExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import io.laminext.syntax.all._
+      import io.laminext.syntax.core._
       import org.scalajs.dom
 
       val inputElement = input(
@@ -21,6 +21,7 @@ object ThisEventsExample
 
       div(
         cls := "space-y-4",
+        "hi",
         div(
           inputElement
         ),

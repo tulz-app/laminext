@@ -6,7 +6,7 @@ See [example](/core/example-this-events).
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val anyObserver: Observer[Any] = ???
 val stringObserver: Observer[String] = ???
@@ -42,7 +42,7 @@ div(
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val anyObserver: Observer[Any] = ???
 val booleanObserver: Observer[Boolean] = ???

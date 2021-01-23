@@ -4,7 +4,7 @@
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait A
 trait B
@@ -21,7 +21,7 @@ val isRightStream: EventStream[Boolean] = stream.isRight
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait A
 trait B
@@ -40,7 +40,7 @@ val rights: EventStream[B] = stream.collectRights
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -64,7 +64,7 @@ TODO: naming (`C` – for "collect")
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -84,7 +84,7 @@ val rightMapped: EventStream[Either[L, U]] = stream.rightMapC(rightProjectC)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -103,7 +103,7 @@ val folded: EventStream[U] = stream.eitherFold(leftProject, rightProject)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -123,7 +123,7 @@ Unlike the previous functions, these take a function that returns another `Event
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R

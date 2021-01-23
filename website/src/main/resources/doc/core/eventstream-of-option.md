@@ -4,7 +4,7 @@
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait A
 
@@ -22,7 +22,7 @@ When the underlying stream emits a `Some`, this emits the value inside that `Som
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait A
 
@@ -39,7 +39,7 @@ When the underlying stream emits a `Some`, this emits the value returned by the 
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Option[String]] = ???
 
@@ -54,7 +54,7 @@ val transitions: EventStream[Int] = stream.collectOption {
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Option[String]] = ???
 
@@ -67,7 +67,7 @@ val containsHello: EventStream[Boolean] = stream.optionContains("hello")
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Option[String]] = ???
 
@@ -82,7 +82,7 @@ Map the values inside the emitted `Option`s.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Option[String]] = ???
 
@@ -97,7 +97,7 @@ Same for the `.flatMap`.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Option[String]] = ???
 
@@ -111,7 +111,7 @@ val upperCasedAndLongerThan5: EventStream[Option[String]] =
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 val stream: EventStream[Option[String]] = ???
 
@@ -128,7 +128,7 @@ Unlike the previous functions, these take a function that returns another `Event
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait A
 trait B

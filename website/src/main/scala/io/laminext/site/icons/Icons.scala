@@ -2,8 +2,7 @@ package io.laminext.site.icons
 
 import com.raquo.laminar.api.L
 import com.raquo.laminar.api.L.svg._
-import io.laminext.syntax.all._
-import io.laminext._
+import io.laminext.syntax.core._
 import org.scalajs.dom.svg.SVG
 
 object Icons {

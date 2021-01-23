@@ -15,7 +15,7 @@ object FetchCirceExample
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.fetch._
-      import io.laminext.syntax.all._
+      import io.laminext.syntax.core._
       import io.circe._
       import io.circe.generic.auto._
       import org.scalajs.dom

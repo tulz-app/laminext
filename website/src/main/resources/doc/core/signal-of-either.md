@@ -4,7 +4,7 @@
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -21,7 +21,7 @@ val isRight: Signal[Boolean] = signal.isRight
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -42,7 +42,7 @@ val rightMapped: Signal[Either[L, U]] = signal.leftMap(projectRight)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -59,7 +59,7 @@ val leftToOption: Signal[Option[R]] = signal.eitherLeftToOption
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -81,7 +81,7 @@ val maybeLeftMapped: Signal[Option[U]] = signal.maybeLeftMap(projectLeft)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -100,7 +100,7 @@ val folded: Signal[U] = signal.eitherFold(projectLeft, projectRight)
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
@@ -119,7 +119,7 @@ Unlike the previous functions, these take a function that returns another `Signa
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.all._
+import io.laminext.syntax.core._
 
 trait L
 trait R
