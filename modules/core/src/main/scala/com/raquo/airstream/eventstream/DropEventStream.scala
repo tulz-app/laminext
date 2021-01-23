@@ -2,7 +2,6 @@ package com.raquo.airstream.eventstream
 
 import com.raquo.airstream.core.EventStream
 import com.raquo.airstream.core.Transaction
-import com.raquo.airstream.core.WritableEventStream
 import com.raquo.airstream.common.InternalNextErrorObserver
 import com.raquo.airstream.common.SingleParentObservable
 
@@ -10,7 +9,6 @@ class DropEventStream[A](
   override protected val parent: EventStream[A],
   toDrop: Int
 ) extends EventStream[A]
-    with WritableEventStream[A]
     with SingleParentObservable[A, A]
     with InternalNextErrorObserver[A] {
 

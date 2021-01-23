@@ -24,7 +24,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
     EventStream
       .merge(
         underlying.map(Some(_)),
-        reset.mapToValue(None)
+        reset.mapToStrict(None)
       ).foldLeft((Option.empty[A], Option.empty[A])) { case ((_, previous), maybeCurrent) =>
         maybeCurrent match {
           case Some(current) => (previous, Some(current))
@@ -35,9 +35,9 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
 
   def errors: EventStream[Throwable] = underlying.recoverToTry.collect { case Failure(err) => err }
 
-  @inline def mapToUnit: EventStream[Unit]     = underlying.mapToValue((): Unit)
-  @inline def mapToTrue: EventStream[Boolean]  = underlying.mapToValue(true)
-  @inline def mapToFalse: EventStream[Boolean] = underlying.mapToValue(false)
+  @inline def mapToUnit: EventStream[Unit]     = underlying.mapToStrict((): Unit)
+  @inline def mapToTrue: EventStream[Boolean]  = underlying.mapToStrict(true)
+  @inline def mapToFalse: EventStream[Boolean] = underlying.mapToStrict(false)
 
   def delayFor(projectMs: A => FiniteDuration): EventStream[A] = {
     new DelayForEventStream(parent = underlying, projectMs)
