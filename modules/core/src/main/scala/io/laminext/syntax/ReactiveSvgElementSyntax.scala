@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.nodes.ReactiveSvgElement
-import io.laminext.ops.svgelement.ReactiveSvgElementOps
+import io.laminext.core.ops.svgelement.ReactiveSvgElementOps
 import org.scalajs.dom
 
 trait ReactiveSvgElementSyntax {

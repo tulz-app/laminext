@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-import io.laminext.ops.htmlelement.ReactiveHtmlElementOps
+import io.laminext.core.ops.htmlelement.ReactiveHtmlElementOps
 import org.scalajs.dom
 
 trait ReactiveHtmlElementSyntax {

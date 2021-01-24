@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.airstream.core.Observable
-import io.laminext.ops.observable.ObservableOfBooleanOps
+import io.laminext.core.ops.observable.ObservableOfBooleanOps
 
 trait ObservableOfBooleanSyntax {
 

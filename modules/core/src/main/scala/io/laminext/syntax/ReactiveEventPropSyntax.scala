@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.keys.ReactiveEventProp
-import io.laminext.ops.reactiveeventprop.ReactiveEventPropOps
+import io.laminext.core.ops.reactiveeventprop.ReactiveEventPropOps
 import org.scalajs.dom
 
 trait ReactiveEventPropSyntax {

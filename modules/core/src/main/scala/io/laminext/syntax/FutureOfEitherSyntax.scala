@@ -1,6 +1,6 @@
 package io.laminext.syntax
 
-import io.laminext.ops.future.FutureOfEitherOps
+import io.laminext.core.ops.future.FutureOfEitherOps
 
 import scala.concurrent.Future
 

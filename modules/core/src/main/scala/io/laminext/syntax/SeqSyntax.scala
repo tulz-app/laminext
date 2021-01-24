@@ -1,6 +1,6 @@
 package io.laminext.syntax
 
-import io.laminext.ops.iterable.SeqOps
+import io.laminext.core.ops.iterable.SeqOps
 
 import scala.collection.generic.IsSeq
 
