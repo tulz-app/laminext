@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.api.L._
-import io.laminext.ops.signal.SignalOfEitherOps
+import io.laminext.core.ops.signal.SignalOfEitherOps
 
 trait SignalOfEitherSyntax {
 

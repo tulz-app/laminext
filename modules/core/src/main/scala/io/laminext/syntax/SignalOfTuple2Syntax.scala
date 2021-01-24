@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.api.L._
-import io.laminext.ops.signal.SignalOfTuple2Ops
+import io.laminext.core.ops.signal.SignalOfTuple2Ops
 
 trait SignalOfTuple2Syntax {
 

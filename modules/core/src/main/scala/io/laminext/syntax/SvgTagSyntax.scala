@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.builders.SvgTag
-import io.laminext.ops.svgtag.SvgTagOps
+import io.laminext.core.ops.svgtag.SvgTagOps
 import org.scalajs.dom
 
 trait SvgTagSyntax {

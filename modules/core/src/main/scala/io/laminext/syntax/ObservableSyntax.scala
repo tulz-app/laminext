@@ -1,8 +1,8 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.api.L._
-import io.laminext.ops.observable.ObservableOfOptionOps
-import io.laminext.ops.observable.ObservableOps
+import io.laminext.core.ops.observable.ObservableOfOptionOps
+import io.laminext.core.ops.observable.ObservableOps
 
 trait ObservableSyntax {
 

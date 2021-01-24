@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.airstream.core.EventStream
-import io.laminext.ops.stream.EventStreamOfOptionOps
+import io.laminext.core.ops.stream.EventStreamOfOptionOps
 
 trait EventStreamOfOptionSyntax {
 

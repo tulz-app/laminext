@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.api.L.Input
-import io.laminext.ops.htmlelement.InputElementOps
+import io.laminext.core.ops.htmlelement.InputElementOps
 
 trait InputElementSyntax {
 

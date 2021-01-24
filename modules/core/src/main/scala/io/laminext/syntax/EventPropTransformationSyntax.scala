@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.emitter.EventPropTransformation
-import io.laminext.ops.eventproptransformation.EventPropTransformationOps
+import io.laminext.core.ops.eventproptransformation.EventPropTransformationOps
 import org.scalajs.dom
 
 trait EventPropTransformationSyntax {

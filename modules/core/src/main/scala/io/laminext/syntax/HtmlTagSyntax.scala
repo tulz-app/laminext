@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.builders.HtmlTag
-import io.laminext.ops.htmltag.HtmlTagOps
+import io.laminext.core.ops.htmltag.HtmlTagOps
 import org.scalajs.dom
 
 trait HtmlTagSyntax {
