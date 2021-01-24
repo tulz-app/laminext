@@ -1,13 +1,12 @@
-package io.laminext
+package io.laminext.core
 
-import com.raquo.airstream.core.Observer
-import com.raquo.airstream.eventbus.EventBus
+import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
-import io.laminext.binders.BinderWithStartStop
-import io.laminext.binders.ResizeObserverBinder
+import io.laminext.core.binders.BinderWithStartStop
+import io.laminext.core.binders.ResizeObserverBinder
 import io.laminext.domext.ResizeObserverEntry
 
-object ResizeObserverReceiver {
+object ResizeObserverBinders {
 
   @inline def -->[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](observer: Observer[ResizeObserverEntry]): BinderWithStartStop[El] = {
     new ResizeObserverBinder(t => observer.onNext(t))

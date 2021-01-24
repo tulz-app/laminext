@@ -1,7 +1,7 @@
 package io.laminext.syntax
 
-import io.laminext.FutureChildReceiver
-import io.laminext.FutureChildrenReceiver
+import io.laminext.core.FutureChildReceiver
+import io.laminext.core.FutureChildrenReceiver
 
 trait ReceiversSyntax {
 

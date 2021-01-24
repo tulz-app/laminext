@@ -7,13 +7,13 @@ import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.emitter.EventPropTransformation
 import com.raquo.laminar.nodes.ReactiveElement
-import io.laminext.NodeSeqModifier
-import io.laminext.ResizeObserverReceiver
-import io.laminext.SetTimeoutBinders
-import io.laminext.StoredBoolean
-import io.laminext.StoredString
-import io.laminext.TeeObserver
-import io.laminext.ThisEventsStreamBinder
+import io.laminext.core.binders.ThisEventsStreamBinder
+import io.laminext.core.NodeSeqModifier
+import io.laminext.core.ResizeObserverBinders
+import io.laminext.core.SetTimeoutBinders
+import io.laminext.core.StoredBoolean
+import io.laminext.core.StoredString
+import io.laminext.core.TeeObserver
 import org.scalajs.dom
 
 import scala.concurrent.duration.FiniteDuration
@@ -75,7 +75,7 @@ trait MiscSyntax {
     timeout: FiniteDuration,
   ): SetTimeoutBinders[Unit] = new SetTimeoutBinders((): Unit, timeout)
 
-  @inline def resizeObserver: ResizeObserverReceiver.type = ResizeObserverReceiver
+  @inline def resizeObserver: ResizeObserverBinders.type = ResizeObserverBinders
 
   @inline def thisEvents[Ev <: dom.Event](t: EventPropTransformation[Ev, Ev]): ThisEventsStreamBinder[Ev, Ev] =
     new ThisEventsStreamBinder[Ev, Ev](t, identity)

@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-import io.laminext.ConditionalChildInserter
+import io.laminext.core.ConditionalChildInserter
 
 final class SignalOfEitherOps[A, B](underlying: Signal[Either[A, B]]) {
 

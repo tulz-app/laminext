@@ -1,7 +1,6 @@
-package io.laminext
+package io.laminext.core
 
 import com.raquo.laminar.api.L._
-import com.raquo.domtypes.generic.Modifier
 
 final class UnsafeAppendRawChildModifier[El <: Element](child: org.scalajs.dom.raw.Node) extends Modifier[El] {
 

@@ -1,7 +1,5 @@
 package io.laminext.syntax
 
-import io.laminext.AmAny
-import io.laminext.HtmlEntities
 import io.laminext.util.SmartClass
 import org.scalajs.dom
 
@@ -37,8 +35,8 @@ trait CoreSyntax
     with ReceiversSyntax {
 
   type AmAny                                                  = io.laminext.AmAny
-  type StoredString                                           = io.laminext.StoredString
-  type StoredBoolean                                          = io.laminext.StoredBoolean
+  type StoredString                                           = io.laminext.core.StoredString
+  type StoredBoolean                                          = io.laminext.core.StoredBoolean
   type AmendedHtmlTag[R <: dom.html.Element, AmType <: AmAny] = io.laminext.AmendedHtmlTag[R, AmType]
   type AmendedSvgTag[R <: dom.svg.Element]                    = io.laminext.AmendedSvgTag[R]
 

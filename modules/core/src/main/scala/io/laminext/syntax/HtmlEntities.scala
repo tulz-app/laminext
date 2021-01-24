@@ -1,4 +1,5 @@
 package io.laminext
+package syntax
 
 trait HtmlEntities {
 
@@ -21,8 +22,6 @@ trait HtmlEntities {
    * Em dash
    */
   @inline def mdash: String = "\u2014"
-
-  import com.raquo.laminar.api.L._
 
   /**
    * HTML Entities

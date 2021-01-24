@@ -1,4 +1,4 @@
-package io.laminext
+package io.laminext.core
 package binders
 
 import com.raquo.laminar.nodes.ReactiveElement

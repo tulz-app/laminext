@@ -1,4 +1,5 @@
-package io.laminext
+package io.laminext.core
+package binders
 
 import app.tulz.tuplez.Composition
 import com.raquo.airstream.core.Observer
