@@ -1,4 +1,5 @@
-package io.laminext
+package io.laminext.core
+package binders
 
 import app.tulz.tuplez.Composition
 import com.raquo.airstream.core.Observer
@@ -122,14 +123,14 @@ class ThisEventsStreamBinder[Ev <: dom.Event, A](
   @inline def sample[T1](signal: Signal[T1]): ThisEventsStreamBinder[Ev, T1] =
     andThen(_.sample(signal))
 
-//  @inline def debugLog(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
-//    andThen(_.debugLog(prefix, when))
-//
-//  @inline def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
-//    andThen(_.debugLogJs(prefix, when))
-//
-//  @inline def debugBreak(when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
-//    andThen(_.debugBreak(when))
+  @inline def debugLog(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
+    andThen(_.debugLog(prefix, when))
+
+  @inline def debugLogJs(prefix: String = "event", when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
+    andThen(_.debugLogJs(prefix, when))
+
+  @inline def debugBreak(when: A => Boolean = _ => true): ThisEventsStreamBinder[Ev, A] =
+    andThen(_.debugBreak(when))
 
   @inline def debugSpy(fn: A => Unit): ThisEventsStreamBinder[Ev, A] =
     andThen(_.debugSpy(fn))

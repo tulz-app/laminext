@@ -1,4 +1,4 @@
-package io.laminext
+package io.laminext.core
 
 import com.raquo.laminar.api.L._
 import org.scalajs.dom.ext.LocalStorage

@@ -1,11 +1,11 @@
-package io.laminext
+package io.laminext.core
 
 import com.raquo.laminar.api.L._
 import org.scalajs.dom.raw.Event
 
 object InputChangeEvents {
 
-  def changes(el: Element): EventStream[Event] =
+  def apply(el: Element): EventStream[Event] =
     EventStream
       .merge(
         el.events(onChange),

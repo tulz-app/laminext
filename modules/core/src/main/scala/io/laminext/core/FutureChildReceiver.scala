@@ -1,15 +1,13 @@
-package io.laminext
+package io.laminext.core
 
 import com.raquo.laminar.api.L._
-import com.raquo.airstream.core.EventStream
-import com.raquo.laminar.modifiers.Inserter
 import com.raquo.laminar.nodes.ChildNode
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
 import scala.concurrent.Future
 
-object FutureChildReceiver {
+private[laminext] object FutureChildReceiver {
 
   val maybe: MaybeFutureChildReceiver.type = MaybeFutureChildReceiver
 

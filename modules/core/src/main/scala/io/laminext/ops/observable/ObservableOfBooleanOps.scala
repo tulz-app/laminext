@@ -4,7 +4,8 @@ import com.raquo.laminar.api.L
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-import io.laminext.ConditionalChildInserter
+import io.laminext.core
+import io.laminext.core.ConditionalChildInserter
 
 final class ObservableOfBooleanOps(underlying: Observable[Boolean]) {
 
@@ -25,12 +26,12 @@ final class ObservableOfBooleanOps(underlying: Observable[Boolean]) {
   @inline def childWhenTrue(
     child: => Child
   ): Inserter[ReactiveHtmlElement.Base] =
-    ConditionalChildInserter(underlying, child)
+    core.ConditionalChildInserter(underlying, child)
 
   @inline def childWhenFalse(
     child: => Child
   ): Inserter[ReactiveHtmlElement.Base] =
-    ConditionalChildInserter(underlying.map(!_), child)
+    core.ConditionalChildInserter(underlying.map(!_), child)
 
   @inline def doWhenTrue(
     callback: => Unit

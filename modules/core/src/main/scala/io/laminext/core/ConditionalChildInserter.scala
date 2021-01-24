@@ -1,10 +1,10 @@
-package io.laminext
+package io.laminext.core
 
-import com.raquo.laminar.api.L._
 import com.raquo.laminar.api.L
+import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 
-object ConditionalChildInserter {
+private[laminext] object ConditionalChildInserter {
 
   def apply[El <: Element](
     condition: Observable[Boolean],

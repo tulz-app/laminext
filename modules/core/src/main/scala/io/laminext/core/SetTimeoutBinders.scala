@@ -1,10 +1,9 @@
-package io.laminext
+package io.laminext.core
 
-import com.raquo.airstream.core.Observer
-import com.raquo.airstream.eventbus.EventBus
+import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
-import io.laminext.binders.BinderWithStartStop
-import io.laminext.binders.SetTimeoutBinder
+import io.laminext.core.binders.BinderWithStartStop
+import io.laminext.core.binders.SetTimeoutBinder
 
 import scala.concurrent.duration.FiniteDuration
 

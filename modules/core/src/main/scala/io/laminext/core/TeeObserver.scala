@@ -1,7 +1,6 @@
-package io.laminext
+package io.laminext.core
 
-import com.raquo.airstream.core.Observer
-
+import com.raquo.laminar.api.L._
 import scala.util.Try
 
 class TeeObserver[T](observers: Seq[Observer[T]]) extends Observer[T] {

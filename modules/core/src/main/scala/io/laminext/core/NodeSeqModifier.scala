@@ -1,6 +1,6 @@
-package io.laminext
+package io.laminext.core
 
-import com.raquo.domtypes.generic.Modifier
+import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
