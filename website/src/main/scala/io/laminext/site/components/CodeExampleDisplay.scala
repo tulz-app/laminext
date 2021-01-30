@@ -1,13 +1,13 @@
 package io.laminext.site.components
 
+import com.raquo.laminar.api.L._
+import io.laminext.syntax.core._
+import io.laminext.syntax.tailwind._
+import io.laminext.syntax.markdown._
+import io.laminext.tailwind.TW
 import io.laminext.highlight.Highlight
 import io.laminext.site.examples.CodeExample
 import io.laminext.tailwind.theme
-import io.laminext.tailwind.TW
-import com.raquo.laminar.api.L._
-import io.laminext.tailwind.syntax._
-import io.laminext.syntax.core._
-import io.laminext.markdown._
 import io.laminext.site.Styles
 import io.laminext.site.TemplateVars
 import org.scalajs.dom
@@ -140,7 +140,7 @@ object CodeExampleDisplay {
           div(
             cls := "overflow-auto",
             TW.transition(show = !sourceCollapsed.signal, collapseTransition),
-            child <-- Styles.highlightStyle.signal.combine(dimContext.signal).map { case (_, dim) =>
+            child <-- Styles.highlightStyle.signal.combineWithFn(dimContext.signal) { (_, dim) =>
               codeNode(dim)
             }
           ),

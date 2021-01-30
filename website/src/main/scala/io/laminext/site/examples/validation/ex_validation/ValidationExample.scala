@@ -11,7 +11,7 @@ object ValidationExample
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.core._
-      import io.laminext.validation.syntax._
+      import io.laminext.syntax.cats._
 
       /* <focus> */
       val validatedInput1 = input(
@@ -41,8 +41,8 @@ object ValidationExample
         placeholder := "enter something else"
       ).validated(
         V.nonBlank("Must not be blank!") &&
-          (V.custom[String]("Must be upper-case!")(string => string.toUpperCase == string) ||
-            V.custom[String]("Must be lower-case!")(string => string.toLowerCase == string))
+          (V.custom("Must be upper-case!")(string => string.toUpperCase == string) ||
+            V.custom("Must be lower-case!")(string => string.toLowerCase == string))
       )
       /* </focus> */
 

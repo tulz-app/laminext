@@ -14,7 +14,7 @@ object FetchCirceExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import io.laminext.fetch._
+      import io.laminext.fetch.circe._
       import io.laminext.syntax.core._
       import io.circe._
       import io.circe.generic.auto._
@@ -31,6 +31,7 @@ object FetchCirceExample
       )
       val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[Json]]
       div(
+        EventStream.fromValue(1).debugLogStarts --> { _ => },
         cls := "space-y-4",
         div(inputElement),
         div(
@@ -43,8 +44,8 @@ object FetchCirceExample
               .flatMap { inputValue =>
                 /* <focus> */
                 Fetch
-                  .post("https://httpbin.org/anything", body = Data(s = inputValue)) // Data has an implicit Encoder[Data] auto-derived
-                  .decode[Json]                                                      // Json has a corresponding implicit Decoder[Json]
+                  .post("https://httpbin.org/anything", body = jsonRequestBody(Data(s = inputValue))) // Data has an implicit Encoder[Data] auto-derived
+                  .decode[Json]                                                                       // Json has a corresponding implicit Decoder[Json]
                 /* </focus> */
               } --> responseReceived,
           ),

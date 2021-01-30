@@ -2,7 +2,7 @@ package io.laminext.websocket
 
 import org.scalajs.dom.raw
 
-sealed abstract class WebSocketEvent[+T]
+sealed abstract class WebSocketEvent[+Receive]
 
 object WebSocketEvent {
 

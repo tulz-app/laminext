@@ -91,4 +91,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       }
     }
 
+  def errorOrValue: EventStream[Either[Throwable, A]] =
+    underlying.recoverToTry.map(_.toEither)
+
 }

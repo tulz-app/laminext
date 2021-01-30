@@ -2,7 +2,7 @@ package io.laminext.tailwind
 package progressbar
 
 import com.raquo.laminar.api.L._
-import io.laminext.tailwind.syntax._
+import io.laminext.syntax.tailwind._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import org.scalajs.dom.html
 

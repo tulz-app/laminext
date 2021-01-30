@@ -57,7 +57,7 @@ object TransitionExample
           )
         ),
         div(
-          cls := "p-8 w-64  bg-blue-600 text-blue-50",
+          cls := "p-8 w-64 bg-blue-600 text-blue-50",
           /* <focus> */
           Transition(show.signal, transitionConfig, observer = actuallyShowing.writer),
           /* </focus> */

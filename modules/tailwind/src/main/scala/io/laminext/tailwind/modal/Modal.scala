@@ -1,7 +1,7 @@
 package io.laminext.tailwind
 package modal
 
-import syntax._
+import io.laminext.syntax.tailwind._
 import theme.Theme
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._

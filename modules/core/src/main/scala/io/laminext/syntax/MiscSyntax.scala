@@ -1,19 +1,15 @@
 package io.laminext.syntax
 
-import com.raquo.airstream.core.Observer
-import com.raquo.airstream.eventbus.EventBus
-import com.raquo.airstream.core.EventStream
-import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.emitter.EventPropTransformation
 import com.raquo.laminar.nodes.ReactiveElement
-import io.laminext.core.binders.ThisEventsStreamBinder
 import io.laminext.core.NodeSeqModifier
 import io.laminext.core.ResizeObserverBinders
 import io.laminext.core.SetTimeoutBinders
 import io.laminext.core.StoredBoolean
 import io.laminext.core.StoredString
 import io.laminext.core.TeeObserver
+import io.laminext.core.ThisEventsStreamBuilder
 import org.scalajs.dom
 
 import scala.concurrent.duration.FiniteDuration
@@ -77,7 +73,7 @@ trait MiscSyntax {
 
   @inline def resizeObserver: ResizeObserverBinders.type = ResizeObserverBinders
 
-  @inline def thisEvents[Ev <: dom.Event](t: EventPropTransformation[Ev, Ev]): ThisEventsStreamBinder[Ev, Ev] =
-    new ThisEventsStreamBinder[Ev, Ev](t, identity)
+  @inline def thisEvents[Ev <: dom.Event](t: EventPropTransformation[Ev, Ev]): ThisEventsStreamBuilder[Ev, Ev] =
+    new ThisEventsStreamBuilder[Ev, Ev](t, identity)
 
 }
