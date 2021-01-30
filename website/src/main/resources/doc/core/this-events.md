@@ -38,7 +38,9 @@ div(
 )
 ```
 
-## `.mapToTrue`, `.mapToFalse` and `.mapToUnit`
+## `.mapToTrue`
+## `.mapToFalse`
+## `.mapToUnit`
 
 ```scala
 import com.raquo.laminar.api.L._

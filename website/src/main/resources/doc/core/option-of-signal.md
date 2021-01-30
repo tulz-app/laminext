@@ -1,4 +1,6 @@
-## `.lift`
+## `.shiftSignal`
+
+`Option[Signal[A]] => Signal[Option[A]]`
 
 Transforms an `Option[Signal[A]]` into a `Signal[Option[A]]`.
 
@@ -8,5 +10,5 @@ import io.laminext.syntax.core._
 
 val option: Option[Signal[String]] = ???
 
-val lifted: Signal[Option[String]] = option.lift
+val lifted: Signal[Option[String]] = option.shiftSignal
 ```

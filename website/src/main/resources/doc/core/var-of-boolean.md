@@ -1,4 +1,5 @@
-## `.toggle` and `.toggleObserver`
+## `.toggle` 
+## `.toggleObserver`
 
 ```scala
 import com.raquo.laminar.api.L._

@@ -4,7 +4,8 @@ Interleaves a `Seq[A]` with elements of `A` (like `.mkString` but returns a `Seq
 
 See [example](/core/example-seq-join).
 
-## `whenEmpty` and `whenDefined`
+## `whenEmpty` 
+## `whenDefined`
 
 ```scala
 val o: Option[String] = ???
@@ -19,7 +20,8 @@ div(
 )
 ```
 
-## `when` and `whenNot`
+## `when` 
+## `whenNot`
 
 ```scala
 val b: Boolean = ???
@@ -34,7 +36,8 @@ div(
 )
 ```
 
-## `nodeSeq` and `nodeSequence`
+## `nodeSeq` 
+## `nodeSequence`
 
 Combine a sequence of modifiers into a `Modifier`.
 
@@ -62,7 +65,7 @@ Use when you know what you're doing.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
+import io.laminext.syntax.dangerous._
 import org.scalajs.dom.raw
 
 val rawNode: raw.Node = ???
@@ -72,7 +75,7 @@ div(
 )
 ```
 
-## Tee observer
+## `tee`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -115,7 +118,8 @@ val (triggerStream, triggerFunc) = createTrigger()
 // triggerFunc: () => Unit – calling this function makes the triggerStream emit a value 
 ```
 
-## `storedBoolean` and `storedString`
+## `storedBoolean` 
+## `storedString`
 
 Creates "var"-like objects that store their values in the local storage.
 
@@ -171,7 +175,8 @@ div(
 
 ```
 
-### `futureChild` and `futureChildren`
+## `futureChild` 
+##  `futureChildren`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -180,7 +185,7 @@ import scala.concurrent.Future
 
 div(
   futureChild <-- Future.successful(div("a")),  
-  futureChildren <-- Future.successful(Seq(div("a"), div("b"))),  
+  futureChildren <-- Future.successful(Seq(div("a"), div("b"))) 
 )
 ```
 
@@ -190,7 +195,7 @@ Use when you know what you're doing.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
+import io.laminext.syntax.dangerous._
 
 val signal: Signal[String] = ???
 

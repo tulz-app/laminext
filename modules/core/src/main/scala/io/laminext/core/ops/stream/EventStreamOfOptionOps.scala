@@ -32,8 +32,8 @@ final class EventStreamOfOptionOps[A](underlying: EventStream[Option[A]]) {
   @inline def withDefault(default: => A): EventStream[A] =
     underlying.map(_.getOrElse(default))
 
-  def someFlatMap[B](mapping: A => EventStream[B]): EventStream[Option[B]] = underlying.flatMap {
-    case Some(a) => mapping(a).map(Some(_))
+  def flatMapWhenDefined[B](mapping: A => EventStream[Option[B]]): EventStream[Option[B]] = underlying.flatMap {
+    case Some(a) => mapping(a)
     case None    => EventStream.fromValue(Option.empty[B])
   }
 

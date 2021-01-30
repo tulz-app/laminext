@@ -3,39 +3,53 @@ libraryDependencies += "io.laminext" %%% "validation" % "{{laminextVersion}}"
 ```
 
 ```scala
-import io.laminext.validation.syntax._
+import io.laminext.syntax.validation._
 ```
 
-The `validation` module provides utilities to validate the input field values.
+This module provides utilities to validate input field values.
 
 ## `.validated`
+## `.validatedCheckbox`
+## `.validatedFiles`
 
-This is an extension method defined for inputs and text areas.
+These are extension methods defined for inputs and text areas.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.validation.syntax._
+import io.laminext.syntax.validation._
 
 val validatedInput = input().validated(???)
 val validatedTextArea = textArea().validated(???)
 val validatedCheckbox = input(tpe := "checkbox").validatedCheckBox(???)
+val validatedFiles = input(tpe := "file").validatedFiles(???)
+
+// this is an alias for .validatedFiles for validations that return a single file
+val validatedFile = input(tpe := "file").validatedFile(???)
 ```
 
-`.validated` accepts a single parameter: `validation: Validation[String]`.
+`.validated*` methods accept a single parameter: `validation: Validation[In, Err, Out]`.
 
 `Validation[A]` is defined as follows:
 
 ```scala
-type ValidatedValue[T] = Either[ValidationError, T]
-type ValidationError   = Seq[String]
-type Validation[T]     = T => ValidatedValue[T]
+type ValidatedValue[Err, A]  = Either[Err, A]
+type Validation[A, Err, Out] = A => ValidatedValue[Err, Out]
 ````
 
-There is a few basic validations provided out of the box:
+For text inputs and text areas, `In` and `Out` are both `String`.
+
+For checkboxes, `In` and `Out` are both `Boolean.
+
+`Err` is `Seq[String]`.
+
+For files, `In` is `Seq[File]`, `Out` is defined by the validation (can be `Seq[File]`, `File` or anything that the validation 
+returns). `Err` is defined by the validation.
+
+There are a few basic validations provided out of the box:
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.validation.syntax._
+import io.laminext.syntax.validation._
 
 // e-mail validation
 input().validated(V.email("please provide a valid e-mail"))
@@ -48,63 +62,45 @@ input().validated(V.pass)
 
 // checkbox validations
 input(tpe := "checkbox").validatedCheckBox(V.isTrue("must be checked!"))
-input(tpe := "checkbox").validatedCheckBox(V.isFalse("must be UNchecked!"))
+input(tpe := "checkbox").validatedCheckBox(V.isFalse("must be un-checked!"))
+
+// files validation
+val filesValidation: Validation[Seq[File], Seq[ValidationError], Seq[File]] = files => ???
+input(tpe := "file").validatedFiles(filesValidation)
+
+// single file validation
+val fileValidation: Validation[Seq[File], Seq[ValidationError], File] = files => ???
+input(tpe := "file").validatedFile(fileValidation)
 
 // custom validation
 input().validated(V.custom("must be upper-case!")(string => string.toUpperCase == string))
-
 ```
 
-## `.validatedValue`
+## `.validatedValue` 
+## `.validatationError`
 
-The `.validation` extension method returns a `ValidatedElement`:
+The `.validation` extension method returns a `ValidatedElement`, which has the following fields:
 
-```scala
-import cats.data.NonEmptyChain
-import com.raquo.laminar.api.L._
-import com.raquo.laminar.nodes.ReactiveHtmlElement
-import org.scalajs.dom
-
-class ValidatedElement[+Ref <: dom.html.Element, A](
-  val el: ReactiveHtmlElement[Ref],
-  val validatedValue: Signal[Either[NonEmptyChain[String], A]],
-  val validationError: Signal[Option[NonEmptyChain[String]]]
-)
-```
-
-* `el` is the original element (`input()`, `textArea`); can be implicitly converted into a normal element so you can put the 
+* `el` – is the original element (`input` or `textArea`); can be implicitly converted into a normal element so you can put the
   validated element into your component tree directly
-* `validatedValue` is a signal with either a validation error (a non-empty chain of errors), or a value that passed the validations
-* `validationError` is a signal with an option that contains the validation error, if any
-
-`validationError`'s value is not immediately set to `Some(errors)`. Rather, it is set when the value is not valid, and the
+* `validatedValue` – a signal with either a validation error, or a value that passed the validation
+* `validationError` – a signal with an option that contains the validation error, if any. 
+  `validationError`'s value is not immediately set to `Some(errors)`. Rather, it is set when the value is not valid, and the
 element has lost the focus. Or if the element contained an invalid value when getting the focus, and its current value is 
 invalid again.
 
 ## Combining validations
 
-Validations can be combined using the `V.all` function:
+Validations can be combined using the `&&` combinator (fail fast – will only report the first 
+validation error, see [cats](validation/cats) if you need `&` and `|`):
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.validation.syntax._
-
-input().validated(V.all(
-  V.nonBlank("must not be blank!"),
-  V.custom("must be upper-case!")(string => string.toUpperCase == string)
-))
-```
-
-Or using the `&&` and `||` operators:
-
-```scala
-import com.raquo.laminar.api.L._
-import io.laminext.validation.syntax._
+import io.laminext.syntax.validation._
 
 input().validated(
-  V.nonBlank("Must not be blank!") &&
-    (V.custom[String]("Must be upper-case!")(string => string.toUpperCase == string) ||
-      V.custom[String]("Must be lower-case!")(string => string.toLowerCase == string))
+  V.nonBlank("must not be blank!") &&
+    V.custom("must be upper-case!")(string => string.toUpperCase == string)
 )
 ```
 
@@ -116,7 +112,7 @@ The `.validated` extension method is provided for signals and event streams:
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.validation.syntax._
+import io.laminext.syntax.validation._
 
 val signal: Signal[String] = ???
 val stream: EventStream[String] = ???

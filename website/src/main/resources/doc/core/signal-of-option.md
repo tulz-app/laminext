@@ -1,8 +1,9 @@
 See [example](/core/example-signal-of-option).
 
-## `.isDefined` and `.isEmpty`
+## `.isDefined` 
+## `.isEmpty`
 
-`Signal[Option[A]] -> Signal[Boolean]`
+`Signal[Option[A]] => Signal[Boolean]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -17,7 +18,7 @@ val signalIsDefined: Signal[Boolean] = signal.isDefined
 
 ## `.optionContains`
 
-`Signal[Option[A]] -> Signal[Boolean]`
+`Signal[Option[A]] => A => Signal[Boolean]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -29,7 +30,7 @@ val containsHello: Signal[Boolean] = signal.optionContains("hello")
 
 ## `.optionExists`
 
-`Signal[Option[A]] -> Signal[Boolean]`
+`Signal[Option[A]] => (A => Boolean) => Signal[Boolean]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -41,7 +42,7 @@ val containsHello: Signal[Boolean] = signal.optionExists(_.toLowerCase == "hello
 
 ## `.optionMap`
 
-`Signal[Option[A]] -> Signal[Option[B]]`
+`Signal[Option[A]] => (A => B) => Signal[Option[B]]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -53,7 +54,7 @@ val mapped: Signal[Option[Int]] = signal.optionMap(_.length)
 
 ## `.optionFlatMap`
 
-`Signal[Option[A]] -> Signal[Option[B]]`
+`Signal[Option[A]] => (A => Option[B]) => Signal[Option[B]]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -63,10 +64,9 @@ val signal: Signal[Option[String]] = ???
 val flatMapped: Signal[Option[Int]] = signal.optionFlatMap(string => Option(string).filter(_.length > 5).map(_.length))
 ```
 
-
 ## `.withDefault`
 
-`Signal[Option[A]] -> Signal[A]`
+`Signal[Option[A]] => A => Signal[A]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -77,9 +77,9 @@ val withDefault: Signal[String] = signal.withDefault("I'm the default!")
 ```
 
 
-## `.someFlatMap`
+## `.flatMapWhenDefined`
 
-`Signal[Option[A]] -> Signal[Option[B]]`
+`Signal[Option[A]] => (A => Signal[Option[B]]) => Signal[Option[B]]`
 
 Unlike the previous functions, this one takes a function that returns another `Signal[...]`.
 
@@ -93,10 +93,7 @@ trait A
 trait B
 
 val signal: Signal[Option[A]] = ???
-val project: A => Signal[B] = ???
+val project: A => Signal[Option[B]] = ???
 
-val flatMapped: Signal[Option[U]] = signal.someFlatMap(project)
+val flatMapped: Signal[Option[U]] = signal.flatMapWhenDefined(project)
 ```
-
-> TODO: this is not consistent with `.leftFlatMap`/`.rightFlatMap` for eithers – those take a projection that returns
-> an `Either[..., ...]`, not a plain value like here.

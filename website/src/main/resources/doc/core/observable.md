@@ -1,4 +1,5 @@
-## `.bind` and `.bindCollect`
+## `.bind` 
+## `.bindCollect`
 
 `.bind` is an alias for `-->(onNext: A => Unit)`.
 

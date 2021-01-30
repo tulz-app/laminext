@@ -14,8 +14,8 @@ object FetchCirceExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import io.laminext.fetch.circe._
       import io.laminext.syntax.core._
+      import io.laminext.fetch.circe._
       import io.circe._
       import io.circe.generic.auto._
       import org.scalajs.dom

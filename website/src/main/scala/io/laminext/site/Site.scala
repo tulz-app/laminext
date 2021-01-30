@@ -111,8 +111,12 @@ object Site {
     SiteModule(
       path = "validation",
       index = docPage("", "Validation", FileAsString("/doc/validation/index.md")),
+      "" -> Seq(
+        docPage("cats", "cats", FileAsString("/doc/validation/cats.md")),
+      ),
       "Examples" -> Seq(
         examplePage(examples.validation.ex_validation.ValidationExample),
+        examplePage(examples.validation.ex_validation_cats.ValidationCatsExample),
       )
     ),
 //    SiteModule(

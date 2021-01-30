@@ -2,13 +2,18 @@
 libraryDependencies += "io.laminext" %%% "fetch-circe" % "{{laminextVersion}}"
 ```
 
-The Circe support module allows to use types that have a corresponding `Encoder` and/or `Decoder` as a request body and/or 
+```scala
+import io.laminext.fetch.circe._
+// note – import this *instead* of io.laminext.fetch._ 
+```
+
+This module allows using the types that have a corresponding `Encoder` and/or `Decoder` as a request body and/or 
 as a response type.
 
-## Specifying the Circe-encoded request body
+## Specifying a circe-encoded request body
 
 ```scala
-import io.laminext.fetch._ // this will put the required implicits from the fetch-circe module into the scope 
+import io.laminext.fetch.circe._  
 import io.circe.generic.JsonCodec
 
 @JsonCodec
@@ -23,7 +28,7 @@ This will always try to decode the response body, regardless of the response sta
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.fetch._
+import io.laminext.fetch.circe._
 import io.circe.generic.JsonCodec
 
 @JsonCodec
@@ -40,7 +45,7 @@ Otherwise, the event stream will emit a `NonOkayResponse` error.
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.fetch._
+import io.laminext.fetch.circe._
 import io.circe.generic.JsonCodec
 
 @JsonCodec
@@ -55,7 +60,7 @@ This will decode the okay (`2xx`) and non-okay responses into different types an
 
 ```scala
 import com.raquo.laminar.api.L._
-import io.laminext.fetch._
+import io.laminext.fetch.circe._
 import io.circe.generic.JsonCodec
 
 @JsonCodec
@@ -70,4 +75,6 @@ val responseStream: EventStream[FetchResponse[Either[MyError, MyResponse]]] =
 
 ## Decoding errors
 
-When the response can not be parsed/decoded, the event stream will emit the underlying `io.circe.Error`.  
+When the response can not be parsed/decoded, the event stream will emit
+an `ResponseDecodeFailed` containing the underlying `io.circe.Error` as well as the original
+response.  

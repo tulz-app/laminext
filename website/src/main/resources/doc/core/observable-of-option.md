@@ -1,4 +1,5 @@
-## `.childWhenDefined` and `.childWhenEmpty`
+## `.childWhenDefined` 
+## `.childWhenEmpty`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -16,7 +17,8 @@ div(
 )
 ```
 
-## `.doWhenDefined` and `.doWhenEmpty`
+## `.doWhenDefined` 
+## `.doWhenEmpty`
 
 ```scala
 import com.raquo.laminar.api.L._

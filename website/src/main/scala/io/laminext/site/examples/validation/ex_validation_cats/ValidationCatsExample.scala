@@ -1,18 +1,19 @@
-package io.laminext.site.examples.validation.ex_validation
+package io.laminext.site.examples.validation.ex_validation_cats
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
 
-object ValidationExample
+object ValidationCatsExample
     extends CodeExample(
-      id = "example-validation",
-      title = "Validation",
+      id = "example-validation-cats",
+      title = "Validation (cats)",
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import cats.implicits._
       import io.laminext.syntax.core._
-      import io.laminext.syntax.validation._
+      import io.laminext.syntax.validation.cats._
+
+      implicitly[cats.Semigroup[Seq[String]]]
 
       /* <focus> */
       val validatedInput1 = input(
@@ -28,7 +29,7 @@ object ValidationExample
         cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "enter something BIG"
       ).validated(
-        V.nonBlank("Must not be blank!") &&
+        V.nonBlank("Must not be blank!") &
           V.custom("Must be upper-case!")(string => string.toUpperCase == string)
       )
       /* </focus> */
@@ -39,8 +40,9 @@ object ValidationExample
         cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "enter something else"
       ).validated(
-        V.custom("Must be longer than 5 characters!")(_.length > 5) &&
-          V.custom("Must be upper-case!")(string => string.toUpperCase == string)
+        V.custom("Must be longer than 5 characters!")(_.length > 5) &
+          (V.custom("Must be upper-case!")(string => string.toUpperCase == string) |
+            V.custom("Must be lower-case!")(string => string.toLowerCase == string))
       )
       /* </focus> */
 

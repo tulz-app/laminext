@@ -33,8 +33,6 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       }
   }
 
-  def errors: EventStream[Throwable] = underlying.recoverToTry.collect { case Failure(err) => err }
-
   @inline def mapToUnit: EventStream[Unit]     = underlying.mapToStrict((): Unit)
   @inline def mapToTrue: EventStream[Boolean]  = underlying.mapToStrict(true)
   @inline def mapToFalse: EventStream[Boolean] = underlying.mapToStrict(false)
