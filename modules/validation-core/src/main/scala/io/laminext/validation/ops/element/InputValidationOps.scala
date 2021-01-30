@@ -3,6 +3,7 @@ package ops.element
 
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
+import io.laminext.validation.ops.ValidationOps
 import org.scalajs.dom.raw.File
 import org.scalajs.dom.html
 
@@ -22,9 +23,23 @@ final class InputValidationOps(el: Input) {
     ValidatedElement(el, value, validation)
   }
 
+  private def firstFileValidation[Err](noFileError: Err): Validation[Seq[File], Err, File] =
+    files =>
+      if (files.isEmpty) {
+        Left(noFileError)
+      } else {
+        Right(files.head)
+      }
+
   @inline def validatedFile[Err](
-    validation: Validation[Seq[File], Err, File],
-  ): ValidatedElement[html.Input, Seq[File], Err, File] = validatedFiles(validation)
+    noFileError: Err,
+    validation: Validation[File, Err, File],
+  ): ValidatedElement[html.Input, Seq[File], Err, File] =
+    ValidatedElement(
+      el,
+      el.files,
+      new ValidationOps(firstFileValidation(noFileError)).flatMap(validation)
+    )
 
   @inline def validatedFiles[Err, Out](
     validation: Validation[Seq[File], Err, Out],

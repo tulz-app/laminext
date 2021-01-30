@@ -7,7 +7,6 @@ import io.laminext.syntax.tailwind._
 import io.laminext.syntax.core._
 import io.laminext.site.icons.Icons
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-import io.laminext.tailwind.TW
 
 object PageHeader {
 

@@ -15,20 +15,14 @@ class HtmlTagTailwindButtonInitOps[T <: dom.html.Element](tag: HtmlTag[T]) {
 
   @inline def btn: AmendedHtmlTagPartial[T, AmButtonExpectSizeOrGroup] =
     tag.amendPartial[AmButtonExpectSizeOrGroup](
-      cls := ClassJoin(
-        Theme.current.button.common.classes,
-        Theme.current.button.disabled,
-        Theme.current.animation.focusTransition
-      ),
-      smartClass(
-        Theme.current.button.single.classes       -> true,
-        Theme.current.button.group.common.classes -> false
-      )
+      cls(Theme.current.button.common.classes),
+      cls(Theme.current.button.disabled),
+      cls(Theme.current.animation.focusTransition)
     )
 
   @inline def buttonGroup: AmendedHtmlTag[T, AmAny] =
     tag.amend[AmAny](
-      cls := Theme.current.buttonGroup.base
+      cls(Theme.current.buttonGroup.base)
     )
 
 }

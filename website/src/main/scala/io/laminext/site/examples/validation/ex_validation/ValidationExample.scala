@@ -10,7 +10,6 @@ object ValidationExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import cats.implicits._
       import io.laminext.syntax.core._
       import io.laminext.syntax.validation._
 

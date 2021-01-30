@@ -35,20 +35,18 @@ final case class Theme(
 
 object Theme {
 
-  val default: Theme = Theme(
-    animation = Animation.default,
-    button = Button.default,
-    buttonGroup = BaseAndCustom(
-      base = "relative z-0 inline-flex shadow-sm rounded-md"
-    ),
-    card = Card.default,
-    transition = Transition.default,
-    modal = Modal.default,
+  val empty: Theme = Theme(
+    animation = Animation.empty,
+    button = Button.empty,
+    buttonGroup = BaseAndCustom.empty,
+    card = Card.empty,
+    transition = Transition.empty,
+    modal = Modal.empty,
     progressBar = ProgressBar.default,
-    fileInput = FileInput.default(Button.default)
+    fileInput = FileInput.empty
   )
 
-  private var _theme = default
+  private var _theme = empty
 
   def current: Theme = _theme
 

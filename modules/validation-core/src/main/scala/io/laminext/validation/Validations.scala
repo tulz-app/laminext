@@ -1,5 +1,7 @@
 package io.laminext.validation
 
+import org.scalajs.dom.raw.File
+
 object Validations {
 
   def apply[A, Err](message: => Err)(check: A => Boolean): Validation[A, Err, A] = s =>
@@ -11,6 +13,9 @@ object Validations {
 
   def custom(message: => String)(check: String => Boolean): Validation[String, Seq[String], String] =
     apply[String, Seq[String]](Seq(message))(check)
+
+  def file[Err](error: => Err)(check: File => Boolean): Validation[File, Err, File] =
+    apply[File, Err](error)(check)
 
   def nonBlank(message: String = "required"): Validation[String, Seq[String], String] =
     apply(Seq(message))(_.trim.nonEmpty)

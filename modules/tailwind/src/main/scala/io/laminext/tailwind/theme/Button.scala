@@ -30,17 +30,13 @@ case class Button(
 
 object Button {
 
-  val default: Button = Button(
-    common = BaseAndCustom(
-      base = "inline-flex items-center border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2"
-    ),
-    disabled = "disabled:opacity-75 disabled:text-opacity-75 disabled:cursor-not-allowed",
-    single = BaseAndCustom(
-      base = "rounded-md"
-    ),
-    size = ButtonSize.default,
-    group = GroupButton.default,
-    color = ButtonColors.default
+  val empty: Button = Button(
+    common = BaseAndCustom.empty,
+    disabled = "",
+    single = BaseAndCustom.empty,
+    size = ButtonSize.empty,
+    group = GroupButton.empty,
+    color = ButtonColors.empty
   )
 
 }

@@ -6,6 +6,8 @@ import io.laminext.highlight.HighlightJavaScript
 import io.laminext.highlight.HighlightJson
 import io.laminext.highlight.HighlightScala
 import io.laminext.tailwind.modal.Modal
+import io.laminext.tailwind.theme.DefaultTheme
+import io.laminext.tailwind.theme.Theme
 import org.scalajs.dom
 
 import scala.scalajs.js.annotation.JSExport
@@ -18,7 +20,8 @@ object Main {
 
   @JSExport
   def start(): Unit = {
-    Modal.initNoScrollClass()
+    Theme.setTheme(DefaultTheme.theme)
+    Modal.initialize()
     LinkHandler.install()
     val wiring = Wiring()
     removeNoJsClass(wiring.ssrContext)

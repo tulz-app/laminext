@@ -17,3 +17,9 @@ final case class BaseAndCustom(
   val classes: String = ClassJoin(base, custom)
 
 }
+
+object BaseAndCustom {
+
+  val empty: BaseAndCustom = BaseAndCustom(base = "")
+
+}

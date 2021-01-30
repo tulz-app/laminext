@@ -20,28 +20,10 @@ final case class FileInput(
 
 object FileInput {
 
-  def default(button: Button): FileInput = FileInput(
-    selecting = BaseAndCustom(
-      base = Seq(
-        button.color.blue.base,
-        button.color.blue.outline,
-        button.color.blue.single.fill
-      ).mkString(" ")
-    ),
-    invalid = BaseAndCustom(
-      base = Seq(
-        button.color.red.base,
-        button.color.red.outline,
-        button.color.red.single.fill
-      ).mkString(" ")
-    ),
-    ready = BaseAndCustom(
-      base = Seq(
-        button.color.green.base,
-        button.color.green.fill,
-        button.color.green.single.fill
-      ).mkString(" ")
-    )
+  val empty: FileInput = FileInput(
+    selecting = BaseAndCustom.empty,
+    invalid = BaseAndCustom.empty,
+    ready = BaseAndCustom.empty
   )
 
 }

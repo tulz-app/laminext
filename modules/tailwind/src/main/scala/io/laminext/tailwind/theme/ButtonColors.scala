@@ -38,7 +38,7 @@ case class ButtonColors(
 
 object ButtonColors {
 
-  val default: ButtonColors = ButtonColors(
+  val empty: ButtonColors = ButtonColors(
     black = ButtonStyleColors(
       base = "focus:ring-gray-500",
       fill = "bg-black hover:bg-gray-900 text-gray-100 hover:white ",
