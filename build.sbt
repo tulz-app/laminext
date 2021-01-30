@@ -1,5 +1,7 @@
 ThisBuild / scalaVersion := ScalaVersions.v213
-ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3M3, ScalaVersions.v3RC1)
+//ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3M3, ScalaVersions.v3RC1)
+ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213)
+//ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3M3)
 
 lazy val basicSettings = Seq(
   scalacOptions ~= (_.filterNot(
@@ -58,7 +60,7 @@ lazy val bundlerSettings = Seq(
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    "com.raquo"      %%% "laminar"      % BuildSettings.version.laminar,
+    ("com.raquo"     %%% "laminar"      % BuildSettings.version.laminar).withDottyCompat(scalaVersion.value),
     ("org.scalatest" %%% "scalatest"    % BuildSettings.version.`scala-test` % Test).withDottyCompat(scalaVersion.value),
     ("app.tulz"      %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test).withDottyCompat(scalaVersion.value),
     ("com.raquo"     %%% "domtestutils" % BuildSettings.version.domtestutils % Test).withDottyCompat(scalaVersion.value)
@@ -67,7 +69,7 @@ lazy val baseDependencies = Seq(
 
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
-    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats).withDottyCompat(scalaVersion.value)
+    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats % Provided).withDottyCompat(scalaVersion.value)
   )
 )
 
@@ -93,15 +95,26 @@ lazy val `cats` =
       description := "Laminar utilities (cats)"
     ).dependsOn(`core`)
 
-lazy val `validation` =
+lazy val `validation-core` =
   project
-    .in(file("modules/validation"))
+    .in(file("modules/validation-core"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(
       description := "Laminar utilities (validation)"
     ).dependsOn(`core`)
+
+lazy val `validation-cats` =
+  project
+    .in(file("modules/validation-cats"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(catsDependencies)
+    .settings(
+      description := "Laminar utilities (validation+cats)"
+    ).dependsOn(`validation-core`)
 
 lazy val `fsm` =
   project
@@ -163,7 +176,7 @@ lazy val `tailwind` =
     .settings(bundlerSettings)
     .settings(
       description := "Laminar UI (tailwindcss)"
-    ).dependsOn(`core`, `ui`)
+    ).dependsOn(`core`, `ui`, `validation-core`)
 
 lazy val `websocket` =
   project
@@ -258,7 +271,7 @@ lazy val website = project
   )
   .dependsOn(
     `core`,
-    `validation`,
+    `validation-cats`,
     `util`,
     `fsm`,
     `videojs`,
@@ -300,7 +313,8 @@ lazy val root = project
   )
   .aggregate(
     `core`,
-    `validation`,
+    `validation-core`,
+    `validation-cats`,
     `util`,
     `fsm`,
     `videojs`,

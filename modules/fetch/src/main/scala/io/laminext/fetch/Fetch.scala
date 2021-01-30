@@ -1,9 +1,8 @@
 package io.laminext.fetch
 
-import com.raquo.airstream.core.EventStream
+import com.raquo.laminar.api.L._
 import org.scalajs.dom
 import org.scalajs.dom.experimental.HttpMethod
-import org.scalajs.dom.experimental.ReadableStream
 import org.scalajs.dom.experimental.ReferrerPolicy
 import org.scalajs.dom.experimental.RequestCache
 import org.scalajs.dom.experimental.RequestCredentials
@@ -15,15 +14,14 @@ import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.typedarray.ArrayBuffer
-import scala.scalajs.js.typedarray.Uint8Array
 
 object Fetch {
 
   @inline def apply(
     method: HttpMethod,
-    url: String,
+    url: ToRequestUrl,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
-    body: RequestBody = RequestBody.noBody,
+    body: ToRequestBody = ToRequestBody.noBody,
   ): FetchEventStreamBuilder =
     new FetchEventStreamBuilder(
       _url = url,
@@ -33,7 +31,7 @@ object Fetch {
     )
 
   @inline def get(
-    url: String,
+    url: ToRequestUrl,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -43,8 +41,8 @@ object Fetch {
     )
 
   @inline def post(
-    url: String,
-    body: RequestBody = RequestBody.noBody,
+    url: ToRequestUrl,
+    body: ToRequestBody = ToRequestBody.noBody,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -55,8 +53,8 @@ object Fetch {
     )
 
   @inline def put(
-    url: String,
-    body: RequestBody = RequestBody.noBody,
+    url: ToRequestUrl,
+    body: ToRequestBody = ToRequestBody.noBody,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -67,8 +65,8 @@ object Fetch {
     )
 
   @inline def patch(
-    url: String,
-    body: RequestBody = RequestBody.noBody,
+    url: ToRequestUrl,
+    body: ToRequestBody = ToRequestBody.noBody,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -79,7 +77,7 @@ object Fetch {
     )
 
   @inline def delete(
-    url: String,
+    url: ToRequestUrl,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -89,7 +87,7 @@ object Fetch {
     )
 
   @inline def query(
-    url: String,
+    url: ToRequestUrl,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -99,7 +97,7 @@ object Fetch {
     )
 
   @inline def head(
-    url: String,
+    url: ToRequestUrl,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -109,7 +107,7 @@ object Fetch {
     )
 
   @inline def options(
-    url: String,
+    url: ToRequestUrl,
     headers: js.UndefOr[Map[String, String]] = js.undefined,
   ): FetchEventStreamBuilder =
     apply(
@@ -121,10 +119,10 @@ object Fetch {
 }
 
 final class FetchEventStreamBuilder(
-  private var _url: String,
+  private var _url: ToRequestUrl,
   private var _method: HttpMethod,
   private var _headers: js.UndefOr[Map[String, String]] = js.undefined,
-  private var _body: RequestBody = RequestBody.noBody,
+  private var _body: ToRequestBody = ToRequestBody.noBody,
   private var _referrer: js.UndefOr[String] = js.undefined,
   private var _referrerPolicy: js.UndefOr[ReferrerPolicy] = js.undefined,
   private var _mode: js.UndefOr[RequestMode] = js.undefined,
@@ -141,7 +139,7 @@ final class FetchEventStreamBuilder(
   ): EventStream[FetchResponse[A]] = {
     this._body()
     FetchEventStream(
-      url = _url,
+      url = _url(),
       method = _method,
       headers = _body.updateHeaders(_headers),
       body = _body(),
@@ -182,8 +180,14 @@ final class FetchEventStreamBuilder(
     this
   }
 
-  def body(
-    body: RequestBody,
+  @inline def addHeaders(headers: (String, String)*): FetchEventStreamBuilder =
+    updateHeaders(_ ++ headers)
+
+  @inline def addAuthorizationHeader(authorization: String): FetchEventStreamBuilder =
+    addHeaders("authorization" -> authorization)
+
+  def setBody(
+    body: ToRequestBody,
   ): FetchEventStreamBuilder = {
     this._body = body
     this
@@ -253,10 +257,10 @@ final class FetchEventStreamBuilder(
   }
 
   def configure(
-    url: String = this._url,
+    url: ToRequestUrl = this._url,
     method: HttpMethod = this._method,
     headers: js.UndefOr[Map[String, String]] = this._headers,
-    body: RequestBody = this._body,
+    body: ToRequestBody = this._body,
     referrer: js.UndefOr[String] = this._referrer,
     referrerPolicy: js.UndefOr[ReferrerPolicy] = this._referrerPolicy,
     mode: js.UndefOr[RequestMode] = this._mode,

@@ -12,7 +12,7 @@ object WebSocketCirceExample
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.core._
-      import io.laminext.websocket._
+      import io.laminext.websocket.circe._
       import io.circe.generic.auto._
 
       case class Data(s: String)

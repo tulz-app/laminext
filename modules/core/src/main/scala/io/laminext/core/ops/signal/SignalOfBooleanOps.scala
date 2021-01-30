@@ -15,14 +15,14 @@ final class SignalOfBooleanOps(underlying: Signal[Boolean]) {
   }
 
   @inline def ||(that: Signal[Boolean]): Signal[Boolean] =
-    underlying.combineWith(that)(_ || _)
+    underlying.combineWithFn(that)(_ || _)
 
   @inline def &&(r: Boolean): Signal[Boolean] = underlying.map { l =>
     l && r
   }
 
   @inline def &&(that: Signal[Boolean]): Signal[Boolean] =
-    underlying.combineWith(that)(_ || _)
+    underlying.combineWithFn(that)(_ || _)
 
   @inline def classSwitch(whenTrue: String, whenFalse: String): Binder[ReactiveHtmlElement.Base] =
     cls <-- underlying.map { bool =>
