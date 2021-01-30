@@ -13,7 +13,4 @@ final class SignalOps[A](underlying: Signal[A]) {
   @inline def valueIs(value: A): Signal[Boolean] =
     underlying.map(_ == value)
 
-  @inline def contains(predicate: A => Boolean): Signal[Boolean] =
-    underlying.map(predicate)
-
 }

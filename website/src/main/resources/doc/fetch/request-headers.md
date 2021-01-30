@@ -13,7 +13,7 @@ Another way is to specify the headers afterwards, using the `headers` method of 
 ```scala
 import io.laminext.fetch.Fetch
 
-Fetch.get("https://...").headers(Map("Authorization" -> "Bearer ..."))
+Fetch.get("https://...").headers(Map("authorization" -> "Bearer ..."))
 ```
 
 Or to use the `updateHeaders` method:
@@ -21,7 +21,23 @@ Or to use the `updateHeaders` method:
 ```scala
 import io.laminext.fetch.Fetch
 
-Fetch.get("https://...").updateHeaders(_.updated("Authorization", "Bearer ..."))
+Fetch.get("https://...").updateHeaders(_.updated("authorization", "Bearer ..."))
+```
+
+There's also a `addHeaders` method:
+
+```scala
+import io.laminext.fetch.Fetch
+
+Fetch.get("https://...").addHeaders("authorization" -> "Bearer ...", "x-another-header" -> "another-header-value")
+```
+
+And `addAuthorizationHeader` method:
+
+```scala
+import io.laminext.fetch.Fetch
+
+Fetch.get("https://...").addAuthorizationHeader("Bearer ...")
 ```
 
 

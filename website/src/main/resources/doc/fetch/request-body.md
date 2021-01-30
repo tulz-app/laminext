@@ -7,13 +7,13 @@ The request body for the underlying `fetch` call can be one of the following:
 * `dom.FormData`
 * `dom.crypto.BufferSource`
 
-This is encapsulated in the `RequestBody` trait:
+This is encapsulated in the `ToRequestBody` trait:
 
 ```scala
 import scala.scalajs.js
 import org.scalajs.dom.experimental.BodyInit
 
-trait RequestBody {
+trait ToRequestBody {
   def apply(): js.UndefOr[BodyInit]
   def updateHeaders(headers: js.UndefOr[Map[String, String]]): js.UndefOr[Map[String, String]] = headers
 }
@@ -21,7 +21,7 @@ trait RequestBody {
 
 (`BodyInit` is defined as `type BodyInit = Blob | BufferSource | FormData | String`)
 
-(`updateHeaders` can be overriden in your custom `RequestBody`, `fetch-circe` adds a `content-type: application/json`, for example)
+(`updateHeaders` can be overridden in your custom `RequestBody`; `fetch-circe` adds a `content-type: application/json; charset=utf-8` header, for example)
 
 There are default implicit conversions from `Blob`, `BufferSource`, `FormData`, and `String` to `RequestBody`, so you
 can pass values of those types directly.

@@ -76,14 +76,14 @@ val s: EventStream[FetchResponse[ArrayBuffer]] = Fetch.post("https://...").array
 
 ### Custom
 
-You can provide a custom response reader: defined by a `Response => Promise[A]` function.
+You can provide a custom response reader: defined by a `Response => Future[A]` function.
 
 ```scala
 import com.raquo.laminar.api.L._
 import io.laminext.fetch._
 import org.scalajs.dom.experimental.Response
 
-val myReader: Response => MyData = ??? 
+val myReader: Response => Future[MyData] = ??? 
 
 val s: EventStream[FetchResponse[MyData]] = Fetch.post("https://...").build(myReader) 
 ```

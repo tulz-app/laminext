@@ -24,8 +24,8 @@ final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
   @inline def withDefault(default: => A): Signal[A] =
     underlying.map(_.getOrElse(default))
 
-  def someFlatMap[B](mapping: A => Signal[B]): Signal[Option[B]] = underlying.flatMap {
-    case Some(a) => mapping(a).map(Some(_))
+  def flatMapWhenDefined[B](mapping: A => Signal[Option[B]]): Signal[Option[B]] = underlying.flatMap {
+    case Some(a) => mapping(a)
     case None    => Val(Option.empty[B])
   }
 

@@ -1,14 +1,11 @@
 package io.laminext.validation
 
-import cats.Monoid
-import io.laminext.validation.ops.ValidationOps
-import io.laminext.validation.ops.ValidationsOps
+import cats.kernel.Semigroup
+import io.laminext.validation.ops.ValidationCatsOps
 
 trait ValidationCatsSyntax {
 
-  implicit def syntaxValidation[A, Err: Monoid](v: Validation[A, Err, A]): ValidationOps[A, Err] =
-    new ValidationOps[A, Err](v)
-
-  implicit def syntaxValidations[A, Err: Monoid](v: Validations.type): ValidationsOps.type = ValidationsOps
+  implicit def syntaxValidationCats[A, Err: Semigroup](v: Validation[A, Err, A]): ValidationCatsOps[A, Err] =
+    new ValidationCatsOps[A, Err](v)
 
 }

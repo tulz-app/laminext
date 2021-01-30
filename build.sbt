@@ -69,7 +69,7 @@ lazy val baseDependencies = Seq(
 
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
-    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats % Provided).withDottyCompat(scalaVersion.value)
+    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats).withDottyCompat(scalaVersion.value)
   )
 )
 

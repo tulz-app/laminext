@@ -1,4 +1,5 @@
-## `.cls` and `.clsNot` 
+## `.cls` 
+## `.clsNot` 
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -8,7 +9,7 @@ val obs: Observable[Boolean] = ???
 
 div(
   obs.cls("class-1"),    // cls <-- obs.map(b => Seq("class-1" -> b))
-  obs.clsNot("class-2"), // cls <-- obs.map(b => Seq("class-2" -> !b))
+  obs.clsNot("class-2")  // cls <-- obs.map(b => Seq("class-2" -> !b))
 )
 ```
 
@@ -30,7 +31,8 @@ div(
 )
 ```
 
-## `.childWhenTrue` and `.childWhenFalse`
+## `.childWhenTrue` 
+## `.childWhenFalse`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -48,7 +50,8 @@ div(
 )
 ```
 
-## `.doWhenTrue` and `.doWhenFalse`
+## `.doWhenTrue`
+## `.doWhenFalse`
 
 ```scala
 import com.raquo.laminar.api.L._

@@ -1,6 +1,8 @@
-## `&&`, `||` and `!`  
+## `&&`
+## `||` 
+## `!` (`.not`)  
 
-`Signal[Boolean] -> Signal[Boolean]`
+`Signal[Boolean] => Signal[Boolean]`
 
 Boolean operations.
 
@@ -22,7 +24,7 @@ val sAndBoolean: Signal[Boolean] = s1 && false
 
 ## `.switch`
 
-`Signal[Boolean] -> Signal[U]`
+`Signal[Boolean] => ( => U, => U) => Signal[U]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -35,5 +37,3 @@ val switched: Signal[String] = signal.switch(
   whenFalse = "I'm false"
 )
 ```
-
-> TODO: possible to define for `Observable[Boolean]` instead?

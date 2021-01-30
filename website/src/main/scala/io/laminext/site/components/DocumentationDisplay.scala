@@ -10,7 +10,7 @@ object DocumentationDisplay {
 
   def apply(title: String, markdown: String): Element =
     div(
-      cls := "prose-custom",
+      cls := "prose max-w-none",
       unsafeMarkdown := TemplateVars(markdown),
       onMountCallback { ctx =>
         ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>

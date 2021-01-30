@@ -93,7 +93,7 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls := "prose-custom",
+        cls := "prose max-w-none",
         unsafeMarkdown := TemplateVars(example.description),
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>

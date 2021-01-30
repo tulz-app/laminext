@@ -1,4 +1,6 @@
-## `.shifted`
+## `.shiftOption`
+
+`Signal[Option[Signal[A]]] => Signal[Option[A]]`
 
 Transforms a `Signal[Option[Signal[A]]]` into a `Signal[Option[A]]`
 

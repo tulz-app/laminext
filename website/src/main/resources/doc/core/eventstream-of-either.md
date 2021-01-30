@@ -1,6 +1,7 @@
-## `.isLeft` and `.isRight`
+## `.isLeft` 
+## `.isRight`
 
-`EventStream[Either[A, B]] -> EventStream[Boolean]`
+`EventStream[Either[L, R]] => EventStream[Boolean]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -15,9 +16,12 @@ val isLeftStream: EventStream[Boolean] = stream.isLeft
 val isRightStream: EventStream[Boolean] = stream.isRight
 ```
 
-## `.collectRights` and `.collectLefts`
+## `.collectRights` 
+## `.collectLefts`
 
-`EventStream[Either[A, B]] -> EventStream[A] / EventStream[B]`
+`EventStream[Either[L, R]] => EventStream[L]`
+
+`EventStream[Either[L, R]] -> EventStream[R]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -32,9 +36,12 @@ val lefts: EventStream[A] = stream.collectLefts
 val rights: EventStream[B] = stream.collectRights
 ```
 
-## `.rightMap` and `.leftMap`
+## `.rightMap` 
+## `.leftMap`
 
-`EventStream[Either[L, R]] -> EventStream[Either[L, U]] / EventStream[Either[U, R]]`
+`EventStream[Either[L, R]] => (R => U) => EventStream[Either[L, U]]`
+
+`EventStream[Either[L, R]] => (L => U) => EventStream[Either[U, R]]`
 
 "Changes" the type of the left/right projection keeping the other one as it is.
 
@@ -54,13 +61,17 @@ val leftMapped: EventStream[Either[U, R]] = stream.leftMap(leftProject)
 val rightMapped: EventStream[Either[L, U]] = stream.rightMap(rightProject)
 ```
 
-## `.rightMapC` and `.leftMapC`
+## `.rightMapC` 
+## `.leftMapC`
 
 TODO: naming (`C` – for "collect")
 
-`EventStream[Either[L, R]] -> EventStream[Either[L, U]] / EventStream[Either[U, R]]`
+`EventStream[Either[L, R]] => (R => U) => EventStream[Either[L, U]]`
 
-"Changes" the type of the left/right projection keeping the other one as it is, emits only if the provided function is `definedAt`.
+`EventStream[Either[L, R]] => (L => U) => EventStream[Either[U, R]]`
+
+"Changes" the type of the left/right projection keeping the other one as it is, 
+emits only if the provided function is `definedAt`.
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -80,7 +91,7 @@ val rightMapped: EventStream[Either[L, U]] = stream.rightMapC(rightProjectC)
 
 ## `.eitherFold`
 
-`EventStream[Either[L, R]] -> EventStream[U]`
+`EventStream[Either[L, R]] => (L => U, R => U) => EventStream[U]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -99,7 +110,7 @@ val folded: EventStream[U] = stream.eitherFold(leftProject, rightProject)
 
 ## `.eitherSwap`
 
-`EventStream[Either[L, R]] -> EventStream[Either[R, L]]`
+`EventStream[Either[L, R]] => EventStream[Either[R, L]]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -113,9 +124,13 @@ val stream: EventStream[Either[L, R]] = ???
 val swapped: EventStream[Either[R, L]] = stream.eitherSwap
 ```
 
-## `.rightFlatMap` and `.leftFlatMap`
+## `.flatMapWhenRight` 
 
-`EventStream[Either[L, R]] -> EventStream[Either[L, U]] / EventStream[Either[U, R]]`
+`EventStream[Either[L, R]] => (R => EventStream[Either[L, U]]) => EventStream[Either[L, U]]`
+
+## `.flatMapWhenLeft`
+
+`EventStream[Either[L, R]] => (L => EventStream[Either[U, R]]) => EventStream[Either[U, R]]`
 
 Unlike the previous functions, these take a function that returns another `EventStream[Either[..., ...]]`.
 
@@ -133,6 +148,6 @@ val stream: EventStream[Either[L, R]] = ???
 val leftProject: L => EventStream[Either[U, R]] = ???
 val rightProject: R => EventStream[Either[L, U]] = ???
 
-val leftMapped: EventStream[Either[U, R]] = stream.leftFlatMap(leftProject)
-val rightMapped: EventStream[Either[L, U]] = stream.rightFlatMap(rightProject)
+val leftMapped: EventStream[Either[U, R]] = stream.flatMapWhenLeft(leftProject)
+val rightMapped: EventStream[Either[L, U]] = stream.flatMapWhenRight(rightProject)
 ```

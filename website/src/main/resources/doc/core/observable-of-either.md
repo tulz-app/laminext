@@ -1,4 +1,5 @@
-## `.childWhenLeft` and `.childWhenRight`
+## `.childWhenLeft` 
+## `.childWhenRight`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -16,7 +17,8 @@ div(
 )
 ```
 
-## `.doWhenLeft` and `.doWhenRight`
+## `.doWhenLeft` 
+## `.doWhenRight`
 
 ```scala
 import com.raquo.laminar.api.L._

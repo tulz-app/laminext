@@ -1,6 +1,8 @@
 ## `.transitions`
 
-Get an `EventStream[(Option[A], A)]` with tuples of the previous and the latest emitted value.
+`EventStream[A] => EventStream[(Option[A], A)]`
+
+Get an `EventStream[(Option[A], A)]` of tuples of (previous, latest) emitted value.
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -13,7 +15,9 @@ See the [example](/core/example-signal-transitions) for Signal `.transitions`.
 
 ## `.previousAndCurrent`
 
-Returns a `Signal[(Option[A], Option[A])]` containing the optional values for the previous and the latest emitted values.
+`EventStream[A] => EventStream[(Option[A], Option[A])]`
+
+Returns a `Signal[(Option[A], Option[A])]` of tuples of optional (previous, latest) emitted values.
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -38,18 +42,9 @@ val resets: EventStream[_] = ???
 val transitions: EventStream[(Option[String], Option[String])] = stream.previousAndLatestWithReset(resets)
 ```
 
-## `.errors`
-
-```scala
-import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
-
-val stream: EventStream[String] = ???
-
-val errors: EventStream[Throwable] = stream.errors
-```
-
-## `.mapToUnit`, `.mapToTrue` and `.mapToFalse`
+## `.mapToUnit` 
+## `.mapToTrue` 
+## `.mapToFalse`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -64,6 +59,10 @@ val falses: EventStream[Boolean] = stream.mapToFalse
 
 ## `.delayFor`
 
+`EventStream[A] => (A => FiniteDuration) => EventStream[A]`
+
+Similar to the built-in `.delay`, but the delay is derived from the value emitted by the stream.
+
 ```scala
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
@@ -74,7 +73,10 @@ val stream: EventStream[Int] = ???
 val delayed: EventStream[Int] = stream.delayFor(_.seconds)
 ```
 
-## `.skipWhen` and `.keepWhen`
+## `.skipWhen`
+## `.keepWhen`
+
+`EventStream[A] => Signal[Boolean] => EventStream[A]`
 
 These functions accept a `Signal[Boolean]` and the resulting stream will emit/skip the events if the sampled
 value of the signal is `true`.
@@ -90,7 +92,10 @@ val skip: EventStream[Int] = stream.skipWhen(booleanSignal)
 val keep: EventStream[Int] = stream.keepWhen(booleanSignal)
 ```
 
-## `.drop` and `.take`
+## `.drop` 
+## `.take`
+
+`EventStream[A] => Int => EventStream[A]`
 
 ```scala
 import com.raquo.laminar.api.L._
@@ -103,6 +108,8 @@ val withoutFirst10: EventStream[Int] = stream.drop(10)
 ```
 
 ## `.distinct`
+
+`EventStream[A] => EventStream[A]`
 
 ```scala
 import com.raquo.laminar.api.L._
