@@ -40,7 +40,7 @@ object Modal {
     ).hiddenIf(content.isEmpty)
   }
 
-  def initNoScrollClass(): Unit = {
+  def initialize(): Unit = {
     val style = dom.document.createElement("style").asInstanceOf[dom.html.Style]
     style.`type` = "text/css"
     style.innerHTML = s""".${noScrollClassName}{margin-right: ${calculateScrollbarWidth()}px;}

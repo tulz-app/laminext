@@ -9,13 +9,10 @@ import io.laminext.validation.ops.ValidationOps
 
 trait ValidationSyntax {
 
-  type ValidatedValue[Err, A]  = io.laminext.validation.ValidatedValue[Err, A]
-  type Validation[A, Err, Out] = io.laminext.validation.Validation[A, Err, Out]
-
   val V: Validations.type = Validations
 
-  implicit def syntaxValidation[A, Err](v: Validation[A, Err, A]): ValidationOps[A, Err] =
-    new ValidationOps[A, Err](v)
+  implicit def syntaxValidation[A, Err, Out](v: Validation[A, Err, Out]): ValidationOps[A, Err, Out] =
+    new ValidationOps[A, Err, Out](v)
 
   implicit def syntaxSignalValidation[A](signal: Signal[A]): SignalValidationOps[A] =
     new SignalValidationOps[A](signal)

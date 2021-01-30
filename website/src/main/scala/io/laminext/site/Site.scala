@@ -125,7 +125,26 @@ object Site {
 //    ),
     SiteModule(
       path = "tailwind",
-      index = docPage("", "Tailwind", FileAsString("/doc/todo.md"))
+      index = docPage("", "Tailwind", FileAsString("/doc/tailwind/index.md")),
+      "" -> Seq(
+        docPage("buttons", "Buttons", FileAsString("/doc/tailwind/buttons.md")),
+        docPage("card", "Card", FileAsString("/doc/tailwind/card.md")),
+        docPage("animation", "Animation", FileAsString("/doc/tailwind/animation.md")),
+        docPage("transition", "Transition", FileAsString("/doc/tailwind/transition.md")),
+        docPage("file-input", "File Input", FileAsString("/doc/tailwind/file-input.md")),
+        docPage("modal", "File Input", FileAsString("/doc/tailwind/modal.md")),
+      ),
+      "Examples" -> Seq(
+        examplePage(examples.tailwind.ex_tailwind_button_colors.TailwindButtonColorsExample),
+        examplePage(examples.tailwind.ex_tailwind_button_sizes.TailwindButtonSizesExample),
+        examplePage(examples.tailwind.ex_tailwind_button_group.TailwindButtonGroupExample),
+        examplePage(examples.tailwind.ex_tailwind_card.TailwindCardExample),
+        examplePage(examples.tailwind.ex_tailwind_animation.TailwindAnimationExample),
+        examplePage(examples.tailwind.ex_tailwind_transition.TailwindTransitionExample),
+        examplePage(examples.tailwind.ex_tailwind_fileinput.TailwindFileInputExample),
+        examplePage(examples.tailwind.ex_tailwind_modal.TailwindModalExample),
+        examplePage(examples.tailwind.ex_tailwind_progress_bar.TailwindProgressBarExample),
+      )
     ),
 //    SiteModule(
 //      path = "videojs",

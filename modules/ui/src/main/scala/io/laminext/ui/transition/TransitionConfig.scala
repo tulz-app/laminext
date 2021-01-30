@@ -64,22 +64,19 @@ case class TransitionConfig(
     hidden = if (hidden == null) this.hidden else hidden.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     nonHidden = if (nonHidden == null) this.nonHidden else nonHidden.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     showing = if (showing == null) this.showing else showing.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
-    inTransition =
-      if (inTransition == null) this.inTransition else inTransition.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
+    inTransition = if (inTransition == null) this.inTransition else inTransition.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     enter = if (enter == null) this.enter else enter.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     enterDuration =
       if (enterDuration == null) this.enterDuration
       else enterDuration.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
-    enterTiming =
-      if (enterTiming == null) this.enterTiming else enterTiming.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
+    enterTiming = if (enterTiming == null) this.enterTiming else enterTiming.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     enterFrom = if (enterFrom == null) this.enterFrom else enterFrom.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     enterTo = if (enterTo == null) this.enterTo else enterTo.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     leave = if (leave == null) this.leave else leave.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     leaveDuration =
       if (leaveDuration == null) this.leaveDuration
       else leaveDuration.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
-    leaveTiming =
-      if (leaveTiming == null) this.leaveTiming else leaveTiming.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
+    leaveTiming = if (leaveTiming == null) this.leaveTiming else leaveTiming.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     leaveFrom = if (leaveFrom == null) this.leaveFrom else leaveFrom.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     leaveTo = if (leaveTo == null) this.leaveTo else leaveTo.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty),
     onEnterFrom = onEnterFrom,
@@ -92,6 +89,18 @@ case class TransitionConfig(
 }
 
 object TransitionConfig {
+
+  val empty: TransitionConfig = TransitionConfig(
+    inTransition = "",
+    enterDuration = "",
+    enterTiming = "",
+    enterFrom = "",
+    enterTo = "",
+    leaveDuration = "",
+    leaveTiming = "",
+    leaveFrom = "",
+    leaveTo = "",
+  )
 
   def apply(
     hidden: String = "hidden",

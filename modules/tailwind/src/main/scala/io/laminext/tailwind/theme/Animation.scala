@@ -6,8 +6,6 @@ case class Animation(
 
 object Animation {
 
-  val default: Animation = Animation(
-    focusTransition = "transition ease-in-out duration-150"
-  )
+  val empty: Animation = Animation(focusTransition = "")
 
 }

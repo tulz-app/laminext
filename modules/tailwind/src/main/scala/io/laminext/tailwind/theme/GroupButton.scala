@@ -30,22 +30,12 @@ final case class GroupButton(
 
 object GroupButton {
 
-  val default: GroupButton = GroupButton(
-    common = BaseAndCustom(
-      base = "focus:ring-1 focus:z-10"
-    ),
-    first = BaseAndCustom(
-      base = "rounded-l-md"
-    ),
-    inner = BaseAndCustom(
-      base = "rounded-none -mx-px"
-    ),
-    last = BaseAndCustom(
-      base = "rounded-r-md"
-    ),
-    single = BaseAndCustom(
-      base = "rounded-md"
-    )
+  val empty: GroupButton = GroupButton(
+    common = BaseAndCustom.empty,
+    first = BaseAndCustom.empty,
+    inner = BaseAndCustom.empty,
+    last = BaseAndCustom.empty,
+    single = BaseAndCustom.empty
   )
 
 }

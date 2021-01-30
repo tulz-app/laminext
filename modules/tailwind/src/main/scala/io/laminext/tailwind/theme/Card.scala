@@ -27,22 +27,12 @@ final case class Card(
 
 object Card {
 
-  val default: Card = Card(
-    wrap = BaseAndCustom(
-      base = "bg-white sm:shadow sm:rounded-lg"
-    ),
-    header = BaseAndCustom(
-      base = "px-4 py-3 sm:px-6 border-b border-gray-200"
-    ),
-    body = BaseAndCustom(
-      base = "p-4 md:px-6 md:rounded-lg"
-    ),
-    footer = BaseAndCustom(
-      base = "px-4 py-3 sm:px-6 border-t border-gray-200"
-    ),
-    title = BaseAndCustom(
-      base = "text-lg md:text-xl font-medium tracking-wide text-gray-700"
-    )
+  val empty: Card = Card(
+    wrap = BaseAndCustom.empty,
+    header = BaseAndCustom.empty,
+    body = BaseAndCustom.empty,
+    footer = BaseAndCustom.empty,
+    title = BaseAndCustom.empty
   )
 
 }

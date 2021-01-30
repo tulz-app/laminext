@@ -1,5 +1,6 @@
 package io.laminext.site.layout
 
+import io.laminext.site.ExampleModalContent
 import io.laminext.site.Page
 import io.laminext.site.Site
 import io.laminext.site.SiteModule
@@ -22,30 +23,33 @@ object PageWrap {
         rel := "stylesheet",
         href <-- Styles.highlightStyle.signal.map(s => s"/stylesheets/highlightjs/${s}.css")
       ),
-      cls := "h-screen flex flex-col",
-      PageHeader($module, $page),
-      noScript(
-        div(
-          cls := "max-w-5xl border-l-4 border-red-400 bg-red-50 text-red-900 mx-auto p-4 font-condensed",
-          "Your browser does not support JavaScript: some features of this site may not work properly."
-        )
-      ),
       div(
-        cls := "flex-1 flex overflow-hidden",
-        PageNavigation($module, $page).hiddenIf($module.optionContains(Site.indexModule)),
-        div(
-          cls := "flex-1 bg-cool-gray-200 overflow-auto p-4",
+        cls := "h-screen flex flex-col",
+        PageHeader($module, $page),
+        noScript(
           div(
-            cls := "container mx-auto p-4 bg-white min-h-full",
-            child <-- $pageAndResult.map {
-              case Some((_, Right((el, _))))     => el
-              case Some((_, Left((_, message)))) => div(message)
-              case None                          => div("loading...")
-            }
+            cls := "max-w-5xl border-l-4 border-red-400 bg-red-50 text-red-900 mx-auto p-4 font-condensed",
+            "Your browser does not support JavaScript: some features of this site may not work properly."
           )
-        )
+        ),
+        div(
+          cls := "flex-1 flex overflow-hidden",
+          PageNavigation($module, $page).hiddenIf($module.optionContains(Site.indexModule)),
+          div(
+            cls := "flex-1 bg-cool-gray-200 overflow-auto p-4",
+            div(
+              cls := "container mx-auto p-4 bg-white min-h-full",
+              child <-- $pageAndResult.map {
+                case Some((_, Right((el, _))))     => el
+                case Some((_, Left((_, message)))) => div(message)
+                case None                          => div("loading...")
+              }
+            )
+          )
+        ),
+        PageFooter()
       ),
-      PageFooter(),
+      TW.modal(ExampleModalContent.modalContent.signal),
       $pageAndResult.bind {
         case Some((_, Right((_, theTitle)))) =>
           titleElement.textContent = s"$theTitle - laminext"

@@ -11,13 +11,13 @@ trait TransitionSyntax {
     show: Signal[Boolean],
     observer: Observer[Boolean] = Observer.empty
   ): Modifier[HtmlElement] =
-    apply(show, theme.Transition.opacityAndScale, observer)
+    apply(show, theme.Theme.current.transition.opacityAndScale, observer)
 
   @inline def opacity(
     show: Signal[Boolean],
     observer: Observer[Boolean] = Observer.empty
   ): Modifier[HtmlElement] =
-    apply(show, theme.Transition.opacity, observer)
+    apply(show, theme.Theme.current.transition.opacity, observer)
 
   @inline def apply(
     show: Signal[Boolean],
