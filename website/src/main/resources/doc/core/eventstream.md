@@ -162,3 +162,15 @@ val signal: Signal[Boolean] = stream.flip(
   intial = true  
 )
 ```
+
+## `.flatMapTo`
+
+```scala
+import com.raquo.laminar.api.L._
+import io.laminext.syntax.core._
+
+val stream: EventStream[Int] = ???
+def makeAnotherStream: EventStream[String] = ???
+
+val output: EventStream[String] = stream.flatMapTo(makeAnotherStream)
+```

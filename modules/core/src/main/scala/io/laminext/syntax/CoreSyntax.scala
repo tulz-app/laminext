@@ -14,7 +14,6 @@ trait CoreSyntax
     with SignalOfOptionOfSignalSyntax
     with SignalOfBooleanSyntax
     with EventStreamSyntax
-    with EventStreamOfUnitSyntax
     with EventStreamOfEitherSyntax
     with EventStreamOfOptionSyntax
     with VarOfBooleanSyntax

@@ -49,7 +49,6 @@ object Site {
       ),
       "EventStream" -> Seq(
         docPage("eventstream", "EventStream", FileAsString("/doc/core/eventstream.md")),
-        docPage("eventstream-of-unit", "EventStream of Unit", FileAsString("/doc/core/eventstream-of-unit.md")),
         docPage("eventstream-of-option", "EventStream of Option", FileAsString("/doc/core/eventstream-of-option.md")),
         docPage("eventstream-of-either", "EventStream of Either", FileAsString("/doc/core/eventstream-of-either.md")),
       ),
@@ -132,7 +131,7 @@ object Site {
         docPage("animation", "Animation", FileAsString("/doc/tailwind/animation.md")),
         docPage("transition", "Transition", FileAsString("/doc/tailwind/transition.md")),
         docPage("file-input", "File Input", FileAsString("/doc/tailwind/file-input.md")),
-        docPage("modal", "File Input", FileAsString("/doc/tailwind/modal.md")),
+        docPage("modal", "Modal", FileAsString("/doc/tailwind/modal.md")),
       ),
       "Examples" -> Seq(
         examplePage(examples.tailwind.ex_tailwind_button_colors.TailwindButtonColorsExample),

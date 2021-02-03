@@ -24,7 +24,7 @@ div(
 
   thisEvents(onClick).map(_ => "string") --> stringObserver,
   thisEvents(onClick).mapTo("string") --> stringObserver,
-  thisEvents(onClick).mapToValue("string") --> stringObserver,
+  thisEvents(onClick).mapToStrict("string") --> stringObserver,
   thisEvents(onClick).mapToUnit --> anyObserver,
   thisEvents(onClick).mapToTrue --> booleanObserver,
   thisEvents(onClick).mapToFalse --> booleanObserver,

@@ -76,24 +76,6 @@ val signal: Signal[Option[String]] = ???
 val withDefault: Signal[String] = signal.withDefault("I'm the default!")
 ```
 
+## `.optionT`
 
-## `.flatMapWhenDefined`
-
-`Signal[Option[A]] => (A => Signal[Option[B]]) => Signal[Option[B]]`
-
-Unlike the previous functions, this one takes a function that returns another `Signal[...]`.
-
-"Changes" the type of the left/right projection keeping the other one as it is.
-
-```scala
-import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
-
-trait A
-trait B
-
-val signal: Signal[Option[A]] = ???
-val project: A => Signal[Option[B]] = ???
-
-val flatMapped: Signal[Option[U]] = signal.flatMapWhenDefined(project)
-```
+Doc TODO

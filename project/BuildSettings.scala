@@ -3,8 +3,9 @@ object BuildSettings {
   object version {
 
     val jsdom        = "16.4.0"
-    val laminar      = "0.12.0-SNAPSHOT"
+    val laminar      = "0.12.0-M1"
     val `scala-test` = "3.2.3"
+    val munit        = "0.7.21"
     val stringdiff   = "0.3.1"
     val domtestutils = "0.11.0"
     val cats         = "2.3.1"
@@ -12,8 +13,8 @@ object BuildSettings {
 
     // -- website
 
-    val sourcecode           = "0.2.2-SNAPSHOT"
-    val frontroute           = "0.12.0-SNAPSHOT"
+    val sourcecode           = "0.2.1"
+    val frontroute           = "0.12.0-M1"
     val `embedded-files`     = "0.2.0"
     val factorio             = "0.3.1"
     val `kind-projector`     = "0.11.2"

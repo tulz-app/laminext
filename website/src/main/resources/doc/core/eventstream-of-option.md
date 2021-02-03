@@ -120,23 +120,6 @@ val stream: EventStream[Option[String]] = ???
 val withDefault: EventStream[String] = stream.withDefault("I'm the default!")
 ```
 
-## `.flatMapWhenDefined`
+## `.optionT`
 
-`EventStream[Option[A]] => (A => EventStream[Option[B]]) => EventStream[Option[B]]`
-
-Unlike the previous functions, these take a function that returns another `EventStream[...]`.
-
-"Changes" the type of the left/right projection keeping the other one as it is.
-
-```scala
-import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
-
-trait A
-trait B
-
-val stream: EventStream[Option[A]] = ???
-val project: A => EventStream[Option[B]] = ???
-
-val flatMapped: EventStream[Option[U]] = stream.flatMapWhenDefined(project)
-```
+Doc TODO
