@@ -34,7 +34,7 @@ object TailwindFileInputExample
           code(
             cls := "text-blue-700 font-medium",
             /* <focus> */
-            child.text <-- fileInput.validatedValue.eitherRightMap(_.name).map(_.toString)
+            child.text <-- fileInput.validatedValue.eitherT.map(_.name).value.map(_.toString)
             /* </focus> */
           )
         ),

@@ -5,6 +5,8 @@ import com.raquo.laminar.api.L._
 
 final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
 
+  @inline def optionT: SignalOptionT[A] = new SignalOptionT(underlying)
+
   @inline def isDefined: Signal[Boolean] = underlying.map(_.isDefined)
 
   @inline def isEmpty: Signal[Boolean] = underlying.map(_.isEmpty)
@@ -23,10 +25,5 @@ final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
 
   @inline def withDefault(default: => A): Signal[A] =
     underlying.map(_.getOrElse(default))
-
-  def flatMapWhenDefined[B](mapping: A => Signal[Option[B]]): Signal[Option[B]] = underlying.flatMap {
-    case Some(a) => mapping(a)
-    case None    => Val(Option.empty[B])
-  }
 
 }

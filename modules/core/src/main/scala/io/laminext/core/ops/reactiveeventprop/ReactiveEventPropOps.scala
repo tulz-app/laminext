@@ -8,13 +8,10 @@ import org.scalajs.dom
 
 final class ReactiveEventPropOps[Ev <: dom.Event](underlying: ReactiveEventProp[Ev]) {
 
-  @inline def mapToTrue: EventPropTransformation[Ev, Boolean] =
-    underlying.mapToValue(true)
+  @inline def mapToTrue: EventPropTransformation[Ev, Boolean] = underlying.mapToStrict(true)
 
-  @inline def mapToFalse: EventPropTransformation[Ev, Boolean] =
-    underlying.mapToValue(false)
+  @inline def mapToFalse: EventPropTransformation[Ev, Boolean] = underlying.mapToStrict(false)
 
-  @inline def mapToUnit: EventPropTransformation[Ev, Unit] =
-    underlying.mapToValue((): Unit)
+  @inline def mapToUnit: EventPropTransformation[Ev, Unit] = underlying.mapToStrict((): Unit)
 
 }

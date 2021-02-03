@@ -45,11 +45,9 @@ lazy val commonSettings = basicSettings ++ Seq(
   scalaJSUseMainModuleInitializer := true,
   scalaJSLinkerConfig in (Compile, fastLinkJS) ~= {
     _.withSourceMap(false)
-  }
-)
-
-lazy val macrosSettings = Seq(
-  libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+  },
+  Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+  testFrameworks += new TestFramework("munit.Framework")
 )
 
 lazy val bundlerSettings = Seq(
@@ -60,10 +58,11 @@ lazy val bundlerSettings = Seq(
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    ("com.raquo"     %%% "laminar"      % BuildSettings.version.laminar).withDottyCompat(scalaVersion.value),
-    ("org.scalatest" %%% "scalatest"    % BuildSettings.version.`scala-test` % Test).withDottyCompat(scalaVersion.value),
-    ("app.tulz"      %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test).withDottyCompat(scalaVersion.value),
-    ("com.raquo"     %%% "domtestutils" % BuildSettings.version.domtestutils % Test).withDottyCompat(scalaVersion.value)
+    ("com.raquo" %%% "laminar" % BuildSettings.version.laminar).withDottyCompat(scalaVersion.value),
+//    ("org.scalatest" %%% "scalatest"    % BuildSettings.version.`scala-test` % Test).withDottyCompat(scalaVersion.value),
+    ("app.tulz"     %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test).withDottyCompat(scalaVersion.value),
+    ("com.raquo"    %%% "domtestutils" % BuildSettings.version.domtestutils % Test).withDottyCompat(scalaVersion.value),
+    "org.scalameta" %%% "munit"        % BuildSettings.version.munit        % Test
   )
 )
 
@@ -90,6 +89,13 @@ lazy val `cats` =
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(catsDependencies)
+    .settings(
+      libraryDependencies ++= Seq(
+        "org.typelevel"              %%% "cats-laws"                 % "2.3.1" % Test,
+        "org.typelevel"              %%% "discipline-munit"          % "1.0.5" % Test,
+        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % "1.2.5" % Test
+      )
+    )
     .settings(noPublish) // nothing here yet
     .settings(
       description := "Laminar utilities (cats)"
@@ -280,6 +286,7 @@ lazy val website = project
   )
   .dependsOn(
     `core`,
+    `cats`,
     `validation-cats`,
     `util`,
     `fsm`,
@@ -323,6 +330,7 @@ lazy val root = project
   )
   .aggregate(
     `core`,
+    `cats`,
     `validation-core`,
     `validation-cats`,
     `util`,

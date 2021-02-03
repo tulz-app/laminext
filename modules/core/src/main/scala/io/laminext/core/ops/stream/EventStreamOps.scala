@@ -6,11 +6,14 @@ import com.raquo.airstream.eventstream.DelayForEventStream
 import com.raquo.airstream.eventstream.DropEventStream
 import com.raquo.airstream.eventstream.TakeEventStream
 import com.raquo.airstream.eventstream.TransitionsEventStream
+import com.raquo.airstream.flatten.FlattenStrategy
 
 import scala.concurrent.duration.FiniteDuration
 import scala.util.Failure
 
 final class EventStreamOps[A](underlying: EventStream[A]) {
+
+  @inline def eitherT: EventStreamEitherT[Nothing, A] = new EventStreamEitherT(underlying.map(Right(_)))
 
   @inline def transitions: EventStream[(Option[A], A)] = new TransitionsEventStream(underlying)
 
@@ -91,5 +94,11 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
 
   def errorOrValue: EventStream[Either[Throwable, A]] =
     underlying.recoverToTry.map(_.toEither)
+
+  @inline def flatMapTo[B, Inner[_], Output[+_] <: Observable[_]](
+    inner: => Inner[B]
+  )(implicit strategy: FlattenStrategy[EventStream, Inner, Output]): Output[B] = {
+    underlying.flatMap(_ => inner)(strategy)
+  }
 
 }
