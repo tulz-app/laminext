@@ -30,9 +30,9 @@ The following is the same for single and group buttons:
 
 See the examples to get a better idea of how it looks like:
 
-* [button colors](/tailwind/tailwind/example-button-colors)
-* [button sizes](/tailwind/tailwind/example-button-sizes)
-* [button group](/tailwind/tailwind/example-button-group)
+* [button colors](/tailwind/example-button-colors)
+* [button sizes](/tailwind/example-button-sizes)
+* [button group](/tailwind/example-button-group)
 
 ## Partially built buttons
 
