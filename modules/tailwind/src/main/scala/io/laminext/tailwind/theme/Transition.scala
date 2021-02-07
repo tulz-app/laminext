@@ -9,7 +9,24 @@ case class Transition(
   opacity: TransitionConfig,
   opacityAndScale: TransitionConfig,
   resize: TransitionConfig,
-)
+) {
+
+  def customize(
+    default: TransitionConfig => TransitionConfig = identity,
+    scale: TransitionConfig => TransitionConfig = identity,
+    opacity: TransitionConfig => TransitionConfig = identity,
+    opacityAndScale: TransitionConfig => TransitionConfig = identity,
+    resize: TransitionConfig => TransitionConfig = identity,
+  ): Transition =
+    Transition(
+      default = default(this.default),
+      scale = scale(this.scale),
+      opacity = opacity(this.opacity),
+      opacityAndScale = opacityAndScale(this.opacityAndScale),
+      resize = resize(this.resize)
+    )
+
+}
 
 object Transition {
 

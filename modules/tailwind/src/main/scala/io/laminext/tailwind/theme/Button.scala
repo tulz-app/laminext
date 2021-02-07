@@ -2,7 +2,7 @@ package io.laminext.tailwind.theme
 
 case class Button(
   common: BaseAndCustom,
-  disabled: String,
+  disabled: BaseAndCustom,
   single: BaseAndCustom,
   size: ButtonSize,
   group: GroupButton,
@@ -11,7 +11,7 @@ case class Button(
 
   def customize(
     common: BaseAndCustom => BaseAndCustom = identity,
-    disabled: String = this.disabled,
+    disabled: BaseAndCustom => BaseAndCustom = identity,
     single: BaseAndCustom => BaseAndCustom = identity,
     size: ButtonSize => ButtonSize = identity,
     group: GroupButton => GroupButton = identity,
@@ -19,7 +19,7 @@ case class Button(
   ): Button =
     Button(
       common = common(this.common),
-      disabled = disabled,
+      disabled = disabled(this.disabled),
       single = single(this.single),
       size = size(this.size),
       group = group(this.group),
@@ -32,7 +32,7 @@ object Button {
 
   val empty: Button = Button(
     common = BaseAndCustom.empty,
-    disabled = "",
+    disabled = BaseAndCustom.empty,
     single = BaseAndCustom.empty,
     size = ButtonSize.empty,
     group = GroupButton.empty,

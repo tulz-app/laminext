@@ -126,6 +126,7 @@ object Site {
       path = "tailwind",
       index = docPage("", "Tailwind", FileAsString("/doc/tailwind/index.md")),
       "" -> Seq(
+        docPage("theme", "Theme", FileAsString("/doc/tailwind/theme.md")),
         docPage("buttons", "Buttons", FileAsString("/doc/tailwind/buttons.md")),
         docPage("card", "Card", FileAsString("/doc/tailwind/card.md")),
         docPage("animation", "Animation", FileAsString("/doc/tailwind/animation.md")),

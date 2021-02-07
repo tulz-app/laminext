@@ -5,7 +5,7 @@ import io.laminext.site.examples.CodeExample
 
 object TailwindCardExample
     extends CodeExample(
-      id = "example-button-card",
+      id = "example-card",
       title = "Card",
       description = FileAsString("description.md")
     )(() => {

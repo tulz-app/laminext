@@ -7,6 +7,8 @@ final case class BaseAndCustom(
   custom: String = ""
 ) {
 
+  @inline def reset(base: String): BaseAndCustom = BaseAndCustom(base = base)
+
   def custom(custom: String): BaseAndCustom =
     if (custom == this.custom) {
       this

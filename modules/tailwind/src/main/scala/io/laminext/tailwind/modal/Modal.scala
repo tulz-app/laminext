@@ -16,7 +16,7 @@ object Modal {
     config: theme.Modal = Theme.current.modal
   ): Element = {
     div(
-      cls := config.container,
+      cls := config.container.classes,
       content.bind { maybeContent =>
         if (maybeContent.isDefined) {
           dom.document.body.parentElement.classList.add(noScrollClassName)
@@ -33,7 +33,7 @@ object Modal {
       div(
         TW.transition(content.isDefined, config.contentWrapTransition),
         div(
-          cls := config.contentWrapInner,
+          cls := config.contentWrapInner.classes,
           child.maybe <-- content.optionMap(_.content)
         )
       )

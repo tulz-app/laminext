@@ -12,32 +12,32 @@ class HtmlTagTailwindButtonGroupExpectsSizeOps[T <: dom.html.Element](
 
   @inline def tiny: AmendedHtmlTagPartial[T, AmButtonGroupExpectsStyle] =
     tag.amend[AmButtonGroupExpectsStyle](
-      cls := Theme.current.button.size.tiny
+      cls := Theme.current.button.size.tiny.classes
     )
 
   @inline def xs: AmendedHtmlTagPartial[T, AmButtonGroupExpectsStyle] =
     tag.amend[AmButtonGroupExpectsStyle](
-      cls := Theme.current.button.size.xs
+      cls := Theme.current.button.size.xs.classes
     )
 
   @inline def sm: AmendedHtmlTagPartial[T, AmButtonGroupExpectsStyle] =
     tag.amend[AmButtonGroupExpectsStyle](
-      cls := Theme.current.button.size.sm
+      cls := Theme.current.button.size.sm.classes
     )
 
   @inline def md: AmendedHtmlTagPartial[T, AmButtonGroupExpectsStyle] =
     tag.amend[AmButtonGroupExpectsStyle](
-      cls := Theme.current.button.size.md
+      cls := Theme.current.button.size.md.classes
     )
 
   @inline def lg: AmendedHtmlTagPartial[T, AmButtonGroupExpectsStyle] =
     tag.amend[AmButtonGroupExpectsStyle](
-      cls := Theme.current.button.size.lg
+      cls := Theme.current.button.size.lg.classes
     )
 
   @inline def xl: AmendedHtmlTagPartial[T, AmButtonGroupExpectsStyle] =
     tag.amend[AmButtonGroupExpectsStyle](
-      cls := Theme.current.button.size.xl
+      cls := Theme.current.button.size.xl.classes
     )
 
 }

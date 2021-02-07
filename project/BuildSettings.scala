@@ -13,13 +13,11 @@ object BuildSettings {
 
     // -- website
 
-    val sourcecode           = "0.2.1"
-    val frontroute           = "0.12.0-M1"
-    val `embedded-files`     = "0.2.0"
-    val factorio             = "0.3.1"
-    val `kind-projector`     = "0.11.2"
-    val `better-monadic-for` = "0.3.1"
-    val pprint               = "0.6.0"
+    val sourcecode       = "0.2.1"
+    val frontroute       = "0.12.0-M2"
+    val `embedded-files` = "0.2.0"
+    val factorio         = "0.3.1"
+    val pprint           = "0.6.0"
 
   }
 

@@ -13,15 +13,16 @@ object TailwindFileInputExample
       import io.laminext.syntax.core._
       import io.laminext.syntax.tailwind._
       import io.laminext.syntax.validation.cats._
-      import io.laminext.validation.Validation
       import org.scalajs.dom.raw.File
 
       val fileValidation: Validation[File, Seq[String], File] =
         V.file(Seq("must be <= 100MB"))(_.size <= 100 * 1024 * 1024) &
           V.file(Seq("must be a .png file"))(_.name.split('.').lastOption.map(_.toLowerCase).contains("png"))
 
+      /* <focus> */
       val fileInput       = input(tpe := "file").validatedFile(Seq("no file"), fileValidation)
       val fileInputButton = button.btn.md.fill.build().fileInput(fileInput)
+      /* </focus> */
 
       div(
         cls := "p-4 space-y-4 bg-white",

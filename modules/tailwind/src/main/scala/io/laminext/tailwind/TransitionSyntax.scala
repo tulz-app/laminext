@@ -19,6 +19,18 @@ trait TransitionSyntax {
   ): Modifier[HtmlElement] =
     apply(show, theme.Theme.current.transition.opacity, observer)
 
+  @inline def scale(
+    show: Signal[Boolean],
+    observer: Observer[Boolean] = Observer.empty
+  ): Modifier[HtmlElement] =
+    apply(show, theme.Theme.current.transition.scale, observer)
+
+  @inline def resize(
+    show: Signal[Boolean],
+    observer: Observer[Boolean] = Observer.empty
+  ): Modifier[HtmlElement] =
+    apply(show, theme.Theme.current.transition.resize, observer)
+
   @inline def apply(
     show: Signal[Boolean],
     config: TransitionConfig = Theme.current.transition.default,

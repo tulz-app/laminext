@@ -14,6 +14,7 @@ import org.scalajs.dom.html
 
 trait BaseSyntax {
 
+  val Modal: io.laminext.tailwind.modal.Modal.type = io.laminext.tailwind.modal.Modal
   type ModalContent = io.laminext.tailwind.modal.ModalContent
 
   object TW {
