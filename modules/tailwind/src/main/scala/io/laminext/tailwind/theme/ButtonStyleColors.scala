@@ -1,10 +1,10 @@
 package io.laminext.tailwind.theme
 
 case class ButtonStyleColors(
-  base: String = "",
-  fill: String = "",
-  outline: String = "",
-  transparent: String = "",
+  base: String,
+  fill: String,
+  outline: String,
+  transparent: String,
   single: ButtonColorStyles = ButtonColorStyles.empty,
   group: ButtonColorStyles = ButtonColorStyles.empty
 ) {
@@ -23,6 +23,19 @@ case class ButtonStyleColors(
     transparent = transparent,
     single = single(this.single),
     group = group(this.group)
+  )
+
+}
+
+object ButtonStyleColors {
+
+  val empty: ButtonStyleColors = ButtonStyleColors(
+    base = "",
+    fill = "",
+    outline = "",
+    transparent = "",
+    single = ButtonColorStyles.empty,
+    group = ButtonColorStyles.empty
   )
 
 }

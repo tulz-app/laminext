@@ -266,6 +266,7 @@ lazy val website = project
   .settings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+    scalaJSUseMainModuleInitializer := true,
 //    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),
     libraryDependencies ++= Seq(
       "com.raquo"     %%% "laminar"              % BuildSettings.version.laminar,
@@ -273,16 +274,10 @@ lazy val website = project
       "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files`,
       "com.lihaoyi"   %%% "sourcecode"           % BuildSettings.version.sourcecode,
       "io.circe"      %%% "circe-generic"        % BuildSettings.version.circe
-    )
-  )
-  .settings(
+    ),
     embedTextGlobs := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
     (Compile / sourceGenerators) += embedFiles
-  )
-  .settings(
-//    addCompilerPlugin(("org.typelevel" %% "kind-projector" % BuildSettings.version.`kind-projector`).cross(CrossVersion.full)),
-//    addCompilerPlugin("com.olegpy" %% "better-monadic-for" % BuildSettings.version.`better-monadic-for`)
   )
   .dependsOn(
     `core`,

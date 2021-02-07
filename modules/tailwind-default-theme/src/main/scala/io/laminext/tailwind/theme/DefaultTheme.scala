@@ -7,7 +7,9 @@ object DefaultTheme {
 
   val theme: Theme = Theme(
     animation = Animation(
-      focusTransition = "transition ease-in-out duration-150"
+      focusTransition = BaseAndCustom(
+        base = "transition ease-in-out duration-150"
+      )
     ),
     button = ButtonTheme.button,
     buttonGroup = BaseAndCustom(base = "relative z-0 inline-flex shadow-sm rounded-md"),
@@ -26,7 +28,9 @@ object DefaultTheme {
       resize = TransitionTheme.resize
     ),
     modal = Modal(
-      container = "fixed inset-0 z-50",
+      container = BaseAndCustom(
+        base = "fixed inset-0 z-50"
+      ),
       overlayTransition = TransitionConfig(
         nonHidden = "hidden md:block md:absolute md:inset-0 bg-gray-900",
         showing = "bg-opacity-75",
@@ -47,7 +51,9 @@ object DefaultTheme {
         ),
         showing = ClassTokenize("transform")
       ),
-      contentWrapInner = "sm:my-0 sm:mx-auto sm:overlay-container"
+      contentWrapInner = BaseAndCustom(
+        base = "md:mx-auto"
+      )
     ),
     progressBar = ProgressBar.default,
     fileInput = FileInput(

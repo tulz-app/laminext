@@ -36,11 +36,11 @@ object CodeExampleDisplay {
   }
 
   private val collapseTransition = theme.Theme.current.transition.resize.customize(
-    hidden = "max-h-32",
-    enterFrom = "max-h-32",
-    enterTo = "",
-    leaveFrom = "",
-    leaveTo = "max-h-32",
+    hidden = _ :+ "max-h-32",
+    enterFrom = _ :+ "max-h-32",
+    enterTo = _ => Seq.empty,
+    leaveFrom = _ => Seq.empty,
+    leaveTo = _ :+ "max-h-32",
     onEnterFrom = el => {
       el.style.maxHeight = null
     },

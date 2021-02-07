@@ -1,5 +1,6 @@
 package io.laminext.site
 
+import com.raquo.laminar.api.L._
 import io.frontroute.LinkHandler
 import io.laminext.highlight.Highlight
 import io.laminext.highlight.HighlightJavaScript
@@ -10,26 +11,23 @@ import io.laminext.tailwind.theme.DefaultTheme
 import io.laminext.tailwind.theme.Theme
 import org.scalajs.dom
 
-import scala.scalajs.js.annotation.JSExport
-import scala.scalajs.js.annotation.JSExportTopLevel
-
-@JSExportTopLevel("App")
 object Main {
 
   val mainCss: MainCss.type = MainCss
 
-  @JSExport
-  def start(): Unit = {
-    Theme.setTheme(DefaultTheme.theme)
-    Modal.initialize()
-    LinkHandler.install()
-    val wiring = Wiring()
-    removeNoJsClass(wiring.ssrContext)
-    insertJsClass(wiring.ssrContext)
-    Highlight.registerLanguage("scala", HighlightScala)
-    Highlight.registerLanguage("javascript", HighlightJavaScript)
-    Highlight.registerLanguage("json", HighlightJson)
-    wiring.routes.start()
+  def main(args: Array[String]): Unit = {
+    val _ = documentEvents.onDomContentLoaded.foreach { _ =>
+      Theme.setTheme(DefaultTheme.theme)
+      Modal.initialize()
+      LinkHandler.install()
+      val wiring = Wiring()
+      removeNoJsClass(wiring.ssrContext)
+      insertJsClass(wiring.ssrContext)
+      Highlight.registerLanguage("scala", HighlightScala)
+      Highlight.registerLanguage("javascript", HighlightJavaScript)
+      Highlight.registerLanguage("json", HighlightJson)
+      wiring.routes.start()
+    }(unsafeWindowOwner)
   }
 
   private def insertJsClass(ssrContext: SsrContext): Unit = {

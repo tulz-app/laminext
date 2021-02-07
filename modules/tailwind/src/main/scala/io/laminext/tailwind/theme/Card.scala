@@ -8,19 +8,19 @@ final case class Card(
   title: BaseAndCustom
 ) {
 
-  def custom(
-    wrap: String = this.wrap.custom,
-    header: String = this.header.custom,
-    body: String = this.body.custom,
-    footer: String = this.footer.custom,
-    title: String = this.title.custom
+  def customize(
+    wrap: BaseAndCustom => BaseAndCustom = identity,
+    header: BaseAndCustom => BaseAndCustom = identity,
+    body: BaseAndCustom => BaseAndCustom = identity,
+    footer: BaseAndCustom => BaseAndCustom = identity,
+    title: BaseAndCustom => BaseAndCustom = identity
   ): Card =
     this.copy(
-      wrap = this.wrap.custom(wrap),
-      header = this.header.custom(header),
-      body = this.body.custom(body),
-      footer = this.footer.custom(footer),
-      title = this.title.custom(title)
+      wrap = wrap(this.wrap),
+      header = header(this.header),
+      body = body(this.body),
+      footer = footer(this.footer),
+      title = title(this.title)
     )
 
 }

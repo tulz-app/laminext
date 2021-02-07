@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const _ = require('lodash');
 
@@ -14,8 +15,11 @@ const devServerHost = '127.0.0.1';
 const devServerPort = 30088;
 
 const devServer = {
-  // hot: true,
-  // inline: true,
+  hot: true,
+  inline: true,
+  injectHot: true,
+  injectClient: true,
+  transportMode: 'ws',
   disableHostCheck: true,
   clientLogLevel: 'info',
   public: 'https://dev.laminext.tulz.app:443',
@@ -39,9 +43,7 @@ function common(mode) {
     output: {
       publicPath: '/',
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].bundle.[contenthash].js',
-      library: 'laminext',
-      libraryTarget: 'var'
+      filename: '[name].bundle.[contenthash].js'
     },
     module: {
       rules: [
@@ -127,6 +129,11 @@ function dev() {
     devtool: 'cheap-module-source-map',
     entry: [
       path.resolve(__dirname, `${scalaOutputPath}/website-fastopt/main.js`),
+    ],
+    plugins: [
+      new webpack.HotModuleReplacementPlugin({
+        // Options...
+      })
     ]
   };
 }
@@ -137,7 +144,7 @@ function customizer(objValue, srcValue) {
   }
 }
 
-module.exports = function () {
+function getConfig() {
   switch (process.env.npm_lifecycle_event) {
     case 'build:prod':
     case 'build':
@@ -180,4 +187,7 @@ module.exports = function () {
         customizer
       );
   }
-};
+}
+
+const config = getConfig()
+module.exports = config
