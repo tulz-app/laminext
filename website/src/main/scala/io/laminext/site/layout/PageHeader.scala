@@ -26,6 +26,13 @@ object PageHeader {
 
     div(
       cls := "flex bg-cool-gray-900 text-white py-4 px-8 items-center space-x-8",
+      div(
+        cls := " -my-4 -mx-4",
+        img(
+          src := "/images/logo.svg",
+          cls := "w-10 h-10"
+        )
+      ),
       nav(
         cls := "w-80 flex space-x-4 items-center justify-start",
         Site.modules.take(1).map(moduleLink($module))

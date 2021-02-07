@@ -297,20 +297,6 @@ lazy val website = project
     `fetch-circe`
   )
 
-lazy val sandbox = project
-  .in(file("sandbox"))
-  .enablePlugins(ScalaJSPlugin)
-  .enablePlugins(EmbeddedFilesPlugin)
-  .settings(basicSettings)
-  .settings(noPublish)
-  .settings(
-    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-    scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
-    libraryDependencies ++= Seq(
-      "com.raquo" %%% "laminar" % BuildSettings.version.laminar,
-    )
-  )
-
 lazy val noPublish = Seq(
   publishLocal / skip := true,
   publish / skip := true,
