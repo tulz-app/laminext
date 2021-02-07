@@ -96,6 +96,7 @@ object PageHeader {
       div(
         a(
           href := "https://github.com/tulz-app/laminext",
+          rel := "external",
           Icons.github(svg.cls := "h-6 text-cool-gray-300")
         )
       )
