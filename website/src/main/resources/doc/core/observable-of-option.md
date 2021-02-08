@@ -27,10 +27,10 @@ import io.laminext.syntax.core._
 val signal: Signal[Option[String]] = ???
 
 div(
-  signal.doWhenDefined { () =>
+  signal.doWhenDefined {
     dom.console.log("option in signal is defined")    
   },
-  signal.doWhenEmpty { () =>
+  signal.doWhenEmpty {
     dom.console.log("option in signal is empty")
   }
 )

@@ -14,20 +14,20 @@ final class ObservableOfEitherOps[A, B](val underlying: Observable[Either[A, B]]
     ConditionalChildInserter(underlying.map(_.isRight), child)
 
   @inline def doWhenLeft(
-    callback: () => Unit
+    callback: => Unit
   ): Binder[ReactiveHtmlElement.Base] =
     underlying --> { value =>
       if (value.isLeft) {
-        callback()
+        callback
       }
     }
 
   @inline def doWhenRight(
-    callback: () => Unit
+    callback: => Unit
   ): Binder[ReactiveHtmlElement.Base] =
     underlying --> { value =>
       if (value.isRight) {
-        callback()
+        callback
       }
     }
 

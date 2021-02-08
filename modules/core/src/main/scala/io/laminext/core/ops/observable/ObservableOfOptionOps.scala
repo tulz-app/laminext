@@ -15,20 +15,20 @@ final class ObservableOfOptionOps[A](val underlying: Observable[Option[A]]) {
     ConditionalChildInserter(underlying.map(_.isDefined), child)
 
   @inline def doWhenDefined(
-    callback: () => Unit
+    callback: => Unit
   ): Binder[ReactiveHtmlElement.Base] =
     underlying --> { value =>
       if (value.isDefined) {
-        callback()
+        callback
       }
     }
 
   @inline def doWhenEmpty(
-    callback: () => Unit
+    callback: => Unit
   ): Binder[ReactiveHtmlElement.Base] =
     underlying --> { value =>
       if (value.isEmpty) {
-        callback()
+        callback
       }
     }
 

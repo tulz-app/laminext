@@ -45,10 +45,10 @@ import io.laminext.syntax.core._
 val obs: Observable[Boolean] = ???
 
 div(
-  obs.doWhenTrue { () =>
+  obs.doWhenTrue { 
     dom.console.log("signal is true")    
   },
-  obs.doWhenFalse { () =>
+  obs.doWhenFalse {
     dom.console.log("signal is false")
   }
 )

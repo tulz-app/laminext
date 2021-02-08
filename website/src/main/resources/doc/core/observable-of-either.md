@@ -27,10 +27,10 @@ import io.laminext.syntax.core._
 val obs: Observable[Either[String, Int]] = ???
 
 div(
-  obs.doWhenLeft { () =>
+  obs.doWhenLeft { 
     dom.console.log("either in signal is left")    
   },
-  obs.doWhenRight { () =>
+  obs.doWhenRight {
     dom.console.log("either in signal is right")
   }
 )
