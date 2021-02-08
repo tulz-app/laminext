@@ -7,12 +7,6 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 final class ObservableOfBooleanOps(underlying: Observable[Boolean]) {
 
-  def cls(s: String): Binder[ReactiveHtmlElement.Base] =
-    L.cls <-- underlying.map(b => Seq(s -> b))
-
-  def clsNot(s: String): Binder[ReactiveHtmlElement.Base] =
-    L.cls <-- underlying.map(b => Seq(s -> !b))
-
   @inline def classSwitch(whenTrue: String, whenFalse: String): Binder[ReactiveHtmlElement.Base] =
     L.cls <-- underlying.map { bool =>
       Seq(

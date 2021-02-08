@@ -1,18 +1,3 @@
-## `.cls` 
-## `.clsNot` 
-
-```scala
-import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
-
-val obs: Observable[Boolean] = ???
-
-div(
-  obs.cls("class-1"),    // cls <-- obs.map(b => Seq("class-1" -> b))
-  obs.clsNot("class-2")  // cls <-- obs.map(b => Seq("class-2" -> !b))
-)
-```
-
 ## `.classSwitch`
 
 See [example](/core/example-signal-of-boolean-class-switch).
@@ -26,8 +11,8 @@ val obs: Observable[Boolean] = ???
 div(
   obs.classSwitch(
     whenTrue = "class-1",
-    whenFalse = "class-2",
-  ) // // cls <-- obs.map(b => Seq("class-1" -> b, "class-2" -> !b))
+    whenFalse = "class-2"
+  ) // cls <-- obs.map(b => Seq("class-1" -> b, "class-2" -> !b))
 )
 ```
 

@@ -19,7 +19,7 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   transform: EventStream[Ev] => EventStream[A]
 ) {
 
-  @inline def forEach[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
+  @inline def foreach[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
     inContext(el => transform(el.events(t)) --> onNext)
 
   @inline def -->[El <: Element](observer: Observer[A]): Modifier[ReactiveElement.Base] =

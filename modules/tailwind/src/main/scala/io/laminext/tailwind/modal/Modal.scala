@@ -26,7 +26,7 @@ object Modal {
       },
       div(
         TW.transition(content.isDefined, config.overlayTransition),
-        thisEvents(onClick).withCurrentValueOf(content).forEach { case (_, maybeContent) =>
+        thisEvents(onClick).withCurrentValueOf(content).foreach { case (_, maybeContent) =>
           maybeContent.flatMap(_.closeObserver).foreach(_.onNext((): Unit))
         }
       ),
