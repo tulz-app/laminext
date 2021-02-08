@@ -11,10 +11,12 @@ object PageNavigation {
 
   def apply(
     $module: Signal[Option[SiteModule]],
-    $page: Signal[Option[Page]]
+    $page: Signal[Option[Page]],
+    mobile: Boolean = false
   ): ReactiveHtmlElement.Base =
     nav(
-      cls := "w-80 py-4 overflow-auto bg-cool-gray-800 text-white",
+      cls := "py-4 overflow-auto bg-cool-gray-800 text-white",
+      cls := (if (mobile) "" else "w-80 hidden lg:block"),
       child.maybe <-- $module.optionMap { module =>
         div(
           cls := "space-y-4",

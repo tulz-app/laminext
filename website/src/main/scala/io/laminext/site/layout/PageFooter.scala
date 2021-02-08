@@ -8,7 +8,7 @@ object PageFooter {
   def apply(
   ): ReactiveHtmlElement.Base =
     div(
-      cls := "bg-cool-gray-900 text-white p-4",
+      cls := "hidden bg-cool-gray-900 text-white p-4",
     )
 
 }

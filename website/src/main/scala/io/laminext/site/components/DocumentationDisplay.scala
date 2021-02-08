@@ -10,13 +10,20 @@ object DocumentationDisplay {
 
   def apply(title: String, markdown: String): Element =
     div(
-      cls := "prose max-w-none",
-      unsafeMarkdown := TemplateVars(markdown),
-      onMountCallback { ctx =>
-        ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
-          Highlight.highlightBlock(codeElement)
+      cls := "space-y-4",
+      h1(
+        cls := "font-display text-3xl font-bold text-cool-gray-900 tracking-wider md:hidden",
+        title
+      ),
+      div(
+        cls := "prose max-w-none",
+        unsafeMarkdown := TemplateVars(markdown),
+        onMountCallback { ctx =>
+          ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
+            Highlight.highlightBlock(codeElement)
+          }
         }
-      }
+      )
     )
 
 }

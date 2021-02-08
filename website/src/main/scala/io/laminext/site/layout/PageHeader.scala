@@ -12,7 +12,8 @@ object PageHeader {
 
   def apply(
     $module: Signal[Option[SiteModule]],
-    $page: Signal[Option[Page]]
+    $page: Signal[Option[Page]],
+    menuObserver: Observer[Option[ModalContent]]
   ): ReactiveHtmlElement.Base = {
     val styleDropDownOpen = Var(false)
     val styleSearch       = Var("")
@@ -27,22 +28,25 @@ object PageHeader {
     div(
       cls := "flex bg-cool-gray-900 text-white py-4 px-8 items-center space-x-8",
       div(
-        cls := " -my-4 -mx-4",
+        cls := "flex-shrink-0 -my-4 -mx-4",
         img(
           src := "/images/logo.svg",
           cls := "w-10 h-10"
         )
       ),
       nav(
-        cls := "w-80 flex space-x-4 items-center justify-start",
+        cls := "flex flex-1 md:flex-none space-x-4 items-center justify-start",
         Site.modules.take(1).map(moduleLink($module))
       ),
       nav(
-        cls := "flex-1 flex space-x-4 justify-start items-center",
-        Site.modules.drop(1).map(moduleLink($module))
+        cls := "hidden md:flex flex-1 space-x-4",
+        div(
+          cls := "flex flex-wrap justify-start items-center",
+          Site.modules.drop(1).map(moduleLink($module))
+        )
       ),
       div(
-        cls := "relative inline-block text-left",
+        cls := "hidden lg:block relative inline-block text-left",
         div(
           button.btn.sm.text.white(
             `type` := "button",
@@ -94,6 +98,37 @@ object PageHeader {
         )
       ),
       div(
+        cls := "lg:hidden",
+        button.btn.md.outline
+          .white(
+//            Icons.heroicons.menu(svg.cls := "hidden-before-css block w-5")
+            "Menu",
+            onClick.mapTo(
+              Some(
+                ModalContent(
+                  div(
+                    div(
+                      cls := "flex justify-end py-4 px-8",
+                      button.btn.md.outline
+                        .white(
+                          "Close",
+                          onClick.mapTo(None) --> menuObserver
+                        )
+                    ),
+                    PageNavigation($module, $page, mobile = true),
+                    div(
+                      cls := "flex flex-wrap justify-start items-center p-4",
+                      Site.modules.drop(1).map(moduleLink($module))
+                    ),
+                  ),
+                  Some(menuObserver.contramap(_ => None))
+                )
+              )
+            ) --> menuObserver
+          )
+      ),
+      div(
+        cls := "hidden lg:block",
         a(
           href := "https://github.com/tulz-app/laminext",
           rel := "external",

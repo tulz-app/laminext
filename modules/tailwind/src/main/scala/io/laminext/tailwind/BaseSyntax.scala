@@ -16,6 +16,7 @@ trait BaseSyntax {
 
   val Modal: io.laminext.tailwind.modal.Modal.type = io.laminext.tailwind.modal.Modal
   type ModalContent = io.laminext.tailwind.modal.ModalContent
+  val ModalContent: io.laminext.tailwind.modal.ModalContent.type = io.laminext.tailwind.modal.ModalContent
 
   object TW {
 

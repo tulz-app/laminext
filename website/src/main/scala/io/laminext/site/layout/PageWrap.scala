@@ -14,7 +14,8 @@ object PageWrap {
 
   def apply(
     $module: Signal[Option[SiteModule]],
-    $page: Signal[Option[Page]]
+    $page: Signal[Option[Page]],
+    menuObserver: Observer[Option[ModalContent]]
   ): ReactiveHtmlElement.Base = {
     val titleElement   = org.scalajs.dom.document.head.querySelector("title")
     val $pageAndResult = $page.optionMap(p => (p, p.render()))
@@ -25,7 +26,7 @@ object PageWrap {
       ),
       div(
         cls := "h-screen flex flex-col",
-        PageHeader($module, $page),
+        PageHeader($module, $page, menuObserver),
         noScript(
           div(
             cls := "max-w-5xl border-l-4 border-red-400 bg-red-50 text-red-900 mx-auto p-4 font-condensed",
@@ -36,9 +37,9 @@ object PageWrap {
           cls := "flex-1 flex overflow-hidden",
           PageNavigation($module, $page).hiddenIf($module.optionContains(Site.indexModule)),
           div(
-            cls := "flex-1 bg-cool-gray-200 overflow-auto p-4",
+            cls := "flex-1 bg-cool-gray-200 overflow-auto md:p-4",
             div(
-              cls := "container mx-auto p-4 bg-white min-h-full",
+              cls := "lg:container lg:mx-auto p-4 bg-white min-h-full",
               child <-- $pageAndResult.map {
                 case Some((_, Right((el, _))))     => el
                 case Some((_, Left((_, message)))) => div(message)

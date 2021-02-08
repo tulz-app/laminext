@@ -2,8 +2,6 @@ package io.laminext.site.examples.tailwind.ex_tailwind_modal
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import io.laminext.site.ExampleModalContent
-import io.laminext.tailwind.modal.ModalContent
 
 object TailwindModalExample
     extends CodeExample(
@@ -13,6 +11,7 @@ object TailwindModalExample
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.tailwind._
+      import io.laminext.site.ExampleModalContent
 
       /* <focus> */
       /*
