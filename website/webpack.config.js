@@ -20,7 +20,6 @@ const devServer = _.mergeWith(
     injectHot: true,
     injectClient: true,
     transportMode: 'ws',
-    public: 'dev.laminext.tulz.app:443',
     port: devServerPort,
     host: devServerHost,
     historyApiFallback: {

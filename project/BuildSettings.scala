@@ -3,7 +3,7 @@ object BuildSettings {
   object version {
 
     val jsdom        = "16.4.0"
-    val laminar      = "0.12.0-M1"
+    val laminar      = "0.12.0-M2"
     val `scala-test` = "3.2.3"
     val munit        = "0.7.21"
     val stringdiff   = "0.3.1"
