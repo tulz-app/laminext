@@ -14,21 +14,23 @@ const scalaOutputPath = path.resolve(__dirname, './target/scala-2.13');
 const devServerHost = '127.0.0.1';
 const devServerPort = 30088;
 
-const devServer = {
-  hot: true,
-  inline: true,
-  injectHot: true,
-  injectClient: true,
-  transportMode: 'ws',
-  disableHostCheck: true,
-  clientLogLevel: 'info',
-  public: 'https://dev.laminext.tulz.app:443',
-  port: devServerPort,
-  host: devServerHost,
-  historyApiFallback: {
-    index: ''
-  }
-};
+const devServer = _.mergeWith(
+  {
+    hot: true,
+    injectHot: true,
+    injectClient: true,
+    transportMode: 'ws',
+    public: 'dev.laminext.tulz.app:443',
+    port: devServerPort,
+    host: devServerHost,
+    historyApiFallback: {
+      index: ''
+    }
+  },
+  require('./devserver.config.js')
+)
+
+
 
 function common(mode) {
   return {

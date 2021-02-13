@@ -15,7 +15,7 @@ object PageNavigation {
     mobile: Boolean = false
   ): ReactiveHtmlElement.Base =
     nav(
-      cls := "py-4 overflow-auto bg-cool-gray-800 text-white",
+      cls := "py-4 overflow-auto bg-gray-800 text-white",
       cls := (if (mobile) "" else "w-80 hidden lg:block"),
       child.maybe <-- $module.optionMap { module =>
         div(
@@ -31,7 +31,7 @@ object PageNavigation {
             div(
               when(title.nonEmpty) {
                 div(
-                  cls := "ml-4 text-xl font-display font-semibold text-cool-gray-400 tracking-wide",
+                  cls := "ml-4 text-xl font-display font-semibold text-gray-400 tracking-wide",
                   title
                 )
               },
@@ -57,8 +57,8 @@ object PageNavigation {
     div(
       cls := "px-2 py-1",
       $currentPage.optionExists(_.path == page.path).classSwitch(
-        whenTrue = "text-white bg-cool-gray-700",
-        whenFalse = "text-cool-gray-200 hover:text-white hover:bg-cool-gray-700"
+        whenTrue = "text-white bg-gray-700",
+        whenFalse = "text-gray-200 hover:text-white hover:bg-gray-700"
       ),
       mods
     )

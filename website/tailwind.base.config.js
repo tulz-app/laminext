@@ -1,16 +1,14 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   prefix: '',
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
   important: false,
   separator: ':',
-  experimental: {
-    uniformColorPalette: true,
-  },
   theme: {
     extend: {
+      colors: {
+        gray: colors.coolGray,
+      },
       fontFamily: {
         display: ['Oxanium', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
         serif: ['Inter', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
@@ -94,7 +92,8 @@ module.exports = {
   },
   corePlugins: {},
   plugins: [
-    require('@tailwindcss/ui'),
-    require('@tailwindcss/forms')
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio')
   ],
 }

@@ -18,7 +18,7 @@ object PageHeader {
     val styleDropDownOpen = Var(false)
     val styleSearch       = Var("")
     val searchInput = input(
-      cls := "appearance-none block w-full px-3 py-2 rounded-md text-cool-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out",
+      cls := "appearance-none block w-full px-3 py-2 rounded-md text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out",
       placeholder := "search..."
     )
     searchInput.amend(
@@ -26,7 +26,7 @@ object PageHeader {
     )
 
     div(
-      cls := "flex bg-cool-gray-900 text-white py-4 px-8 items-center space-x-8",
+      cls := "flex bg-gray-900 text-white py-4 px-8 items-center space-x-8",
       div(
         cls := "flex-shrink-0 -my-4 -mx-4",
         img(
@@ -50,17 +50,17 @@ object PageHeader {
         div(
           button.btn.sm.text.white(
             `type` := "button",
-            Icons.highlighter(svg.cls := "h-4 text-cool-gray-300"),
+            Icons.highlighter(svg.cls := "h-4 text-gray-300"),
             aria.hasPopup := true,
             aria.expanded <-- styleDropDownOpen.signal,
             onClick --> { _ => styleDropDownOpen.toggle() },
             Icons
               .chevronDown(
-                svg.cls := "-mr-1 ml-2 h-4 fill-current text-cool-gray-300"
+                svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
               ).hiddenIf(styleDropDownOpen.signal),
             Icons
               .chevronUp(
-                svg.cls := "-mr-1 ml-2 h-4 fill-current text-cool-gray-300"
+                svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
               ).visibleIf(styleDropDownOpen.signal)
           )
         ),
@@ -78,7 +78,7 @@ object PageHeader {
             ),
             Styles.styles.map { styleName =>
               button(
-                cls := "block flex items-center space-x-2 w-full px-4 py-2 text-left text-cool-gray-700 hover:bg-cool-gray-200 hover:text-cool-gray-900",
+                cls := "block flex items-center space-x-2 w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-200 hover:text-gray-900",
                 onClick.mapTo(styleName) --> Styles.highlightStyle.setObserver,
                 role := "menuitem",
                 span(
@@ -132,7 +132,7 @@ object PageHeader {
         a(
           href := "https://github.com/tulz-app/laminext",
           rel := "external",
-          Icons.github(svg.cls := "h-6 text-cool-gray-300")
+          Icons.github(svg.cls := "h-6 text-gray-300")
         )
       )
     )
@@ -143,8 +143,8 @@ object PageHeader {
       cls := "border-b-2 px-2 border-transparent flex font-display tracking-wide",
       currentModule
         .map(_.exists(_.path == module.path)).classSwitch(
-          "border-cool-gray-300 text-white",
-          "text-cool-gray-300 hover:border-cool-gray-300 hover:text-white "
+          "border-gray-300 text-white",
+          "text-gray-300 hover:border-gray-300 hover:text-white "
         ),
       href := s"/${module.path}",
       module.index.title

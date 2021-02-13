@@ -12,7 +12,7 @@ object DocumentationDisplay {
     div(
       cls := "space-y-4",
       h1(
-        cls := "font-display text-3xl font-bold text-cool-gray-900 tracking-wider md:hidden",
+        cls := "font-display text-3xl font-bold text-gray-900 tracking-wider md:hidden",
         title
       ),
       div(

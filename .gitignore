@@ -1,6 +1,7 @@
 target
 .idea
 .bsp
+devserver.config.js
 
 node_modules
 yarn-error.log

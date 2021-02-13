@@ -1,9 +1,9 @@
 .prose {
     & code:not(.hljs) {
-        @apply text-cool-gray-900;
+        @apply text-gray-900;
         @apply font-medium;
         /*@apply text-sm;*/
-        @apply bg-cool-gray-200;
+        @apply bg-gray-200;
 
         &::before, &::after {
             content: " ";

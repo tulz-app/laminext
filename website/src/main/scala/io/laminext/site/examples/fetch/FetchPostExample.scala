@@ -43,7 +43,7 @@ object FetchPostExample
             code("received:")
           ),
           div(
-            cls := "flex flex-col space-y-4 p-4 max-h-96 overflow-auto bg-cool-gray-900",
+            cls := "flex flex-col space-y-4 p-4 max-h-96 overflow-auto bg-gray-900",
             children.command <-- responsesStream.recoverToTry.map {
               case Success(response) =>
                 CollectionCommand.Append(

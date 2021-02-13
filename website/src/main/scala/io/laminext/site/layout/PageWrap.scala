@@ -37,7 +37,7 @@ object PageWrap {
           cls := "flex-1 flex overflow-hidden",
           PageNavigation($module, $page).hiddenIf($module.optionContains(Site.indexModule)),
           div(
-            cls := "flex-1 bg-cool-gray-200 overflow-auto md:p-4",
+            cls := "flex-1 bg-gray-200 overflow-auto md:p-4",
             div(
               cls := "lg:container lg:mx-auto p-4 bg-white min-h-full",
               child <-- $pageAndResult.map {

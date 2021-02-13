@@ -64,7 +64,7 @@ class Routes(locationProvider: LocationProvider) {
 
   private val mobileMenuModal: Modal = Theme.current.modal.customize(
     contentWrapTransition = _.customize(
-      nonHidden = _ :+ "bg-cool-gray-900"
+      nonHidden = _ :+ "bg-gray-900"
     )
   )
 

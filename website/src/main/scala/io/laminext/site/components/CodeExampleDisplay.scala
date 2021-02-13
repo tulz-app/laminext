@@ -87,7 +87,7 @@ object CodeExampleDisplay {
       cls := "flex flex-col space-y-4 mb-20",
       div(
         h1(
-          cls := "font-display text-3xl font-bold text-cool-gray-900 tracking-wider",
+          cls := "font-display text-3xl font-bold text-gray-900 tracking-wider",
           example.title
         )
       ),
@@ -105,7 +105,7 @@ object CodeExampleDisplay {
         div(
           cls := "flex space-x-4 items-center",
           h2(
-            cls := "flex-1 text-xl font-semibold text-cool-gray-900",
+            cls := "flex-1 text-xl font-semibold text-gray-900",
             "Source code:"
           ),
           when(hasContext) {
@@ -144,17 +144,17 @@ object CodeExampleDisplay {
             }
           ),
           div(
-            cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-cool-gray-500 to-cool-gray-600 opacity-75",
+            cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-gray-500 to-gray-600 opacity-75",
             button(
-              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-cool-gray-200 text-cool-gray-50 font-semibold",
+              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-gray-200 text-gray-50 font-semibold",
               onClick.mapToUnit --> sourceCollapsed.toggleObserver,
               "expand"
             )
           ).visibleIf(sourceCollapsed.signal),
           div(
-            cls := "p-2 bg-gradient-to-b from-cool-gray-500 to-cool-gray-600 opacity-75",
+            cls := "p-2 bg-gradient-to-b from-gray-500 to-gray-600 opacity-75",
             button(
-              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-cool-gray-200 text-cool-gray-200 font-semibold",
+              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-gray-200 text-gray-200 font-semibold",
               onClick.mapToUnit --> sourceCollapsed.toggleObserver,
               "collapse"
             )
@@ -164,7 +164,7 @@ object CodeExampleDisplay {
       div(
         cls := "space-y-2",
         h2(
-          cls := "text-xl font-semibold text-cool-gray-900",
+          cls := "text-xl font-semibold text-gray-900",
           "Live demo:"
         ),
         div(

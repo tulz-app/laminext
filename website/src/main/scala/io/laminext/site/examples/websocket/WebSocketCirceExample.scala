@@ -66,7 +66,7 @@ object WebSocketCirceExample
               code("received:")
             ),
             div(
-              cls := "flex flex-col space-y-4 p-4 max-h-48 overflow-auto bg-cool-gray-900 text-green-400 text-xs",
+              cls := "flex flex-col space-y-4 p-4 max-h-48 overflow-auto bg-gray-900 text-green-400 text-xs",
               /* <focus> */
               children.command <-- ws.received.map { message =>
                 CollectionCommand.Append(
@@ -82,7 +82,7 @@ object WebSocketCirceExample
               code("events:")
             ),
             div(
-              cls := "flex flex-col space-y-4 p-4 max-h-48 overflow-auto bg-cool-gray-900 text-green-400 text-xs",
+              cls := "flex flex-col space-y-4 p-4 max-h-48 overflow-auto bg-gray-900 text-green-400 text-xs",
               /* <focus> */
               children.command <-- ws.events.map { event =>
                 CollectionCommand.Append(

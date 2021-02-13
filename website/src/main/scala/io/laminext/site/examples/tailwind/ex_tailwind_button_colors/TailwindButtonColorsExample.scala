@@ -57,7 +57,7 @@ object TailwindButtonColorsExample
           button.btn.lg.text.yellow(cls := "flex-1 justify-center", "text.yellow")
         ),
         div(
-          cls := "-mx-4 p-4 flex space-x-4 bg-cool-gray-900",
+          cls := "-mx-4 p-4 flex space-x-4 bg-gray-900",
           button.btn.lg.fill.white(cls := "flex-1 justify-center", "fill.white"),
           button.btn.lg.fill.white(cls := "flex-1 justify-center", disabled := true, "fill.white.disabled"),
           button.btn.lg.outline.white(cls := "flex-1 justify-center", "outline.white"),
