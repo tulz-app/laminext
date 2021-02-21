@@ -1,38 +1,28 @@
 package io.laminext.core
 
 import app.tulz.tuplez.Composition
-import com.raquo.airstream.core.Observer
+import com.raquo.airstream.core.Sink
 import com.raquo.airstream.debug.Debugger
-import com.raquo.airstream.eventbus.EventBus
-import com.raquo.airstream.eventbus.WriteBus
 import com.raquo.airstream.flatten.FlattenStrategy
 import com.raquo.airstream.util.always
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.emitter.EventPropTransformation
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
 import scala.util.Try
 
 class ThisEventsStreamBuilder[Ev <: dom.Event, A](
-  t: EventPropTransformation[Ev, Ev],
+  t: EventProcessor[Ev, Ev],
   transform: EventStream[Ev] => EventStream[A]
 ) {
 
-  @inline def foreach[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
-    inContext(el => transform(el.events(t)) --> onNext)
-
-  @inline def -->[El <: Element](observer: Observer[A]): Modifier[ReactiveElement.Base] =
-    inContext(el => transform(el.events(t)) --> observer)
+  @inline def -->[El <: Element](sink: Sink[A]): Modifier[ReactiveElement.Base] =
+    composeEvents(t)(transform) --> sink
 
   @inline def -->[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
-    inContext(el => transform(el.events(t)) --> onNext)
+    composeEvents(t)(transform) --> onNext
 
-  @inline def -->[El <: Element](writeBus: WriteBus[A]): Modifier[ReactiveElement.Base] =
-    inContext(el => transform(el.events(t)) --> writeBus)
-
-  @inline def -->[El <: Element](eventBus: EventBus[A]): Modifier[ReactiveElement.Base] =
-    inContext(el => transform(el.events(t)) --> eventBus)
+  @inline def foreach[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] = -->(onNext)
 
   // ---
 
@@ -52,19 +42,11 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
 
   @inline def mapToFalse: ThisEventsStreamBuilder[Ev, Boolean] = map(_ => false)
 
-  @inline def flatMap[B](compose: A => EventStream[B])(implicit
-    strategy: FlattenStrategy[EventStream, EventStream, EventStream]
-  ): ThisEventsStreamBuilder[Ev, B] =
-    andThen(s => strategy.flatten(s.map(compose)))
+  @inline def filter(passes: A => Boolean): ThisEventsStreamBuilder[Ev, A] = andThen(_.filter(passes))
 
-  @inline def filter(passes: A => Boolean): ThisEventsStreamBuilder[Ev, A] =
-    andThen(_.filter(passes))
+  @inline def filterNot(predicate: A => Boolean): ThisEventsStreamBuilder[Ev, A] = andThen(_.filterNot(predicate))
 
-  @inline def filterNot(predicate: A => Boolean): ThisEventsStreamBuilder[Ev, A] =
-    andThen(_.filterNot(predicate))
-
-  @inline def collect[B](pf: PartialFunction[A, B]): ThisEventsStreamBuilder[Ev, B] =
-    andThen(_.collect(pf))
+  @inline def collect[B](pf: PartialFunction[A, B]): ThisEventsStreamBuilder[Ev, B] = andThen(_.collect(pf))
 
   @inline def delay(ms: Int = 0): ThisEventsStreamBuilder[Ev, A] = andThen(_.delay(ms))
 
@@ -85,12 +67,9 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   )(fn: (Try[B], Try[A]) => Try[B]): ThisEventsSignalBuilder[Ev, B] =
     new ThisEventsSignalBuilder(t, transform.andThen(_.foldLeftRecover(initial)(fn)))
 
-  @inline def startWith[B >: A](initial: => B): ThisEventsSignalBuilder[Ev, B] =
-    toSignal(initial)
+  @inline def startWith[B >: A](initial: => B): ThisEventsSignalBuilder[Ev, B] = toSignal(initial)
 
-  @inline def startWithTry[B >: A](
-    initial: => Try[B]
-  ): ThisEventsSignalBuilder[Ev, B] = toSignalWithTry(initial)
+  @inline def startWithTry[B >: A](initial: => Try[B]): ThisEventsSignalBuilder[Ev, B] = toSignalWithTry(initial)
 
   @inline def startWithNone: ThisEventsSignalBuilder[Ev, Option[A]] = toWeakSignal
 
@@ -105,6 +84,11 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
 
   @inline def compose[B](operator: EventStream[A] => EventStream[B]): ThisEventsStreamBuilder[Ev, B] =
     andThen(_.compose(operator))
+
+  @inline def recover[B >: A](pf: PartialFunction[Throwable, Option[B]]): ThisEventsStreamBuilder[Ev, B] =
+    andThen(_.recover(pf))
+
+  @inline def recoverToTry: ThisEventsStreamBuilder[Ev, Try[A]] = andThen(_.recoverToTry)
 
   @inline def combineWith[T1, Out](
     s1: EventStream[T1]
@@ -126,6 +110,11 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
 
   @inline def setDisplayName(name: String): ThisEventsStreamBuilder[Ev, A] =
     andThen(_.setDisplayName(name))
+
+  @inline def flatMap[B](compose: A => EventStream[B])(implicit
+    strategy: FlattenStrategy[EventStream, EventStream, EventStream]
+  ): ThisEventsStreamBuilder[Ev, B] =
+    andThen(s => strategy.flatten(s.map(compose)))
 
   @inline def debugLog(
     when: Try[A] => Boolean = always,

@@ -1,11 +1,11 @@
 package io.laminext.core
 
 import app.tulz.tuplez.Composition
-import com.raquo.airstream.core.Observer
+import com.raquo.airstream.core.Sink
 import com.raquo.airstream.debug.Debugger
 import com.raquo.airstream.util.always
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.emitter.EventPropTransformation
+import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 
@@ -13,15 +13,15 @@ import scala.util.Failure
 import scala.util.Try
 
 class ThisEventsSignalBuilder[Ev <: dom.Event, A](
-  t: EventPropTransformation[Ev, Ev],
+  t: EventProcessor[Ev, Ev],
   transform: EventStream[Ev] => Signal[A]
 ) {
 
-  @inline def -->[El <: Element](observer: Observer[A]): Modifier[ReactiveElement.Base] =
-    inContext(el => transform(el.events(t)) --> observer)
+  @inline def -->[El <: Element](sink: Sink[A]): Binder[ReactiveElement.Base] =
+    composeEvents(t)(transform) --> sink
 
   @inline def -->[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
-    inContext(el => transform(el.events(t)) --> onNext)
+    composeEvents(t)(transform) --> onNext
 
   // ---
 
@@ -46,18 +46,6 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   ): ThisEventsSignalBuilder[Ev, B] =
     andThen(_.composeAll(operator, initialOperator))
 
-  @inline def combineWithFn[T1, Out](
-    s1: Signal[T1]
-  )(
-    combinator: (A, T1) => Out
-  ): ThisEventsSignalBuilder[Ev, Out] =
-    andThen(_.combineWithFn(s1)(combinator))
-
-  @inline def combineWith[T1](
-    s1: Signal[T1]
-  )(implicit c: Composition[A, T1]): ThisEventsSignalBuilder[Ev, c.Composed] =
-    andThen(_.combineWith(s1))
-
   @inline def changes: ThisEventsStreamBuilder[Ev, A] =
     new ThisEventsStreamBuilder(t, transform.andThen(_.changes))
 
@@ -76,6 +64,21 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
 
   @inline def recoverToTry: ThisEventsSignalBuilder[Ev, Try[A]] =
     map(Try(_)).recover[Try[A]] { case err => Some(Failure(err)) }
+
+  @inline def combineWithFn[T1, Out](
+    s1: Signal[T1]
+  )(
+    combinator: (A, T1) => Out
+  ): ThisEventsSignalBuilder[Ev, Out] =
+    andThen(_.combineWithFn(s1)(combinator))
+
+  @inline def combineWith[T1](
+    s1: Signal[T1]
+  )(implicit c: Composition[A, T1]): ThisEventsSignalBuilder[Ev, c.Composed] =
+    andThen(_.combineWith(s1))
+
+  @inline def debugWith(debugger: Debugger[A]): ThisEventsSignalBuilder[Ev, A] =
+    andThen(_.debugWith(debugger))
 
   @inline def setDisplayName(name: String): ThisEventsSignalBuilder[Ev, A] =
     andThen(_.setDisplayName(name))
@@ -147,8 +150,5 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
 
   @inline def debugSpyStops(fn: () => Unit): ThisEventsSignalBuilder[Ev, A] =
     andThen(_.debugSpyStops(fn))
-
-  @inline def debugWith(debugger: Debugger[A]): ThisEventsSignalBuilder[Ev, A] =
-    andThen(_.debugWith(debugger))
 
 }

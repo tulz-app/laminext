@@ -58,8 +58,7 @@ lazy val bundlerSettings = Seq(
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    ("com.raquo" %%% "laminar" % BuildSettings.version.laminar).withDottyCompat(scalaVersion.value),
-//    ("org.scalatest" %%% "scalatest"    % BuildSettings.version.`scala-test` % Test).withDottyCompat(scalaVersion.value),
+    ("com.raquo"    %%% "laminar"      % BuildSettings.version.laminar).withDottyCompat(scalaVersion.value),
     ("app.tulz"     %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test).withDottyCompat(scalaVersion.value),
     ("com.raquo"    %%% "domtestutils" % BuildSettings.version.domtestutils % Test).withDottyCompat(scalaVersion.value),
     "org.scalameta" %%% "munit"        % BuildSettings.version.munit        % Test
@@ -68,7 +67,7 @@ lazy val baseDependencies = Seq(
 
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
-    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats).withDottyCompat(scalaVersion.value)
+    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats) //.withDottyCompat(scalaVersion.value)
   )
 )
 
@@ -91,9 +90,9 @@ lazy val `cats` =
     .settings(catsDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        "org.typelevel"              %%% "cats-laws"                 % "2.3.1" % Test,
-        "org.typelevel"              %%% "discipline-munit"          % "1.0.5" % Test,
-        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % "1.2.5" % Test
+        "org.typelevel"              %%% "cats-laws"                 % BuildSettings.version.`cats-laws`                 % Test,
+        "org.typelevel"              %%% "discipline-munit"          % BuildSettings.version.`discipline-munit`          % Test,
+        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % BuildSettings.version.`scalacheck-shapeless_1.14` % Test
       )
     )
     .settings(noPublish) // nothing here yet

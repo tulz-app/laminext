@@ -1,7 +1,6 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.emitter.EventPropTransformation
 import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.core.NodeSeqModifier
 import io.laminext.core.ResizeObserverBinders
@@ -73,7 +72,7 @@ trait MiscSyntax {
 
   @inline def resizeObserver: ResizeObserverBinders.type = ResizeObserverBinders
 
-  @inline def thisEvents[Ev <: dom.Event](t: EventPropTransformation[Ev, Ev]): ThisEventsStreamBuilder[Ev, Ev] =
+  @inline def thisEvents[Ev <: dom.Event](t: EventProcessor[Ev, Ev]): ThisEventsStreamBuilder[Ev, Ev] =
     new ThisEventsStreamBuilder[Ev, Ev](t, identity)
 
 }
