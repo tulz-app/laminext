@@ -1,7 +1,6 @@
 ThisBuild / scalaVersion := ScalaVersions.v213
-//ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3M3, ScalaVersions.v3RC1)
+//ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3RC1)
 ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213)
-//ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3M3)
 
 lazy val basicSettings = Seq(
   scalacOptions ~= (_.filterNot(

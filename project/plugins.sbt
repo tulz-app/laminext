@@ -18,6 +18,6 @@ addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.16")
 
 addSbtPlugin("com.yurique" % "sbt-embedded-files" % "0.2.0")
 
-addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.1")
+addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.3")
 
 addSbtPlugin("com.codecommit" % "sbt-github-actions" % "0.10.0")
