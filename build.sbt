@@ -1,6 +1,8 @@
 ThisBuild / scalaVersion := ScalaVersions.v213
-//ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213, ScalaVersions.v3RC1)
-ThisBuild / crossScalaVersions := Seq(ScalaVersions.v213)
+ThisBuild / crossScalaVersions := Seq(
+  ScalaVersions.v213,
+//  ScalaVersions.v3RC1
+)
 
 lazy val basicSettings = Seq(
   scalacOptions ~= (_.filterNot(
@@ -39,13 +41,8 @@ lazy val basicSettings = Seq(
 )
 
 lazy val commonSettings = basicSettings ++ Seq(
-  requireJsDomEnv in Test := true,
-  parallelExecution in Test := false,
-  scalaJSUseMainModuleInitializer := true,
-  scalaJSLinkerConfig in (Compile, fastLinkJS) ~= {
-    _.withSourceMap(false)
-  },
-  Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+  Test / requireJsDomEnv := true,
+  Test / parallelExecution := false,
   testFrameworks += new TestFramework("munit.Framework")
 )
 
@@ -89,9 +86,9 @@ lazy val `cats` =
     .settings(catsDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        "org.typelevel"              %%% "cats-laws"                 % BuildSettings.version.`cats-laws`                 % Test,
-        "org.typelevel"              %%% "discipline-munit"          % BuildSettings.version.`discipline-munit`          % Test,
-        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % BuildSettings.version.`scalacheck-shapeless_1.14` % Test
+//        "org.typelevel"              %%% "cats-laws"                 % BuildSettings.version.`cats-laws`                 % Test,
+        "org.typelevel" %%% "discipline-munit" % BuildSettings.version.`discipline-munit` % Test,
+//        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % BuildSettings.version.`scalacheck-shapeless_1.14` % Test
       )
     )
     .settings(noPublish) // nothing here yet
@@ -264,12 +261,13 @@ lazy val website = project
   .settings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+    scalaJSLinkerConfig in (Compile, fullLinkJS) ~= { _.withSourceMap(false) },
     scalaJSUseMainModuleInitializer := true,
-//    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),
+    //    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),
     libraryDependencies ++= Seq(
       "com.raquo"     %%% "laminar"              % BuildSettings.version.laminar,
       "io.frontroute" %%% "frontroute"           % BuildSettings.version.frontroute,
-      "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files`,
+      "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files-macro`,
       "com.lihaoyi"   %%% "sourcecode"           % BuildSettings.version.sourcecode,
       "io.circe"      %%% "circe-generic"        % BuildSettings.version.circe
     ),

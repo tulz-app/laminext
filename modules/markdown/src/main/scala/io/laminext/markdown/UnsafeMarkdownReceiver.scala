@@ -8,7 +8,7 @@ object UnsafeMarkdownReceiver {
 
   @inline def :=(markdown: String): Modifier[HtmlElement] = {
     new Modifier[HtmlElement] {
-      override def apply(element: HtmlElement): Unit = element.ref.innerHTML = Marked(markdown)
+      override def apply(element: HtmlElement): Unit = element.ref.innerHTML = Marked.parse(markdown)
     }
   }
 
