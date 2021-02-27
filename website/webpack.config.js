@@ -88,7 +88,7 @@ function common(mode) {
           {from: './src/main/static/images', to: 'images'},
           {from: './src/main/static/robots.txt', to: '[name].[ext]'},
           {from: './src/main/static/favicon/*', to: '[name].[ext]'},
-          {from: './node_modules/highlight.js/styles/*', to: 'stylesheets/highlightjs/[name].[ext]'},
+          {from: './src/main/static/theme/*', to: 'stylesheets/highlightjs/[name].[ext]'},
         ]
       })
     ]

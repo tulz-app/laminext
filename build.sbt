@@ -48,22 +48,22 @@ lazy val commonSettings = basicSettings ++ Seq(
 
 lazy val bundlerSettings = Seq(
   jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
-  installJsdom / version := BuildSettings.version.jsdom,
+  installJsdom / version := LibraryVersions.jsdom,
   useYarn := true
 )
 
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq(
-    ("com.raquo"    %%% "laminar"      % BuildSettings.version.laminar).withDottyCompat(scalaVersion.value),
-    ("app.tulz"     %%% "stringdiff"   % BuildSettings.version.stringdiff   % Test).withDottyCompat(scalaVersion.value),
-    ("com.raquo"    %%% "domtestutils" % BuildSettings.version.domtestutils % Test).withDottyCompat(scalaVersion.value),
-    "org.scalameta" %%% "munit"        % BuildSettings.version.munit        % Test
+    ("com.raquo"    %%% "laminar"      % LibraryVersions.laminar).withDottyCompat(scalaVersion.value),
+    ("app.tulz"     %%% "stringdiff"   % LibraryVersions.stringdiff   % Test).withDottyCompat(scalaVersion.value),
+    ("com.raquo"    %%% "domtestutils" % LibraryVersions.domtestutils % Test).withDottyCompat(scalaVersion.value),
+    "org.scalameta" %%% "munit"        % LibraryVersions.munit        % Test
   )
 )
 
 lazy val catsDependencies = Seq(
   libraryDependencies ++= Seq(
-    ("org.typelevel" %%% "cats-core" % BuildSettings.version.cats) //.withDottyCompat(scalaVersion.value)
+    ("org.typelevel" %%% "cats-core" % LibraryVersions.cats) //.withDottyCompat(scalaVersion.value)
   )
 )
 
@@ -86,9 +86,9 @@ lazy val `cats` =
     .settings(catsDependencies)
     .settings(
       libraryDependencies ++= Seq(
-//        "org.typelevel"              %%% "cats-laws"                 % BuildSettings.version.`cats-laws`                 % Test,
-        "org.typelevel" %%% "discipline-munit" % BuildSettings.version.`discipline-munit` % Test,
-//        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % BuildSettings.version.`scalacheck-shapeless_1.14` % Test
+//        "org.typelevel"              %%% "cats-laws"                 % LibraryVersions.`cats-laws`                 % Test,
+        "org.typelevel" %%% "discipline-munit" % LibraryVersions.`discipline-munit` % Test,
+//        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % LibraryVersions.`scalacheck-shapeless_1.14` % Test
       )
     )
     .settings(noPublish) // nothing here yet
@@ -206,8 +206,8 @@ lazy val `websocket-circe` =
     .settings(baseDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
-        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
+        "io.circe" %%% "circe-core"   % LibraryVersions.circe,
+        "io.circe" %%% "circe-parser" % LibraryVersions.circe
       )
     )
     .settings(
@@ -233,8 +233,8 @@ lazy val `fetch-circe` =
     .settings(baseDependencies)
     .settings(
       libraryDependencies ++= Seq(
-        "io.circe" %%% "circe-core"   % BuildSettings.version.circe,
-        "io.circe" %%% "circe-parser" % BuildSettings.version.circe
+        "io.circe" %%% "circe-core"   % LibraryVersions.circe,
+        "io.circe" %%% "circe-parser" % LibraryVersions.circe
       )
     )
     .settings(
@@ -261,15 +261,15 @@ lazy val website = project
   .settings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
-    scalaJSLinkerConfig in (Compile, fullLinkJS) ~= { _.withSourceMap(false) },
+    Compile / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     scalaJSUseMainModuleInitializer := true,
     //    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),
     libraryDependencies ++= Seq(
-      "com.raquo"     %%% "laminar"              % BuildSettings.version.laminar,
-      "io.frontroute" %%% "frontroute"           % BuildSettings.version.frontroute,
-      "com.yurique"   %%% "embedded-files-macro" % BuildSettings.version.`embedded-files-macro`,
-      "com.lihaoyi"   %%% "sourcecode"           % BuildSettings.version.sourcecode,
-      "io.circe"      %%% "circe-generic"        % BuildSettings.version.circe
+      "com.raquo"     %%% "laminar"              % LibraryVersions.laminar,
+      "io.frontroute" %%% "frontroute"           % LibraryVersions.frontroute,
+      "com.yurique"   %%% "embedded-files-macro" % LibraryVersions.`embedded-files-macro`,
+      "com.lihaoyi"   %%% "sourcecode"           % LibraryVersions.sourcecode,
+      "io.circe"      %%% "circe-generic"        % LibraryVersions.circe
     ),
     embedTextGlobs := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
