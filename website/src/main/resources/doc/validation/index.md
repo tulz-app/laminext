@@ -38,7 +38,7 @@ type Validation[A, Err, Out] = A => ValidatedValue[Err, Out]
 
 For text inputs and text areas, `In` and `Out` are both `String`.
 
-For checkboxes, `In` and `Out` are both `Boolean.
+For checkboxes, `In` and `Out` are both `Boolean`.
 
 `Err` is `Seq[String]`.
 
