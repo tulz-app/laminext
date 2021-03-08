@@ -1,7 +1,22 @@
-ThisBuild / scalaVersion := ScalaVersions.v213
-ThisBuild / crossScalaVersions := Seq(
-  ScalaVersions.v213,
-//  ScalaVersions.v3RC1
+inThisBuild(
+  List(
+    organization := "io.laminext",
+    homepage := Some(url("https://github.com/tulz-app/laminext")),
+    licenses := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
+    ThisBuild / scmInfo := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
+    developers := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique")))
+  )
+)
+
+inThisBuild(
+  List(
+    scalaVersion := ScalaVersions.v213,
+    crossScalaVersions := Seq(
+      ScalaVersions.v213,
+      //  ScalaVersions.v3RC1
+    ),
+    Test / publishArtifact := false,
+  )
 )
 
 lazy val basicSettings = Seq(
