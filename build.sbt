@@ -3,82 +3,50 @@ inThisBuild(
     organization := "io.laminext",
     homepage := Some(url("https://github.com/tulz-app/laminext")),
     licenses := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
-    ThisBuild / scmInfo := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
-    developers := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique")))
-  )
-)
-
-inThisBuild(
-  List(
+    scmInfo := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
+    developers := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
     scalaVersion := ScalaVersions.v213,
     crossScalaVersions := Seq(
       ScalaVersions.v213,
-      //  ScalaVersions.v3RC1
+      ScalaVersions.v3RC1
     ),
     Test / publishArtifact := false,
-  )
+    Test / parallelExecution := false,
+    githubWorkflowTargetTags ++= Seq("v*"),
+    githubWorkflowPublishTargetBranches += RefPredicate.StartsWith(Ref.Tag("v")),
+    githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release")))
+//    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/fastLinkJS")))
+  ),
 )
 
-lazy val basicSettings = Seq(
-  scalacOptions ~= (_.filterNot(
-    Set(
-      "-Wdead-code",
-      "-Wunused:implicits",
-      "-Wunused:explicits",
-      "-Wunused:imports",
-      "-Wunused:params"
-    )
-  )),
-  scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, _)) =>
-      Seq(
-        "-Ymacro-annotations"
-      )
-    case Some((3, _)) => Seq()
-    case _            => Seq()
-  }),
-  scalacOptions in (Compile, doc) ~= (_.filterNot(
-    Set(
-      "-scalajs",
-      "-deprecation",
-      "-explain-types",
-      "-explain",
-      "-feature",
-      "-language:existentials,experimental.macros,higherKinds,implicitConversions",
-      "-unchecked",
-      "-Xfatal-warnings",
-      "-Ykind-projector",
-      "-from-tasty",
-      "-encoding",
-      "utf8",
-    )
-  ))
-)
-
-lazy val commonSettings = basicSettings ++ Seq(
-  Test / requireJsDomEnv := true,
-  Test / parallelExecution := false,
-  testFrameworks += new TestFramework("munit.Framework")
+lazy val commonSettings = Seq.concat(
+  ScalaOptions.fixOptions
 )
 
 lazy val bundlerSettings = Seq(
   jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
-  installJsdom / version := LibraryVersions.jsdom,
+  installJsdom / version := DependencyVersions.jsdom,
+  Test / requireJsDomEnv := true,
   useYarn := true
 )
 
 lazy val baseDependencies = Seq(
-  libraryDependencies ++= Seq(
-    ("com.raquo"    %%% "laminar"      % LibraryVersions.laminar).withDottyCompat(scalaVersion.value),
-    ("app.tulz"     %%% "stringdiff"   % LibraryVersions.stringdiff   % Test).withDottyCompat(scalaVersion.value),
-    ("com.raquo"    %%% "domtestutils" % LibraryVersions.domtestutils % Test).withDottyCompat(scalaVersion.value),
-    "org.scalameta" %%% "munit"        % LibraryVersions.munit        % Test
+  libraryDependencies ++= Seq.concat(
+    Dependencies.laminar.value,
+    Dependencies.stringdiff.value,
+    Dependencies.domtestutils.value
   )
 )
 
 lazy val catsDependencies = Seq(
-  libraryDependencies ++= Seq(
-    ("org.typelevel" %%% "cats-core" % LibraryVersions.cats) //.withDottyCompat(scalaVersion.value)
+  libraryDependencies ++= Seq.concat(
+    Dependencies.cats.value
+  )
+)
+
+lazy val circeDependencies = Seq(
+  libraryDependencies ++= Seq.concat(
+    Dependencies.circe.value
   )
 )
 
@@ -88,28 +56,6 @@ lazy val `core` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Laminar extensions"
-    )
-
-lazy val `cats` =
-  project
-    .in(file("modules/cats"))
-    .enablePlugins(ScalaJSPlugin)
-    .settings(commonSettings)
-    .settings(baseDependencies)
-    .settings(catsDependencies)
-    .settings(
-      libraryDependencies ++= Seq(
-//        "org.typelevel"              %%% "cats-laws"                 % LibraryVersions.`cats-laws`                 % Test,
-        "org.typelevel" %%% "discipline-munit" % LibraryVersions.`discipline-munit` % Test,
-//        "com.github.alexarchambault" %%% "scalacheck-shapeless_1.14" % LibraryVersions.`scalacheck-shapeless_1.14` % Test
-      )
-    )
-    .settings(noPublish) // nothing here yet
-    .settings(
-      description := "Laminar utilities (cats)"
-    ).dependsOn(`core`)
 
 lazy val `validation-core` =
   project
@@ -117,9 +63,7 @@ lazy val `validation-core` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Laminar utilities (validation)"
-    ).dependsOn(`core`)
+    .dependsOn(`core`)
 
 lazy val `validation-cats` =
   project
@@ -128,9 +72,7 @@ lazy val `validation-cats` =
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(catsDependencies)
-    .settings(
-      description := "Laminar utilities (validation+cats)"
-    ).dependsOn(`validation-core`)
+    .dependsOn(`validation-core`)
 
 lazy val `fsm` =
   project
@@ -138,9 +80,6 @@ lazy val `fsm` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Laminar utilities (validation)"
-    )
 
 lazy val `markdown` =
   project
@@ -148,9 +87,6 @@ lazy val `markdown` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Laminar utilities (markdown)"
-    )
 
 lazy val `videojs` =
   project
@@ -158,9 +94,7 @@ lazy val `videojs` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Laminar + video.js"
-    ).dependsOn(`core`)
+    .dependsOn(`core`)
 
 lazy val `highlight` =
   project
@@ -168,40 +102,33 @@ lazy val `highlight` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Laminar + highlight.js"
-    )
 
 lazy val `ui` =
   project
     .in(file("modules/ui"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
-    .settings(baseDependencies)
     .settings(bundlerSettings)
-    .settings(
-      description := "Laminar UI"
-    ).dependsOn(`core`)
+    .settings(baseDependencies)
+    .dependsOn(`core`)
 
 lazy val `tailwind` =
   project
     .in(file("modules/tailwind"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
-    .settings(baseDependencies)
     .settings(bundlerSettings)
-    .settings(
-      description := "Laminar UI (tailwindcss)"
-    ).dependsOn(`core`, `ui`, `validation-core`)
+    .settings(baseDependencies)
+    .dependsOn(`core`, `ui`, `validation-core`)
 
 lazy val `tailwind-default-theme` =
   project
     .in(file("modules/tailwind-default-theme"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
     .settings(commonSettings)
-    .settings(
-      description := "Laminar UI (tailwindcss default theme)"
-    ).dependsOn(`tailwind`)
+    .settings(bundlerSettings)
+    .settings(baseDependencies)
+    .dependsOn(`tailwind`)
 
 lazy val `websocket` =
   project
@@ -209,9 +136,6 @@ lazy val `websocket` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Websocket client"
-    )
 
 lazy val `websocket-circe` =
   project
@@ -219,15 +143,7 @@ lazy val `websocket-circe` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      libraryDependencies ++= Seq(
-        "io.circe" %%% "circe-core"   % LibraryVersions.circe,
-        "io.circe" %%% "circe-parser" % LibraryVersions.circe
-      )
-    )
-    .settings(
-      description := "circe support for websocket client"
-    )
+    .settings(circeDependencies)
     .dependsOn(`websocket`)
 
 lazy val `fetch` =
@@ -236,9 +152,6 @@ lazy val `fetch` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Fetch client"
-    )
 
 lazy val `fetch-circe` =
   project
@@ -246,15 +159,7 @@ lazy val `fetch-circe` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      libraryDependencies ++= Seq(
-        "io.circe" %%% "circe-core"   % LibraryVersions.circe,
-        "io.circe" %%% "circe-parser" % LibraryVersions.circe
-      )
-    )
-    .settings(
-      description := "circe support for the fetch client"
-    )
+    .settings(circeDependencies)
     .dependsOn(`fetch`)
 
 lazy val `util` =
@@ -263,28 +168,29 @@ lazy val `util` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(
-      description := "Misc utilities"
-    )
 
 lazy val website = project
   .in(file("website"))
   .enablePlugins(ScalaJSPlugin)
   .enablePlugins(EmbeddedFilesPlugin)
-  .settings(basicSettings)
+  .settings(commonSettings)
   .settings(noPublish)
   .settings(
+    publish / skip := true,
+    scalaVersion := ScalaVersions.v3RC1,
+    crossScalaVersions := Seq(
+      ScalaVersions.v3RC1
+    ),
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
     Compile / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     scalaJSUseMainModuleInitializer := true,
     //    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),
-    libraryDependencies ++= Seq(
-      "com.raquo"     %%% "laminar"              % LibraryVersions.laminar,
-      "io.frontroute" %%% "frontroute"           % LibraryVersions.frontroute,
-      "com.yurique"   %%% "embedded-files-macro" % LibraryVersions.`embedded-files-macro`,
-      "com.lihaoyi"   %%% "sourcecode"           % LibraryVersions.sourcecode,
-      "io.circe"      %%% "circe-generic"        % LibraryVersions.circe
+    libraryDependencies ++= Seq.concat(
+      Dependencies.laminar.value,
+      Dependencies.frontroute.value,
+      Dependencies.`embedded-files-macro`.value,
+      Dependencies.sourcecode.value
     ),
     embedTextGlobs := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
@@ -292,7 +198,6 @@ lazy val website = project
   )
   .dependsOn(
     `core`,
-    `cats`,
     `validation-cats`,
     `util`,
     `fsm`,
@@ -322,7 +227,6 @@ lazy val root = project
   )
   .aggregate(
     `core`,
-    `cats`,
     `validation-core`,
     `validation-cats`,
     `util`,

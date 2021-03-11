@@ -17,11 +17,12 @@ object FetchCirceExample
       import io.laminext.syntax.core._
       import io.laminext.fetch.circe._
       import io.circe._
-      import io.circe.generic.auto._
       import org.scalajs.dom
 
-      case class Data(
-        s: String
+      case class Data(s: String)
+      implicit val codeData: Codec[Data] = Codec.from(
+        Decoder.decodeString.map(Data(_)),
+        Encoder.encodeString.contramap(_.s),
       )
 
       val inputElement = input(
