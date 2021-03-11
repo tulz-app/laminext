@@ -1,1 +1,5 @@
-.yarn/
+build/
+dist/
+.yarn/*
+!.yarn/releases
+!.yarn/plugins

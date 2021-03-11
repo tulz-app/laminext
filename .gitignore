@@ -1,6 +1,8 @@
 target
 .idea
 .bsp
+.vscode
+.metals
 devserver.config.js
 
 node_modules

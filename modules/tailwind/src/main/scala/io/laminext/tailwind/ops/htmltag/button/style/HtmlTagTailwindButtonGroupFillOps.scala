@@ -15,7 +15,6 @@ class HtmlTagTailwindButtonGroupFillOps[T <: dom.html.Element](
   @inline def custom(
     styles: ButtonStyleColors
   ): AmendedHtmlTag[T, AmButtonWithStyle] = {
-    println(s"HtmlTagTailwindButtonGroupFillOps: ${styles}")
     tag
       .amend(
         cls := ClassJoin(styles.base, styles.fill, styles.group.fill)

@@ -1,13 +1,15 @@
 package com.raquo.laminar.utils
 
-import io.laminext.domtestutils.matching.TestableHtmlAttr
+import com.raquo.domtestutils.matching.RuleImplicits
+import com.raquo.domtestutils.matching.TestableHtmlAttr
+import com.raquo.domtestutils.matching.TestableProp
+import com.raquo.domtestutils.matching.TestableSvgAttr
 import com.raquo.domtestutils.EventSimulator
 import com.raquo.domtestutils.MountOps
-import com.raquo.domtestutils.matching.RuleImplicits
-import com.raquo.domtestutils.matching.TestableSvgAttr
-import com.raquo.laminar.api._
 import com.raquo.laminar.api.Laminar.CompositeSvgAttr
+import com.raquo.laminar.api._
 import com.raquo.laminar.defs.ReactiveComplexHtmlKeys.CompositeHtmlAttr
+import com.raquo.laminar.defs.ReactiveComplexHtmlKeys.CompositeProp
 import com.raquo.laminar.nodes.ReactiveElement
 import com.raquo.laminar.nodes.RootNode
 
@@ -52,6 +54,10 @@ trait LaminarSpec extends MountOps with RuleImplicits with EventSimulator {
     root = null
     // containerNode = null
     mountedElementClue = defaultMountedElementClue
+  }
+
+  implicit def makeCompositePropTestable[V](prop: CompositeProp[V]): TestableProp[V, V] = {
+    new TestableProp(prop.key)
   }
 
   implicit def makeCompositeHtmlAttrTestable[V](attr: CompositeHtmlAttr[V]): TestableHtmlAttr[V] = {
