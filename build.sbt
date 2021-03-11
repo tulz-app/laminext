@@ -12,7 +12,8 @@ inThisBuild(
     ),
     Test / publishArtifact := false,
     Test / parallelExecution := false,
-    githubWorkflowTargetTags := Seq.empty, // no scalatest for scala3
+    githubWorkflowTargetBranches := Seq.empty, // no scalatest for scala3
+    githubWorkflowTargetTags := Seq.empty,     // no scalatest for scala3
 //    githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches += RefPredicate.StartsWith(Ref.Tag("v")),
     githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release")))
