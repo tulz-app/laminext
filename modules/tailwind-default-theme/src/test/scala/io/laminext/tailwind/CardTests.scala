@@ -1,51 +1,51 @@
 package io.laminext.tailwind
 
-import syntax._
-import io.laminext.tailwind.theme.Theme
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.utils.UnitSpec
+import io.laminext.syntax.tailwind._
+import io.laminext.tailwind.theme.DefaultTheme
+import io.laminext.tailwind.theme.Theme
 import io.laminext.util.ClassJoin
-import org.scalatest.BeforeAndAfterEach
+import org.scalatest.BeforeAndAfter
 
-class CardTests extends UnitSpec with BeforeAndAfterEach {
+class CardTests extends UnitSpec with BeforeAndAfter {
 
-  override def afterEach(): Unit = {
-    Theme.setTheme(Theme.default)
+  before {
+    Theme.setTheme(DefaultTheme.theme)
   }
 
   it(".card.wrap") {
     div.card.wrap ====
       ClassJoin(
-        "bg-white sm:shadow sm:rounded-lg"
-//        Theme.default.card.header.classes
+        DefaultTheme.theme.card.wrap.classes
       )
   }
 
   it(".card.header") {
     div.card.header ====
       ClassJoin(
-        Theme.default.card.header.classes
+        DefaultTheme.theme.card.header.classes
       )
   }
 
   it(".card.body") {
     div.card.body ====
       ClassJoin(
-        Theme.default.card.body.classes
+        DefaultTheme.theme.card.body.classes
       )
   }
 
   it(".card.footer") {
     div.card.footer ====
       ClassJoin(
-        Theme.default.card.footer.classes
+        DefaultTheme.theme.card.footer.classes
       )
   }
 
   it(".card.title") {
     div.card.title ====
       ClassJoin(
-        Theme.default.card.title.classes
+        DefaultTheme.theme.card.title.classes
       )
   }
 
