@@ -14,7 +14,7 @@ addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0")
 
 libraryDependencies += "net.exoego" %% "scalajs-env-jsdom-nodejs" % "2.0.0"
 
-addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.16")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.17")
 
 addSbtPlugin("com.yurique" % "sbt-embedded-files" % "0.2.0")
 
