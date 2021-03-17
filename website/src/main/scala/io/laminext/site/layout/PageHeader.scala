@@ -85,11 +85,17 @@ object PageHeader {
                   cls := "flex-1",
                   styleName,
                 ),
-                span(
-                  Icons
-                    .check(svg.cls := "h-6 text-green-500 fill-current")
-                    .visibleIf(Styles.highlightStyle.signal.valueIs(styleName)),
-                )
+                child.maybe <-- Styles.highlightStyle.signal.valueIs(styleName).map {
+                  if (_) {
+                    Some(
+                      span(
+                        Icons.check(svg.cls := "h-6 text-green-500 fill-current")
+                      )
+                    )
+                  } else {
+                    None
+                  }
+                }
               ).hiddenIf(
                 styleSearch.signal.map(search => !styleName.contains(search))
               )

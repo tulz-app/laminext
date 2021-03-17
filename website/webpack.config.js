@@ -4,6 +4,7 @@ const _ = require('lodash');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -33,6 +34,9 @@ const devServer = _.mergeWith(
 
 function common(mode) {
   return {
+    entry: [
+      path.resolve(__dirname, './src/main/static/stylesheets/main.css'),
+    ],
     mode,
     resolve: {
       modules: [
@@ -61,7 +65,7 @@ function common(mode) {
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: [ExtractCssChunks.loader, 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -76,6 +80,10 @@ function common(mode) {
       ]
     },
     plugins: [
+      new ExtractCssChunks({
+        filename: '[name].[contenthash].css',
+        chunkFilename: '[id].[contenthash].css',
+      }),
       new HtmlWebpackPlugin({
         template: './src/main/static/html/index.html.ejs',
         minify: false,

@@ -13,7 +13,7 @@ import org.scalajs.dom
 
 object Main {
 
-  val mainCss: MainCss.type = MainCss
+//  val mainCss: MainCss.type = MainCss
 
   def main(args: Array[String]): Unit = {
     val _ = documentEvents.onDomContentLoaded.foreach { _ =>
