@@ -6,6 +6,7 @@ inThisBuild(
     scmInfo := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
     developers := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
     scalaVersion := ScalaVersions.v213,
+    description := "Laminar utilities and components",
     crossScalaVersions := Seq(
       ScalaVersions.v213,
 //      ScalaVersions.v3RC1
