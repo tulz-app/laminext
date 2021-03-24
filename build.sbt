@@ -8,16 +8,14 @@ inThisBuild(
     scalaVersion := ScalaVersions.v213,
     crossScalaVersions := Seq(
       ScalaVersions.v213,
-      ScalaVersions.v3RC1
+//      ScalaVersions.v3RC1
     ),
     Test / publishArtifact := false,
     Test / parallelExecution := false,
-    githubWorkflowTargetBranches := Seq.empty, // no scalatest for scala3
-    githubWorkflowTargetTags := Seq.empty,     // no scalatest for scala3
-//    githubWorkflowTargetTags ++= Seq("v*"),
+    githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches += RefPredicate.StartsWith(Ref.Tag("v")),
     githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release"))),
-//    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/fastLinkJS"))),
+    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/fastLinkJS"))),
     githubWorkflowEnv ~= (_ ++ Map(
       "PGP_PASSPHRASE"    -> s"$${{ secrets.PGP_PASSPHRASE }}",
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
@@ -185,7 +183,6 @@ lazy val website = project
   .settings(noPublish)
   .settings(
     publish / skip := true,
-    scalaVersion := ScalaVersions.v3RC1,
     crossScalaVersions := Seq(
       ScalaVersions.v3RC1
     ),

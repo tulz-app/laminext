@@ -25,7 +25,7 @@ object DependencyVersions {
   // -- website
 
   val sourcecode             = "0.2.4"
-  val frontroute             = "0.12.0"
+  val frontroute             = "0.12.2"
   val `embedded-files`       = "0.2.0"
   val `embedded-files-macro` = "0.2.1"
   val factorio               = "0.3.1"
