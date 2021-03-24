@@ -60,7 +60,6 @@ object FetchPostExample
                   )
                 )
               case Failure(exception) =>
-                dom.console.error(exception.getMessage)
                 CollectionCommand.Append(
                   div(
                     div(

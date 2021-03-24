@@ -4,9 +4,6 @@ The `FetchEventStreamBuilder` provides methods for specifying all the settings t
 
 (see [Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) for more details on these settings)
 
-Note that the `FetchEventStreamBuilder` is not immutable. It can be safely re-used, but calls to all configuration
-methods do modify the instance.
-
 ### Headers 
 
 ```scala

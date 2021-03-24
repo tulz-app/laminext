@@ -73,7 +73,6 @@ object FetchCirceExample
                   )
                 )
               case Failure(exception) =>
-                dom.console.error(exception.getMessage)
                 CollectionCommand.Append(
                   div(
                     div(
@@ -87,5 +86,4 @@ object FetchCirceExample
           )
         )
       )
-      div()
     })
