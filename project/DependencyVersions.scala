@@ -13,6 +13,7 @@ object DependencyVersions {
   val `cats-laws`                 = "2.4.2"
   val `discipline-munit`          = "1.0.6"
   val `scalacheck-shapeless_1.14` = "1.2.5"
+  val zioJson                     = "0.1.3"
 
   val circe: Def.Initialize[String] = Def.setting {
     CrossVersion.partialVersion(scalaVersion.value) match {
