@@ -57,6 +57,12 @@ lazy val circeDependencies = Seq(
   )
 )
 
+lazy val zioDependencies = Seq(
+  libraryDependencies ++= Seq.concat(
+    Dependencies.zioJson.value
+  )
+)
+
 lazy val `core` =
   project
     .in(file("modules/core"))
@@ -151,6 +157,15 @@ lazy val `websocket-circe` =
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(circeDependencies)
+    .dependsOn(`websocket`)
+
+lazy val `websocket-zio` =
+  project
+    .in(file("modules/websocket-zio"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(zioDependencies)
     .dependsOn(`websocket`)
 
 lazy val `fetch` =
