@@ -56,7 +56,7 @@ jobs:
       - name: Check that workflows are up to date
         run: sbt ++${{ matrix.scala }} githubWorkflowCheck
 
-      - run: sbt ++${{ matrix.scala }} test website/fullLinkJS
+      - run: sbt ++${{ matrix.scala }} test website/fastLinkJS
 
       - name: Compress target directories
         run: tar cf targets.tar website/target modules/validation-core/target modules/util/target target modules/highlight/target modules/fsm/target modules/websocket/target modules/fetch-circe/target modules/websocket-zio/target modules/tailwind-default-theme/target modules/ui/target modules/validation-cats/target modules/fetch/target modules/core/target modules/tailwind/target modules/websocket-circe/target modules/videojs/target modules/markdown/target project/target
