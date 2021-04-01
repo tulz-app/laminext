@@ -9,14 +9,14 @@ inThisBuild(
     description := "Laminar utilities and components",
     crossScalaVersions := Seq(
       ScalaVersions.v213,
-//      ScalaVersions.v3RC1
+//      ScalaVersions.v3RC2
     ),
     Test / publishArtifact := false,
     Test / parallelExecution := false,
     githubWorkflowTargetTags ++= Seq("v*"),
-    githubWorkflowPublishTargetBranches += RefPredicate.StartsWith(Ref.Tag("v")),
+    githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
     githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release"))),
-    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/fastLinkJS"))),
+    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/fullLinkJS"))),
     githubWorkflowEnv ~= (_ ++ Map(
       "PGP_PASSPHRASE"    -> s"$${{ secrets.PGP_PASSPHRASE }}",
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
