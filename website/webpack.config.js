@@ -1,10 +1,9 @@
-const webpack = require('webpack');
 const path = require('path');
 const _ = require('lodash');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -31,20 +30,12 @@ const devServer = _.mergeWith(
 )
 
 
-
 function common(mode) {
   return {
+    mode,
     entry: [
       path.resolve(__dirname, './src/main/static/stylesheets/main.css'),
     ],
-    mode,
-    resolve: {
-      modules: [
-        'node_modules',
-        path.resolve(__dirname, 'node_modules'),
-        path.resolve(__dirname, 'src/main/static/stylesheets')
-      ],
-    },
     output: {
       publicPath: '/',
       path: path.resolve(__dirname, 'dist'),
@@ -53,36 +44,18 @@ function common(mode) {
     module: {
       rules: [
         {
-          test: /\.js$/,
-          enforce: 'pre',
-          use: [{
-            loader: 'scalajs-friendly-source-map-loader',
-            options: {
-              name: '[name].[contenthash:8].[ext]',
-              bundleHttp: false
-            }
-          }]
-        },
-        {
           test: /\.css$/,
-          use: [ExtractCssChunks.loader, 'css-loader', 'postcss-loader'],
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
         },
         {
-          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-          use: [{
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }]
-        }
+          test: /\.(png|jpg|woff(2)?|ttf|eot|svg)$/,
+          type: 'asset/resource'
+        },
       ]
     },
     plugins: [
-      new ExtractCssChunks({
+      new MiniCssExtractPlugin({
         filename: '[name].[contenthash].css',
-        chunkFilename: '[id].[contenthash].css',
       }),
       new HtmlWebpackPlugin({
         template: './src/main/static/html/index.html.ejs',
@@ -93,55 +66,46 @@ function common(mode) {
       }),
       new CopyWebpackPlugin({
         patterns: [
-          {from: './src/main/static/public', to: ''},
+          {from: './src/main/public', to: ''},
         ]
       })
     ]
   }
 }
 
-function prod() {
-  return {
-    entry: [
-      path.resolve(__dirname, `${scalaOutputPath}/website-opt/main.js`),
-    ],
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserPlugin()],
-    },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new CompressionPlugin({
-        test: /\.(js|css|html|svg|json|woff|woff2)$/,
-        deleteOriginalAssets: false,
-      }),
-      new CompressionPlugin({
-        test: /\.(js|css|html|svg|woff|woff2)$/,
-        filename: '[path][base].br',
-        algorithm: 'brotliCompress',
-        compressionOptions: {
-          // zlib’s `level` option matches Brotli’s `BROTLI_PARAM_QUALITY` option.
-          level: 11,
-        },
-        minRatio: 0.8,
-        deleteOriginalAssets: false,
-      })
-    ]
-  }
+const prod = {
+  entry: [
+    path.resolve(__dirname, `${scalaOutputPath}/website-opt/main.js`),
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CompressionPlugin({
+      test: /\.(js|css|html|svg|json|woff|woff2)$/,
+      deleteOriginalAssets: false,
+    }),
+    new CompressionPlugin({
+      test: /\.(js|css|html|svg|woff|woff2)$/,
+      filename: '[path][base].br',
+      algorithm: 'brotliCompress',
+      compressionOptions: {
+        // zlib’s `level` option matches Brotli’s `BROTLI_PARAM_QUALITY` option.
+        level: 11,
+      },
+      minRatio: 0.8,
+      deleteOriginalAssets: false,
+    })
+  ]
 }
 
-function dev() {
-  return {
-    devtool: 'cheap-module-source-map',
-    entry: [
-      path.resolve(__dirname, `${scalaOutputPath}/website-fastopt/main.js`),
-    ],
-    plugins: [
-      new webpack.HotModuleReplacementPlugin({
-        // Options...
-      })
-    ]
-  };
+const dev = {
+  entry: [
+    path.resolve(__dirname, `${scalaOutputPath}/website-fastopt/main.js`),
+  ],
+  devtool: 'cheap-module-source-map',
 }
 
 function customizer(objValue, srcValue) {
@@ -154,44 +118,18 @@ function getConfig() {
   switch (process.env.npm_lifecycle_event) {
     case 'build:prod':
     case 'build':
-      console.info('production build');
-      return _.mergeWith(
-        {},
-        common('production'),
-        prod(),
-        customizer
-      );
+      return _.mergeWith(common('production'), prod, customizer);
 
     case 'build:dev':
-      console.info('development build');
-      return _.mergeWith(
-        {},
-        common('development'),
-        dev(),
-        customizer
-      );
+      return _.mergeWith(common('development'), dev, customizer);
 
     case 'start:prod':
-      console.info('production dev server');
-      return _.mergeWith(
-        {},
-        common('production'),
-        prod(),
-        {devServer},
-        customizer
-      );
+      return _.mergeWith(common('production'), prod, {devServer}, customizer);
 
     case 'start':
     case 'start:dev':
     default:
-      console.info('development dev server');
-      return _.mergeWith(
-        {},
-        common('development'),
-        dev(),
-        {devServer},
-        customizer
-      );
+      return _.mergeWith(common('development'), dev, {devServer}, customizer);
   }
 }
 
