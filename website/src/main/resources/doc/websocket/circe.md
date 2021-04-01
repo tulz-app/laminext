@@ -7,7 +7,7 @@ The `websocket-circe` module provides an extension method for the `WebSocketRece
 
 ```scala
 import io.circe.generic.JsonCodec
-import io.laminext.websocket._
+import io.laminext.websocket.circe._
 
 @JsonCodec
 case class SendData(s: String)
@@ -17,3 +17,5 @@ case class ReceiveData(s: String)
 
 val ws = WebSocket.url("wss://echo.websocket.org").json[ReceiveData, SendData]
 ```
+
+[Example](/websocket/example-websocket-echo-circe)

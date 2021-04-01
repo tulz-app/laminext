@@ -34,7 +34,7 @@ object Dependencies {
     )
   }
 
-  val zioJson: Def.Initialize[Seq[ModuleID]] = Def.setting {
+  val `zio-json`: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
       "dev.zio" %%% "zio-json" % DependencyVersions.zioJson
     )
@@ -55,6 +55,12 @@ object Dependencies {
   val sourcecode: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
       "com.lihaoyi" %%% "sourcecode" % DependencyVersions.sourcecode
+    )
+  }
+
+  val `scala-java-time`: Def.Initialize[Seq[ModuleID]] = Def.setting {
+    Seq(
+      "io.github.cquiroz" %%% "scala-java-time" % DependencyVersions.`scala-java-time`
     )
   }
 

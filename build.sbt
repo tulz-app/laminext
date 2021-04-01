@@ -57,9 +57,9 @@ lazy val circeDependencies = Seq(
   )
 )
 
-lazy val zioDependencies = Seq(
+lazy val zioJsonDependencies = Seq(
   libraryDependencies ++= Seq.concat(
-    Dependencies.zioJson.value
+    Dependencies.`zio-json`.value
   )
 )
 
@@ -159,13 +159,13 @@ lazy val `websocket-circe` =
     .settings(circeDependencies)
     .dependsOn(`websocket`)
 
-lazy val `websocket-zio` =
+lazy val `websocket-zio-json` =
   project
     .in(file("modules/websocket-zio"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .settings(zioDependencies)
+    .settings(zioJsonDependencies)
     .dependsOn(`websocket`)
 
 lazy val `fetch` =
@@ -211,7 +211,8 @@ lazy val website = project
       Dependencies.laminar.value,
       Dependencies.frontroute.value,
       Dependencies.`embedded-files-macro`.value,
-      Dependencies.sourcecode.value
+      Dependencies.sourcecode.value,
+      Dependencies.`scala-java-time`.value,
     ),
     embedTextGlobs := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
@@ -230,6 +231,7 @@ lazy val website = project
     `tailwind-default-theme`,
     `websocket`,
     `websocket-circe`,
+    `websocket-zio-json`,
     `fetch`,
     `fetch-circe`
   )
@@ -261,5 +263,6 @@ lazy val root = project
     `fetch`,
     `fetch-circe`,
     `websocket`,
-    `websocket-circe`
+    `websocket-circe`,
+    `websocket-zio-json`,
   )

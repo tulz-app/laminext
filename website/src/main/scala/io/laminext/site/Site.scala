@@ -93,10 +93,12 @@ object Site {
       index = docPage("", "WebSocket", FileAsString("/doc/websocket/index.md")),
       "" -> Seq(
         docPage("circe", "circe support", FileAsString("/doc/websocket/circe.md")),
+        docPage("zio-json", "zio-json support", FileAsString("/doc/websocket/zio-json.md")),
       ),
       "Examples" -> Seq(
         examplePage(examples.websocket.WebSocketExample),
         examplePage(examples.websocket.WebSocketCirceExample),
+        examplePage(examples.websocket.WebSocketZioJsonExample),
       )
     ),
     SiteModule(
