@@ -13,6 +13,7 @@ inThisBuild(
     ),
     Test / publishArtifact := false,
     Test / parallelExecution := false,
+    githubWorkflowJavaVersions := Seq("openjdk@1.11.0"),
     githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
     githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release"))),
