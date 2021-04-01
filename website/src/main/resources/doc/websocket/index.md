@@ -192,3 +192,8 @@ ws.events // EventStream[WebSocketEvent[Receive]]
 
 If you use [circe](https://circe.github.io/circe/), there's a `websocket-circe` module available. See [circe support](/websocket/circe).
 
+
+## zio-json support
+
+Similarly, if you use [zio-json](https://github.com/zio/zio-json), there's a `websocket-zio-json` module available. See [zio-json support](/websocket/zio-json).
+

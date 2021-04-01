@@ -6,6 +6,8 @@ libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.2.0"
 
 The `websocket-zio-json` module provides an extension method for the `WebSocketReceiveBuilder`: `.json[Receive, Send]`:
 
+You will probably need the `scala-java-time` dependency from above, as `zio-json` references some `java.time` classes, 
+which are not available in the js runtime by default.
 
 ```scala
 import zio.json._
