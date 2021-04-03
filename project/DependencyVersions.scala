@@ -8,7 +8,7 @@ object DependencyVersions {
   val laminar                     = "0.12.2"
   val `scala-test`                = "3.2.3"
   val stringdiff                  = "0.3.1"
-  val domtestutils                = "0.14.5"
+  val domtestutils                = "0.14.6"
   val cats                        = "2.5.0"
   val `cats-laws`                 = "2.5.0"
   val `discipline-munit`          = "1.0.6"
