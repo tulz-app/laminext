@@ -2,6 +2,7 @@ package com.raquo.airstream.eventstream
 
 import com.raquo.laminar.api.L._
 import com.raquo.airstream.core.Transaction
+import com.raquo.airstream.core.WritableEventStream
 import com.raquo.airstream.common.InternalNextErrorObserver
 import com.raquo.airstream.common.SingleParentObservable
 
@@ -9,6 +10,7 @@ class TakeEventStream[A](
   override protected val parent: EventStream[A],
   toTake: Int
 ) extends EventStream[A]
+    with WritableEventStream[A]
     with SingleParentObservable[A, A]
     with InternalNextErrorObserver[A] {
 

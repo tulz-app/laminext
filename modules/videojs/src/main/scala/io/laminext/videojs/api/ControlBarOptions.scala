@@ -10,12 +10,11 @@ object ControlBarOptions {
     fullscreenToggle: UndefOr[Boolean] = js.undefined,
     pictureInPictureToggle: UndefOr[Boolean] = js.undefined
   ): ControlBarOptions = {
-    js.Dynamic
-      .literal(
-        volumePanel = volumePanel,
-        fullscreenToggle = fullscreenToggle,
-        pictureInPictureToggle = pictureInPictureToggle
-      ).asInstanceOf[ControlBarOptions]
+    val obj = js.Object().asInstanceOf[js.Dynamic]
+    volumePanel.foreach(obj.volumePanel = _)
+    fullscreenToggle.foreach(obj.fullscreenToggle = _)
+    pictureInPictureToggle.foreach(obj.pictureInPictureToggle = _)
+    obj.asInstanceOf[ControlBarOptions]
   }
 
 }

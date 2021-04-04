@@ -9,7 +9,10 @@ object VolumePanelOptions {
     inline: UndefOr[Boolean] = js.undefined,
     volumeControl: UndefOr[VolumeControlOptions] = js.undefined
   ): VolumePanelOptions = {
-    js.Dynamic.literal(inline = inline, volumeControl = volumeControl).asInstanceOf[VolumePanelOptions]
+    val obj = js.Object().asInstanceOf[js.Dynamic]
+    inline.foreach(obj.inline = _)
+    volumeControl.foreach(obj.volumeControl = _)
+    obj.asInstanceOf[VolumePanelOptions]
   }
 
 }

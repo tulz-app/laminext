@@ -200,9 +200,6 @@ lazy val website = project
   .settings(noPublish)
   .settings(
     publish / skip := true,
-    crossScalaVersions := Seq(
-      ScalaVersions.v3RC1
-    ),
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
     Compile / scalaJSLinkerConfig ~= { _.withSourceMap(false) },

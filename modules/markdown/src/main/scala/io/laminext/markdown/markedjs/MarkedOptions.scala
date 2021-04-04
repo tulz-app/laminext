@@ -10,7 +10,7 @@ class MarkedOptions extends js.Object {
    * A function to highlight code blocks
    * @see [[https://github.com/chjj/marked#highlight]]
    */
-  val highlight: js.Any = js.undefined
+  val highlight: UndefOr[(String, UndefOr[String], js.Function) => String] = js.undefined
 
   /**
    * An object containing functions to render tokens to HTML.
@@ -86,15 +86,15 @@ object MarkedOptions {
     val _smartLists  = smartLists
     val _smartypants = smartypants
     new MarkedOptions {
-      override val highlight: Any           = _highlight
-      override val renderer: MarkedRenderer = _renderer
-      override val gfm: Boolean             = _gfm
-      override val tables: Boolean          = _tables
-      override val breaks: Boolean          = _breaks
-      override val pedantic: Boolean        = _pedantic
-      override val sanitize: Boolean        = _sanitize
-      override val smartLists: Boolean      = _smartLists
-      override val smartypants: Boolean     = _smartypants
+      override val highlight: UndefOr[(String, UndefOr[String], js.Function) => String] = _highlight
+      override val renderer: MarkedRenderer                                             = _renderer
+      override val gfm: Boolean                                                         = _gfm
+      override val tables: Boolean                                                      = _tables
+      override val breaks: Boolean                                                      = _breaks
+      override val pedantic: Boolean                                                    = _pedantic
+      override val sanitize: Boolean                                                    = _sanitize
+      override val smartLists: Boolean                                                  = _smartLists
+      override val smartypants: Boolean                                                 = _smartypants
     }
   }
 }

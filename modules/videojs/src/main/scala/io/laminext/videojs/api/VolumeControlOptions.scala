@@ -11,7 +11,10 @@ object VolumeControlOptions {
     volumeBar: UndefOr[VolumeBar] = js.undefined,
     vertical: UndefOr[Boolean] = js.undefined
   ): VolumeControlOptions = {
-    js.Dynamic.literal(volumeBar = volumeBar, vertical = vertical).asInstanceOf[VolumeControlOptions]
+    val obj = js.Object().asInstanceOf[js.Dynamic]
+    volumeBar.foreach(obj.volumeBar = _)
+    vertical.foreach(obj.vertical = _)
+    obj.asInstanceOf[VolumeControlOptions]
   }
 
 }
