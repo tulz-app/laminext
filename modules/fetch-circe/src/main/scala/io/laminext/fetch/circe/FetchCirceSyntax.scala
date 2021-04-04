@@ -1,4 +1,5 @@
-package io.laminext.fetch.circe
+package io.laminext.fetch
+package circe
 
 import io.circe._
 

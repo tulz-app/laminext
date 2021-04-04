@@ -1,5 +1,5 @@
 package io.laminext.fetch
-package circe
+package upickle
 
 import org.scalajs.dom.experimental.BodyInit
 

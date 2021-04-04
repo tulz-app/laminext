@@ -82,10 +82,12 @@ object Site {
         docPage("request-settings", "Other request settings", FileAsString("/doc/fetch/request-settings.md")),
         docPage("response", "Handling the response", FileAsString("/doc/fetch/response.md")),
         docPage("circe", "circe support", FileAsString("/doc/fetch/circe.md")),
+        docPage("upickle", "upickle support", FileAsString("/doc/fetch/upickle.md")),
       ),
       "Examples" -> Seq(
         examplePage(examples.fetch.FetchPostExample),
         examplePage(examples.fetch.FetchCirceExample),
+        examplePage(examples.fetch.FetchUpickleExample),
       )
     ),
     SiteModule(
@@ -93,11 +95,13 @@ object Site {
       index = docPage("", "WebSocket", FileAsString("/doc/websocket/index.md")),
       "" -> Seq(
         docPage("circe", "circe support", FileAsString("/doc/websocket/circe.md")),
+        docPage("upickle", "circe support", FileAsString("/doc/websocket/upickle.md")),
         docPage("zio-json", "zio-json support", FileAsString("/doc/websocket/zio-json.md")),
       ),
       "Examples" -> Seq(
         examplePage(examples.websocket.WebSocketExample),
         examplePage(examples.websocket.WebSocketCirceExample),
+        examplePage(examples.websocket.WebSocketUpickleExample),
         examplePage(examples.websocket.WebSocketZioJsonExample),
       )
     ),
