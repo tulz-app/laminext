@@ -5,9 +5,9 @@ import sbt.librarymanagement.CrossVersion
 object DependencyVersions {
 
   val jsdom                       = "16.4.0"
-  val laminar                     = "0.12.2"
-  val `scala-test`                = "3.2.3"
-  val stringdiff                  = "0.3.1"
+  val laminar                     = "0.13.0-M1"
+  val `scala-test`                = "3.2.7"
+  val stringdiff                  = "0.3.2"
   val domtestutils                = "0.14.6"
   val cats                        = "2.5.0"
   val `cats-laws`                 = "2.5.0"
@@ -26,10 +26,9 @@ object DependencyVersions {
   // -- website
 
   val sourcecode             = "0.2.4"
-  val frontroute             = "0.12.2"
+  val frontroute             = "0.13.0-M1"
   val `embedded-files`       = "0.2.0"
   val `embedded-files-macro` = "0.2.1"
-  val factorio               = "0.3.1"
   val pprint                 = "0.6.0"
   val `scala-java-time`      = "2.2.0"
 

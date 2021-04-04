@@ -40,19 +40,19 @@ object VideoJSOptions {
     obj.html5 = js.Dynamic.literal(
       vhs = js.Object()
     )
-    if (poster.nonEmpty) obj.poster = poster
-    if (width.nonEmpty) obj.width = width
-    if (height.nonEmpty) obj.height = height
+    poster.foreach(obj.poster = _)
+    width.foreach(obj.width = _)
+    height.foreach(obj.height = _)
     if (sources.nonEmpty) obj.sources = sources.toJSArray
     if (techOrder.nonEmpty) obj.techOrder = techOrder.toJSArray
-    if (aspectRatio.nonEmpty) obj.aspectRatio = playbackRates
-    if (controlBar.nonEmpty) obj.controlBar = controlBar
-    if (defaultVolume.nonEmpty) obj.defaultVolume = defaultVolume
-    if (html5.nonEmpty) obj.html5 = html5
-    if (liveui.nonEmpty) obj.liveui = liveui
-    if (muted.nonEmpty) obj.html5 = muted
-    if (nativeControlsForTouch.nonEmpty) obj.html5 = nativeControlsForTouch
-    if (notSupportedMessage.nonEmpty) obj.html5 = notSupportedMessage
+    aspectRatio.foreach(obj.aspectRatio = _)
+    controlBar.foreach(obj.controlBar = _)
+    defaultVolume.foreach(obj.defaultVolume = _)
+    html5.foreach(obj.html5 = _)
+    liveui.foreach(obj.liveui = _)
+    muted.foreach(obj.html5 = _)
+    nativeControlsForTouch.foreach(obj.html5 = _)
+    notSupportedMessage.foreach(obj.html5 = _)
     if (playbackRates.nonEmpty) obj.playbackRates = playbackRates.toJSArray
     additional.foreach { case (key, value) => obj.updateDynamic(key)(value) }
     obj.asInstanceOf[VideoJSOptions]
