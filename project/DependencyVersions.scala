@@ -7,7 +7,7 @@ object DependencyVersions {
   val jsdom                       = "16.4.0"
   val laminar                     = "0.12.2"
   val `scala-test`                = "3.2.3"
-  val stringdiff                  = "0.3.1"
+  val stringdiff                  = "0.3.2"
   val domtestutils                = "0.14.6"
   val cats                        = "2.5.0"
   val `cats-laws`                 = "2.5.0"
