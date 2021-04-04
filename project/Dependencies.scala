@@ -33,6 +33,12 @@ object Dependencies {
     )
   }
 
+  val upickle: Def.Initialize[Seq[ModuleID]] = Def.setting {
+    Seq(
+      "com.lihaoyi" %%% "upickle" % DependencyVersions.upickle
+    )
+  }
+
   val `zio-json`: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
       "dev.zio" %%% "zio-json" % DependencyVersions.zioJson
