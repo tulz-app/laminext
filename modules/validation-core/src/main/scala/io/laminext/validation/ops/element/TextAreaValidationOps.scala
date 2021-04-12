@@ -3,6 +3,7 @@ package ops.element
 
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
+import io.laminext.validation.components.ValidatedElement
 import org.scalajs.dom.html
 
 final class TextAreaValidationOps(el: TextArea) {

@@ -3,6 +3,7 @@ package ops.element
 
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
+import io.laminext.validation.components.ValidatedElement
 import io.laminext.validation.ops.ValidationOps
 import org.scalajs.dom.raw.File
 import org.scalajs.dom.html
