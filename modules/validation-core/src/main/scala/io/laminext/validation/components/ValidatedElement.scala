@@ -1,9 +1,10 @@
 package io.laminext.validation
-package ops.element
+package components
 
 import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
+import io.laminext.base.ComponentBase
+import io.laminext.syntax.core._
 import org.scalajs.dom
 
 class ValidatedElement[+R <: dom.html.Element, A, Err, Out](
@@ -11,13 +12,9 @@ class ValidatedElement[+R <: dom.html.Element, A, Err, Out](
   val value: Signal[A],
   val validatedValue: Signal[ValidatedValue[Err, Out]],
   val validationError: Signal[Option[Err]]
-)
+) extends ComponentBase[R]
 
 object ValidatedElement {
-
-  @inline implicit def validatedElementToReactiveHtmlElement[R <: dom.html.Element, A, Err, Out](
-    validated: ValidatedElement[R, A, Err, Out]
-  ): ReactiveHtmlElement[R] = validated.el
 
   def apply[R <: dom.html.Element, A, Err, Out](
     el: ReactiveHtmlElement[R],

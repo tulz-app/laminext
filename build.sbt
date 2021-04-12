@@ -70,6 +70,13 @@ lazy val zioJsonDependencies = Seq(
   )
 )
 
+lazy val base =
+  project
+    .in(file("modules/base"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+
 lazy val `core` =
   project
     .in(file("modules/core"))
@@ -83,7 +90,7 @@ lazy val `validation-core` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .dependsOn(`core`)
+    .dependsOn(`base`, `core`)
 
 lazy val `validation-cats` =
   project
@@ -130,7 +137,7 @@ lazy val `ui` =
     .settings(commonSettings)
     .settings(bundlerSettings)
     .settings(baseDependencies)
-    .dependsOn(`core`)
+    .dependsOn(`base`, `core`)
 
 lazy val `tailwind` =
   project
@@ -139,7 +146,7 @@ lazy val `tailwind` =
     .settings(commonSettings)
     .settings(bundlerSettings)
     .settings(baseDependencies)
-    .dependsOn(`core`, `ui`, `validation-core`)
+    .dependsOn(`base`, `core`, `ui`, `validation-core`)
 
 lazy val `tailwind-default-theme` =
   project
@@ -241,6 +248,7 @@ lazy val website = project
     (Compile / sourceGenerators) += embedFiles
   )
   .dependsOn(
+    base,
     `core`,
     `validation-cats`,
     `util`,
@@ -273,6 +281,7 @@ lazy val root = project
     name := "laminext"
   )
   .aggregate(
+    base,
     `core`,
     `validation-core`,
     `validation-cats`,
