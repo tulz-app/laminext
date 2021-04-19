@@ -18,9 +18,8 @@ object DependencyVersions {
 
   val circe: Def.Initialize[String] = Def.setting {
     CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((3, _)) => "0.13.0"
+      case Some((3, _)) => "0.14.0-M5"
       case _            => "0.13.0"
-//      case Some((3, _)) => "0.14.0-M4"
     }
   }
 
