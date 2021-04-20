@@ -23,7 +23,21 @@ inThisBuild(
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
       "SONATYPE_PASSWORD" -> s"$${{ secrets.SONATYPE_PASSWORD }}",
       "SONATYPE_USERNAME" -> s"$${{ secrets.SONATYPE_USERNAME }}"
-    ))
+    )),
+    githubWorkflowGeneratedUploadSteps ~= (_.map {
+      case run: WorkflowStep.Run =>
+        run.copy(commands = run.commands.map { command =>
+          if (command.startsWith("tar cf targets.tar")) {
+            command
+              .replace("website/target", "")
+              .replace("modules/websocket-zio/target", "")
+          } else {
+            command
+          }
+
+        })
+      case other => other
+    })
   ),
 )
 
@@ -230,6 +244,7 @@ lazy val website = project
   .settings(commonSettings)
   .settings(noPublish)
   .settings(
+    githubWorkflowTargetTags := Seq.empty,
     publish / skip := true,
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
