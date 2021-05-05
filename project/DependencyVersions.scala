@@ -5,7 +5,7 @@ import sbt.librarymanagement.CrossVersion
 object DependencyVersions {
 
   val jsdom                       = "16.4.0"
-  val laminar                     = "0.12.2"
+  val laminar                     = "0.13.0"
   val `scala-test`                = "3.2.3"
   val stringdiff                  = "0.3.1"
   val domtestutils                = "0.14.6"
