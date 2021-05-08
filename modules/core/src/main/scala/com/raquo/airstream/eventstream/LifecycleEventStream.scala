@@ -1,6 +1,7 @@
 package com.raquo.airstream.eventstream
 
 import com.raquo.laminar.api.L._
+import com.raquo.airstream.core.Protected
 import com.raquo.airstream.core.Transaction
 import com.raquo.airstream.core.WritableEventStream
 import com.raquo.airstream.common.InternalNextErrorObserver
@@ -15,9 +16,9 @@ class LifecycleEventStream[A](
     with SingleParentObservable[A, A]
     with InternalNextErrorObserver[A] {
 
-  override protected[airstream] val topoRank: Int = parent.topoRank + 1
+  override protected val topoRank: Int = Protected.topoRank(parent) + 1
 
-  override protected[airstream] def onNext(nextParentValue: A, transaction: Transaction): Unit = {
+  override protected def onNext(nextParentValue: A, transaction: Transaction): Unit = {
     fireValue(nextParentValue, transaction)
   }
 
