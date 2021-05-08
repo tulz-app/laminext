@@ -10,23 +10,22 @@ object DependencyVersions {
   val stringdiff   = "0.3.3"
   val domtestutils = "0.14.7"
   val cats         = "2.6.0"
-  val zioJson      = "0.1.4"
-  val upickle      = "1.3.11"
+  val upickle      = "1.3.12"
 
   val circe: Def.Initialize[String] = Def.setting {
     CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((3, _)) => "0.14.0-M5"
+      case Some((3, _)) => "0.14.0-M6"
       case _            => "0.13.0"
     }
   }
 
   // -- website
 
-  val sourcecode             = "0.2.4"
+  val sourcecode             = "0.2.6"
   val frontroute             = "0.13.0"
   val `embedded-files`       = "0.2.0"
   val `embedded-files-macro` = "0.2.3"
   val pprint                 = "0.6.0"
-  val `scala-java-time`      = "2.2.0"
+  val `scala-java-time`      = "2.2.2"
 
 }

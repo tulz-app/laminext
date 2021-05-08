@@ -1,4 +1,4 @@
-package com.raquo.airstream.eventstream
+package io.laminext.core
 
 import com.raquo.laminar.api.L._
 import com.raquo.airstream.core.Protected

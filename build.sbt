@@ -17,27 +17,13 @@ inThisBuild(
     githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
     githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release"))),
-    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test" /*, "website/fastLinkJS"*/ ))),
+    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/fastLinkJS"))),
     githubWorkflowEnv ~= (_ ++ Map(
       "PGP_PASSPHRASE"    -> s"$${{ secrets.PGP_PASSPHRASE }}",
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
       "SONATYPE_PASSWORD" -> s"$${{ secrets.SONATYPE_PASSWORD }}",
       "SONATYPE_USERNAME" -> s"$${{ secrets.SONATYPE_USERNAME }}"
-    )),
-    githubWorkflowGeneratedUploadSteps ~= (_.map {
-      case run: WorkflowStep.Run =>
-        run.copy(commands = run.commands.map { command =>
-          if (command.startsWith("tar cf targets.tar")) {
-            command
-              .replace("website/target", "")
-              .replace("modules/websocket-zio/target", "")
-          } else {
-            command
-          }
-
-        })
-      case other => other
-    })
+    ))
   ),
 )
 
@@ -75,12 +61,6 @@ lazy val circeDependencies = Seq(
 lazy val upickleDependencies = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.upickle.value
-  )
-)
-
-lazy val zioJsonDependencies = Seq(
-  libraryDependencies ++= Seq.concat(
-    Dependencies.`zio-json`.value
   )
 )
 
@@ -196,15 +176,6 @@ lazy val `websocket-upickle` =
     .settings(upickleDependencies)
     .dependsOn(`websocket`)
 
-lazy val `websocket-zio-json` =
-  project
-    .in(file("modules/websocket-zio"))
-    .enablePlugins(ScalaJSPlugin)
-    .settings(commonSettings)
-    .settings(baseDependencies)
-    .settings(zioJsonDependencies)
-    .dependsOn(`websocket`)
-
 lazy val `fetch` =
   project
     .in(file("modules/fetch"))
@@ -277,7 +248,6 @@ lazy val website = project
     `websocket`,
     `websocket-circe`,
     `websocket-upickle`,
-    `websocket-zio-json`,
     `fetch`,
     `fetch-circe`,
     `fetch-upickle`
@@ -313,6 +283,5 @@ lazy val root = project
     `fetch-upickle`,
     `websocket`,
     `websocket-circe`,
-    `websocket-upickle`,
-//    `websocket-zio-json`,
+    `websocket-upickle`
   )
