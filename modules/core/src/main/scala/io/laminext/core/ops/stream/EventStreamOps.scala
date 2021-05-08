@@ -2,14 +2,9 @@ package io.laminext.core
 package ops.stream
 
 import com.raquo.laminar.api.L._
-import com.raquo.airstream.eventstream.DelayForEventStream
-import com.raquo.airstream.eventstream.DropEventStream
-import com.raquo.airstream.eventstream.TakeEventStream
-import com.raquo.airstream.eventstream.TransitionsEventStream
 import com.raquo.airstream.flatten.FlattenStrategy
 
 import scala.concurrent.duration.FiniteDuration
-import scala.util.Failure
 
 final class EventStreamOps[A](underlying: EventStream[A]) {
 

@@ -39,12 +39,6 @@ object Dependencies {
     )
   }
 
-  val `zio-json`: Def.Initialize[Seq[ModuleID]] = Def.setting {
-    Seq(
-      "dev.zio" %%% "zio-json" % DependencyVersions.zioJson
-    )
-  }
-
   val frontroute: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
       "io.frontroute" %%% "frontroute" % DependencyVersions.frontroute

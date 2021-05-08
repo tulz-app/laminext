@@ -1,11 +1,11 @@
-package com.raquo.airstream.eventstream
+package io.laminext.core
 
-import com.raquo.laminar.api.L._
+import com.raquo.airstream.common.InternalNextErrorObserver
+import com.raquo.airstream.common.SingleParentObservable
 import com.raquo.airstream.core.Protected
 import com.raquo.airstream.core.Transaction
 import com.raquo.airstream.core.WritableEventStream
-import com.raquo.airstream.common.InternalNextErrorObserver
-import com.raquo.airstream.common.SingleParentObservable
+import com.raquo.laminar.api.L._
 
 class DropEventStream[A](
   override protected val parent: EventStream[A],
