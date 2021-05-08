@@ -1,6 +1,7 @@
 package com.raquo.airstream.eventstream
 
 import com.raquo.laminar.api.L._
+import com.raquo.airstream.core.Protected
 import com.raquo.airstream.core.Transaction
 import com.raquo.airstream.core.WritableEventStream
 import com.raquo.airstream.common.InternalNextErrorObserver
@@ -15,9 +16,9 @@ class TransitionsEventStream[A](
 
   private var previous: Option[A] = Option.empty
 
-  override protected[airstream] val topoRank: Int = parent.topoRank + 1
+  override protected val topoRank: Int = Protected.topoRank(parent) + 1
 
-  override protected[airstream] def onNext(nextValue: A, transaction: Transaction): Unit = {
+  override protected def onNext(nextValue: A, transaction: Transaction): Unit = {
     fireValue((previous, nextValue), transaction)
     previous = Some(nextValue)
   }
