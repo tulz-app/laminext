@@ -11,18 +11,16 @@ object TransitionExample
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.core._
-      import io.laminext.ui.transition.Transition
-      import io.laminext.ui.transition.TransitionConfig
+      import io.laminext.ui._
 
       /* <focus> */
       val transitionConfig = TransitionConfig(
+        hidden = "hidden",
         inTransition = "transform transition-all motion-reduce:transition-none motion-reduce:transform-none",
-        enterDuration = "duration-1000",
-        enterTiming = "ease-out",
+        enter = "duration-1000 ease-out",
         enterFrom = "opacity-0 scale-75",
         enterTo = "opacity-100 scale-100",
-        leaveDuration = "duration-1000",
-        leaveTiming = "ease-in",
+        leave = "duration-1000 ease-in",
         leaveFrom = "opacity-100 scale-100",
         leaveTo = "opacity-0 scale-75"
       )
@@ -35,7 +33,7 @@ object TransitionExample
         cls := "p-4 flex flex-col space-y-4",
         div(
           button(
-            cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+            cls := "btn-md-fill-blue",
             "toggle",
             onClick --> show.toggleObserver
           )
@@ -59,7 +57,7 @@ object TransitionExample
         div(
           cls := "p-8 w-64 bg-blue-600 text-blue-50",
           /* <focus> */
-          Transition(show.signal, transitionConfig, observer = actuallyShowing.writer),
+          addTransition(show.signal, transitionConfig, observer = actuallyShowing.writer),
           /* </focus> */
           "I should transition!"
         )

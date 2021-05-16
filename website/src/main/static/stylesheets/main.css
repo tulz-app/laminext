@@ -1,12 +1,241 @@
+@import './tailwind.css';
 @import './fonts.css';
-/*noinspection CssUnknownTarget*/
-@import 'tailwindcss/base';
-@import './base.css';
-
-/*noinspection CssUnknownTarget*/
-@import 'tailwindcss/components';
-
-/*noinspection CssUnknownTarget*/
-@import 'tailwindcss/utilities';
-
 @import './markdown.css';
+
+body {
+    @apply font-serif;
+}
+
+@layer base {
+
+    [type='text'],
+    [type='email'],
+    [type='url'],
+    [type='password'],
+    [type='number'],
+    [type='date'],
+    [type='datetime-local'],
+    [type='month'],
+    [type='search'],
+    [type='tel'],
+    [type='time'],
+    [type='week'],
+    [multiple],
+    textarea,
+    select {
+        @apply shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono;
+    }
+
+}
+
+@layer components {
+
+    .card-wrap {
+        @apply bg-white sm:shadow sm:rounded-lg;
+    }
+
+    .card-header {
+        @apply px-4 py-3 sm:px-6 border-b border-gray-200;
+    }
+
+    .card-body {
+        @apply p-4 md:px-6 md:rounded-lg;
+    }
+
+    .card-footer {
+        @apply px-4 py-3 sm:px-6 border-t border-gray-200;
+    }
+
+    .card-title {
+        @apply text-lg md:text-xl font-medium tracking-wide text-gray-700
+    }
+
+    /* BUTTONS */
+
+    .btn {
+        @apply inline-flex items-center justify-center
+        focus:outline-none focus:ring-2 focus:ring-offset-2
+        disabled:opacity-90 /*disabled:text-opacity-90*/
+        disabled:cursor-not-allowed;
+    }
+
+    .btn-single {
+        @apply rounded-md;
+    }
+
+    .btn-first {
+        @apply rounded-l-md focus:z-10;
+    }
+
+    .btn-last {
+        @apply rounded-r-md focus:z-10;
+    }
+
+    .btn-inner {
+        @apply rounded-none focus:z-10 -mx-px;
+    }
+
+    .btn-sm {
+        @apply px-3 py-1 text-base;
+    }
+
+    .btn-md {
+        @apply px-3 py-2 text-base;
+    }
+
+    .btn-lg {
+        @apply px-4 py-2 text-xl;
+    }
+
+    .btn-text {
+        @apply border border-transparent bg-transparent;
+    }
+
+    .btn-outline {
+        @apply bg-transparent border;
+    }
+
+    .btn-fill {
+        @apply border border-transparent;
+    }
+
+    .btn-text-white {
+        @apply btn-text
+        text-gray-200
+        hover:text-white
+        focus:ring-gray-500
+    }
+
+    .btn-text-blue {
+        @apply btn-text
+        text-blue-700
+        hover:text-blue-600
+        focus:ring-blue-500
+    }
+
+    .btn-fill-blue {
+        @apply btn-fill
+        text-gray-100
+        bg-blue-600
+        hover:bg-blue-500 hover:text-white
+        focus:ring-blue-500;
+
+    }
+
+    .btn-outline-blue {
+        @apply btn-outline
+        text-blue-700
+        border-blue-500
+        hover:bg-blue-50 hover:text-blue-700
+        focus:ring-blue-500;
+    }
+
+    .btn-outline-green {
+        @apply btn-outline
+        text-green-700
+        border-green-500
+        hover:bg-green-50 hover:text-green-700
+    }
+
+    .btn-outline-red {
+        @apply btn-outline
+        text-red-600
+        border-red-500
+        hover:bg-red-50 hover:text-red-700
+        focus:ring-red-500;
+    }
+
+    .btn-outline-white {
+        @apply btn-outline
+        text-gray-200
+        border-gray-300
+        hover:text-white
+        focus:ring-gray-500;
+    }
+
+    .btn-outline-blue-light {
+        @apply btn-outline
+        text-blue-300
+        border-blue-300
+        hover:border-blue-100 hover:text-blue-100
+        focus:ring-blue-500;
+    }
+
+    .btn-lg-text-white {
+        @apply btn btn-single btn-lg btn-text-white;
+    }
+
+    .btn-md-text-blue {
+        @apply btn btn-single btn-md btn-text-blue
+    }
+
+    .btn-md-text-white {
+        @apply btn btn-single btn-md btn-text-white;
+    }
+
+    .btn-lg-text-white {
+        @apply btn btn-single btn-lg btn-text-white;
+    }
+
+    .btn-sm-text-white {
+        @apply btn btn-single btn-sm btn-text-white;
+    }
+
+    .btn-sm-text-blue {
+        @apply btn btn-single btn-sm btn-text-blue;
+    }
+
+    .btn-lg-fill-blue {
+        @apply btn btn-single btn-lg btn-fill-blue;
+    }
+
+    .btn-md-fill-blue {
+        @apply btn btn-single btn-md btn-fill-blue;
+    }
+
+    .btn-md-outline-red {
+        @apply btn btn-single btn-md btn-outline-red;
+    }
+
+    .btn-md-outline-blue {
+        @apply btn btn-single btn-md btn-outline-blue;
+    }
+
+    .btn-md-outline-green {
+        @apply btn btn-single btn-md btn-outline-green;
+    }
+
+    .btn-md-outline-blue-first {
+        @apply btn btn-first btn-md btn-outline-blue;
+    }
+
+    .btn-md-outline-blue-inner {
+        @apply btn btn-inner btn-md btn-outline-blue;
+    }
+
+    .btn-md-outline-blue-last {
+        @apply btn btn-last btn-md btn-outline-blue;
+    }
+
+
+    .btn-lg-outline-blue {
+        @apply btn btn-single btn-lg btn-outline-blue;
+    }
+
+    .btn-md-outline-white {
+        @apply btn btn-single btn-md btn-outline-white;
+    }
+
+    .btn-lg-outline-white {
+        @apply btn btn-single btn-lg btn-outline-white;
+    }
+
+    .btn-lg-outline-blue-light {
+        @apply btn btn-single btn-lg btn-outline-blue-light;
+    }
+
+    .btn-group {
+        @apply relative z-0 inline-flex shadow-sm rounded-md;
+    }
+
+}

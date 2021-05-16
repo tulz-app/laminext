@@ -2,6 +2,7 @@ package io.laminext.site.components
 
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
+import io.laminext.ui._
 import io.laminext.syntax.tailwind._
 import io.laminext.syntax.markdown._
 import io.laminext.highlight.Highlight
@@ -9,6 +10,7 @@ import io.laminext.site.examples.CodeExample
 import io.laminext.tailwind.theme
 import io.laminext.site.Styles
 import io.laminext.site.TemplateVars
+import io.laminext.tailwind.theme.TailwindTransition
 import org.scalajs.dom
 import org.scalajs.dom.ext._
 import org.scalajs.dom.html
@@ -35,7 +37,7 @@ object CodeExampleDisplay {
     lines.map(_.drop(minIndent)).mkString("\n")
   }
 
-  private val collapseTransition = theme.Theme.current.transition.resize.customize(
+  private val collapseTransition = TailwindTransition.resize.customize(
     hidden = _ :+ "max-h-32",
     enterFrom = _ :+ "max-h-32",
     enterTo = _ => Seq.empty,
@@ -92,7 +94,7 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls := "prose max-w-none",
+        cls := "prose prose-blue max-w-none",
         unsafeMarkdown := TemplateVars(example.description),
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
@@ -109,8 +111,8 @@ object CodeExampleDisplay {
             "Source code:"
           ),
           when(hasContext) {
-            label.btn.sm.text.blue(
-              cls := "flex-shrink-0 flex space-x-1 items-center cursor-pointer",
+            label(
+              cls := "btn-sm-text-blue flex-shrink-0 flex space-x-1 items-center cursor-pointer",
               input(
                 tpe := "checkbox",
                 checked <-- dimContext.signal,
@@ -127,8 +129,8 @@ object CodeExampleDisplay {
           },
           span(
             cls := "flex-shrink-0",
-            button.btn.sm.text.blue(
-              cls := "w-20 justify-center",
+            button(
+              cls := "btn-sm-text-blue w-20 justify-center",
               child.text <-- sourceCollapsed.signal.switch("expand", "collapse"),
               onClick --> sourceCollapsed.toggleObserver
             )
@@ -138,7 +140,7 @@ object CodeExampleDisplay {
           cls := "overflow-hidden shadow relative",
           div(
             cls := "overflow-auto",
-            TW.transition(show = !sourceCollapsed.signal, collapseTransition),
+            addTransition(show = !sourceCollapsed.signal, collapseTransition),
             child <-- Styles.highlightStyle.signal.combineWithFn(dimContext.signal) { (_, dim) =>
               codeNode(dim)
             }

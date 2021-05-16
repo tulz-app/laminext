@@ -3,10 +3,12 @@ package io.laminext.site
 package layout
 
 import com.raquo.laminar.api.L._
+import io.laminext.ui._
 import io.laminext.syntax.tailwind._
 import io.laminext.syntax.core._
 import io.laminext.site.icons.Icons
 import com.raquo.laminar.nodes.ReactiveHtmlElement
+import io.laminext.tailwind.theme.TailwindTransition
 
 object PageHeader {
 
@@ -48,7 +50,8 @@ object PageHeader {
       div(
         cls := "hidden lg:block relative inline-block text-left",
         div(
-          button.btn.sm.text.white(
+          button(
+            cls := "btn-sm-text-white",
             `type` := "button",
             Icons.highlighter(svg.cls := "h-4 text-gray-300"),
             aria.hasPopup := true,
@@ -65,7 +68,7 @@ object PageHeader {
           )
         ),
         div(
-          TW.transition(styleDropDownOpen.signal),
+          addTransition(styleDropDownOpen.signal, TailwindTransition.opacityAndScale),
           cls := "origin-top-right absolute max-h-128 overflow-auto right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20 p-2",
           div(
             cls := "py-1",
@@ -105,33 +108,33 @@ object PageHeader {
       ),
       div(
         cls := "lg:hidden",
-        button.btn.md.outline
-          .white(
+        button(
+          cls := "btn-md-outline-white",
 //            Icons.heroicons.menu(svg.cls := "hidden-before-css block w-5")
-            "Menu",
-            onClick.mapTo(
-              Some(
-                ModalContent(
+          "Menu",
+          onClick.mapTo(
+            Some(
+              ModalContent(
+                div(
                   div(
-                    div(
-                      cls := "flex justify-end py-4 px-8",
-                      button.btn.md.outline
-                        .white(
-                          "Close",
-                          onClick.mapTo(None) --> menuObserver
-                        )
-                    ),
-                    PageNavigation($module, $page, mobile = true),
-                    div(
-                      cls := "flex flex-wrap justify-start items-center p-4",
-                      Site.modules.drop(1).map(moduleLink($module))
-                    ),
+                    cls := "flex justify-end py-4 px-8",
+                    button(
+                      cls := "btn-md-outline-white",
+                      "Close",
+                      onClick.mapTo(None) --> menuObserver
+                    )
                   ),
-                  Some(menuObserver.contramap(_ => None))
-                )
+                  PageNavigation($module, $page, mobile = true),
+                  div(
+                    cls := "flex flex-wrap justify-start items-center p-4",
+                    Site.modules.drop(1).map(moduleLink($module))
+                  ),
+                ),
+                Some(menuObserver.contramap(_ => None))
               )
-            ) --> menuObserver
-          )
+            )
+          ) --> menuObserver
+        )
       ),
       div(
         cls := "hidden lg:block",

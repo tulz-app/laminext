@@ -4,10 +4,8 @@ import com.raquo.laminar.api.L._
 import io.laminext.site.layout.PageWrap
 import io.laminext.syntax.core._
 import io.laminext.syntax.tailwind._
+import io.laminext.ui._
 import io.frontroute._
-import io.laminext.tailwind.modal.ModalContent
-import io.laminext.tailwind.theme.Modal
-import io.laminext.tailwind.theme.Theme
 import org.scalajs.dom
 
 class Routes(locationProvider: LocationProvider) {
@@ -61,12 +59,6 @@ class Routes(locationProvider: LocationProvider) {
   private val $module = routeResult.optionMap(_._1)
   private val $page   = routeResult.optionMap(_._2)
 
-  private val mobileMenuModal: Modal = Theme.current.modal.customize(
-    contentWrapTransition = _.customize(
-      nonHidden = _ :+ "bg-gray-900"
-    )
-  )
-
   def start(): Unit = {
     val appContainer  = dom.document.querySelector("#app")
     val menuContainer = dom.document.querySelector("#menu-modal")
@@ -74,7 +66,7 @@ class Routes(locationProvider: LocationProvider) {
 
     appContainer.innerHTML = ""
     com.raquo.laminar.api.L.render(appContainer, appContent)
-    com.raquo.laminar.api.L.render(menuContainer, TW.modal(mobileMenuContent.signal, mobileMenuModal))
+    com.raquo.laminar.api.L.render(menuContainer, modal(mobileMenuContent.signal, Theme.mobileMenuModalStyling))
 
     runRoute(route, locationProvider)(unsafeWindowOwner)
 

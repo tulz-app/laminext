@@ -1,6 +1,5 @@
 package io.laminext.syntax
 
-import io.laminext.util.SmartClass
 import org.scalajs.dom
 
 trait CoreSyntax
@@ -30,7 +29,6 @@ trait CoreSyntax
     with SeqSyntax
     with MiscSyntax
     with HtmlEntities
-    with SmartClass
     with ReceiversSyntax {
 
   type AmAny                                                  = io.laminext.AmAny

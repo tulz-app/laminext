@@ -3,21 +3,17 @@ package io.laminext.site
 import com.raquo.laminar.api.L._
 import io.frontroute.LinkHandler
 import io.laminext.highlight.Highlight
+import io.laminext.highlight.HighlightCss
 import io.laminext.highlight.HighlightJavaScript
 import io.laminext.highlight.HighlightJson
 import io.laminext.highlight.HighlightScala
-import io.laminext.tailwind.modal.Modal
-import io.laminext.tailwind.theme.DefaultTheme
-import io.laminext.tailwind.theme.Theme
+import io.laminext.ui.Modal
 import org.scalajs.dom
 
 object Main {
 
-//  val mainCss: MainCss.type = MainCss
-
   def main(args: Array[String]): Unit = {
     val _ = documentEvents.onDomContentLoaded.foreach { _ =>
-      Theme.setTheme(DefaultTheme.theme)
       Modal.initialize()
       LinkHandler.install()
       val wiring = Wiring()
@@ -25,6 +21,7 @@ object Main {
       insertJsClass(wiring.ssrContext)
       Highlight.registerLanguage("scala", HighlightScala)
       Highlight.registerLanguage("javascript", HighlightJavaScript)
+      Highlight.registerLanguage("css", HighlightCss)
       Highlight.registerLanguage("json", HighlightJson)
       wiring.routes.start()
     }(unsafeWindowOwner)

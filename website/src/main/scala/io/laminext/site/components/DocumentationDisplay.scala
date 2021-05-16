@@ -16,7 +16,7 @@ object DocumentationDisplay {
         title
       ),
       div(
-        cls := "prose max-w-none",
+        cls := "prose prose-blue max-w-none",
         unsafeMarkdown := TemplateVars(markdown),
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>

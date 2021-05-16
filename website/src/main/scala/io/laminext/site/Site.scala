@@ -106,7 +106,19 @@ object Site {
     SiteModule(
       path = "ui",
       index = docPage("", "UI", FileAsString("/doc/ui/index.md")),
+      "" -> Seq(
+        docPage("card", "Card", FileAsString("/doc/ui/card.md")),
+        docPage("file-input", "File Input", FileAsString("/doc/ui/file-input.md")),
+        docPage("progress-bar", "Progress Bar", FileAsString("/doc/ui/progress-bar.md")),
+        docPage("transition", "Transition", FileAsString("/doc/ui/transition.md")),
+        docPage("modal", "Modal", FileAsString("/doc/ui/modal.md")),
+        docPage("animation", "Animation", FileAsString("/doc/ui/animation.md")),
+      ),
       "Examples" -> Seq(
+        examplePage(examples.ui.ex_card.CardExample),
+        examplePage(examples.ui.ex_fileinput.FileInputExample),
+        examplePage(examples.ui.ex_progress_bar.ProgressBarExample),
+        examplePage(examples.ui.ex_modal.ModalExample),
         examplePage(examples.ui.ex_animation.AnimationExample),
         examplePage(examples.ui.ex_transition.TransitionExample),
       )
@@ -130,24 +142,9 @@ object Site {
       path = "tailwind",
       index = docPage("", "Tailwind", FileAsString("/doc/tailwind/index.md")),
       "" -> Seq(
-        docPage("theme", "Theme", FileAsString("/doc/tailwind/theme.md")),
-        docPage("buttons", "Buttons", FileAsString("/doc/tailwind/buttons.md")),
-        docPage("card", "Card", FileAsString("/doc/tailwind/card.md")),
-        docPage("animation", "Animation", FileAsString("/doc/tailwind/animation.md")),
         docPage("transition", "Transition", FileAsString("/doc/tailwind/transition.md")),
-        docPage("file-input", "File Input", FileAsString("/doc/tailwind/file-input.md")),
-        docPage("modal", "Modal", FileAsString("/doc/tailwind/modal.md")),
-      ),
-      "Examples" -> Seq(
-        examplePage(examples.tailwind.ex_tailwind_button_colors.TailwindButtonColorsExample),
-        examplePage(examples.tailwind.ex_tailwind_button_sizes.TailwindButtonSizesExample),
-        examplePage(examples.tailwind.ex_tailwind_button_group.TailwindButtonGroupExample),
-        examplePage(examples.tailwind.ex_tailwind_card.TailwindCardExample),
-        examplePage(examples.tailwind.ex_tailwind_animation.TailwindAnimationExample),
-        examplePage(examples.tailwind.ex_tailwind_transition.TailwindTransitionExample),
-        examplePage(examples.tailwind.ex_tailwind_fileinput.TailwindFileInputExample),
-        examplePage(examples.tailwind.ex_tailwind_modal.TailwindModalExample),
-        examplePage(examples.tailwind.ex_tailwind_progress_bar.TailwindProgressBarExample),
+        //        docPage("theme", "Theme", FileAsString("/doc/tailwind/theme.md")),
+//        docPage("buttons", "Buttons", FileAsString("/doc/tailwind/buttons.md")),
       )
     ),
 //    SiteModule(

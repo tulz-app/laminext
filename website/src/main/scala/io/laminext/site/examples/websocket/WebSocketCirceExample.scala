@@ -42,7 +42,7 @@ object WebSocketCirceExample
 //        div(
 //          cls := "flex space-x-4",
 //          button(
-//            cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+//            cls := "btn-md-fill-blue",
 //            "send",
 //            /* <focus> */
 //            thisEvents(onClick).sample(inputElement.value).map(string => Data(string)) --> ws.send

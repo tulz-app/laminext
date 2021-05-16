@@ -1,6 +1,5 @@
 package io.laminext.site.layout
 
-import io.laminext.site.ExampleModalContent
 import io.laminext.site.Page
 import io.laminext.site.Site
 import io.laminext.site.SiteModule
@@ -8,6 +7,7 @@ import io.laminext.site.Styles
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
 import io.laminext.syntax.tailwind._
+import io.laminext.ui._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 object PageWrap {
@@ -50,7 +50,6 @@ object PageWrap {
         ),
         PageFooter()
       ),
-      TW.modal(ExampleModalContent.modalContent.signal),
       $pageAndResult.bind {
         case Some((_, Right((_, theTitle)))) =>
           titleElement.textContent = s"$theTitle - laminext"

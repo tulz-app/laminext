@@ -1,38 +1,30 @@
-Themed transitions using the `Transition` from `laminext-ui`.
+Transition configs using the TailwindCSS utilities.
 
-Theme contains configurations for the following transitions:
+* `TailwindTransition.scale`
+* `TailwindTransition.opacity`
+* `TailwindTransition.opacityAndScale`
+* `TailwindTransition.resize`
 
-* default (in the default theme, it's opacity and scale)
-* scale
-* opacity
-* opacity and scale
-* resize
-
-Available via the `TW` object.
 
 ```scala
 import com.raquo.laminar.api.L._
+import io.laminext.ui._
 import io.laminext.syntax.tailwind._
 
 val showing: Signal[Boolean] = ???
 
 div(
   div(
-    TW.transition(showing), // default
+    addTransition(showing, TailwindTransition.scale)
   ),
   div(
-    TW.transition.opacityAndScale(showing)
+    addTransition(showing, TailwindTransition.opacity)
   ),
   div(
-    TW.transition.opacity(showing)
+    addTransition(showing, TailwindTransition.opacityAndScale)
   ),
   div(
-    TW.transition.scale(showing)
-  ),
-  div(
-    TW.transition.resize(showing)
+    addTransition(showing, TailwindTransition.resize)
   )
 )
 ```
-
-See the [example](/tailwind/example-transition)

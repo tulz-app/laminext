@@ -1,1 +1,1 @@
-This example uses the Tailwind classes. 
+This example uses the TailwindCSS classes. 

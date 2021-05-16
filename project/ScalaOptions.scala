@@ -10,6 +10,7 @@ object ScalaOptions {
         "-Wunused:implicits",
         "-Wunused:explicits",
         "-Wunused:imports",
+        "-Wunused:privates",
         "-Wunused:params"
       )
     )),

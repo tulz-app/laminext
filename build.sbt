@@ -131,7 +131,7 @@ lazy val `ui` =
     .settings(commonSettings)
     .settings(bundlerSettings)
     .settings(baseDependencies)
-    .dependsOn(`base`, `core`)
+    .dependsOn(`base`, `core`, `validation-core`)
 
 lazy val `tailwind` =
   project
