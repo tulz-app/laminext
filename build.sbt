@@ -9,7 +9,7 @@ inThisBuild(
     description := "Laminar utilities and components",
     crossScalaVersions := Seq(
       ScalaVersions.v213,
-      ScalaVersions.v3RC3
+      ScalaVersions.v3
     ),
     Test / publishArtifact := false,
     Test / parallelExecution := false,
