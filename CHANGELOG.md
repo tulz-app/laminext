@@ -6,7 +6,7 @@ Laminar 0.13.0, Scala 3.0.0
 
 ### 0.13.0
 
-Laminar 0.13.0, circe modules cross built for Scala 3-RC3 (circe v0.14.0-M6)
+Laminar 0.13.0, Scala 3-RC3
 
 ### 0.12.3
 
