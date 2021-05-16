@@ -2,6 +2,10 @@
 libraryDependencies += "io.laminext" %%% "core" % "{{laminextVersion}}"
 ```
 
+```scala
+import io.laminext.syntax.core._
+```
+
 laminext-core provides a set of extensions and utilities for [Laminar](https://github.com/raquo/Laminar) and [Airstream](https://github.com/raquo/Airstream)
 
 ## Observable
