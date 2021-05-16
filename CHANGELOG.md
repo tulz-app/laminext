@@ -1,15 +1,16 @@
 # Changelog
 
-## 0.13.1
+### 0.13.2
 
+WIP
+
+### 0.13.1
+
+Laminar 0.13.0, Scala 3.0.0 
 
 ### 0.13.0
 
-Laminar 0.13.0, circe modules cross built for Scala 3-RC3 (circe v0.14.0-M5)
-
-### 0.13.0-M1
-
-Laminar 0.13.0-M1
+Laminar 0.13.0, Scala 3-RC3
 
 ### 0.12.3
 
