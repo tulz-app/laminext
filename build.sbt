@@ -9,7 +9,8 @@ inThisBuild(
     description := "Laminar utilities and components",
     crossScalaVersions := Seq(
       ScalaVersions.v213,
-      ScalaVersions.v3
+      ScalaVersions.v3,
+      ScalaVersions.v212
     ),
     Test / publishArtifact := false,
     Test / parallelExecution := false,
@@ -41,7 +42,6 @@ lazy val bundlerSettings = Seq(
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.laminar.value,
-    Dependencies.stringdiff.value,
     Dependencies.domtestutils.value
   )
 )

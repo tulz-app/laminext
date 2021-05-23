@@ -7,10 +7,9 @@ object DependencyVersions {
   val jsdom        = "16.4.0"
   val laminar      = "0.13.0"
   val `scala-test` = "3.2.9"
-  val stringdiff   = "0.3.3"
   val domtestutils = "0.14.8"
   val cats         = "2.6.1"
-  val upickle      = "1.3.13"
+  val upickle      = "1.3.14"
 
   val circe: Def.Initialize[String] = Def.setting {
     CrossVersion.partialVersion(scalaVersion.value) match {
