@@ -9,8 +9,7 @@ inThisBuild(
     description := "Laminar utilities and components",
     crossScalaVersions := Seq(
       ScalaVersions.v213,
-      ScalaVersions.v3,
-      ScalaVersions.v212
+      ScalaVersions.v3
     ),
     Test / publishArtifact := false,
     Test / parallelExecution := false,
@@ -25,7 +24,7 @@ inThisBuild(
       "SONATYPE_PASSWORD" -> s"$${{ secrets.SONATYPE_PASSWORD }}",
       "SONATYPE_USERNAME" -> s"$${{ secrets.SONATYPE_USERNAME }}"
     )),
-    versionScheme := Some("semver-spec") // all 0.y.z are treated as initial development (no bincompat guarantees)
+    versionScheme := Some("early-semver") // Early Semantic Versioning that would keep binary compatibility across patch updates within 0.Y.z
   ),
 )
 
