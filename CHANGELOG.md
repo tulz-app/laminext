@@ -1,5 +1,9 @@
 # Changelog
 
+### 0.13.2
+
+* new: `protocol` parameter for WebSocket (thanks @ghostdogpr!) 
+
 ### 0.13.1
 
 Laminar 0.13.0, Scala 3.0.0 

@@ -7,10 +7,6 @@ module.exports = (api) => {
     mode: 'jit',
     purge: [
       `./target/scala-${scalaVersion}/website-${scalajsMode}/*.js`,
-      './src/main/resources/**/*.html',
-      './src/main/resources/**/*.md',
-      './src/main/scala/**/*.html',
-      './src/main/scala/**/*.md',
       './src/main/static/html/*',
     ],
     theme: {

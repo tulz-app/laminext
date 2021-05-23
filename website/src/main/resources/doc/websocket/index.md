@@ -6,20 +6,23 @@ libraryDependencies += "io.laminext" %%% "websocket" % "{{laminextVersion}}"
 import io.laminext.websocket._
 ```
 
-In order to build a WebSocket connection, you first need to specify the endpoint to connect to:
+In order to build a WebSocket connection, you first need to specify the endpoint to connect to.
+Optionally you can specify a `protocol` ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket)):
 
 ## Absolute endpoint URL:
 
 ```scala
 import io.laminext.websocket._
-val ws = WebSocket.url("wss://echo.websocket.org")
+val ws  = WebSocket.url("wss://echo.websocket.org")
+val ws2 = WebSocket.url("wss://echo.websocket.org", protocol = "my-protocol")
 ```
 
 ## Relative endpoint URL:
 
 ```scala
 import io.laminext.websocket._
-val ws = WebSocket.path("/my-ws-endpoint")
+val ws  = WebSocket.path("/my-ws-endpoint")
+val ws2 = WebSocket.path("/my-ws-endpoint", protocol = "my-protocol")
 ```
 
 ## Receive
@@ -193,7 +196,8 @@ ws.events // EventStream[WebSocketEvent[Receive]]
 If you use [circe](https://circe.github.io/circe/), there's a `websocket-circe` module available. See [circe support](/websocket/circe).
 
 
-## zio-json support
+## upickle support
 
-Similarly, if you use [zio-json](https://github.com/zio/zio-json), there's a `websocket-zio-json` module available. See [zio-json support](/websocket/zio-json).
+Similarly, if you use [upickle](https://github.com/com-lihaoyi/upickle), there's 
+a `websocket-upickle` module available. See [upickle support](/websocket/upickle).
 

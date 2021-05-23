@@ -95,7 +95,7 @@ object Site {
       index = docPage("", "WebSocket", FileAsString("/doc/websocket/index.md")),
       "" -> Seq(
         docPage("circe", "circe support", FileAsString("/doc/websocket/circe.md")),
-        docPage("upickle", "circe support", FileAsString("/doc/websocket/upickle.md"))
+        docPage("upickle", "upickle support", FileAsString("/doc/websocket/upickle.md"))
       ),
       "Examples" -> Seq(
         examplePage(examples.websocket.WebSocketExample),
@@ -167,6 +167,14 @@ object Site {
       index = docPage("", "Util", FileAsString("/doc/util/index.md")),
       "Examples" -> Seq(
         examplePage(examples.util.ex_human_readable_size.HumanReadableSizeExample),
+      )
+    ),
+    SiteModule(
+      path = "news",
+      index = docPage("", "News", FileAsString("/doc/news/index.md")),
+      "" -> Seq(
+        docPage("v0-13-2", "v0.13.2", FileAsString("/doc/news/v0.13.2.md")),
+        docPage("v0-13-1", "v0.13.1", FileAsString("/doc/news/v0.13.1.md")),
       )
     ),
   )
