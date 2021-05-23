@@ -10,6 +10,7 @@ class WebSocketReceiveBuilderUpickleOps(b: WebSocketReceiveBuilder) {
   @inline def json[Receive, Send](implicit receiveReader: Reader[Receive], sendWriter: Writer[Send]): WebSocketBuilder[Receive, Send] =
     new WebSocketBuilder[Receive, Send](
       url = b.url,
+      protocol = b.protocol,
       initializer = initialize.text,
       sender = send.text[Send](write(_)),
       receiver = receive.text[Receive](string => Try(read[Receive](string)).toEither)

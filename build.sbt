@@ -24,7 +24,8 @@ inThisBuild(
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
       "SONATYPE_PASSWORD" -> s"$${{ secrets.SONATYPE_PASSWORD }}",
       "SONATYPE_USERNAME" -> s"$${{ secrets.SONATYPE_USERNAME }}"
-    ))
+    )),
+    versionScheme := Some("semver-spec") // all 0.y.z are treated as initial development (no bincompat guarantees)
   ),
 )
 

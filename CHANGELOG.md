@@ -1,8 +1,12 @@
 # Changelog
 
-### 0.13.2
+### 0.13.3
 
 WIP
+
+### 0.13.2
+
+* new: `protocol` parameter for WebSocket (thanks @ghostdogpr!) 
 
 ### 0.13.1
 

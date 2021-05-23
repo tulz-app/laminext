@@ -12,6 +12,7 @@ import scala.util.Try
 
 final class WebSocketBuilder[Receive, Send](
   url: String,
+  protocol: String,
   initializer: WebSocketInitialize,
   sender: WebSocketSend[Send],
   receiver: WebSocketReceive[Receive],
@@ -27,6 +28,7 @@ final class WebSocketBuilder[Receive, Send](
     reconnectRetries: Int = 10
   ): WebSocket[Receive, Send] = new WebSocket[Receive, Send](
     url = url,
+    protocol = protocol,
     initializer = initializer,
     sender = sender,
     receiver = receiver,
@@ -41,83 +43,84 @@ final class WebSocketBuilder[Receive, Send](
 
 }
 
-final class WebSocketReceiveStringBuilder(url: String) {
+final class WebSocketReceiveStringBuilder(url: String, protocol: String) {
 
   @inline def sendString: WebSocketBuilder[String, String] =
-    new WebSocketBuilder(url, initialize.text, send.string, receive.string)
+    new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.string)
   @inline def sendText[Send](encode: Send => String): WebSocketBuilder[String, Send] =
-    new WebSocketBuilder(url, initialize.text, send.text(encode), receive.string)
+    new WebSocketBuilder(url, protocol, initialize.text, send.text(encode), receive.string)
   @inline def sendBlob: WebSocketBuilder[String, Blob] =
-    new WebSocketBuilder(url, initialize.blob, send.blob, receive.string)
+    new WebSocketBuilder(url, protocol, initialize.blob, send.blob, receive.string)
   @inline def sendArrayBuffer: WebSocketBuilder[String, ArrayBuffer] =
-    new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.string)
+    new WebSocketBuilder(url, protocol, initialize.arraybuffer, send.arraybuffer, receive.string)
 
 }
 
 final class WebSocketReceiveTextBuilder[Receive](
   url: String,
+  protocol: String,
   decode: String => Either[Throwable, Receive]
 ) {
 
   @inline def sendString: WebSocketBuilder[Receive, String] =
-    new WebSocketBuilder(url, initialize.text, send.string, receive.text(decode))
+    new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.text(decode))
   @inline def sendText[Send](encode: Send => String): WebSocketBuilder[Receive, Send] =
-    new WebSocketBuilder(url, initialize.text, send.text(encode), receive.text(decode))
+    new WebSocketBuilder(url, protocol, initialize.text, send.text(encode), receive.text(decode))
   @inline def sendBlob: WebSocketBuilder[Receive, Blob] =
-    new WebSocketBuilder(url, initialize.blob, send.blob, receive.text(decode))
+    new WebSocketBuilder(url, protocol, initialize.blob, send.blob, receive.text(decode))
   @inline def sendArrayBuffer: WebSocketBuilder[Receive, ArrayBuffer] =
-    new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.text(decode))
+    new WebSocketBuilder(url, protocol, initialize.arraybuffer, send.arraybuffer, receive.text(decode))
 
 }
 
-final class WebSocketReceiveBlobBuilder(url: String) {
+final class WebSocketReceiveBlobBuilder(url: String, protocol: String) {
 
   @inline def sendString: WebSocketBuilder[Blob, String] =
-    new WebSocketBuilder(url, initialize.text, send.string, receive.blob)
+    new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.blob)
   @inline def sendText[Send](encode: Send => String): WebSocketBuilder[Blob, Send] =
-    new WebSocketBuilder(url, initialize.text, send.text(encode), receive.blob)
+    new WebSocketBuilder(url, protocol, initialize.text, send.text(encode), receive.blob)
   @inline def sendBlob: WebSocketBuilder[Blob, Blob] =
-    new WebSocketBuilder(url, initialize.blob, send.blob, receive.blob)
+    new WebSocketBuilder(url, protocol, initialize.blob, send.blob, receive.blob)
   @inline def sendArrayBuffer: WebSocketBuilder[Blob, ArrayBuffer] =
-    new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.blob)
+    new WebSocketBuilder(url, protocol, initialize.arraybuffer, send.arraybuffer, receive.blob)
 
 }
 
-final class WebSocketReceiveArrayBufferBuilder(url: String) {
+final class WebSocketReceiveArrayBufferBuilder(url: String, protocol: String) {
 
   @inline def sendString: WebSocketBuilder[ArrayBuffer, String] =
-    new WebSocketBuilder(url, initialize.text, send.string, receive.arraybuffer)
+    new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.arraybuffer)
   @inline def sendText[Send](encode: Send => String): WebSocketBuilder[ArrayBuffer, Send] =
-    new WebSocketBuilder(url, initialize.text, send.text(encode), receive.arraybuffer)
+    new WebSocketBuilder(url, protocol, initialize.text, send.text(encode), receive.arraybuffer)
   @inline def sendBlob: WebSocketBuilder[ArrayBuffer, Blob] =
-    new WebSocketBuilder(url, initialize.blob, send.blob, receive.arraybuffer)
+    new WebSocketBuilder(url, protocol, initialize.blob, send.blob, receive.arraybuffer)
   @inline def sendArrayBuffer: WebSocketBuilder[ArrayBuffer, ArrayBuffer] =
-    new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.arraybuffer)
+    new WebSocketBuilder(url, protocol, initialize.arraybuffer, send.arraybuffer, receive.arraybuffer)
 
 }
 
-final class WebSocketReceiveBuilder(private[websocket] val url: String) {
+final class WebSocketReceiveBuilder(private[websocket] val url: String, private[websocket] val protocol: String) {
 
-  @inline def string: WebSocketBuilder[String, String] = new WebSocketBuilder(url, initialize.text, send.string, receive.string)
+  @inline def string: WebSocketBuilder[String, String] = new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.string)
 
   @inline def text[Receive, Send](
     encode: Send => String,
     decode: String => Either[Throwable, Receive]
-  ): WebSocketBuilder[Receive, Send] = new WebSocketBuilder(url, initialize.text, send.text(encode), receive.text(decode))
+  ): WebSocketBuilder[Receive, Send] = new WebSocketBuilder(url, protocol, initialize.text, send.text(encode), receive.text(decode))
 
-  @inline def blob: WebSocketBuilder[dom.Blob, dom.Blob] = new WebSocketBuilder(url, initialize.blob, send.blob, receive.blob)
+  @inline def blob: WebSocketBuilder[dom.Blob, dom.Blob] = new WebSocketBuilder(url, protocol, initialize.blob, send.blob, receive.blob)
 
   @inline def arraybuffer: WebSocketBuilder[js.typedarray.ArrayBuffer, js.typedarray.ArrayBuffer] =
-    new WebSocketBuilder(url, initialize.arraybuffer, send.arraybuffer, receive.arraybuffer)
+    new WebSocketBuilder(url, protocol, initialize.arraybuffer, send.arraybuffer, receive.arraybuffer)
 
   @inline def receiveString: WebSocketReceiveStringBuilder =
-    new WebSocketReceiveStringBuilder(url)
+    new WebSocketReceiveStringBuilder(url, protocol)
   @inline def receiveText[Receive](decode: String => Either[Throwable, Receive]): WebSocketReceiveTextBuilder[Receive] =
-    new WebSocketReceiveTextBuilder[Receive](url, decode)
+    new WebSocketReceiveTextBuilder[Receive](url, protocol, decode)
   @inline def receiveBlob: WebSocketReceiveBlobBuilder =
-    new WebSocketReceiveBlobBuilder(url)
+    new WebSocketReceiveBlobBuilder(url, protocol)
   @inline def receiveArrayBuffer: WebSocketReceiveArrayBufferBuilder =
-    new WebSocketReceiveArrayBufferBuilder(url)
+    new WebSocketReceiveArrayBufferBuilder(url, protocol)
 
 }
 
