@@ -10,7 +10,7 @@ object DependencyVersions {
   val stringdiff   = "0.3.3"
   val domtestutils = "0.14.8"
   val cats         = "2.6.1"
-  val upickle      = "1.3.14"
+  val upickle      = "1.3.15"
 
   val circe: Def.Initialize[String] = Def.setting {
     CrossVersion.partialVersion(scalaVersion.value) match {
