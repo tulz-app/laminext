@@ -42,6 +42,7 @@ lazy val bundlerSettings = Seq(
 lazy val baseDependencies = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.laminar.value,
+    Dependencies.stringdiff.value,
     Dependencies.domtestutils.value
   )
 )

@@ -8,6 +8,11 @@ object Dependencies {
       "com.raquo" %%% "laminar" % DependencyVersions.laminar
     )
   }
+  val stringdiff: Def.Initialize[Seq[ModuleID]] = Def.setting {
+    Seq(
+      "app.tulz" %%% "stringdiff" % DependencyVersions.stringdiff % Test
+    )
+  }
 
   val domtestutils: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
