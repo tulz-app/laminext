@@ -5,7 +5,7 @@ inThisBuild(
     licenses := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
     scmInfo := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
     developers := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
-    scalaVersion := ScalaVersions.v3,
+    scalaVersion := ScalaVersions.v213,
     description := "Laminar utilities and components",
     crossScalaVersions := Seq(
       ScalaVersions.v213,
