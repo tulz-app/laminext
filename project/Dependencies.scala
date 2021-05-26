@@ -28,8 +28,8 @@ object Dependencies {
 
   val circe: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
-      "io.circe" %%% "circe-core"   % DependencyVersions.circe.value,
-      "io.circe" %%% "circe-parser" % DependencyVersions.circe.value
+      "io.circe" %%% "circe-core"   % DependencyVersions.circe,
+      "io.circe" %%% "circe-parser" % DependencyVersions.circe
     )
   }
 
