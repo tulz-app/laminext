@@ -9,8 +9,10 @@ object ScalaOptions {
         "-Wunused:implicits",
         "-Wunused:explicits",
         "-Wunused:imports",
+        "-Wunused:params",
         "-Wunused:privates",
-        "-Wunused:params"
+        "-source",
+        "future"
       )
     )),
     (Compile / doc / scalacOptions) ~= (_.filterNot(
