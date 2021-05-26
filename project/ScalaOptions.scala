@@ -13,14 +13,6 @@ object ScalaOptions {
         "-Wunused:params"
       )
     )),
-    scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, _)) =>
-        Seq(
-          "-Ymacro-annotations"
-        )
-      case Some((3, _)) => Seq()
-      case _            => Seq()
-    }),
     (Compile / doc / scalacOptions) ~= (_.filterNot(
       Set(
         "-scalajs",
@@ -34,7 +26,7 @@ object ScalaOptions {
         "-Ykind-projector",
         "-from-tasty",
         "-encoding",
-        "utf8",
+        "utf8"
       )
     ))
   )

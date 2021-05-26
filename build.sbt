@@ -25,7 +25,7 @@ inThisBuild(
       "SONATYPE_USERNAME" -> s"$${{ secrets.SONATYPE_USERNAME }}"
     )),
     versionScheme := Some("early-semver") // Early Semantic Versioning that would keep binary compatibility across patch updates within 0.Y.z
-  ),
+  )
 )
 
 lazy val commonSettings = Seq.concat(
