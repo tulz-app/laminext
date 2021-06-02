@@ -14,10 +14,10 @@ addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0")
 
 libraryDependencies += "net.exoego" %% "scalajs-env-jsdom-nodejs" % "2.0.0"
 
-addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.19")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.20")
 
 addSbtPlugin("com.yurique" % "sbt-embedded-files" % "0.2.1")
 
-addSbtPlugin("com.codecommit" % "sbt-github-actions" % "0.11.0")
+addSbtPlugin("com.codecommit" % "sbt-github-actions" % "0.12.0")
 
 addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.5.7")
