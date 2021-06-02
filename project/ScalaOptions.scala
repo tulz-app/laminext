@@ -1,4 +1,3 @@
-import sbt._
 import sbt.Keys._
 
 object ScalaOptions {
@@ -10,25 +9,7 @@ object ScalaOptions {
         "-Wunused:explicits",
         "-Wunused:imports",
         "-Wunused:params",
-        "-Wunused:privates",
-        "-source",
-        "future"
-      )
-    )),
-    (Compile / doc / scalacOptions) ~= (_.filterNot(
-      Set(
-        "-scalajs",
-        "-deprecation",
-        "-explain-types",
-        "-explain",
-        "-feature",
-        "-language:existentials,experimental.macros,higherKinds,implicitConversions",
-        "-unchecked",
-        "-Xfatal-warnings",
-        "-Ykind-projector",
-        "-from-tasty",
-        "-encoding",
-        "utf8"
+        "-Wunused:privates"
       )
     ))
   )
