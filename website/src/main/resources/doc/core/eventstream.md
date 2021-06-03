@@ -1,3 +1,17 @@
+## `.errorOrValue`
+
+`EventStream[A] => EventStream[Either[Throwable, A]]`
+
+Returns an `EventStream[Either[Throwable, A]]` containing the values emitted by the stream (as `Right`) or the
+stream errors (as `Left`).
+
+```scala
+import com.raquo.laminar.api.L._
+import io.laminext.syntax.core._
+val stream: EventStream[String] = ???
+val transitions: EventStream[Either[Throwable, String]] = stream.errorOrValue
+```
+
 ## `.transitions`
 
 `EventStream[A] => EventStream[(Option[A], A)]`
