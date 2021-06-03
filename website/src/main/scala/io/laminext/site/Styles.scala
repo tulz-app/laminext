@@ -48,7 +48,6 @@ object Styles {
     "dracula",
     "far",
     "foundation",
-    "github-gist",
     "github",
     "gml",
     "googlecode",

@@ -20,7 +20,7 @@ object DocumentationDisplay {
         unsafeMarkdown := TemplateVars(markdown),
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
-            Highlight.highlightBlock(codeElement)
+            Highlight.highlightElement(codeElement)
           }
         }
       )
