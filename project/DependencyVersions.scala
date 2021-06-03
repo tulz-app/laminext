@@ -12,8 +12,7 @@ object DependencyVersions {
   // -- website
 
   val sourcecode             = "0.2.7"
-  val frontroute             = "0.13.1"
-  val `embedded-files`       = "0.2.0"
+  val frontroute             = "0.13.2"
   val `embedded-files-macro` = "0.2.4"
   val `scala-java-time`      = "2.3.0"
 
