@@ -73,7 +73,7 @@ object CodeExampleDisplay {
       div(
         theCode,
         onMountCallback { ctx =>
-          Highlight.highlightBlock(ctx.thisNode.ref.childNodes.head)
+          Highlight.highlightElement(ctx.thisNode.ref.childNodes.head)
           if (hasContext) {
             hideFocusMarkers(ctx.thisNode.ref.childNodes.head.asInstanceOf[html.Element])
             val _ = js.timers.setTimeout(0) {
@@ -98,7 +98,7 @@ object CodeExampleDisplay {
         unsafeMarkdown := TemplateVars(example.description),
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
-            Highlight.highlightBlock(codeElement)
+            Highlight.highlightElement(codeElement)
           }
         }
       ),

@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.JSImport
 object Highlight extends js.Any {
 
   def registerLanguage(name: String, lang: js.Any): Unit = js.native
-  def highlightBlock(block: Node): Unit                  = js.native
+  def highlightElement(block: Node): Unit                = js.native
 
 }
 

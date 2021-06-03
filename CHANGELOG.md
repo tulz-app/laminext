@@ -1,8 +1,12 @@
 # Changelog
 
+### 0.13.4
+
+Sourcemaps are now pointing to GitHub.
+
 ### 0.13.3
 
-WIP
+Update to circe 0.14.1.
 
 ### 0.13.2
 
