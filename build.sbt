@@ -29,7 +29,19 @@ inThisBuild(
 )
 
 lazy val commonSettings = Seq.concat(
-  ScalaOptions.fixOptions
+  ScalaOptions.fixOptions,
+  scalacOptions ++= {
+    val sourcesGithubUrl = s"https://raw.githubusercontent.com/tulz-app/laminext/${git.gitHeadCommit.value.get}/"
+    val sourcesOptionName = CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) => "-P:scalajs:mapSourceURI"
+      case Some((3, _)) => "-scalajs-mapSourceURI"
+      case _            => throw new RuntimeException(s"unexpected scalaVersion: ${scalaVersion.value}")
+    }
+    val moduleSourceRoot = file("").toURI.toString
+    Seq(
+      s"$sourcesOptionName:$moduleSourceRoot->$sourcesGithubUrl"
+    )
+  }
 )
 
 lazy val bundlerSettings = Seq(
