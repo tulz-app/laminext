@@ -1,5 +1,13 @@
 # Changelog
 
+### 0.13.4
+
+Sourcemaps are now pointing to GitHub.
+
+### 0.13.3
+
+Update to circe 0.14.1.
+
 ### 0.13.2
 
 * new: `protocol` parameter for WebSocket (thanks @ghostdogpr!) 
