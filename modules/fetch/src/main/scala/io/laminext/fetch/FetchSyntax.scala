@@ -4,19 +4,18 @@ import com.raquo.laminar.api.L._
 import io.laminext.fetch.ops.EventStreamOfFetchResponseOfEitherOps
 import io.laminext.fetch.ops.EventStreamOfFetchResponseOps
 import io.laminext.fetch.ops.FetchEventStreamBuilderOps
+import io.laminext.util.UrlString
 
 trait FetchSyntax {
 
-  def uri(
-    origin: String,
-    path: String = "",
+  def url(
+    absolute: String,
     params: Map[String, Seq[String]] = Map.empty
-  ): RequestUrl = origin.split("://", 2) match {
-    case Array(protocol, hostname) =>
-      RequestUrl(protocol, hostname, path.split('/').toSeq, params)
-    case _ =>
-      RequestUrl("https", origin, path.split('/').toSeq, params)
-  }
+  ): RequestUrl =
+    absolute match {
+      case UrlString(location) => RequestUrl.fromLocation(location).addParams(params)
+      case other               => throw new IllegalArgumentException(s"Invalid URL: $other")
+    }
 
   implicit def syntaxFetchEventStreamBuilder(
     underlying: FetchEventStreamBuilder
