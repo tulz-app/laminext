@@ -12,17 +12,16 @@ import scala.scalajs.js.URIUtils.encodeURIComponent
  * @param path a Seq of path segments
  * @param params a Map of query search parameters
  */
-case class RequestUrl(
-  protocol: String = "https",
+case class RequestUrl private (
+  protocol: String,
   host: String,
   path: Seq[String] = Seq.empty,
   params: Map[String, Seq[String]] = Map.empty
 ) extends ToRequestUrl {
 
-  def encode: String = s"$protocol://$host/${path.map(encodeURIComponent).mkString("/")}${UrlUtils.encodeSearchParams(params)}"
+  def encode: String = s"$protocol//$host/${path.map(encodeURIComponent).mkString("/")}${UrlUtils.encodeSearchParams(params)}"
 
-  override def toString: String = encode
-  override def apply(): String  = encode
+  override def apply(): String = encode
 
   @inline def withHost(host: String): RequestUrl = this.copy(host = host)
 
@@ -60,6 +59,19 @@ case class RequestUrl(
 }
 
 object RequestUrl {
+
+  def apply(
+    protocol: String = "https",
+    host: String,
+    path: Seq[String] = Seq.empty,
+    params: Map[String, Seq[String]] = Map.empty
+  ): RequestUrl =
+    new RequestUrl(
+      protocol = protocol,
+      host = host,
+      path = path.filterNot(_.isEmpty),
+      params = params
+    )
 
   def fromLocation(location: Location): RequestUrl = {
     val segments = if (location.pathname.nonEmpty) {
