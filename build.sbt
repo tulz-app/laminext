@@ -195,7 +195,7 @@ lazy val `fetch` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .dependsOn(`util`)
+    .dependsOn(`core`, `util`)
 
 lazy val `fetch-circe` =
   project

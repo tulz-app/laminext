@@ -41,7 +41,7 @@
     "defaults"
   ],
   "scripts": {
-    "dev": "webpack serve --progress",
+    "dev": "TAILWIND_DISABLE_TOUCH=1 DEBUG=1 webpack serve --progress",
     "start": "webpack serve --progress",
     "start:prod": "webpack serve",
     "build": "webpack --progress",

@@ -18,7 +18,7 @@ class FetchEventStreamBuilderUpickleOps(underlying: FetchEventStreamBuilder) {
     response.text().flatMap { text =>
       Try(read[A](text)) match {
         case Success(a)     => Future.successful(a)
-        case Failure(error) => Future.failed(new ResponseDecodeFailed(error, response))
+        case Failure(error) => Future.failed(ResponseError(error, response))
       }
     }
 
