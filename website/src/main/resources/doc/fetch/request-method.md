@@ -7,7 +7,7 @@ It provides functions to specify the HTTP method you want to use.
 These functions return a `FetchEventStreamBuilder` which allows to specify the rest of the request settings.
 
 Note that the `FetchEventStreamBuilder` is not immutable. It can be safely re-used, but calls to all configuration 
-methods do modify the instance.
+methods **do** modify the instance.
 
 ```scala
 import io.laminext.fetch.Fetch
