@@ -1,22 +1,16 @@
-.prose {
-    & code:not(.hljs) {
-        @apply text-gray-900;
-        @apply font-medium;
-        /*@apply text-sm;*/
-        @apply bg-gray-200;
-
-        &::before, &::after {
-            content: " ";
-        }
-    }
-
-    & h1, & h2, & h3, & h4, & h5 {
-        & code:not(.hljs) {
-            @apply bg-white;
-            @apply text-blue-700;
-            &::before, &::after {
-                content: "";
-            }
-        }
-    }
+.prose code:not(.hljs) {
+    @apply bg-blue-50 !important;
+    @apply hover:bg-blue-200 !important;
+    @apply text-blue-900 !important;
+    @apply px-1 !important;
+    @apply rounded !important;
 }
+
+.prose code:not(.hljs):before {
+    content: "" !important;
+}
+
+.prose code:not(.hljs):after {
+    content: "" !important;
+}
+

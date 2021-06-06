@@ -9,17 +9,17 @@ import scala.scalajs.js.URIUtils.encodeURIComponent
 /**
  * @param protocol http or https
  * @param host hostname, optionally with port
- * @param path a Seq of path segments
+ * @param segments a Seq of path segments
  * @param params a Map of query search parameters
  */
 case class RequestUrl private (
   protocol: String,
   host: String,
-  path: Seq[String] = Seq.empty,
-  params: Map[String, Seq[String]] = Map.empty
+  segments: Seq[String],
+  params: Map[String, Seq[String]]
 ) extends ToRequestUrl {
 
-  def encode: String = s"$protocol//$host/${path.map(encodeURIComponent).mkString("/")}${UrlUtils.encodeSearchParams(params)}"
+  def encode: String = s"$protocol//$host/${segments.map(encodeURIComponent).mkString("/")}${UrlUtils.encodeSearchParams(params)}"
 
   override def apply(): String = encode
 
@@ -27,7 +27,7 @@ case class RequestUrl private (
 
   @inline def withSegments(segments: String*): RequestUrl =
     this.copy(
-      path = segments.filterNot(_.isEmpty)
+      segments = segments.filterNot(_.isEmpty)
     )
 
   @inline def withPath(path: String): RequestUrl =
@@ -35,7 +35,7 @@ case class RequestUrl private (
 
   @inline def addSegments(segments: String*): RequestUrl =
     this.withSegments(
-      this.path ++ segments: _*
+      this.segments ++ segments: _*
     )
 
   @inline def appendPath(path: String): RequestUrl =
@@ -63,13 +63,13 @@ object RequestUrl {
   def apply(
     protocol: String = "https",
     host: String,
-    path: Seq[String] = Seq.empty,
+    segments: Seq[String] = Seq.empty,
     params: Map[String, Seq[String]] = Map.empty
   ): RequestUrl =
     new RequestUrl(
       protocol = protocol,
       host = host,
-      path = path.filterNot(_.isEmpty),
+      segments = segments.filterNot(_.isEmpty),
       params = params
     )
 
@@ -82,7 +82,7 @@ object RequestUrl {
     RequestUrl(
       protocol = location.protocol,
       host = location.host,
-      path = segments,
+      segments = segments,
       params = UrlUtils.decodeSearchParams(location.search)
     )
   }

@@ -14,7 +14,7 @@ const scalaOutputPath = path.resolve(__dirname, `./target/scala-${scalaVersion}`
 const devServerHost = '127.0.0.1';
 const devServerPort = 30088;
 
-const devServer = _.mergeWith(
+const devServer =
   {
     hot: true,
     injectHot: true,
@@ -24,10 +24,15 @@ const devServer = _.mergeWith(
     host: devServerHost,
     historyApiFallback: {
       index: ''
-    }
-  },
-  require('./devserver.config.js')
-)
+    },
+    public: `${devServerHost}:${devServerPort}`,
+    firewall: false,
+    client: {
+      host: devServerHost,
+      port: devServerPort
+    },
+
+  }
 
 
 function common(mode) {

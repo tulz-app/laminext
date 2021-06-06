@@ -12,10 +12,7 @@ trait FetchSyntax {
     absolute: String,
     params: Map[String, Seq[String]] = Map.empty
   ): RequestUrl =
-    absolute match {
-      case UrlString(location) => RequestUrl.fromLocation(location).addParams(params)
-      case other               => throw new IllegalArgumentException(s"Invalid URL: $other")
-    }
+    RequestUrl.fromLocation(UrlString.parse(absolute)).addParams(params)
 
   implicit def syntaxFetchEventStreamBuilder(
     underlying: FetchEventStreamBuilder
