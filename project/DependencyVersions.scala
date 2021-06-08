@@ -6,7 +6,7 @@ object DependencyVersions {
   val stringdiff   = "0.3.4"
   val domtestutils = "0.14.8"
   val cats         = "2.6.1"
-  val upickle      = "1.3.15"
+  val upickle      = "1.4.0"
   val circe        = "0.14.1"
 
   // -- website
