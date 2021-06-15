@@ -61,7 +61,7 @@ If you want to encode the messages before sending (JSON, etc), you can specify a
 ```scala
 import io.laminext.websocket._
 case class MyData()
-val myEncode: MyData => MyData = ??? 
+val myEncode: MyData => String = ??? 
 WebSocket.path("/my-ws-endpoint").receiveString.sendText(myEncode)
 ```
 
