@@ -14,10 +14,10 @@ import scala.util.control.NonFatal
 
 object WebSocket {
 
-  def url[Receive, Send](url: String, protocol: String = ""): WebSocketReceiveBuilder =
+  def url[Receive, Send](url: String, protocol: js.UndefOr[String] = js.undefined): WebSocketReceiveBuilder =
     new WebSocketReceiveBuilder(url, protocol)
 
-  def path[Receive, Send](path: String, protocol: String = ""): WebSocketReceiveBuilder = {
+  def path[Receive, Send](path: String, protocol: js.UndefOr[String] = js.undefined): WebSocketReceiveBuilder = {
     val wsProtocol = if (dom.document.location.protocol == "https:") "wss" else "ws"
     url(s"$wsProtocol://${dom.document.location.host}$path", protocol)
   }
@@ -26,7 +26,7 @@ object WebSocket {
 
 class WebSocket[Receive, Send](
   url: String,
-  protocol: String,
+  protocol: js.UndefOr[String],
   initializer: WebSocketInitialize,
   sender: WebSocketSend[Send],
   receiver: WebSocketReceive[Receive],
@@ -52,7 +52,7 @@ class WebSocket[Receive, Send](
     if (js.isUndefined(maybeWS)) {
       try {
         connectingVar.writer.onNext(true)
-        val ws = new raw.WebSocket(url, protocol)
+        val ws = protocol.fold(new raw.WebSocket(url))(new raw.WebSocket(url, _))
         maybeWS = ws
 
         initializer(ws)
