@@ -7,6 +7,7 @@ trait ReExports {
   type FetchResponse[A]        = io.laminext.fetch.FetchResponse[A]
   type FetchTimeout            = io.laminext.fetch.FetchTimeout
   type FetchError              = io.laminext.fetch.FetchError
+  type ResponseError           = io.laminext.fetch.ResponseError
   type RequestUrl              = io.laminext.fetch.RequestUrl
   type ToRequestBody           = io.laminext.fetch.ToRequestBody
   type ToRequestUrl            = io.laminext.fetch.ToRequestUrl

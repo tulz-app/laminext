@@ -170,6 +170,7 @@ object Site {
       path = "news",
       index = docPage("", "News", FileAsString("/doc/news/index.md")),
       "" -> Seq(
+        docPage("v0-13-6", "v0.13.6", FileAsString("/doc/news/v0.13.6.md")),
         docPage("v0-13-5", "v0.13.5", FileAsString("/doc/news/v0.13.5.md")),
         docPage("v0-13-4", "v0.13.4", FileAsString("/doc/news/v0.13.4.md")),
         docPage("v0-13-3", "v0.13.3", FileAsString("/doc/news/v0.13.3.md")),

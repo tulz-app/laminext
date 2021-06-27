@@ -12,7 +12,7 @@ import scala.util.Try
 
 final class WebSocketBuilder[Receive, Send](
   url: String,
-  protocol: String,
+  protocol: js.UndefOr[String],
   initializer: WebSocketInitialize,
   sender: WebSocketSend[Send],
   receiver: WebSocketReceive[Receive],
@@ -43,7 +43,7 @@ final class WebSocketBuilder[Receive, Send](
 
 }
 
-final class WebSocketReceiveStringBuilder(url: String, protocol: String) {
+final class WebSocketReceiveStringBuilder(url: String, protocol: js.UndefOr[String]) {
 
   @inline def sendString: WebSocketBuilder[String, String] =
     new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.string)
@@ -58,7 +58,7 @@ final class WebSocketReceiveStringBuilder(url: String, protocol: String) {
 
 final class WebSocketReceiveTextBuilder[Receive](
   url: String,
-  protocol: String,
+  protocol: js.UndefOr[String],
   decode: String => Either[Throwable, Receive]
 ) {
 
@@ -73,7 +73,7 @@ final class WebSocketReceiveTextBuilder[Receive](
 
 }
 
-final class WebSocketReceiveBlobBuilder(url: String, protocol: String) {
+final class WebSocketReceiveBlobBuilder(url: String, protocol: js.UndefOr[String]) {
 
   @inline def sendString: WebSocketBuilder[Blob, String] =
     new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.blob)
@@ -86,7 +86,7 @@ final class WebSocketReceiveBlobBuilder(url: String, protocol: String) {
 
 }
 
-final class WebSocketReceiveArrayBufferBuilder(url: String, protocol: String) {
+final class WebSocketReceiveArrayBufferBuilder(url: String, protocol: js.UndefOr[String]) {
 
   @inline def sendString: WebSocketBuilder[ArrayBuffer, String] =
     new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.arraybuffer)
@@ -99,7 +99,7 @@ final class WebSocketReceiveArrayBufferBuilder(url: String, protocol: String) {
 
 }
 
-final class WebSocketReceiveBuilder(private[websocket] val url: String, private[websocket] val protocol: String) {
+final class WebSocketReceiveBuilder(private[websocket] val url: String, private[websocket] val protocol: js.UndefOr[String]) {
 
   @inline def string: WebSocketBuilder[String, String] = new WebSocketBuilder(url, protocol, initialize.text, send.string, receive.string)
 

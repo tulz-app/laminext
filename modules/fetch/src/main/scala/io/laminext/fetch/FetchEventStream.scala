@@ -48,7 +48,12 @@ object FetchEventStream {
       def handleError(error: Throwable): Unit = {
         timeoutHandle.foreach(clearTimeout)
         timeoutHandle = js.undefined
-        fireError(FetchError(error))
+        fireError {
+          error match {
+            case e: FetchException => e
+            case other             => FetchError(other)
+          }
+        }
       }
 
       def sendRequest(): Future[Response] = {
@@ -110,7 +115,7 @@ object FetchEventStream {
                     }
                   )
                 }
-              },
+              }
             )
           }
         },

@@ -1,5 +1,12 @@
 # Changelog
 
+### 0.13.6
+
+* Bugfix: websocket client was failing to connect when no sub-protocol was specified (defaulting to "", which 
+  was incorrect)  
+* Minor changes to improve error handling in the `fetch` module
+  * `ResponseDecodeFailed` is gone, `ResponseError` is used instead
+  
 ### 0.13.5
 
 ##### `fetch` module: `RequestUrl`

@@ -16,7 +16,7 @@ class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
     response.text().flatMap { text =>
       parser.decode[A](text) match {
         case Right(a)    => Future.successful(a)
-        case Left(error) => Future.failed(new ResponseDecodeFailed(error, response))
+        case Left(error) => Future.failed(ResponseError(error, response))
       }
     }
 
