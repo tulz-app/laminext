@@ -9,8 +9,8 @@ import scala.util.Success
 
 object ObservableSwitchingBindExample
     extends CodeExample(
-      id = "example-observable-switching-bind",
-      title = "Observable switching bind",
+      id = "example-add-switching-observer",
+      title = "Add switching observer",
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
@@ -68,7 +68,7 @@ object ObservableSwitchingBindExample
           )
         ),
         /* <focus> */
-        messages.events.addSwitchingObserverOpt(observers),
+        messages.events.addOptionalSwitchingObserver(observers),
         /* </focus> */
         div(
           cls := "flex flex-col space-y-4 p-4 max-h-96 overflow-auto bg-gray-900",

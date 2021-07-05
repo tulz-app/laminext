@@ -25,7 +25,7 @@ final class ObservableOps[A](underlying: Observable[A]) {
     }
   }
 
-  def addSwitchingObserverOpt(observers: Source[Option[Observer[A]]]): Modifier[ReactiveElement.Base] = {
+  def addOptionalSwitchingObserver(observers: Source[Option[Observer[A]]]): Modifier[ReactiveElement.Base] = {
     onMountBind { ctx =>
       var previousSubscription = Option.empty[Subscription]
       observers --> { observer =>
