@@ -15,4 +15,24 @@ final class ObservableOps[A](underlying: Observable[A]) {
       }
     }
 
+  def addSwitchingObserver(observers: Source[Observer[A]]): Modifier[ReactiveElement.Base] = {
+    onMountBind { ctx =>
+      var previousSubscription = Option.empty[Subscription]
+      observers --> { observer =>
+        previousSubscription.foreach(_.kill())
+        previousSubscription = Some(underlying.addObserver(observer)(ctx.owner))
+      }
+    }
+  }
+
+  def addOptionalSwitchingObserver(observers: Source[Option[Observer[A]]]): Modifier[ReactiveElement.Base] = {
+    onMountBind { ctx =>
+      var previousSubscription = Option.empty[Subscription]
+      observers --> { observer =>
+        previousSubscription.foreach(_.kill())
+        previousSubscription = observer.map(observer => underlying.addObserver(observer)(ctx.owner))
+      }
+    }
+  }
+
 }
