@@ -70,7 +70,7 @@ object Site {
         examplePage(examples.iterable.ex_seq_join.SeqJoinExample),
         examplePage(examples.element.ex_input_values.InputValuesExample),
         examplePage(examples.eventproptransformation.ex_eventprop_stream.ThisEventsExample),
-        examplePage(examples.observable.ex_observable_switching_bind.ObservableSwitchingBindExample)
+        examplePage(examples.observable.ex_observable_switching_bind.AddSwitchingObserverExample)
       )
     ),
     SiteModule(

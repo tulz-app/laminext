@@ -7,7 +7,7 @@ import io.laminext.site.examples.CodeExample
 import scala.util.Failure
 import scala.util.Success
 
-object ObservableSwitchingBindExample
+object AddSwitchingObserverExample
     extends CodeExample(
       id = "example-add-switching-observer",
       title = "Add switching observer",
