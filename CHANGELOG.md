@@ -1,5 +1,9 @@
 # Changelog
 
+### 0.13.7
+
+* API: new: `.addSwitchingObserver` and `.addOptionalSwitchingObserver`
+
 ### 0.13.6
 
 * Bugfix: websocket client was failing to connect when no sub-protocol was specified (defaulting to "", which 
