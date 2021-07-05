@@ -69,7 +69,8 @@ object Site {
         examplePage(examples.signal.ex_signal_of_option.SignalOfOptionExample),
         examplePage(examples.iterable.ex_seq_join.SeqJoinExample),
         examplePage(examples.element.ex_input_values.InputValuesExample),
-        examplePage(examples.eventproptransformation.ex_eventprop_stream.ThisEventsExample)
+        examplePage(examples.eventproptransformation.ex_eventprop_stream.ThisEventsExample),
+        examplePage(examples.observable.ex_observable_switching_bind.ObservableSwitchingBindExample)
       )
     ),
     SiteModule(
@@ -170,6 +171,7 @@ object Site {
       path = "news",
       index = docPage("", "News", FileAsString("/doc/news/index.md")),
       "" -> Seq(
+        docPage("v0-13-7", "v0.13.7", FileAsString("/doc/news/v0.13.7.md")),
         docPage("v0-13-6", "v0.13.6", FileAsString("/doc/news/v0.13.6.md")),
         docPage("v0-13-5", "v0.13.5", FileAsString("/doc/news/v0.13.5.md")),
         docPage("v0-13-4", "v0.13.4", FileAsString("/doc/news/v0.13.4.md")),
