@@ -4,7 +4,7 @@ import io.laminext.util.SmartClass
 import org.scalajs.dom
 
 trait CoreSyntax
-    extends ObservableSyntax
+    extends SourceSyntax
     with ObservableOfBooleanSyntax
     with ObservableOfOptionSyntax
     with SignalSyntax

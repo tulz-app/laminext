@@ -2,7 +2,10 @@
 
 ### 0.13.8
 
-* API: new: `.addSwitchingObserver` and `.addOptionalSwitchingObserver`
+* API: new: `mutationObserver`
+* Fix: stored vars now check if local storage is accessible
+* API: observable extension methods are now source extension methods
+* API: now accepting source and sink where observable and observer where expected before 
 
 ### 0.13.7
 
