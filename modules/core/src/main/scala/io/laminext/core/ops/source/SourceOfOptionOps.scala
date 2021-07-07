@@ -1,18 +1,18 @@
 package io.laminext.core
-package ops.observable
+package ops.source
 
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
-final class ObservableOfOptionOps[A](val underlying: Observable[Option[A]]) {
+final class SourceOfOptionOps[A](val underlying: Source[Option[A]]) {
 
   @inline def childIfEmpty(child: => Child): Inserter[ReactiveElement.Base] =
-    ConditionalChildInserter(underlying.map(_.isEmpty), child)
+    ConditionalChildInserter(underlying.toObservable.map(_.isEmpty), child)
 
   @inline def childIfDefined(child: => Child): Inserter[ReactiveElement.Base] =
-    ConditionalChildInserter(underlying.map(_.isDefined), child)
+    ConditionalChildInserter(underlying.toObservable.map(_.isDefined), child)
 
   @inline def doWhenDefined(
     callback: => Unit

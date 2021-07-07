@@ -8,16 +8,16 @@ import io.laminext.domext.ResizeObserverEntry
 
 object ResizeObserverBinders {
 
-  @inline def -->[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](observer: Observer[ResizeObserverEntry]): BinderWithStartStop[El] = {
-    new ResizeObserverBinder(t => observer.onNext(t))
+  @inline def -->[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](sink: Sink[ResizeObserverEntry]): BinderWithStartStop[El] = {
+    new ResizeObserverBinder(t => sink.toObserver.onNext(t))
   }
 
   @inline def -->[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](onNext: ResizeObserverEntry => Unit): BinderWithStartStop[El] = {
     new ResizeObserverBinder(onNext)
   }
 
-  @inline def -->[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](eventBus: EventBus[ResizeObserverEntry]): BinderWithStartStop[El] = {
-    new ResizeObserverBinder(t => eventBus.writer.onNext(t))
-  }
+  @inline def bind[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](sink: Sink[ResizeObserverEntry]): BinderWithStartStop[El] = -->(sink)
+
+  @inline def bind[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](onNext: ResizeObserverEntry => Unit): BinderWithStartStop[El] = -->(onNext)
 
 }

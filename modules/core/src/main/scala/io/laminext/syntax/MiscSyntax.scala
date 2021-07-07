@@ -2,6 +2,7 @@ package io.laminext.syntax
 
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
+import io.laminext.core.MutationObserverBinders
 import io.laminext.core.NodeSeqModifier
 import io.laminext.core.ResizeObserverBinders
 import io.laminext.core.SetTimeoutBinders
@@ -12,6 +13,7 @@ import io.laminext.core.ThisEventsStreamBuilder
 import org.scalajs.dom
 
 import scala.concurrent.duration.FiniteDuration
+import scala.scalajs.js
 
 trait MiscSyntax {
 
@@ -71,6 +73,24 @@ trait MiscSyntax {
   ): SetTimeoutBinders[Unit] = new SetTimeoutBinders((): Unit, timeout)
 
   @inline def resizeObserver: ResizeObserverBinders.type = ResizeObserverBinders
+
+  @inline def mutationObserver(
+    childList: Boolean = false,
+    attributes: Boolean = false,
+    characterData: Boolean = false,
+    subtree: Boolean = false,
+    attributeOldValue: Boolean = false,
+    characterDataOldValue: Boolean = false,
+    attributeFilter: js.UndefOr[js.Array[String]] = js.undefined
+  ): MutationObserverBinders = new MutationObserverBinders(
+    childList,
+    attributes,
+    characterData,
+    subtree,
+    attributeOldValue,
+    characterDataOldValue,
+    attributeFilter
+  )
 
   @inline def thisEvents[Ev <: dom.Event](t: EventProcessor[Ev, Ev]): ThisEventsStreamBuilder[Ev, Ev] =
     new ThisEventsStreamBuilder[Ev, Ev](t, identity)

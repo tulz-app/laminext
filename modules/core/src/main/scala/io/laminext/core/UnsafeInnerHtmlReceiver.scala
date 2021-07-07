@@ -9,7 +9,7 @@ object UnsafeInnerHtmlReceiver {
       override def apply(element: El): Unit = element.ref.innerHTML = innerHtml
     }
 
-  def <--($innerHtml: EventStream[String]): Modifier[HtmlElement] =
+  def <--($innerHtml: Source[String]): Modifier[HtmlElement] =
     new Modifier[HtmlElement] {
       override def apply(parentNode: HtmlElement): Unit = {
         parentNode.amend(

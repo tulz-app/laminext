@@ -12,7 +12,7 @@ final class ReactiveHtmlElementOps[T <: dom.html.Element](el: ReactiveHtmlElemen
     el.amend(com.raquo.laminar.api.L.cls := className)
   }
 
-  @inline def cls[V](value: Observable[V])(implicit valueMapper: CompositeValueMapper[V]): ReactiveHtmlElement[T] = {
+  @inline def cls[V](value: Source[V])(implicit valueMapper: CompositeValueMapper[V]): ReactiveHtmlElement[T] = {
     el.amend(com.raquo.laminar.api.L.cls <-- value)
   }
 
