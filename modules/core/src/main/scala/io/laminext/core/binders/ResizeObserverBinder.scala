@@ -32,7 +32,7 @@ class ResizeObserverBinder[El <: ReactiveElement[dom.raw.HTMLElement]](
 
   override def bind(element: El): DynamicSubscription = {
     if (maybeResizeObserver.isDefined) {
-      dom.console.error("resizeListener can not be re-used")
+      dom.console.error("resizeObserver can not be re-used")
     }
     this.element = element
     maybeResizeObserver = Some(

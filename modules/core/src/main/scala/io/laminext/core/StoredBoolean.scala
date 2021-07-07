@@ -12,10 +12,16 @@ final class StoredBoolean(name: String, initial: Boolean = true) {
   val signal: Signal[Boolean] =
     updateBus.events
       .foldLeft[Boolean] {
-        LocalStorage(storageId).map(_.toBoolean).getOrElse(initial)
+        if (BrowserUtils.storageEnabled) {
+          LocalStorage(storageId).map(_.toBoolean).getOrElse(initial)
+        } else {
+          initial
+        }
       } { case (current, update) =>
         val newValue = update(current)
-        LocalStorage(storageId) = newValue.toString
+        if (BrowserUtils.storageEnabled) {
+          LocalStorage(storageId) = newValue.toString
+        }
         newValue
       }
 

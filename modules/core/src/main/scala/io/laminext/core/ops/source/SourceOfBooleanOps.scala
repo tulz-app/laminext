@@ -1,14 +1,14 @@
 package io.laminext.core
-package ops.observable
+package ops.source
 
 import com.raquo.laminar.api.L
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
-final class ObservableOfBooleanOps(underlying: Observable[Boolean]) {
+final class SourceOfBooleanOps(underlying: Source[Boolean]) {
 
   @inline def classSwitch(whenTrue: String, whenFalse: String): Binder[ReactiveHtmlElement.Base] =
-    L.cls <-- underlying.map { bool =>
+    L.cls <-- underlying.toObservable.map { bool =>
       Seq(
         whenTrue  -> bool,
         whenFalse -> !bool
@@ -18,12 +18,12 @@ final class ObservableOfBooleanOps(underlying: Observable[Boolean]) {
   @inline def childWhenTrue(
     child: => Child
   ): Inserter[ReactiveHtmlElement.Base] =
-    ConditionalChildInserter(underlying, child)
+    ConditionalChildInserter(underlying.toObservable, child)
 
   @inline def childWhenFalse(
     child: => Child
   ): Inserter[ReactiveHtmlElement.Base] =
-    ConditionalChildInserter(underlying.map(!_), child)
+    ConditionalChildInserter(underlying.toObservable.map(!_), child)
 
   @inline def doWhenTrue(
     callback: => Unit

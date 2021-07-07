@@ -12,10 +12,16 @@ final class StoredString(name: String, initial: String) {
   val signal: Signal[String] =
     updateBus.events
       .foldLeft[String](
-        LocalStorage(storageId).getOrElse(initial)
+        if (BrowserUtils.storageEnabled) {
+          LocalStorage(storageId).getOrElse(initial)
+        } else {
+          initial
+        }
       ) { case (current, update) =>
         val newValue = update(current)
-        LocalStorage(storageId) = newValue
+        if (BrowserUtils.storageEnabled) {
+          LocalStorage(storageId) = newValue
+        }
         newValue
       }
 

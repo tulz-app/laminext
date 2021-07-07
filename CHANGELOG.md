@@ -1,5 +1,9 @@
 # Changelog
 
+### 0.13.8
+
+* API: new: `.addSwitchingObserver` and `.addOptionalSwitchingObserver`
+
 ### 0.13.7
 
 * API: new: `.addSwitchingObserver` and `.addOptionalSwitchingObserver`
