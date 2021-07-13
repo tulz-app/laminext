@@ -11,7 +11,8 @@ class ValidatedElement[+R <: dom.html.Element, A, Err, Out](
   val el: ReactiveHtmlElement[R],
   val value: Signal[A],
   val validatedValue: Signal[ValidatedValue[Err, Out]],
-  val validationError: Signal[Option[Err]]
+  val validationError: Signal[Option[Err]],
+  val resetError: Observer[Unit]
 ) extends ComponentBase[R]
 
 object ValidatedElement {
@@ -22,16 +23,23 @@ object ValidatedElement {
     validation: Validation[A, Err, Out]
   ): ValidatedElement[R, A, Err, Out] = {
     val validatedValue = value.map(validation)
-
-    val focusedAtLeastOnce = el.events(onBlur).foldLeft(false)((_, _) => true)
+    val resetBus       = new EventBus[Unit]()
 
     val blurredAtLeastOnce =
       EventStream
         .merge(
+          el.events(onBlur.mapToTrue),
+          resetBus.events.mapToFalse
+        ).foldLeft(false)((_, value) => value)
+
+    val shouldShowError =
+      EventStream
+        .merge(
+          resetBus.events.mapToFalse,
           el.events(onBlur).mapToTrue,
           el.events(onFocus)
             .sample(
-              Signal.combine(validatedValue, focusedAtLeastOnce)
+              Signal.combine(validatedValue, blurredAtLeastOnce)
             )
             .map { case (validatedValue, focusedAtLeastOnce) =>
               validatedValue.isLeft && focusedAtLeastOnce
@@ -41,13 +49,19 @@ object ValidatedElement {
 
     val error =
       Signal
-        .combine(validatedValue, blurredAtLeastOnce)
+        .combine(validatedValue, shouldShowError)
         .map {
           case (Left(errors), true) => Some(errors)
           case _                    => Option.empty
         }
 
-    new ValidatedElement[R, A, Err, Out](el, value, validatedValue, error)
+    new ValidatedElement[R, A, Err, Out](
+      el = el,
+      value = value,
+      validatedValue = validatedValue,
+      validationError = error,
+      resetError = resetBus.writer
+    )
   }
 
 }

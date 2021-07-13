@@ -1,5 +1,10 @@
 # Changelog
 
+### 0.13.9
+
+* update to `Laminar` v0.13.1
+* API: new: `ValidatedElement` now exposes the `.resetError` observer
+
 ### 0.13.8
 
 * API: new: `mutationObserver`
