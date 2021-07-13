@@ -27,10 +27,10 @@ val obs: Observable[Boolean] = ???
 
 div(
   obs.childWhenTrue {
-    span("signal is true")
+    span("source emitted true")
   },
   obs.childWhenFalse {
-    span("signal is false")
+    span("source emitted false")
   }
 )
 ```
@@ -46,10 +46,10 @@ val obs: Observable[Boolean] = ???
 
 div(
   obs.doWhenTrue { 
-    dom.console.log("signal is true")    
+    dom.console.log("source emitted true")
   },
   obs.doWhenFalse {
-    dom.console.log("signal is false")
+    dom.console.log("source emitted false")
   }
 )
 ```

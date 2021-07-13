@@ -79,6 +79,28 @@ object ValidationCatsExample
           /* </focus> */
         ),
         div(
+          button(
+            "Reset values",
+            cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+            onClick --> { _ =>
+              validatedInput1.ref.value = ""
+              validatedInput2.ref.value = ""
+              validatedInput3.ref.value = ""
+            }
+          )
+        ),
+        div(
+          button(
+            "Reset errors",
+            cls := "inline-flex items-center px-3 py-2 border border-blue-500 shadow-sm tracking-wide font-medium rounded-md text-blue-100 bg-blue-600 hover:bg-blue-500 hover:text-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+            /* <focus> */
+            onClick.mapToUnit --> validatedInput1.resetError,
+            onClick.mapToUnit --> validatedInput2.resetError,
+            onClick.mapToUnit --> validatedInput3.resetError
+            /* </focus> */
+          )
+        ),
+        div(
           cls := "flex space-x-4 items-center",
           code("validatedInput1.el.value:"),
           code(

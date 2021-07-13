@@ -76,8 +76,7 @@ input(tpe := "file").validatedFile(fileValidation)
 input().validated(V.custom("must be upper-case!")(string => string.toUpperCase == string))
 ```
 
-## `.validatedValue` 
-## `.validatationError`
+## `.validatedValue`, `.validatationError`, `.resetError`
 
 The `.validation` extension method returns a `ValidatedElement`, which has the following fields:
 
@@ -87,7 +86,10 @@ The `.validation` extension method returns a `ValidatedElement`, which has the f
 * `validationError` – a signal with an option that contains the validation error, if any. 
   `validationError`'s value is not immediately set to `Some(errors)`. Rather, it is set when the value is not valid, and the
 element has lost the focus. Or if the element contained an invalid value when getting the focus, and its current value is 
-invalid again.
+invalid again (or vice versa).
+* `resetError` – an observer which, when written to, reset the behavior of the `.validationError` signal back to its initial
+state (as if the input has not been "touched" by the user yet).
+
 
 ## Combining validations
 

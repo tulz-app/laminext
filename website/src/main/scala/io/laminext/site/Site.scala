@@ -32,11 +32,11 @@ object Site {
     SiteModule(
       path = "core",
       index = docPage("", "Core", FileAsString("/doc/core/index.md")),
-      "Observable" -> Seq(
-        docPage("observable", "Observable", FileAsString("/doc/core/observable.md")),
-        docPage("observable-of-boolean", "Observable of Boolean", FileAsString("/doc/core/observable-of-boolean.md")),
-        docPage("observable-of-option", "Observable of Option", FileAsString("/doc/core/observable-of-option.md")),
-        docPage("observable-of-either", "Observable of Either", FileAsString("/doc/core/observable-of-either.md")),
+      "Source" -> Seq(
+        docPage("source", "Source", FileAsString("/doc/core/source.md")),
+        docPage("source-of-boolean", "Source of Boolean", FileAsString("/doc/core/source-of-boolean.md")),
+        docPage("source-of-option", "Source of Option", FileAsString("/doc/core/source-of-option.md")),
+        docPage("source-of-either", "Source of Either", FileAsString("/doc/core/source-of-either.md")),
       ),
       "Signal" -> Seq(
         docPage("signal", "Signal", FileAsString("/doc/core/signal.md")),
@@ -171,6 +171,8 @@ object Site {
       path = "news",
       index = docPage("", "News", FileAsString("/doc/news/index.md")),
       "" -> Seq(
+        docPage("v0-13-9", "v0.13.9", FileAsString("/doc/news/v0.13.9.md")),
+        docPage("v0-13-8", "v0.13.8", FileAsString("/doc/news/v0.13.8.md")),
         docPage("v0-13-7", "v0.13.7", FileAsString("/doc/news/v0.13.7.md")),
         docPage("v0-13-6", "v0.13.6", FileAsString("/doc/news/v0.13.6.md")),
         docPage("v0-13-5", "v0.13.5", FileAsString("/doc/news/v0.13.5.md")),

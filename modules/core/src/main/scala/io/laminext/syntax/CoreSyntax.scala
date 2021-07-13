@@ -3,7 +3,7 @@ package io.laminext.syntax
 import org.scalajs.dom
 
 trait CoreSyntax
-    extends ObservableSyntax
+    extends SourceSyntax
     with ObservableOfBooleanSyntax
     with ObservableOfOptionSyntax
     with SignalSyntax

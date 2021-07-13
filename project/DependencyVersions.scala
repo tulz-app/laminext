@@ -1,7 +1,7 @@
 object DependencyVersions {
 
   val jsdom        = "16.4.0"
-  val laminar      = "0.13.0"
+  val laminar      = "0.13.1"
   val `scala-test` = "3.2.9"
   val stringdiff   = "0.3.4"
   val domtestutils = "0.14.8"
@@ -12,7 +12,7 @@ object DependencyVersions {
   // -- website
 
   val sourcecode             = "0.2.7"
-  val frontroute             = "0.13.2"
+  val frontroute             = "0.13.3"
   val `embedded-files-macro` = "0.2.4"
   val `scala-java-time`      = "2.3.0"
 
