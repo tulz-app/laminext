@@ -17,21 +17,11 @@ const devServerPort = 30088;
 const devServer =
   {
     hot: true,
-    injectHot: true,
-    injectClient: true,
-    transportMode: 'ws',
     port: devServerPort,
     host: devServerHost,
     historyApiFallback: {
       index: ''
-    },
-    public: `${devServerHost}:${devServerPort}`,
-    firewall: false,
-    client: {
-      host: devServerHost,
-      port: devServerPort
-    },
-
+    }
   }
 
 

@@ -8,9 +8,7 @@ import io.laminext.syntax.validation._
 
 This module provides utilities to validate input field values.
 
-## `.validated`
-## `.validatedCheckbox`
-## `.validatedFiles`
+## `.validated`, `.validatedCheckbox`, `.validatedFiles`, `.validatedFile`
 
 These are extension methods defined for inputs and text areas.
 
@@ -27,7 +25,11 @@ val validatedFiles = input(tpe := "file").validatedFiles(???)
 val validatedFile = input(tpe := "file").validatedFile(???)
 ```
 
-`.validated*` methods accept a single parameter: `validation: Validation[In, Err, Out]`.
+`.validated*` methods accept two parameters: 
+
+* (required) `validation: Validation[In, Err, Out]`
+* (optional) `changeStreamTransform: EventStream[Event] => EventStream[Event]` – used 
+  when building the underlying `.changes` event stream (see [Input Values](/core/input-values)).  
 
 `Validation[A]` is defined as follows:
 
@@ -74,6 +76,13 @@ input(tpe := "file").validatedFile(fileValidation)
 
 // custom validation
 input().validated(V.custom("must be upper-case!")(string => string.toUpperCase == string))
+
+// custom validation with error message built with the value that is being validated
+input().validated(
+  V.custom { s =>
+    Option.when(string.toUpperCase != string)(s"'$s' must be upper-case!")
+  }
+)
 ```
 
 ## `.validatedValue`, `.validatationError`, `.resetError`

@@ -1,5 +1,16 @@
 # Changelog
 
+### 0.13.10
+
+* API: new: `input`/`textArea` `.changes`/`.value`/`.checked`/`.files` now have additional overloaded versions 
+  that accept a `changeStreamTransform: EventStream[Event] => EventStream[Event]` parameter (can be used, for example, to
+  debounce the "changed" events)
+* API: new: `input`/`textArea` `.validated`/`.validatedCheckBox`/`.validatedFile`/`.validatedFiles` now accept a second
+  (optional) parameter – `changeStreamTransform: EventStream[Event] => EventStream[Event]` – which is passed to the 
+  `.value`/`.checked`/`.files`
+* API: additional validation builders accepting a functions like `check: A => Option[Err]` that can construct error messages
+  using the value that is being validated
+
 ### 0.13.9
 
 * update to `Laminar` v0.13.1

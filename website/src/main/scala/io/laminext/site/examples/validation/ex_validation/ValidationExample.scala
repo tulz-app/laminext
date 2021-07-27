@@ -40,6 +40,30 @@ object ValidationExample
       )
       /* </focus> */
 
+      /* <focus> */
+      val validatedInput4 = input(
+        tpe := "text",
+        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+        placeholder := "enter something with a space"
+      ).validated(
+        V.custom { s =>
+          Option.when(!s.contains(" ")) {
+            s"'$s' must contain a space"
+          }
+        }
+      )
+      /* </focus> */
+      /* <focus> */
+      val validatedInput5 = input(
+        tpe := "text",
+        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+        placeholder := "enter something (debounced 1 sec)"
+      ).validated(
+        V.nonBlank("Must not be blank!"),
+        _.debounce(1000)
+      )
+      /* </focus> */
+
       div(
         cls := "p-4 flex flex-col space-y-4",
         div(validatedInput1),
@@ -75,6 +99,28 @@ object ValidationExample
           )
           /* </focus> */
         ),
+        div(validatedInput4),
+        div(
+          /* <focus> */
+          child.maybe <-- validatedInput4.validationError.optionMap(errors =>
+            span(
+              cls := "text-red-700 text-sm",
+              errors.map(error => div(error))
+            )
+          )
+          /* </focus> */
+        ),
+        div(validatedInput5),
+        div(
+          /* <focus> */
+          child.maybe <-- validatedInput5.validationError.optionMap(errors =>
+            span(
+              cls := "text-red-700 text-sm",
+              errors.map(error => div(error))
+            )
+          )
+          /* </focus> */
+        ),
         div(
           button(
             "Reset values",
@@ -82,6 +128,8 @@ object ValidationExample
               validatedInput1.ref.value = ""
               validatedInput2.ref.value = ""
               validatedInput3.ref.value = ""
+              validatedInput4.ref.value = ""
+              validatedInput5.ref.value = ""
             }
           )
         ),
@@ -91,7 +139,9 @@ object ValidationExample
             /* <focus> */
             onClick.mapToUnit --> validatedInput1.resetError,
             onClick.mapToUnit --> validatedInput2.resetError,
-            onClick.mapToUnit --> validatedInput3.resetError
+            onClick.mapToUnit --> validatedInput3.resetError,
+            onClick.mapToUnit --> validatedInput4.resetError,
+            onClick.mapToUnit --> validatedInput5.resetError
             /* </focus> */
           )
         ),
