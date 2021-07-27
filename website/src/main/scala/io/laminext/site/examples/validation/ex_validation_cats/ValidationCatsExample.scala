@@ -13,8 +13,6 @@ object ValidationCatsExample
       import io.laminext.syntax.core._
       import io.laminext.syntax.validation.cats._
 
-      implicitly[cats.Semigroup[Seq[String]]]
-
       /* <focus> */
       val validatedInput1 = input(
         tpe := "email",

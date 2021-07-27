@@ -39,7 +39,7 @@ object PageWrap {
           div(
             cls := "flex-1 bg-gray-200 overflow-auto md:p-4",
             div(
-              cls := "lg:container lg:mx-auto p-4 bg-white min-h-full",
+              cls := "lg:container lg:mx-auto lg:max-w-4xl lg:p-8 p-4 bg-white min-h-full",
               child <-- $pageAndResult.map {
                 case Some((_, Right((el, _))))     => el
                 case Some((_, Left((_, message)))) => div(message)
