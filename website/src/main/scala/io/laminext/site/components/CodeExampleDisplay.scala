@@ -37,29 +37,15 @@ object CodeExampleDisplay {
 
   private val collapseTransition = theme.Theme.current.transition.resize.customize(
     hidden = _ :+ "max-h-32",
+    showing = _ :+ "max-h-[400px]",
     enterFrom = _ :+ "max-h-32",
-    enterTo = _ => Seq.empty,
-    leaveFrom = _ => Seq.empty,
-    leaveTo = _ :+ "max-h-32",
-    onEnterFrom = el => {
-      el.style.maxHeight = null
-    },
-    onEnterTo = el => {
-      el.style.maxHeight = s"${el.scrollHeight}px"
-    },
-    onLeaveFrom = el => {
-      el.style.maxHeight = s"${el.scrollHeight}px"
-    },
-    onLeaveTo = el => {
-      el.style.maxHeight = null
-    },
-    onReset = (el, _) => {
-      el.style.maxHeight = null
-    }
+    enterTo = _ :+ "max-h-[400px]",
+    leaveFrom = _ :+ "max-h-[400px]",
+    leaveTo = _ :+ "max-h-32"
   )
 
   def apply(example: CodeExample): Element = {
-    val sourceCollapsed = storedBoolean(example.id, initial = false)
+    val sourceCollapsed = storedBoolean(example.id)
     val dimContext      = storedBoolean("dim-context", initial = false)
     val hasContext      = example.code.source.contains("/* <focus> */")
 
@@ -72,11 +58,13 @@ object CodeExampleDisplay {
         theCode,
         onMountCallback { ctx =>
           Highlight.highlightElement(ctx.thisNode.ref.childNodes.head)
+          hideFocusMarkers(ctx.thisNode.ref.childNodes.head.asInstanceOf[html.Element])
           if (hasContext) {
-            hideFocusMarkers(ctx.thisNode.ref.childNodes.head.asInstanceOf[html.Element])
-            val _ = js.timers.setTimeout(0) {
-              val updatedNode = setOpacityRecursively(theCode.ref, 0, dim)
-              val _           = ctx.thisNode.ref.replaceChild(updatedNode, ctx.thisNode.ref.childNodes.head)
+            val _ = js.timers.setTimeout(100) {
+              val _ = js.timers.setTimeout(0) {
+                val updatedNode = setOpacityRecursively(theCode.ref, 0, dim)
+                val _           = ctx.thisNode.ref.replaceChild(updatedNode, ctx.thisNode.ref.childNodes.head)
+              }
             }
           }
         }
