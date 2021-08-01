@@ -71,6 +71,12 @@ lazy val circeDependencies = Seq(
   )
 )
 
+lazy val zioJsonDependencies = Seq(
+  libraryDependencies ++= Seq.concat(
+    Dependencies.zioJson.value
+  )
+)
+
 lazy val upickleDependencies = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.upickle.value
@@ -180,6 +186,15 @@ lazy val `websocket-circe` =
     .settings(circeDependencies)
     .dependsOn(`websocket`)
 
+lazy val `websocket-ziojson` =
+  project
+    .in(file("modules/websocket-ziojson"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(zioJsonDependencies)
+    .dependsOn(`websocket`)
+
 lazy val `websocket-upickle` =
   project
     .in(file("modules/websocket-upickle"))
@@ -204,6 +219,15 @@ lazy val `fetch-circe` =
     .settings(commonSettings)
     .settings(baseDependencies)
     .settings(circeDependencies)
+    .dependsOn(`fetch`)
+
+lazy val `fetch-ziojson` =
+  project
+    .in(file("modules/fetch-ziojson"))
+    .enablePlugins(ScalaJSPlugin)
+    .settings(commonSettings)
+    .settings(baseDependencies)
+    .settings(zioJsonDependencies)
     .dependsOn(`fetch`)
 
 lazy val `fetch-upickle` =
@@ -260,9 +284,11 @@ lazy val website = project
     `tailwind-default-theme`,
     `websocket`,
     `websocket-circe`,
+    `websocket-ziojson`,
     `websocket-upickle`,
     `fetch`,
     `fetch-circe`,
+    `fetch-ziojson`,
     `fetch-upickle`
   )
 
@@ -293,8 +319,10 @@ lazy val root = project
     `tailwind-default-theme`,
     `fetch`,
     `fetch-circe`,
+    `fetch-ziojson`,
     `fetch-upickle`,
     `websocket`,
     `websocket-circe`,
+    `websocket-ziojson`,
     `websocket-upickle`
   )

@@ -8,6 +8,7 @@ object DependencyVersions {
   val cats         = "2.6.1"
   val upickle      = "1.4.0"
   val circe        = "0.14.1"
+  val zioJson      = "0.2.0-M1"
 
   // -- website
 
