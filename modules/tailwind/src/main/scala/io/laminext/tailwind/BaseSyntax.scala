@@ -1,11 +1,11 @@
 package io.laminext.tailwind
 
 import com.raquo.laminar.api.L._
-import io.laminext.tailwind.ops.htmlelement.ReactiveHtmlElementTailwindOps
-import io.laminext.tailwind.ops.svgelement.ReactiveSvgElementTailwindOps
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import com.raquo.laminar.nodes.ReactiveSvgElement
-import io.laminext.tailwind.modal.Modal
+import io.laminext.tailwind.ops.htmlelement.ReactiveHtmlElementTailwindOps
+import io.laminext.tailwind.ops.signal.SignalOfBooleanTailwindOps
+import io.laminext.tailwind.ops.svgelement.ReactiveSvgElementTailwindOps
 import io.laminext.tailwind.progressbar.ProgressBar
 import io.laminext.tailwind.theme.Theme
 import io.laminext.ui.animation.Animation
@@ -48,5 +48,7 @@ trait BaseSyntax {
   implicit def syntaxReactiveSvgElementTailwind[T <: dom.svg.Element](
     el: ReactiveSvgElement[T]
   ): ReactiveSvgElementTailwindOps[T] = new ReactiveSvgElementTailwindOps[T](el)
+
+  implicit def syntaxSignalOfBooleanTailwind(s: Signal[Boolean]): SignalOfBooleanTailwindOps = new SignalOfBooleanTailwindOps(s)
 
 }
