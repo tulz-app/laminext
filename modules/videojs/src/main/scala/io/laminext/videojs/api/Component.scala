@@ -2,7 +2,6 @@ package io.laminext.videojs.api
 
 import org.scalajs.dom.Element
 import org.scalajs.dom.raw.NodeList
-
 import scala.scalajs.js
 import scala.scalajs.js.|
 
@@ -26,7 +25,8 @@ import scala.scalajs.js.|
 //}
 
 /**
- * @see [[http://docs.videojs.com/docs/api/component.html]]
+ * @see
+ *   [[http://docs.videojs.com/docs/api/component.html]]
  */
 @js.native
 trait Component extends js.Object {

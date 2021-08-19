@@ -1,7 +1,6 @@
 package io.laminext.syntax
 
 import io.laminext.core.ops.iterable.SeqOps
-
 import scala.collection.generic.IsSeq
 
 trait SeqSyntax {

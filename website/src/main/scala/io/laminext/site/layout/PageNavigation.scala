@@ -22,7 +22,7 @@ object PageNavigation {
           cls := "space-y-4",
           navigationItem($page, module.index)(
             a(
-              cls := "ml-2 flex text-xl font-display font-bold",
+              cls  := "ml-2 flex text-xl font-display font-bold",
               href := s"/${module.path}",
               module.index.title
             )
@@ -38,7 +38,7 @@ object PageNavigation {
               pages.map { page =>
                 navigationItem($page, page)(
                   a(
-                    cls := "ml-6 flex font-display font-medium tracking-wide",
+                    cls  := "ml-6 flex font-display font-medium tracking-wide",
                     href := s"/${module.path}/${page.path}",
                     page.title
                   )

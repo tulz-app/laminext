@@ -6,7 +6,6 @@ import com.raquo.airstream.ownership.Subscription
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-
 import scala.scalajs.js
 
 object VideoJSPlayer {

@@ -14,16 +14,13 @@ class SignalOptionT[A](val value: Signal[Option[A]]) {
     value.flatMap(_.fold(default)(f))
 
   /**
-   * Catamorphism on the Option. This is identical to [[fold]], but it only has
-   * one parameter list, which can result in better type inference in some
-   * contexts.
+   * Catamorphism on the Option. This is identical to [[fold]], but it only has one parameter list, which can result in better type inference in some contexts.
    */
   def cata[B](default: => B, f: A => B): Signal[B] =
     fold(default)(f)
 
   /**
-   * Effectful catamorphism on the Option. This is identical to [[foldF]], but it only has
-   * one parameter list, which can result in better type inference in some
+   * Effectful catamorphism on the Option. This is identical to [[foldF]], but it only has one parameter list, which can result in better type inference in some
    * contexts.
    */
   def cataF[B](default: => Signal[B], f: A => Signal[B]): Signal[B] =

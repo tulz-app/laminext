@@ -1,7 +1,6 @@
 package io.laminext.videojs.api
 
 import io.laminext.videojs.api.components.VolumeBar
-
 import scala.scalajs.js
 import scala.scalajs.js.UndefOr
 

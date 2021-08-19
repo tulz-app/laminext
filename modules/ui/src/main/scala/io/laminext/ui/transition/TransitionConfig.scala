@@ -3,20 +3,34 @@ package io.laminext.ui.transition
 import org.scalajs.dom
 
 /**
- * @param hidden when hidden
- * @param nonHidden when showing or in transition
- * @param showing when showing
- * @param inTransition when in transition
- * @param enter during enter transition
- * @param enterDuration enter duriation
- * @param enterTiming enter timing
- * @param enterFrom enter from
- * @param enterTo enter to
- * @param leave during leave transition
- * @param leaveDuration leave duration
- * @param leaveTiming leave timing
- * @param leaveFrom leave from
- * @param leaveTo leave to
+ * @param hidden
+ *   when hidden
+ * @param nonHidden
+ *   when showing or in transition
+ * @param showing
+ *   when showing
+ * @param inTransition
+ *   when in transition
+ * @param enter
+ *   during enter transition
+ * @param enterDuration
+ *   enter duriation
+ * @param enterTiming
+ *   enter timing
+ * @param enterFrom
+ *   enter from
+ * @param enterTo
+ *   enter to
+ * @param leave
+ *   during leave transition
+ * @param leaveDuration
+ *   leave duration
+ * @param leaveTiming
+ *   leave timing
+ * @param leaveFrom
+ *   leave from
+ * @param leaveTo
+ *   leave to
  */
 case class TransitionConfig(
   hidden: Seq[String],

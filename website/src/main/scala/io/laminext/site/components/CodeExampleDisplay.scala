@@ -12,7 +12,6 @@ import io.laminext.site.TemplateVars
 import org.scalajs.dom
 import org.scalajs.dom.ext._
 import org.scalajs.dom.html
-
 import scala.scalajs.js
 
 object CodeExampleDisplay {
@@ -80,7 +79,7 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls := "prose max-w-none",
+        cls            := "prose max-w-none",
         unsafeMarkdown := TemplateVars(example.description),
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>

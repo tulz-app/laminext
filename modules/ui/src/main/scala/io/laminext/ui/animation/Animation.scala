@@ -4,7 +4,6 @@ package animation
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-
 import scala.scalajs.js
 
 object Animation {

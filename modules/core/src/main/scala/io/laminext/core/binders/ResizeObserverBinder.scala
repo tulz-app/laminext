@@ -8,7 +8,6 @@ import io.laminext.domext.ResizeObserverEntry
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.raw.SVGElement
-
 import scala.scalajs.js.|
 
 class ResizeObserverBinder[El <: ReactiveElement[dom.raw.HTMLElement]](

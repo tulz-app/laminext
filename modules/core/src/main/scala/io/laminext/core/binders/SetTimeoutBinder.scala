@@ -2,7 +2,6 @@ package io.laminext.core
 package binders
 
 import com.raquo.laminar.nodes.ReactiveElement
-
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 import scala.scalajs.js.timers.SetTimeoutHandle

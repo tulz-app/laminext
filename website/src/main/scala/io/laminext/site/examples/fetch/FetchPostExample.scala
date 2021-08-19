@@ -4,7 +4,6 @@ import com.raquo.laminar.CollectionCommand
 import com.yurique.embedded.FileAsString
 import io.laminext.fetch.FetchResponse
 import io.laminext.site.examples.CodeExample
-
 import scala.util.Failure
 import scala.util.Success
 

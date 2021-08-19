@@ -9,7 +9,6 @@ import org.scalajs.dom.experimental.RequestCredentials
 import org.scalajs.dom.experimental.RequestMode
 import org.scalajs.dom.experimental.RequestRedirect
 import org.scalajs.dom.experimental.Response
-
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.Future
 import scala.scalajs.js

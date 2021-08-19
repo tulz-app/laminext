@@ -2,7 +2,6 @@ package io.laminext.fetch
 
 import org.scalajs.dom
 import org.scalajs.dom.experimental.BodyInit
-
 import scala.scalajs.js
 
 trait ToRequestBody {

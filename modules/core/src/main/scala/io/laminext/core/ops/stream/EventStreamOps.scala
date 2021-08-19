@@ -3,7 +3,6 @@ package ops.stream
 
 import com.raquo.laminar.api.L._
 import com.raquo.airstream.flatten.FlattenStrategy
-
 import scala.concurrent.duration.FiniteDuration
 
 final class EventStreamOps[A](underlying: EventStream[A]) {

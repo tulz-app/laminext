@@ -21,11 +21,8 @@ class MarkedRenderer extends js.Object {
   def tablerow(content: String): String            = js.native
 
   /**
-   * @note `flags` has the following properties:
-   * {
-   *   header: true || false,
-   *   align: 'center' || 'left' || 'right'
-   * }
+   * @note
+   *   `flags` has the following properties: { header: true || false, align: 'center' || 'left' || 'right' }
    */
   def tablecell(content: String, flags: js.Object): String = js.native
 

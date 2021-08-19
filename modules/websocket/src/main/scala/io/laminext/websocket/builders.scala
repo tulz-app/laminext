@@ -3,7 +3,6 @@ package io.laminext.websocket
 import internal._
 import org.scalajs.dom
 import org.scalajs.dom.Blob
-
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js

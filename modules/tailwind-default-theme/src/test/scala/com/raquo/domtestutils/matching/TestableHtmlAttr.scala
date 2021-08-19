@@ -4,7 +4,6 @@ import com.raquo.domtestutils.Utils.repr
 import com.raquo.domtypes.generic.keys.Prop
 import app.tulz.diff.TokenDiff
 import org.scalajs.dom
-
 import scala.scalajs.js
 
 // @TODO Create EventPropOps

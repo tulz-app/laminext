@@ -6,7 +6,6 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 import org.scalajs.dom.raw
-
 import scala.collection.mutable
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
