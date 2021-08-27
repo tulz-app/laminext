@@ -3,7 +3,6 @@ package io.laminext.site.examples.observable.ex_observable_switching_bind
 import com.raquo.laminar.CollectionCommand
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-
 import scala.util.Failure
 import scala.util.Success
 

@@ -35,9 +35,9 @@ class ButtonTailwindFileInputOps[T <: dom.html.Button](el: ReactiveHtmlElement[T
         }
       },
       fileInput.el.amend(
-        cls := "absolute block top-0 right-0 min-w-full min-h-full opacity-0 outline-0 text-right bg-white",
+        cls      := "absolute block top-0 right-0 min-w-full min-h-full opacity-0 outline-0 text-right bg-white",
         fontSize := "100px",
-        cursor := "inherit",
+        cursor   := "inherit",
       )
     )
 

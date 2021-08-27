@@ -2,7 +2,6 @@ package io.laminext.core
 
 import org.scalajs.dom.ext.LocalStorage
 import org.scalajs.dom
-
 import scala.util.Try
 
 object BrowserUtils {

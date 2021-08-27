@@ -18,7 +18,8 @@ object EventTarget {
 
   /**
    * A Custom DOM event.
-   * @see [Properties]{@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent}
+   * @see
+   *   [Properties]{@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent}
    */
   @js.native
   trait Event extends js.Any

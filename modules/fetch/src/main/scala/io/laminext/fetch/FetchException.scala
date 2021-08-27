@@ -1,7 +1,6 @@
 package io.laminext.fetch
 
 import org.scalajs.dom.experimental.Response
-
 import scala.concurrent.duration.FiniteDuration
 
 sealed abstract class FetchException(message: String) extends RuntimeException(message)

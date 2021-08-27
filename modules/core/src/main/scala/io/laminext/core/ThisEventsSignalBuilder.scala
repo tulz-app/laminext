@@ -8,7 +8,6 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
-
 import scala.util.Failure
 import scala.util.Try
 

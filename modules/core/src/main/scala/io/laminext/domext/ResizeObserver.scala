@@ -3,7 +3,6 @@ package io.laminext.domext
 import org.scalajs.dom.ClientRect
 import org.scalajs.dom.raw.HTMLElement
 import org.scalajs.dom.raw.SVGElement
-
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
 import scala.scalajs.js.|
