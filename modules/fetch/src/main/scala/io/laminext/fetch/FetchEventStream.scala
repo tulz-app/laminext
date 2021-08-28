@@ -12,7 +12,6 @@ import org.scalajs.dom.experimental.RequestInit
 import org.scalajs.dom.experimental.RequestMode
 import org.scalajs.dom.experimental.RequestRedirect
 import org.scalajs.dom.experimental.Response
-
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 import scala.scalajs.js.timers.clearTimeout

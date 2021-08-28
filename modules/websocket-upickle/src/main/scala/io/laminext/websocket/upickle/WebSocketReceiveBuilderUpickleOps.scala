@@ -2,7 +2,6 @@ package io.laminext.websocket.upickle
 
 import upickle.default._
 import io.laminext.websocket._
-
 import scala.util.Try
 
 class WebSocketReceiveBuilderUpickleOps(b: WebSocketReceiveBuilder) {

@@ -1,7 +1,6 @@
 package io.laminext.syntax
 
 import io.laminext.core.ops.future.FutureOfEitherOps
-
 import scala.concurrent.Future
 
 trait FutureOfEitherSyntax {

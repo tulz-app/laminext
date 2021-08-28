@@ -10,7 +10,6 @@ import org.scalajs.dom.raw.MutationObserver
 import org.scalajs.dom.raw.MutationObserverInit
 import org.scalajs.dom.raw.MutationRecord
 import org.scalajs.dom.raw.SVGElement
-
 import scala.scalajs.js
 import scala.scalajs.js.|
 

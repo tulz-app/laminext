@@ -2,7 +2,6 @@ package io.laminext.videojs.api
 
 import org.scalajs.dom.Element
 import org.scalajs.dom.raw.TimeRanges
-
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.annotation.JSName
@@ -17,11 +16,14 @@ object VideoJS extends Component {
   val VERSION: String = js.native
 
   /**
-   * Doubles as the main function for users to create a player instance and also the main library object.
-   * The videojs function can be used to initialize or retrieve a player.
-   * @param element Video element or video element ID
-   * @param settings Optional options object for config/settings
-   * @param ready Optional ready callback
+   * Doubles as the main function for users to create a player instance and also the main library object. The videojs function can be used to initialize or
+   * retrieve a player.
+   * @param element
+   *   Video element or video element ID
+   * @param settings
+   *   Optional options object for config/settings
+   * @param ready
+   *   Optional ready callback
    */
   def apply(
     element: String | Element,
@@ -33,11 +35,12 @@ object VideoJS extends Component {
 
   /**
    * Adding languages so that they're available to all players.
-   * @param code The language code or dictionary property
-   * @param data The data values to be translated
-   * @example {{{
-   *   VideoJS.addLanguage("es", js.Dynamic.literal(Hello = "Hola"))
-   * }}}
+   * @param code
+   *   The language code or dictionary property
+   * @param data
+   *   The data values to be translated
+   * @example
+   *   {{{ VideoJS.addLanguage("es", js.Dynamic.literal(Hello = "Hola")) }}}
    */
   def addLanguage(code: String, data: js.Object): Unit = js.native
 
@@ -69,7 +72,8 @@ object VideoJS extends Component {
 
   /**
    * Returns whether the url passed is a cross domain request or not.
-   * @param url The url to check
+   * @param url
+   *   The url to check
    */
   def isCrossOrigin(url: String): Boolean = js.native
 
@@ -88,48 +92,42 @@ object VideoJS extends Component {
   def parseUrl(url: String): js.Object = js.native
 
   /**
-   * Create a Video.js player plugin.
-   * Plugins are only initialized when options for the plugin are included in the player options, or the plugin function on the player instance is called.
-   * See the plugin guide in the docs for a more detailed example
-   * @param name The plugin name
-   * @param fn The plugin function that will be called with options
+   * Create a Video.js player plugin. Plugins are only initialized when options for the plugin are included in the player options, or the plugin function on the
+   * player instance is called. See the plugin guide in the docs for a more detailed example
+   * @param name
+   *   The plugin name
+   * @param fn
+   *   The plugin function that will be called with options
    */
   def plugin(name: String, fn: js.Function): Unit = js.native
 
   /**
-   * Register a component so it can referred to by name.
-   * Used when adding to other components, either through addChild component.addChild('myComponent') or through default children options { children: ['myComponent'] }.
-   * @param name Class name of the component
-   * @param comp Component class
-   * @return The newly registered component
-   * @example {{{
-   *   // Get a component to subclass
-   *   var VjsButton = videojs.getComponent('Button');
-   *   // Subclass the component (see 'extend' doc for more info)
-   *   var MySpecialButton = videojs.extend(VjsButton, {});
-   *   // Register the new component
-   *   VjsButton.registerComponent('MySpecialButton', MySpecialButton);
-   *   // (optionally) add the new component as a default player child
-   *  myPlayer.addChild('MySpecialButton');
-   * }}}
+   * Register a component so it can referred to by name. Used when adding to other components, either through addChild component.addChild('myComponent') or
+   * through default children options { children: ['myComponent'] }.
+   * @param name
+   *   Class name of the component
+   * @param comp
+   *   Component class
+   * @return
+   *   The newly registered component
+   * @example
+   *   {{{ // Get a component to subclass var VjsButton = videojs.getComponent('Button'); // Subclass the component (see 'extend' doc for more info) var
+   *   MySpecialButton = videojs.extend(VjsButton, {}); // Register the new component VjsButton.registerComponent('MySpecialButton', MySpecialButton); //
+   *   (optionally) add the new component as a default player child myPlayer.addChild('MySpecialButton'); }}}
    */
   def registerComponent(name: String, comp: js.Object): js.Object = js.native
 
   /**
    * Register a Tech so it can referred to by name. This is used in the tech order for the player.
-   * @param name Class name of the tech
-   * @param tech Tech class
-   * @return The newly registered Tech
-   * @example {{{
-   *     // get the Html5 Tech
-   *     var Html5 = videojs.getTech('Html5');
-   *     var MyTech = videojs.extend(Html5, {});
-   *     // Register the new Tech
-   *     VjsButton.registerTech('Tech', MyTech);
-   *     var player = videojs('myplayer', {
-   *       techOrder: ['myTech', 'html5']
-   *     });
-   * }}}
+   * @param name
+   *   Class name of the tech
+   * @param tech
+   *   Tech class
+   * @return
+   *   The newly registered Tech
+   * @example
+   *   {{{ // get the Html5 Tech var Html5 = videojs.getTech('Html5'); var MyTech = videojs.extend(Html5, {}); // Register the new Tech
+   *   VjsButton.registerTech('Tech', MyTech); var player = videojs('myplayer', { techOrder: ['myTech', 'html5'] }); }}}
    */
   def registerTech(name: String, tech: js.Object): js.Object = js.native
 

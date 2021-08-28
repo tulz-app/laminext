@@ -6,7 +6,6 @@ import io.laminext.core.binders.BinderWithStartStop
 import io.laminext.core.binders.MutationObserverBinder
 import org.scalajs.dom.raw.MutationObserverInit
 import org.scalajs.dom.raw.MutationRecord
-
 import scala.scalajs.js
 
 class MutationObserverBinders(

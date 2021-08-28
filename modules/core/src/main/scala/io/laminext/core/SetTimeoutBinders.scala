@@ -4,7 +4,6 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.core.binders.BinderWithStartStop
 import io.laminext.core.binders.SetTimeoutBinder
-
 import scala.concurrent.duration.FiniteDuration
 
 class SetTimeoutBinders[V](

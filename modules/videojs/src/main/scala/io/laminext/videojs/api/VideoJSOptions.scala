@@ -1,7 +1,6 @@
 package io.laminext.videojs.api
 
 import io.laminext.videojs.api
-
 import scala.scalajs.js
 import scala.scalajs.js.UndefOr
 import scala.scalajs.js.|
@@ -63,12 +62,15 @@ object VideoJSOptions {
 trait VideoJSOptions extends ComponentOptions {
 
   /**
-   * The controls option sets whether or not the player has controls that the user can interact with. Without controls the only way to start the video playing is with the autoplay attribute or through the API.
+   * The controls option sets whether or not the player has controls that the user can interact with. Without controls the only way to start the video playing
+   * is with the autoplay attribute or through the API.
    */
   val controls: Boolean
 
   /**
-   * If autoplay is true, the video will start playing as soon as page is loaded (without any interaction from the user). NOT SUPPORTED BY APPLE iOS DEVICES. Apple blocks the autoplay functionality in an effort to protect it's customers from unwillingly using a lot of their (often expensive) monthly data plans. A user touch/click is required to start the video in this case.
+   * If autoplay is true, the video will start playing as soon as page is loaded (without any interaction from the user). NOT SUPPORTED BY APPLE iOS DEVICES.
+   * Apple blocks the autoplay functionality in an effort to protect it's customers from unwillingly using a lot of their (often expensive) monthly data plans.
+   * A user touch/click is required to start the video in this case.
    */
   val autoplay: Boolean
 
@@ -78,15 +80,17 @@ trait VideoJSOptions extends ComponentOptions {
   val loop: Boolean
 
   /**
-   * The preload attribute informs the browser whether or not the video data should begin downloading as soon as the video tag is loaded. The options are auto, metadata, and none.
-   * 'auto': Start loading the video immediately (if the browser agrees). Some mobile devices like iPhones and iPads will not preload the video in order to protect their users' bandwidth. This is why the value is called 'auto' and not something more final like 'true'.
-   * 'metadata': Load only the meta data of the video, which includes information like the duration and dimensions of the video.
-   * 'none': Don't preload any of the video data. This will wait until the user clicks play to begin downloading.
+   * The preload attribute informs the browser whether or not the video data should begin downloading as soon as the video tag is loaded. The options are auto,
+   * metadata, and none. 'auto': Start loading the video immediately (if the browser agrees). Some mobile devices like iPhones and iPads will not preload the
+   * video in order to protect their users' bandwidth. This is why the value is called 'auto' and not something more final like 'true'. 'metadata': Load only
+   * the meta data of the video, which includes information like the duration and dimensions of the video. 'none': Don't preload any of the video data. This
+   * will wait until the user clicks play to begin downloading.
    */
   val preload: String
 
   /**
-   * The poster attribute sets the image that displays before the video begins playing. This is often a frame of the video or a custom title screen. As soon as the user clicks play the image will go away.
+   * The poster attribute sets the image that displays before the video begins playing. This is often a frame of the video or a custom title screen. As soon as
+   * the user clicks play the image will go away.
    */
   val poster: UndefOr[String]
 
@@ -120,7 +124,8 @@ trait VideoJSOptions extends ComponentOptions {
   /**
    * Video.js indicates that the user is interacting with the player by way of the "vjs-user-active" and "vjs-user-inactive" classes and the "useractive" event.
    *
-   * The inactivityTimeout determines how many milliseconds of inactivity is required before declaring the user inactive. A value of 0 indicates that there is no inactivityTimeout and the user will never be considered inactive.
+   * The inactivityTimeout determines how many milliseconds of inactivity is required before declaring the user inactive. A value of 0 indicates that there is
+   * no inactivityTimeout and the user will never be considered inactive.
    */
   val inactivityTimeout: Double
 

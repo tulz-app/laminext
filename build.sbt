@@ -1,23 +1,23 @@
 inThisBuild(
   List(
     organization := "io.laminext",
-    homepage := Some(url("https://github.com/tulz-app/laminext")),
-    licenses := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
-    scmInfo := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
-    developers := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
+    homepage     := Some(url("https://github.com/tulz-app/laminext")),
+    licenses     := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
+    scmInfo      := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
+    developers   := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
     scalaVersion := ScalaVersions.v213,
-    description := "Laminar utilities and components",
+    description  := "Laminar utilities and components",
     crossScalaVersions := Seq(
       ScalaVersions.v213,
       ScalaVersions.v3
     ),
-    Test / publishArtifact := false,
-    Test / parallelExecution := false,
+    Test / publishArtifact     := false,
+    Test / parallelExecution   := false,
     githubWorkflowJavaVersions := Seq("openjdk@1.11.0"),
     githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
-    githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release"))),
-    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/compile"))),
+    githubWorkflowPublish               := Seq(WorkflowStep.Sbt(List("ci-release"))),
+    githubWorkflowBuild                 := Seq(WorkflowStep.Sbt(List("test", "website/compile"))),
     githubWorkflowEnv ~= (_ ++ Map(
       "PGP_PASSPHRASE"    -> s"$${{ secrets.PGP_PASSPHRASE }}",
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
@@ -45,10 +45,10 @@ lazy val commonSettings = Seq.concat(
 )
 
 lazy val bundlerSettings = Seq(
-  jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+  jsEnv                  := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
   installJsdom / version := DependencyVersions.jsdom,
   Test / requireJsDomEnv := true,
-  useYarn := true
+  useYarn                := true
 )
 
 lazy val baseDependencies = Seq(
@@ -268,8 +268,8 @@ lazy val website = project
 
 lazy val noPublish = Seq(
   publishLocal / skip := true,
-  publish / skip := true,
-  publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
+  publish / skip      := true,
+  publishTo           := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 )
 
 lazy val root = project

@@ -5,7 +5,6 @@ import com.raquo.airstream.common.SingleParentObservable
 import com.raquo.airstream.core.Transaction
 import com.raquo.airstream.core.WritableEventStream
 import com.raquo.laminar.api.L._
-
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 

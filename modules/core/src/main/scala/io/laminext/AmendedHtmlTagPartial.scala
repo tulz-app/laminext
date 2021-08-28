@@ -4,7 +4,6 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.builders.HtmlTag
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import org.scalajs.dom
-
 import scala.annotation.implicitNotFound
 
 class AmendedHtmlTagPartial[R <: dom.html.Element, AmType <: AmAny](
