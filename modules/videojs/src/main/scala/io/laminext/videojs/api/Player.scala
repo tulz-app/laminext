@@ -81,7 +81,7 @@ trait Player extends Component {
    * @return
    *   The end of the last buffered time range
    * @example
-   *   {{{ var howMuchIsDownloaded = myPlayer.bufferedPercent(); }}}
+   *   {{{var howMuchIsDownloaded = myPlayer.bufferedPercent();}}}
    */
   def bufferedPercent(): Double = js.native
 
@@ -117,7 +117,7 @@ trait Player extends Component {
    * @return
    *   The time in seconds, when not setting
    * @example
-   *   {{{ var whereYouAt = myPlayer.currentTime(); }}}
+   *   {{{var whereYouAt = myPlayer.currentTime();}}}
    */
   def currentTime(): Double = js.native
 
@@ -128,7 +128,7 @@ trait Player extends Component {
    * @return
    *   Self, when the current time is set
    * @example
-   *   {{{ myPlayer.currentTime(120); // 2 minutes into the video }}}
+   *   {{{myPlayer.currentTime(120); // 2 minutes into the video}}}
    */
   def currentTime(seconds: Int | String = ???): this.type = js.native
 
