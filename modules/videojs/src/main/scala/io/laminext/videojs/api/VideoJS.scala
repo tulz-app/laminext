@@ -40,7 +40,7 @@ object VideoJS extends Component {
    * @param data
    *   The data values to be translated
    * @example
-   *   {{{ VideoJS.addLanguage("es", js.Dynamic.literal(Hello = "Hola")) }}}
+   *   {{{VideoJS.addLanguage("es", js.Dynamic.literal(Hello = "Hola"))}}}
    */
   def addLanguage(code: String, data: js.Object): Unit = js.native
 
