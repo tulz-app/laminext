@@ -80,10 +80,10 @@ class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
 
   def toOption: EventStreamOptionT[B] = new EventStreamOptionT(value.map(_.toOption))
 
-  def collectRight: EventStream[B] =
+  def collectRight: EventStream[B]                                  =
     value.collect { case Right(b) => b }
 
-  def collectLeft: EventStream[A] =
+  def collectLeft: EventStream[A]                                   =
     value.collect { case Left(a) => a }
 
   def bimap[C, D](fa: A => C, fb: B => D): EventStreamEitherT[C, D] =

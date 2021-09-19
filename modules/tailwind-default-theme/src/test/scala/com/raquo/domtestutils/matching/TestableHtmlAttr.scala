@@ -26,7 +26,7 @@ class TestableProp[V, DomV](val prop: Prop[V, DomV]) extends AnyVal {
     value match {
       case str: String =>
         str.split("\\s+").toSeq.sorted.mkString(" ").asInstanceOf[U]
-      case value => value
+      case value       => value
     }
 
   }
@@ -36,7 +36,7 @@ class TestableProp[V, DomV](val prop: Prop[V, DomV]) extends AnyVal {
       (maybeActualValue, maybeExpectedValue) match {
 
         case (Some(actualValue), Some(expectedValue)) =>
-          val actualValueMaybeSorted =
+          val actualValueMaybeSorted   =
             if (sorted) {
               sortValue(actualValue)
             } else {

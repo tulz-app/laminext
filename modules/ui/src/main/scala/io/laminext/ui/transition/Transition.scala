@@ -124,21 +124,21 @@ object Transition {
       },
       inContext { (el: HtmlElement) =>
         bus.events.withCurrentValueOf(show) --> {
-          case (EnterFrom, _) =>
+          case (EnterFrom, _)     =>
             config.onEnterFrom(el.ref)
             classes.writer.onNext(enterFromClasses)
             scheduleEvent(EnterTo)
-          case (EnterTo, _) =>
+          case (EnterTo, _)       =>
             config.onEnterTo(el.ref)
             classes.writer.onNext(enterToClasses)
-          case (LeaveFrom, _) =>
+          case (LeaveFrom, _)     =>
             config.onLeaveFrom(el.ref)
             classes.writer.onNext(leaveFromClasses)
             scheduleEvent(LeaveTo)
-          case (LeaveTo, _) =>
+          case (LeaveTo, _)       =>
             config.onLeaveTo(el.ref)
             classes.writer.onNext(leaveToClasses)
-          case (Reset, show) =>
+          case (Reset, show)      =>
             classes.writer.onNext(resetClasses(show))
             scheduleEvent(AfterReset)
           case (AfterReset, show) =>

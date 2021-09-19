@@ -68,7 +68,7 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
     s1: Signal[T1]
   )(
     combinator: (A, T1) => Out
-  ): ThisEventsSignalBuilder[Ev, Out] =
+  ): ThisEventsSignalBuilder[Ev, Out]                           =
     andThen(_.combineWithFn(s1)(combinator))
 
   @inline def combineWith[T1](
