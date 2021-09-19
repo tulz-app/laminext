@@ -43,9 +43,9 @@ object Cookies {
     domain: Option[String] = null,
     secure: Boolean = false
   ): String = {
-    val attributes = extend(
+    val attributes  = extend(
       Map(
-        "path" -> Some("/")
+        "path"    -> Some("/")
       ),
       Map(
         "expires" -> ttlSeconds
@@ -53,10 +53,10 @@ object Cookies {
             new Date(Date.now() + e * 1000).toUTCString()
           }
           .orElse(Some("")),
-        "path"   -> Some(path),
-        "domain" -> domain,
-        "secure" -> Some(secure.toString),
-        "value" -> Some(value).map { s =>
+        "path"    -> Some(path),
+        "domain"  -> domain,
+        "secure"  -> Some(secure.toString),
+        "value"   -> Some(value).map { s =>
           valueUriComponentsRegex.replaceAllIn(
             encodeURIComponent(s),
             (m: Regex.Match) => decodeURIComponent(m.group(0))
@@ -76,7 +76,7 @@ object Cookies {
     val stringifiedAttributes = attributes.foldLeft("") { case (acc, (k, v)) =>
       s"$acc; $k=${v.split(";").headOption.getOrElse("")}"
     }
-    val cookie = s"$preparedKey=$value$stringifiedAttributes"
+    val cookie                = s"$preparedKey=$value$stringifiedAttributes"
     org.scalajs.dom.document.cookie = cookie
     cookie
   }

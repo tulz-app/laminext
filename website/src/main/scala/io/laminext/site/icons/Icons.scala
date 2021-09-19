@@ -9,7 +9,7 @@ object Icons {
 
   private def faIcon(d: String, viewBox: String): AmendedSvgTag[SVG] =
     svg.amend(
-      cls := "fill-current",
+      cls           := "fill-current",
       L.svg.viewBox := viewBox,
       path(L.svg.d := d)
     )

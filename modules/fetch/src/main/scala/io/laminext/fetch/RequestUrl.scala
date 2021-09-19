@@ -2,15 +2,18 @@ package io.laminext.fetch
 
 import io.laminext.util.UrlUtils
 import org.scalajs.dom.raw.Location
-
 import scala.collection.immutable.ArraySeq
 import scala.scalajs.js.URIUtils.encodeURIComponent
 
 /**
- * @param protocol http or https
- * @param host hostname, optionally with port
- * @param segments a Seq of path segments
- * @param params a Map of query search parameters
+ * @param protocol
+ *   http or https
+ * @param host
+ *   hostname, optionally with port
+ * @param segments
+ *   a Seq of path segments
+ * @param params
+ *   a Map of query search parameters
  */
 case class RequestUrl private (
   protocol: String,

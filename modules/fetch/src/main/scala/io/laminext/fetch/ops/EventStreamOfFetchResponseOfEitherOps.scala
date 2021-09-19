@@ -18,7 +18,7 @@ class EventStreamOfFetchResponseOfEitherOps[L, R](underlying: EventStream[FetchR
   def rightData: EventStream[R] =
     underlying.collect { case FetchResponse(_, _, _, _, _, Right(data), _) => data }
 
-  def leftData: EventStream[L] =
+  def leftData: EventStream[L]  =
     underlying.collect { case FetchResponse(_, _, _, _, _, Left(data), _) => data }
 
 }

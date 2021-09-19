@@ -4,7 +4,6 @@ import com.raquo.domtestutils.Utils.repr
 import com.raquo.domtypes.generic.keys.Prop
 import app.tulz.diff.TokenDiff
 import org.scalajs.dom
-
 import scala.scalajs.js
 
 // @TODO Create EventPropOps
@@ -27,7 +26,7 @@ class TestableProp[V, DomV](val prop: Prop[V, DomV]) extends AnyVal {
     value match {
       case str: String =>
         str.split("\\s+").toSeq.sorted.mkString(" ").asInstanceOf[U]
-      case value => value
+      case value       => value
     }
 
   }
@@ -37,7 +36,7 @@ class TestableProp[V, DomV](val prop: Prop[V, DomV]) extends AnyVal {
       (maybeActualValue, maybeExpectedValue) match {
 
         case (Some(actualValue), Some(expectedValue)) =>
-          val actualValueMaybeSorted =
+          val actualValueMaybeSorted   =
             if (sorted) {
               sortValue(actualValue)
             } else {

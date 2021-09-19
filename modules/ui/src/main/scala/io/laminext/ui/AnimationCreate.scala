@@ -2,7 +2,6 @@ package io.laminext.ui
 
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
-
 import scala.scalajs.js
 
 trait AnimationCreate {

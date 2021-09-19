@@ -8,7 +8,6 @@ import com.raquo.airstream.util.always
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
-
 import scala.util.Try
 
 class ThisEventsStreamBuilder[Ev <: dom.Event, A](

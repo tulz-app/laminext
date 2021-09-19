@@ -75,10 +75,10 @@ object PageHeader {
           addTransition(styleDropDownOpen.signal, TailwindTransition.opacityAndScale),
           cls := "origin-top-right absolute max-h-128 overflow-auto right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20 p-2",
           div(
-            cls := "py-1",
-            role := "menu",
+            cls              := "py-1",
+            role             := "menu",
             aria.orientation := "vertical",
-            aria.labelledBy := "options-menu",
+            aria.labelledBy  := "options-menu",
             div(
               cls := "mb-2",
               searchInput
@@ -144,7 +144,7 @@ object PageHeader {
         cls := "hidden lg:block",
         a(
           href := "https://github.com/tulz-app/laminext",
-          rel := "external",
+          rel  := "external",
           Icons.github(svg.cls := "h-6 text-gray-300")
         )
       )

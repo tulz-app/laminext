@@ -8,7 +8,6 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.modifiers.Binder
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
-
 import scala.util.Failure
 import scala.util.Try
 
@@ -69,7 +68,7 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
     s1: Signal[T1]
   )(
     combinator: (A, T1) => Out
-  ): ThisEventsSignalBuilder[Ev, Out] =
+  ): ThisEventsSignalBuilder[Ev, Out]                           =
     andThen(_.combineWithFn(s1)(combinator))
 
   @inline def combineWith[T1](

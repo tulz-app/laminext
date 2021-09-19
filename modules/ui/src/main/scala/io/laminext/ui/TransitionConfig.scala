@@ -3,21 +3,36 @@ package io.laminext.ui
 import org.scalajs.dom
 
 /**
- * @param hidden when hidden
- * @param nonHidden when showing or in transition
- * @param showing when showing
- * @param inTransition when in transition
- * @param enter during enter transition
- * @param enterFrom enter from
- * @param enterTo enter to
- * @param leave during leave transition
- * @param leaveFrom leave from
- * @param leaveTo leave to
- * @param onEnterFrom optional callback to set additional enterFrom settings of the element
- * @param onEnterTo optional callback to set additional enterTo settings of the element
- * @param onLeaveFrom optional callback to set additional leaveFrom settings of the element
- * @param onLeaveTo optional callback to set additional leaveFrom settings of the element
- * @param onReset optional callback to reset the element
+ * @param hidden
+ *   when hidden
+ * @param nonHidden
+ *   when showing or in transition
+ * @param showing
+ *   when showing
+ * @param inTransition
+ *   when in transition
+ * @param enter
+ *   during enter transition
+ * @param enterFrom
+ *   enter from
+ * @param enterTo
+ *   enter to
+ * @param leave
+ *   during leave transition
+ * @param leaveFrom
+ *   leave from
+ * @param leaveTo
+ *   leave to
+ * @param onEnterFrom
+ *   optional callback to set additional enterFrom settings of the element
+ * @param onEnterTo
+ *   optional callback to set additional enterTo settings of the element
+ * @param onLeaveFrom
+ *   optional callback to set additional leaveFrom settings of the element
+ * @param onLeaveTo
+ *   optional callback to set additional leaveFrom settings of the element
+ * @param onReset
+ *   optional callback to reset the element
  */
 final case class TransitionConfig(
   hidden: Seq[String],

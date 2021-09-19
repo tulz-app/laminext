@@ -7,7 +7,7 @@ final class ValidationCatsOps[A, Err: Semigroup](underlying: Validation[A, Err, 
 
   def &(other: Validation[A, Err, A]): Validation[A, Err, A] = (a: A) =>
     underlying(a) match {
-      case Right(a) =>
+      case Right(a)    =>
         other(a) match {
           case Right(a)         => Right(a)
           case Left(otherError) => Left(otherError)
@@ -21,7 +21,7 @@ final class ValidationCatsOps[A, Err: Semigroup](underlying: Validation[A, Err, 
 
   def |(other: Validation[A, Err, A]): Validation[A, Err, A] = (a: A) =>
     underlying(a) match {
-      case Right(a) => Right(a)
+      case Right(a)    => Right(a)
       case Left(error) =>
         other(a) match {
           case Right(a)         => Right(a)

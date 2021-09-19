@@ -11,7 +11,6 @@ import io.laminext.core.StoredString
 import io.laminext.core.TeeObserver
 import io.laminext.core.ThisEventsStreamBuilder
 import org.scalajs.dom
-
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 

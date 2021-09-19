@@ -6,7 +6,6 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
 import org.scalajs.dom.raw
-
 import scala.collection.mutable
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
@@ -71,7 +70,7 @@ class WebSocket[Receive, Send](
           receiver(event) match {
             case Right(message) =>
               eventBus.writer.onNext(WebSocketEvent.Received(message))
-            case Left(error) =>
+            case Left(error)    =>
               eventBus.writer.onNext(WebSocketEvent.Error(error))
           }
         }
@@ -88,7 +87,7 @@ class WebSocket[Receive, Send](
             } else {
               reconnectDelayOffline.toMillis.toDouble
             }
-            val _ = js.timers.setTimeout(delay) {
+            val _     = js.timers.setTimeout(delay) {
               if (bindsCount > 0) {
                 initWebSocket()
               }

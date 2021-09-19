@@ -3,7 +3,6 @@ package ops.stream
 
 import com.raquo.laminar.api.L._
 import com.raquo.airstream.flatten.FlattenStrategy
-
 import scala.concurrent.duration.FiniteDuration
 
 final class EventStreamOps[A](underlying: EventStream[A]) {
@@ -49,7 +48,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       .withCurrentValueOf(b)
       .collect { case (v, true) => v }
 
-  @inline def drop(toDrop: Int): EventStream[A] = new DropEventStream[A](underlying, toDrop)
+  @inline def drop(toDrop: Int): EventStream[A]    = new DropEventStream[A](underlying, toDrop)
 
   @inline def take(toTake: Int): EventStream[A] = new TakeEventStream[A](underlying, toTake)
 
@@ -59,7 +58,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
     underlying.filter { event =>
       previous match {
         case Some(prev) if prev == event => false
-        case _ =>
+        case _                           =>
           previous = Some(event)
           true
       }

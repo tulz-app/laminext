@@ -16,4 +16,6 @@ trait BaseSyntax {
     el: ReactiveSvgElement[T]
   ): ReactiveSvgElementTailwindOps[T] = new ReactiveSvgElementTailwindOps[T](el)
 
+  implicit def syntaxSignalOfBooleanTailwind(s: Signal[Boolean]): SignalOfBooleanTailwindOps = new SignalOfBooleanTailwindOps(s)
+
 }

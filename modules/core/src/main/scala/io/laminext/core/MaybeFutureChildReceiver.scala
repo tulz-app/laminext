@@ -4,7 +4,6 @@ import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ChildNode
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
-
 import scala.concurrent.Future
 
 object MaybeFutureChildReceiver {

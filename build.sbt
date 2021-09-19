@@ -1,43 +1,46 @@
+import org.scalajs.linker.interface.ESVersion
+
 inThisBuild(
   List(
-    organization := "io.laminext",
-    homepage := Some(url("https://github.com/tulz-app/laminext")),
-    licenses := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
-    scmInfo := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
-    developers := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
-    scalaVersion := ScalaVersions.v213,
-    description := "Laminar utilities and components",
-    crossScalaVersions := Seq(
+    organization                        := "io.laminext",
+    homepage                            := Some(url("https://github.com/tulz-app/laminext")),
+    licenses                            := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
+    scmInfo                             := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
+    developers                          := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
+    scalaVersion                        := ScalaVersions.v213,
+    description                         := "Laminar utilities and components",
+    crossScalaVersions                  := Seq(
       ScalaVersions.v213,
       ScalaVersions.v3
     ),
-    Test / publishArtifact := false,
-    Test / parallelExecution := false,
-    githubWorkflowJavaVersions := Seq("openjdk@1.11.0"),
+    Test / publishArtifact              := false,
+    Test / parallelExecution            := false,
+    scalafmtOnCompile                   := true,
+    githubWorkflowJavaVersions          := Seq("openjdk@1.11.0"),
     githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
-    githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release"))),
-    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "website/compile"))),
+    githubWorkflowPublish               := Seq(WorkflowStep.Sbt(List("ci-release"))),
+    githubWorkflowBuild                 := Seq(WorkflowStep.Sbt(List("test", "website/compile"))),
     githubWorkflowEnv ~= (_ ++ Map(
       "PGP_PASSPHRASE"    -> s"$${{ secrets.PGP_PASSPHRASE }}",
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
       "SONATYPE_PASSWORD" -> s"$${{ secrets.SONATYPE_PASSWORD }}",
       "SONATYPE_USERNAME" -> s"$${{ secrets.SONATYPE_USERNAME }}"
     )),
-    versionScheme := Some("early-semver") // Early Semantic Versioning that would keep binary compatibility across patch updates within 0.Y.z
-  )
+    versionScheme                       := Some("semver-spec") // all 0.y.z are treated as initial development (no bincompat guarantees)
+  ),
 )
 
 lazy val commonSettings = Seq.concat(
   ScalaOptions.fixOptions,
   scalacOptions ++= {
-    val sourcesGithubUrl = s"https://raw.githubusercontent.com/tulz-app/laminext/${git.gitHeadCommit.value.get}/"
+    val sourcesGithubUrl  = s"https://raw.githubusercontent.com/tulz-app/laminext/${git.gitHeadCommit.value.get}/"
     val sourcesOptionName = CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, _)) => "-P:scalajs:mapSourceURI"
       case Some((3, _)) => "-scalajs-mapSourceURI"
       case _            => throw new RuntimeException(s"unexpected scalaVersion: ${scalaVersion.value}")
     }
-    val moduleSourceRoot = file("").toURI.toString
+    val moduleSourceRoot  = file("").toURI.toString
     Seq(
       s"$sourcesOptionName:$moduleSourceRoot->$sourcesGithubUrl"
     )
@@ -45,10 +48,10 @@ lazy val commonSettings = Seq.concat(
 )
 
 lazy val bundlerSettings = Seq(
-  jsEnv := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+  jsEnv                  := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
   installJsdom / version := DependencyVersions.jsdom,
   Test / requireJsDomEnv := true,
-  useYarn := true
+  useYarn                := true
 )
 
 lazy val baseDependencies = Seq(
@@ -229,9 +232,9 @@ lazy val website = project
   .settings(commonSettings)
   .settings(noPublish)
   .settings(
-    githubWorkflowTargetTags := Seq.empty,
+    githubWorkflowTargetTags        := Seq.empty,
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-    scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+    scalaJSLinkerConfig ~= { _.withESFeatures(_.withESVersion(ESVersion.ES5_1)) },
     Compile / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     scalaJSUseMainModuleInitializer := true,
     //    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),
@@ -242,7 +245,7 @@ lazy val website = project
       Dependencies.sourcecode.value,
       Dependencies.`scala-java-time`.value,
     ),
-    embedTextGlobs := Seq("**/*.md"),
+    embedTextGlobs                  := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
     (Compile / sourceGenerators) += embedFiles
   )
@@ -268,8 +271,8 @@ lazy val website = project
 
 lazy val noPublish = Seq(
   publishLocal / skip := true,
-  publish / skip := true,
-  publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
+  publish / skip      := true,
+  publishTo           := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 )
 
 lazy val root = project

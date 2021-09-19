@@ -7,7 +7,7 @@ final class EventStreamOfOptionOps[A](underlying: EventStream[Option[A]]) {
 
   @inline def optionT: EventStreamOptionT[A] = new EventStreamOptionT(underlying)
 
-  @inline def collectDefined: EventStream[A] =
+  @inline def collectDefined: EventStream[A]  =
     underlying.collect { case Some(event) => event }
 
   @inline def isDefined: EventStream[Boolean] =
