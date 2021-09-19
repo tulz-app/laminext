@@ -47,7 +47,7 @@ trait FileInputElementCreate {
           }
         }
       }
-    val fileInput = input(tpe := "file", multiple(true), inputElementMods, inputMods).validatedFiles(multiFileValidation)
+    val fileInput                                                                            = input(tpe := "file", multiple(true), inputElementMods, inputMods).validatedFiles(multiFileValidation)
     build(fileInput, styling, labelSelecting, labelReady)
   }
 

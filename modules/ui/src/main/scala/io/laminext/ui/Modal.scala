@@ -12,15 +12,15 @@ object Modal {
     style.`type` = "text/css"
     style.innerHTML = s""".${noScrollClassName}{margin-right: ${calculateScrollbarWidth()}px;}
                          |html.${noScrollClassName} body {overflow: hidden !important;}""".stripMargin
-    val _ = dom.document.getElementsByTagName("head")(0).appendChild(style)
+    val _     = dom.document.getElementsByTagName("head")(0).appendChild(style)
   }
 
   private def calculateScrollbarWidth(): Double = {
-    val outer = div(styleAttr("visibility: hidden; width: 100px; msOverflowStyle: scrollbar")).ref
+    val outer           = div(styleAttr("visibility: hidden; width: 100px; msOverflowStyle: scrollbar")).ref
     dom.document.body.appendChild(outer)
-    val widthNoScroll = outer.offsetWidth
+    val widthNoScroll   = outer.offsetWidth
     outer.style.overflow = "scroll"
-    val inner = div(width := "100%").ref
+    val inner           = div(width := "100%").ref
     outer.appendChild(inner)
     val widthWithScroll = inner.offsetWidth
     outer.parentNode.removeChild(outer)

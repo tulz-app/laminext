@@ -1,9 +1,11 @@
 package io.laminext.tailwind
 
-import io.laminext.tailwind.ops.htmlelement.ReactiveHtmlElementTailwindOps
-import io.laminext.tailwind.ops.svgelement.ReactiveSvgElementTailwindOps
+import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import com.raquo.laminar.nodes.ReactiveSvgElement
+import io.laminext.tailwind.ops.htmlelement.ReactiveHtmlElementTailwindOps
+import io.laminext.tailwind.ops.signal.SignalOfBooleanTailwindOps
+import io.laminext.tailwind.ops.svgelement.ReactiveSvgElementTailwindOps
 import org.scalajs.dom
 
 trait BaseSyntax {

@@ -31,13 +31,13 @@ trait TransitionCreate {
         config.enter        -> true,
 //        config.enterDuration -> true,
 //        config.enterTiming   -> true,
-        config.enterFrom -> true,
-        config.enterTo   -> false,
-        config.leave     -> false,
+        config.enterFrom    -> true,
+        config.enterTo      -> false,
+        config.leave        -> false,
 //        config.leaveDuration -> false,
 //        config.leaveTiming   -> false,
-        config.leaveFrom -> false,
-        config.leaveTo   -> false
+        config.leaveFrom    -> false,
+        config.leaveTo      -> false
       )
 
     val enterToClasses =
@@ -49,13 +49,13 @@ trait TransitionCreate {
         config.enter        -> true,
 //        config.enterDuration -> true,
 //        config.enterTiming   -> true,
-        config.enterFrom -> false,
-        config.enterTo   -> true,
-        config.leave     -> false,
+        config.enterFrom    -> false,
+        config.enterTo      -> true,
+        config.leave        -> false,
 //        config.leaveDuration -> false,
 //        config.leaveTiming   -> false,
-        config.leaveFrom -> false,
-        config.leaveTo   -> false
+        config.leaveFrom    -> false,
+        config.leaveTo      -> false
       )
 
     val leaveFromClasses =
@@ -67,13 +67,13 @@ trait TransitionCreate {
         config.enter        -> false,
 //        config.enterDuration -> false,
 //        config.enterTiming   -> false,
-        config.enterFrom -> false,
-        config.enterTo   -> false,
-        config.leave     -> true,
+        config.enterFrom    -> false,
+        config.enterTo      -> false,
+        config.leave        -> true,
 //        config.leaveDuration -> true,
 //        config.leaveTiming   -> true,
-        config.leaveFrom -> true,
-        config.leaveTo   -> false
+        config.leaveFrom    -> true,
+        config.leaveTo      -> false
       )
 
     val leaveToClasses =
@@ -85,13 +85,13 @@ trait TransitionCreate {
         config.enter        -> false,
 //        config.enterDuration -> false,
 //        config.enterTiming   -> false,
-        config.enterFrom -> false,
-        config.enterTo   -> false,
-        config.leave     -> true,
+        config.enterFrom    -> false,
+        config.enterTo      -> false,
+        config.leave        -> true,
 //        config.leaveDuration -> true,
 //        config.leaveTiming   -> true,
-        config.leaveFrom -> false,
-        config.leaveTo   -> true
+        config.leaveFrom    -> false,
+        config.leaveTo      -> true
       )
 
     def resetClasses(show: Boolean) =
@@ -103,13 +103,13 @@ trait TransitionCreate {
         config.enter        -> false,
 //        config.enterDuration -> false,
 //        config.enterTiming   -> false,
-        config.enterFrom -> false,
-        config.enterTo   -> false,
-        config.leave     -> false,
+        config.enterFrom    -> false,
+        config.enterTo      -> false,
+        config.leave        -> false,
 //        config.leaveDuration -> false,
 //        config.leaveTiming   -> false,
-        config.leaveFrom -> false,
-        config.leaveTo   -> false
+        config.leaveFrom    -> false,
+        config.leaveTo      -> false
       )
 
     def scheduleEvent = (event: TransitionEvent) => {
@@ -128,21 +128,21 @@ trait TransitionCreate {
       },
       inContext { (el: HtmlElement) =>
         bus.events.withCurrentValueOf(show) --> {
-          case (EnterFrom, _) =>
+          case (EnterFrom, _)     =>
             config.onEnterFrom(el.ref)
             classes.writer.onNext(enterFromClasses)
             scheduleEvent(EnterTo)
-          case (EnterTo, _) =>
+          case (EnterTo, _)       =>
             config.onEnterTo(el.ref)
             classes.writer.onNext(enterToClasses)
-          case (LeaveFrom, _) =>
+          case (LeaveFrom, _)     =>
             config.onLeaveFrom(el.ref)
             classes.writer.onNext(leaveFromClasses)
             scheduleEvent(LeaveTo)
-          case (LeaveTo, _) =>
+          case (LeaveTo, _)       =>
             config.onLeaveTo(el.ref)
             classes.writer.onNext(leaveToClasses)
-          case (Reset, show) =>
+          case (Reset, show)      =>
             classes.writer.onNext(resetClasses(show))
             scheduleEvent(AfterReset)
           case (AfterReset, show) =>
