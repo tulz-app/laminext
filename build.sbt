@@ -18,6 +18,7 @@ inThisBuild(
     scalafmtOnCompile                   := true,
     githubWorkflowJavaVersions          := Seq("openjdk@1.16.0"),
     githubWorkflowUseSbtThinClient      := false,
+    githubWorkflowSbtCommand            := "sbt -mem 5000",
     githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
     githubWorkflowPublish               := Seq(WorkflowStep.Sbt(List("ci-release"))),
