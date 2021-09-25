@@ -11,19 +11,19 @@ final class SignalOfOptionOps[A](underlying: Signal[Option[A]]) {
 
   @inline def isEmpty: Signal[Boolean] = underlying.map(_.isEmpty)
 
-  @inline def optionContains[B >: A](value: B): Signal[Boolean] =
+  @inline def optionContains[B >: A](value: B): Signal[Boolean]            =
     underlying.map(_.contains(value))
 
-  @inline def optionExists(predicate: A => Boolean): Signal[Boolean] =
+  @inline def optionExists(predicate: A => Boolean): Signal[Boolean]       =
     underlying.map(_.exists(predicate))
 
-  @inline def optionMap[B](project: A => B): Signal[Option[B]] =
+  @inline def optionMap[B](project: A => B): Signal[Option[B]]             =
     underlying.map(_.map(project))
 
   @inline def optionFlatMap[B](project: A => Option[B]): Signal[Option[B]] =
     underlying.map(_.flatMap(project))
 
-  @inline def withDefault(default: => A): Signal[A] =
+  @inline def withDefault(default: => A): Signal[A]                        =
     underlying.map(_.getOrElse(default))
 
 }

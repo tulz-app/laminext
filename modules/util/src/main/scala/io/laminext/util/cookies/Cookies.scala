@@ -31,9 +31,9 @@ object Cookies {
     }
   }
 
-  private val decodeRegex             = "(%[0-9A-Z]{2})+".r
-  private val valueUriComponentsRegex = "%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)".r
-  private val keyUriComponentsRegex   = "%(23|24|26|2B|5E|60|7C)".r
+  private val decodeRegex                                     = "(%[0-9A-Z]{2})+".r
+  private val valueUriComponentsRegex                         = "%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)".r
+  private val keyUriComponentsRegex                           = "%(23|24|26|2B|5E|60|7C)".r
 
   def set(
     key: String,
@@ -81,7 +81,7 @@ object Cookies {
     cookie
   }
 
-  def remove(key: String): String =
+  def remove(key: String): String                                                  =
     set(key, "", ttlSeconds = Some(-1))
 
   private def extend(arguments: Map[String, Option[String]]*): Map[String, String] = {
@@ -90,7 +90,7 @@ object Cookies {
     }
   }
 
-  private def decode(s: String): String =
+  private def decode(s: String): String                                            =
     decodeRegex.replaceAllIn(s, (m: Regex.Match) => decodeURIComponent(m.group(0)))
 
 }

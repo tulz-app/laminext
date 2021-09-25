@@ -19,7 +19,7 @@ class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
       }
     }
 
-  private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder =
+  private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder                =
     b.updateHeaders(_.updated("accept", "application/json"))
 
   def decode[A](implicit decoder: Decoder[A]): EventStream[FetchResponse[A]] =

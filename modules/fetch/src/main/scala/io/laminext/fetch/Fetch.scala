@@ -179,7 +179,7 @@ final class FetchEventStreamBuilder(
     this
   }
 
-  @inline def addHeaders(headers: (String, String)*): FetchEventStreamBuilder =
+  @inline def addHeaders(headers: (String, String)*): FetchEventStreamBuilder        =
     updateHeaders(_ ++ headers)
 
   @inline def addAuthorizationHeader(authorization: String): FetchEventStreamBuilder =

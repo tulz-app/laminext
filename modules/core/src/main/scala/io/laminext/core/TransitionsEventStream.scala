@@ -23,7 +23,7 @@ class TransitionsEventStream[A](
     previous = Some(nextValue)
   }
 
-  override def onError(nextError: Throwable, transaction: Transaction): Unit =
+  override def onError(nextError: Throwable, transaction: Transaction): Unit  =
     fireError(nextError, transaction)
 
 }

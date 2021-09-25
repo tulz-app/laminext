@@ -18,13 +18,13 @@ class HtmlTagTailwindCardOps[T <: dom.html.Element](
   tag: AmendedHtmlTagPartial[T, AmCard]
 ) {
 
-  @inline def wrap: AmendedHtmlTag[T, AmAny] =
+  @inline def wrap: AmendedHtmlTag[T, AmAny]          =
     tag
       .amend[AmAny](
         cls := Theme.current.card.wrap.classes
       ).build
 
-  @inline def body: AmendedHtmlTag[T, AmCardBody] =
+  @inline def body: AmendedHtmlTag[T, AmCardBody]     =
     tag
       .amend[AmCardBody](
         cls := Theme.current.card.body.classes
@@ -42,7 +42,7 @@ class HtmlTagTailwindCardOps[T <: dom.html.Element](
         cls := Theme.current.card.footer.classes
       ).build
 
-  @inline def title: AmendedHtmlTag[T, AmCardTitle] =
+  @inline def title: AmendedHtmlTag[T, AmCardTitle]   =
     tag
       .amend[AmCardTitle](
         cls := Theme.current.card.title.classes

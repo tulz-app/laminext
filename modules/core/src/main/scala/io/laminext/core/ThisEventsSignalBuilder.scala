@@ -16,7 +16,7 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   transform: EventStream[Ev] => Signal[A]
 ) {
 
-  @inline def -->[El <: Element](sink: Sink[A]): Binder[ReactiveElement.Base] =
+  @inline def -->[El <: Element](sink: Sink[A]): Binder[ReactiveElement.Base]       =
     composeEvents(t)(transform) --> sink
 
   @inline def -->[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
@@ -29,10 +29,10 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
 
   // Signal proxies
 
-  @inline def map[B](project: A => B): ThisEventsSignalBuilder[Ev, B] =
+  @inline def map[B](project: A => B): ThisEventsSignalBuilder[Ev, B]                                     =
     andThen(_.map(project))
 
-  @inline def compose[B](operator: Signal[A] => Signal[B]): ThisEventsSignalBuilder[Ev, B] =
+  @inline def compose[B](operator: Signal[A] => Signal[B]): ThisEventsSignalBuilder[Ev, B]                =
     andThen(_.compose(operator))
 
   @inline def composeChanges[AA >: A](
@@ -45,10 +45,10 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   ): ThisEventsSignalBuilder[Ev, B] =
     andThen(_.composeAll(operator, initialOperator))
 
-  @inline def changes: ThisEventsStreamBuilder[Ev, A] =
+  @inline def changes: ThisEventsStreamBuilder[Ev, A]                                                     =
     new ThisEventsStreamBuilder(t, transform.andThen(_.changes))
 
-  @inline def foldLeft[B](makeInitial: A => B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B] =
+  @inline def foldLeft[B](makeInitial: A => B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B]           =
     andThen(_.foldLeft(makeInitial)(fn))
 
   @inline def foldLeftRecover[B](makeInitial: Try[A] => Try[B])(
@@ -61,14 +61,14 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   ): ThisEventsSignalBuilder[Ev, B] =
     andThen(_.recover(pf))
 
-  @inline def recoverToTry: ThisEventsSignalBuilder[Ev, Try[A]] =
+  @inline def recoverToTry: ThisEventsSignalBuilder[Ev, Try[A]]                                           =
     map(Try(_)).recover[Try[A]] { case err => Some(Failure(err)) }
 
   @inline def combineWithFn[T1, Out](
     s1: Signal[T1]
   )(
     combinator: (A, T1) => Out
-  ): ThisEventsSignalBuilder[Ev, Out]                           =
+  ): ThisEventsSignalBuilder[Ev, Out] =
     andThen(_.combineWithFn(s1)(combinator))
 
   @inline def combineWith[T1](
@@ -76,10 +76,10 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   )(implicit c: Composition[A, T1]): ThisEventsSignalBuilder[Ev, c.Composed] =
     andThen(_.combineWith(s1))
 
-  @inline def debugWith(debugger: Debugger[A]): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugWith(debugger: Debugger[A]): ThisEventsSignalBuilder[Ev, A]                            =
     andThen(_.debugWith(debugger))
 
-  @inline def setDisplayName(name: String): ThisEventsSignalBuilder[Ev, A] =
+  @inline def setDisplayName(name: String): ThisEventsSignalBuilder[Ev, A]                                =
     andThen(_.setDisplayName(name))
 
   @inline def debugLog(
@@ -105,49 +105,49 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   ): ThisEventsSignalBuilder[Ev, A] =
     andThen(_.debugLogLifecycle(logStarts, logStops))
 
-  @inline def debugLogStarts: ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugLogStarts: ThisEventsSignalBuilder[Ev, A]                                              =
     andThen(_.debugLogStarts)
 
-  @inline def debugLogStops: ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugLogStops: ThisEventsSignalBuilder[Ev, A]                                               =
     andThen(_.debugLogStops)
 
-  @inline def debugBreak(when: Try[A] => Boolean = always): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugBreak(when: Try[A] => Boolean = always): ThisEventsSignalBuilder[Ev, A]                =
     andThen(_.debugBreak(when))
 
-  @inline def debugBreakEvents(when: A => Boolean = always): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugBreakEvents(when: A => Boolean = always): ThisEventsSignalBuilder[Ev, A]               =
     andThen(_.debugBreakEvents(when))
 
-  @inline def debugBreakErrors(when: Throwable => Boolean = always): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugBreakErrors(when: Throwable => Boolean = always): ThisEventsSignalBuilder[Ev, A]       =
     andThen(_.debugBreakErrors(when))
 
-  @inline def debugBreakLifecycle: ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugBreakLifecycle: ThisEventsSignalBuilder[Ev, A]                                         =
     andThen(_.debugBreakLifecycle)
 
-  @inline def debugBreakStarts: ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugBreakStarts: ThisEventsSignalBuilder[Ev, A]                                            =
     andThen(_.debugBreakStarts)
 
-  @inline def debugBreakStops: ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugBreakStops: ThisEventsSignalBuilder[Ev, A]                                             =
     andThen(_.debugBreakStops)
 
-  @inline def debugWithName(displayName: String): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugWithName(displayName: String): ThisEventsSignalBuilder[Ev, A]                          =
     andThen(_.debugWithName(displayName))
 
-  @inline def debugSpy(fn: Try[A] => Unit): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugSpy(fn: Try[A] => Unit): ThisEventsSignalBuilder[Ev, A]                                =
     andThen(_.debugSpy(fn))
 
-  @inline def debugSpyEvents(fn: A => Unit): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugSpyEvents(fn: A => Unit): ThisEventsSignalBuilder[Ev, A]                               =
     andThen(_.debugSpyEvents(fn))
 
-  @inline def debugSpyErrors(fn: Throwable => Unit): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugSpyErrors(fn: Throwable => Unit): ThisEventsSignalBuilder[Ev, A]                       =
     andThen(_.debugSpyErrors(fn))
 
   @inline def debugSpyLifecycle(startFn: Int => Unit, stopFn: () => Unit): ThisEventsSignalBuilder[Ev, A] =
     andThen(_.debugSpyLifecycle(startFn, stopFn))
 
-  @inline def debugSpyStarts(fn: Int => Unit): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugSpyStarts(fn: Int => Unit): ThisEventsSignalBuilder[Ev, A]                             =
     andThen(_.debugSpyStarts(fn))
 
-  @inline def debugSpyStops(fn: () => Unit): ThisEventsSignalBuilder[Ev, A] =
+  @inline def debugSpyStops(fn: () => Unit): ThisEventsSignalBuilder[Ev, A]                               =
     andThen(_.debugSpyStops(fn))
 
 }

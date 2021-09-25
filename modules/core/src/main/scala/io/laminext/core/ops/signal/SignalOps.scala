@@ -10,7 +10,7 @@ final class SignalOps[A](underlying: Signal[A]) {
       (Some(previous), current)
     }
 
-  @inline def valueIs(value: A): Signal[Boolean] =
+  @inline def valueIs(value: A): Signal[Boolean]  =
     underlying.map(_ == value)
 
 }

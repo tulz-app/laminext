@@ -10,18 +10,18 @@ final class SignalOfBooleanOps(underlying: Signal[Boolean]) {
 
   @inline def not: Signal[Boolean] = underlying.map(!_)
 
-  @inline def ||(r: Boolean): Signal[Boolean] = underlying.map { l =>
+  @inline def ||(r: Boolean): Signal[Boolean]                                                          = underlying.map { l =>
     l || r
   }
 
-  @inline def ||(that: Signal[Boolean]): Signal[Boolean] =
+  @inline def ||(that: Signal[Boolean]): Signal[Boolean]                                               =
     underlying.combineWithFn(that)(_ || _)
 
-  @inline def &&(r: Boolean): Signal[Boolean] = underlying.map { l =>
+  @inline def &&(r: Boolean): Signal[Boolean]                                                          = underlying.map { l =>
     l && r
   }
 
-  @inline def &&(that: Signal[Boolean]): Signal[Boolean] =
+  @inline def &&(that: Signal[Boolean]): Signal[Boolean]                                               =
     underlying.combineWithFn(that)(_ && _)
 
   @inline def classSwitch(whenTrue: => String, whenFalse: => String): Binder[ReactiveHtmlElement.Base] =
@@ -32,7 +32,7 @@ final class SignalOfBooleanOps(underlying: Signal[Boolean]) {
       )
     }
 
-  @inline def switch[T](whenTrue: => T, whenFalse: => T): Signal[T] =
+  @inline def switch[T](whenTrue: => T, whenFalse: => T): Signal[T]                                    =
     underlying.map(if (_) whenTrue else whenFalse)
 
 }

@@ -36,22 +36,22 @@ trait MiscSyntax {
     if (!b) { mods }
     else { emptyMod }
 
-  @inline def whenEmpty[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
+  @inline def whenEmpty[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El]   =
     when(o.isEmpty)(mods: _*)
 
   @inline def whenDefined[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
     when(o.isDefined)(mods: _*)
 
-  @inline def tee[T](observers: Observer[T]*): Observer[T] =
+  @inline def tee[T](observers: Observer[T]*): Observer[T]                                =
     new TeeObserver[T](observers)
 
-  def buildStream[T](body: Observer[T] => Unit): EventStream[T] = {
+  def buildStream[T](body: Observer[T] => Unit): EventStream[T]                   = {
     val bus = new EventBus[T]
     body(bus.writer)
     bus.events
   }
 
-  @inline def createTrigger(): (EventStream[Unit], () => Unit) = {
+  @inline def createTrigger(): (EventStream[Unit], () => Unit)                    = {
     val (stream, callback) = EventStream.withCallback[Unit]
     (stream, () => { callback((): Unit) })
   }
@@ -59,7 +59,7 @@ trait MiscSyntax {
   @inline def storedBoolean(name: String, initial: Boolean = true): StoredBoolean =
     new StoredBoolean(name, initial)
 
-  @inline def storedString(name: String, initial: String): StoredString =
+  @inline def storedString(name: String, initial: String): StoredString           =
     new StoredString(name, initial)
 
   @inline def after[T](
@@ -71,7 +71,7 @@ trait MiscSyntax {
     timeout: FiniteDuration,
   ): SetTimeoutBinders[Unit] = new SetTimeoutBinders((): Unit, timeout)
 
-  @inline def resizeObserver: ResizeObserverBinders.type = ResizeObserverBinders
+  @inline def resizeObserver: ResizeObserverBinders.type                          = ResizeObserverBinders
 
   @inline def mutationObserver(
     childList: Boolean = false,

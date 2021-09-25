@@ -20,7 +20,7 @@ abstract class BinderWithStartStop[-El <: ReactiveElement.Base] extends Binder[E
     }
   }
 
-  def start(): Unit = {
+  def start(): Unit                                   = {
     if (subscribed) {
       doStart()
     }

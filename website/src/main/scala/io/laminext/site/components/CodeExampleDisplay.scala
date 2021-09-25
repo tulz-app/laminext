@@ -34,7 +34,7 @@ object CodeExampleDisplay {
     lines.map(_.drop(minIndent)).mkString("\n")
   }
 
-  private val collapseTransition = theme.Theme.current.transition.resize.customize(
+  private val collapseTransition                  = theme.Theme.current.transition.resize.customize(
     hidden = _ :+ "max-h-32",
     showing = _ :+ "max-h-[400px]",
     enterFrom = _ :+ "max-h-32",
@@ -43,7 +43,7 @@ object CodeExampleDisplay {
     leaveTo = _ :+ "max-h-32"
   )
 
-  def apply(example: CodeExample): Element = {
+  def apply(example: CodeExample): Element                                                      = {
     val sourceCollapsed = storedBoolean(example.id)
     val dimContext      = storedBoolean("dim-context", initial = false)
     val hasContext      = example.code.source.contains("/* <focus> */")
@@ -88,7 +88,7 @@ object CodeExampleDisplay {
         }
       ),
       div(
-        cls := "space-y-2",
+        cls            := "space-y-2",
         div(
           cls := "flex space-x-4 items-center",
           h2(
@@ -149,7 +149,7 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls := "space-y-2",
+        cls            := "space-y-2",
         h2(
           cls := "text-xl font-semibold text-gray-900",
           "Live demo:"
@@ -165,7 +165,7 @@ object CodeExampleDisplay {
     )
   }
 
-  private def opaqueColor(color: String, opaque: Int, dim: Boolean): String = {
+  private def opaqueColor(color: String, opaque: Int, dim: Boolean): String                     = {
     if (opaque == 0 && dim) {
       if (color.startsWith("rgb(")) {
         color.replace("rgb(", "rgba(").replace(")", ", .4)")
@@ -185,7 +185,7 @@ object CodeExampleDisplay {
     }
 
     var childrenOpaque = opaque
-    val newChildNodes = element.childNodes.flatMap { child =>
+    val newChildNodes  = element.childNodes.flatMap { child =>
       if (child.nodeName == "#text") {
         val span = dom.document.createElement("span").asInstanceOf[html.Element]
         span.innerText = child.textContent
@@ -207,7 +207,7 @@ object CodeExampleDisplay {
     newElement
   }
 
-  private def hideFocusMarkers(element: html.Element): Unit =
+  private def hideFocusMarkers(element: html.Element): Unit                                     =
     element.childNodes.foreach { child =>
       if (child.nodeName != "#text") {
         if (child.innerText == "/* <focus> */" || child.innerText == "/* </focus> */") {

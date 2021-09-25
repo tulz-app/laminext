@@ -27,7 +27,7 @@ class MutationObserverBinder[El <: ReactiveElement[dom.raw.HTMLElement]](
     }
   }
 
-  def doStart(): Unit = {
+  def doStart(): Unit                                 = {
     maybeMutationObserver.foreach { mutationObserver =>
       mutationObserver.observe(
         element.ref,

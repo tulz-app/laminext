@@ -11,7 +11,7 @@ import org.scalajs.dom
 
 final class HtmlTagOps[T <: dom.html.Element](tag: HtmlTag[T]) {
 
-  @inline def amended[AmType <: AmAny]: AmendedHtmlTag[T, AmType] =
+  @inline def amended[AmType <: AmAny]: AmendedHtmlTag[T, AmType]               =
     new AmendedHtmlTag[T, AmType](tag, Seq.empty)
 
   @inline def amendedPartial[AmType <: AmAny]: AmendedHtmlTagPartial[T, AmType] =

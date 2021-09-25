@@ -14,16 +14,16 @@ trait ValidationSyntax {
   implicit def syntaxValidation[A, Err, Out](v: Validation[A, Err, Out]): ValidationOps[A, Err, Out] =
     new ValidationOps[A, Err, Out](v)
 
-  implicit def syntaxSignalValidation[A](signal: Signal[A]): SignalValidationOps[A] =
+  implicit def syntaxSignalValidation[A](signal: Signal[A]): SignalValidationOps[A]                  =
     new SignalValidationOps[A](signal)
 
-  implicit def syntaxEventStreamValidation[A](stream: EventStream[A]): EventStreamValidationOps[A] =
+  implicit def syntaxEventStreamValidation[A](stream: EventStream[A]): EventStreamValidationOps[A]   =
     new EventStreamValidationOps[A](stream)
 
-  implicit def syntaxInputValidatedValue(el: Input): InputValidationOps =
+  implicit def syntaxInputValidatedValue(el: Input): InputValidationOps                              =
     new InputValidationOps(el)
 
-  implicit def syntaxTextAreaValidatedValue(el: TextArea): TextAreaValidationOps =
+  implicit def syntaxTextAreaValidatedValue(el: TextArea): TextAreaValidationOps                     =
     new TextAreaValidationOps(el)
 
 }

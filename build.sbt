@@ -33,7 +33,7 @@ inThisBuild(
   ),
 )
 
-lazy val commonSettings = Seq.concat(
+lazy val commonSettings           = Seq.concat(
   ScalaOptions.fixOptions,
   scalacOptions ++= {
     val sourcesGithubUrl  = s"https://raw.githubusercontent.com/tulz-app/laminext/${git.gitHeadCommit.value.get}/"
@@ -49,14 +49,14 @@ lazy val commonSettings = Seq.concat(
   }
 )
 
-lazy val bundlerSettings = Seq(
+lazy val bundlerSettings          = Seq(
   jsEnv                  := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
   installJsdom / version := DependencyVersions.jsdom,
   Test / requireJsDomEnv := true,
   useYarn                := true
 )
 
-lazy val baseDependencies = Seq(
+lazy val baseDependencies         = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.laminar.value,
     Dependencies.stringdiff.value,
@@ -64,39 +64,39 @@ lazy val baseDependencies = Seq(
   )
 )
 
-lazy val catsDependencies = Seq(
+lazy val catsDependencies         = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.cats.value
   )
 )
 
-lazy val circeDependencies = Seq(
+lazy val circeDependencies        = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.circe.value
   )
 )
 
-lazy val upickleDependencies = Seq(
+lazy val upickleDependencies      = Seq(
   libraryDependencies ++= Seq.concat(
     Dependencies.upickle.value
   )
 )
 
-lazy val base =
+lazy val base                     =
   project
     .in(file("modules/base"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
 
-lazy val `core` =
+lazy val `core`                   =
   project
     .in(file("modules/core"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
 
-lazy val `validation-core` =
+lazy val `validation-core`        =
   project
     .in(file("modules/validation-core"))
     .enablePlugins(ScalaJSPlugin)
@@ -104,7 +104,7 @@ lazy val `validation-core` =
     .settings(baseDependencies)
     .dependsOn(`base`, `core`)
 
-lazy val `validation-cats` =
+lazy val `validation-cats`        =
   project
     .in(file("modules/validation-cats"))
     .enablePlugins(ScalaJSPlugin)
@@ -113,21 +113,21 @@ lazy val `validation-cats` =
     .settings(catsDependencies)
     .dependsOn(`validation-core`)
 
-lazy val `fsm` =
+lazy val `fsm`                    =
   project
     .in(file("modules/fsm"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
 
-lazy val `markdown` =
+lazy val `markdown`               =
   project
     .in(file("modules/markdown"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
 
-lazy val `videojs` =
+lazy val `videojs`                =
   project
     .in(file("modules/videojs"))
     .enablePlugins(ScalaJSPlugin)
@@ -135,14 +135,14 @@ lazy val `videojs` =
     .settings(baseDependencies)
     .dependsOn(`core`)
 
-lazy val `highlight` =
+lazy val `highlight`              =
   project
     .in(file("modules/highlight"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
 
-lazy val `ui` =
+lazy val `ui`                     =
   project
     .in(file("modules/ui"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
@@ -151,7 +151,7 @@ lazy val `ui` =
     .settings(baseDependencies)
     .dependsOn(`base`, `core`)
 
-lazy val `tailwind` =
+lazy val `tailwind`               =
   project
     .in(file("modules/tailwind"))
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
@@ -169,14 +169,14 @@ lazy val `tailwind-default-theme` =
     .settings(baseDependencies)
     .dependsOn(`tailwind`)
 
-lazy val `websocket` =
+lazy val `websocket`              =
   project
     .in(file("modules/websocket"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
 
-lazy val `websocket-circe` =
+lazy val `websocket-circe`        =
   project
     .in(file("modules/websocket-circe"))
     .enablePlugins(ScalaJSPlugin)
@@ -185,7 +185,7 @@ lazy val `websocket-circe` =
     .settings(circeDependencies)
     .dependsOn(`websocket`)
 
-lazy val `websocket-upickle` =
+lazy val `websocket-upickle`      =
   project
     .in(file("modules/websocket-upickle"))
     .enablePlugins(ScalaJSPlugin)
@@ -194,7 +194,7 @@ lazy val `websocket-upickle` =
     .settings(upickleDependencies)
     .dependsOn(`websocket`)
 
-lazy val `fetch` =
+lazy val `fetch`                  =
   project
     .in(file("modules/fetch"))
     .enablePlugins(ScalaJSPlugin)
@@ -202,7 +202,7 @@ lazy val `fetch` =
     .settings(baseDependencies)
     .dependsOn(`core`, `util`)
 
-lazy val `fetch-circe` =
+lazy val `fetch-circe`            =
   project
     .in(file("modules/fetch-circe"))
     .enablePlugins(ScalaJSPlugin)
@@ -211,7 +211,7 @@ lazy val `fetch-circe` =
     .settings(circeDependencies)
     .dependsOn(`fetch`)
 
-lazy val `fetch-upickle` =
+lazy val `fetch-upickle`          =
   project
     .in(file("modules/fetch-upickle"))
     .enablePlugins(ScalaJSPlugin)
@@ -220,14 +220,14 @@ lazy val `fetch-upickle` =
     .settings(upickleDependencies)
     .dependsOn(`fetch`)
 
-lazy val `util` =
+lazy val `util`                   =
   project
     .in(file("modules/util"))
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
 
-lazy val website = project
+lazy val website                  = project
   .in(file("website"))
   .enablePlugins(ScalaJSPlugin)
   .enablePlugins(EmbeddedFilesPlugin)
@@ -271,13 +271,13 @@ lazy val website = project
     `fetch-upickle`
   )
 
-lazy val noPublish = Seq(
+lazy val noPublish                = Seq(
   publishLocal / skip := true,
   publish / skip      := true,
   publishTo           := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 )
 
-lazy val root = project
+lazy val root                     = project
   .in(file("."))
   .settings(noPublish)
   .settings(

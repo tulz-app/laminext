@@ -18,7 +18,7 @@ class LifecycleEventStream[A](
 
   override protected val topoRank: Int = Protected.topoRank(parent) + 1
 
-  override protected def onNext(nextParentValue: A, transaction: Transaction): Unit = {
+  override protected def onNext(nextParentValue: A, transaction: Transaction): Unit    = {
     fireValue(nextParentValue, transaction)
   }
 
@@ -26,12 +26,12 @@ class LifecycleEventStream[A](
     fireError(nextError, transaction)
   }
 
-  override protected[this] def onStart(): Unit = {
+  override protected[this] def onStart(): Unit                                         = {
     startCallback()
     super.onStart()
   }
 
-  override protected[this] def onStop(): Unit = {
+  override protected[this] def onStop(): Unit                                          = {
     stopCallback()
     super.onStop()
   }

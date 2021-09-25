@@ -37,7 +37,7 @@ trait LaminarSpec extends MountOps with RuleImplicits with EventSimulator {
     mount(node, clue)
   }
 
-  override def unmount(clue: String = "unmount"): Unit = {
+  override def unmount(clue: String = "unmount"): Unit                                           = {
     assertRootNodeMounted("unmount:" + clue)
     doAssert(
       root != null,
@@ -56,7 +56,7 @@ trait LaminarSpec extends MountOps with RuleImplicits with EventSimulator {
     mountedElementClue = defaultMountedElementClue
   }
 
-  implicit def makeCompositePropTestable[V](prop: CompositeProp[V]): TestableProp[V, V] = {
+  implicit def makeCompositePropTestable[V](prop: CompositeProp[V]): TestableProp[V, V]          = {
     new TestableProp(prop.key)
   }
 
@@ -64,7 +64,7 @@ trait LaminarSpec extends MountOps with RuleImplicits with EventSimulator {
     new TestableHtmlAttr(attr.key)
   }
 
-  implicit def makeCompositeSvgAttrTestable[V](attr: CompositeSvgAttr[V]): TestableSvgAttr[V] = {
+  implicit def makeCompositeSvgAttrTestable[V](attr: CompositeSvgAttr[V]): TestableSvgAttr[V]    = {
     new TestableSvgAttr(attr.key)
   }
 }

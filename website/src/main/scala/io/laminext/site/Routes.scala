@@ -14,13 +14,13 @@ class Routes(locationProvider: LocationProvider) {
 
   private val mobileMenuContent = Var[Option[ModalContent]](None)
 
-  private def notFound: Route =
+  private def notFound: Route                      =
     complete {
 //      $page.writer.onNext(Some(Page("", "Not Found", () => Left((404, "Not Found")))))
       dom.window.scrollTo(0, 0)
     }
 
-  private def modulePrefix =
+  private def modulePrefix                         =
     pathPrefix(segment).flatMap { moduleName =>
       provide(Site.findModule(moduleName)).collect { case Some(module) =>
         Tuple1(module)
@@ -34,12 +34,12 @@ class Routes(locationProvider: LocationProvider) {
       }
     }
 
-  private val reset: () => Unit = () => {
+  private val reset: () => Unit                    = () => {
     mobileMenuContent.writer.onNext(None)
     dom.window.scrollTo(0, 0)
   }
 
-  private val (routeResult, route) = makeRouteWithCallback[(SiteModule, Page)](reset) { render =>
+  private val (routeResult, route)                 = makeRouteWithCallback[(SiteModule, Page)](reset) { render =>
     concat(
       pathEnd {
         render(Site.indexModule -> Site.indexModule.index)
@@ -58,8 +58,8 @@ class Routes(locationProvider: LocationProvider) {
     )
   }
 
-  private val $module = routeResult.optionMap(_._1)
-  private val $page   = routeResult.optionMap(_._2)
+  private val $module                              = routeResult.optionMap(_._1)
+  private val $page                                = routeResult.optionMap(_._2)
 
   private val mobileMenuModal: Modal = Theme.current.modal.customize(
     contentWrapTransition = _.customize(

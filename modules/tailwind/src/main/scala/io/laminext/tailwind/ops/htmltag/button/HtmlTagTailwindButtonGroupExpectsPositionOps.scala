@@ -29,22 +29,22 @@ class HtmlTagTailwindButtonGroupExpectsPositionOps[T <: dom.html.Element](
       )
     }
 
-  @inline def first: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize] =
+  @inline def first: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize]                       =
     tag.amend[AmButtonGroupExpectsSize](
       cls := Theme.current.button.group.first.classes
     )
 
-  @inline def inner: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize] =
+  @inline def inner: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize]                       =
     tag.amend[AmButtonGroupExpectsSize](
       cls := Theme.current.button.group.inner.classes
     )
 
-  @inline def last: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize] =
+  @inline def last: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize]                        =
     tag.amend[AmButtonGroupExpectsSize](
       cls := Theme.current.button.group.last.classes
     )
 
-  @inline def single: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize] =
+  @inline def single: AmendedHtmlTagPartial[T, AmButtonGroupExpectsSize]                      =
     tag.amend[AmButtonGroupExpectsSize](
       cls := Theme.current.button.group.single.classes
     )

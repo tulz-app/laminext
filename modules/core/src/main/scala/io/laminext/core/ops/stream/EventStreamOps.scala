@@ -30,9 +30,9 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       }
   }
 
-  @inline def mapToUnit: EventStream[Unit]     = underlying.mapToStrict((): Unit)
-  @inline def mapToTrue: EventStream[Boolean]  = underlying.mapToStrict(true)
-  @inline def mapToFalse: EventStream[Boolean] = underlying.mapToStrict(false)
+  @inline def mapToUnit: EventStream[Unit]                                                = underlying.mapToStrict((): Unit)
+  @inline def mapToTrue: EventStream[Boolean]                                             = underlying.mapToStrict(true)
+  @inline def mapToFalse: EventStream[Boolean]                                            = underlying.mapToStrict(false)
 
   def delayFor(projectMs: A => FiniteDuration): EventStream[A] = {
     new DelayForEventStream(parent = underlying, projectMs)

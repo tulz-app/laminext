@@ -8,7 +8,7 @@ import org.scalajs.dom
 
 final class ReactiveHtmlElementOps[T <: dom.html.Element](el: ReactiveHtmlElement[T]) {
 
-  @inline def cls(className: String): ReactiveHtmlElement[T] = {
+  @inline def cls(className: String): ReactiveHtmlElement[T]                                                  = {
     el.amend(com.raquo.laminar.api.L.cls := className)
   }
 

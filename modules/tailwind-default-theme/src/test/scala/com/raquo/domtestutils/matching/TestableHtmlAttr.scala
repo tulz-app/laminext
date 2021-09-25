@@ -18,7 +18,7 @@ class TestableProp[V, DomV](val prop: Prop[V, DomV]) extends AnyVal {
     testNode.addCheck(nodePropIs(Some(expectedValue), sorted = true))
   }
 
-  def isEmpty: Rule = (testNode: ExpectedNode) => {
+  def isEmpty: Rule                     = (testNode: ExpectedNode) => {
     testNode.addCheck(nodePropIs(maybeExpectedValue = None))
   }
 
@@ -84,7 +84,7 @@ class TestableProp[V, DomV](val prop: Prop[V, DomV]) extends AnyVal {
     }
   }
 
-  private[domtestutils] def getProp(node: dom.Node): Option[V] = {
+  private[domtestutils] def getProp(node: dom.Node): Option[V]                                                             = {
     val propValue = node.asInstanceOf[js.Dynamic].selectDynamic(prop.name)
     val jsUndef   = js.undefined
 

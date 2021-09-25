@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
 
-  val laminar: Def.Initialize[Seq[ModuleID]] = Def.setting {
+  val laminar: Def.Initialize[Seq[ModuleID]]    = Def.setting {
     Seq(
       "com.raquo" %%% "laminar" % DependencyVersions.laminar
     )

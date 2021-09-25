@@ -28,32 +28,32 @@ case class RequestUrl private (
 
   @inline def withHost(host: String): RequestUrl = this.copy(host = host)
 
-  @inline def withSegments(segments: String*): RequestUrl =
+  @inline def withSegments(segments: String*): RequestUrl              =
     this.copy(
       segments = segments.filterNot(_.isEmpty)
     )
 
-  @inline def withPath(path: String): RequestUrl =
+  @inline def withPath(path: String): RequestUrl                       =
     this.withSegments(ArraySeq.unsafeWrapArray(path.split('/')): _*)
 
-  @inline def addSegments(segments: String*): RequestUrl =
+  @inline def addSegments(segments: String*): RequestUrl               =
     this.withSegments(
       this.segments ++ segments: _*
     )
 
-  @inline def appendPath(path: String): RequestUrl =
+  @inline def appendPath(path: String): RequestUrl                     =
     this.addSegments(ArraySeq.unsafeWrapArray(path.split('/')): _*)
 
   @inline def withParams(params: Map[String, Seq[String]]): RequestUrl =
     this.copy(params = params)
 
-  @inline def withParams(params: (String, String)*): RequestUrl =
+  @inline def withParams(params: (String, String)*): RequestUrl        =
     this.withParams(params.groupMap(_._1)(_._2))
 
-  @inline def addParams(params: Map[String, Seq[String]]): RequestUrl =
+  @inline def addParams(params: Map[String, Seq[String]]): RequestUrl  =
     this.withParams(this.params ++ params)
 
-  @inline def addParams(params: (String, String)*): RequestUrl =
+  @inline def addParams(params: (String, String)*): RequestUrl         =
     this.addParams(params.groupMap(_._1)(_._2))
 
   def maybeAddParams(params: (String, Option[String])*): RequestUrl =

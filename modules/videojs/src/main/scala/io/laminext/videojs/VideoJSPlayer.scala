@@ -16,7 +16,7 @@ object VideoJSPlayer {
   lazy val h265Supported: String =
     video().ref.canPlayType("""video/mp4; codecs="hvc1"""")
 
-  private def playerBus() = new EventBus[Player]
+  private def playerBus()        = new EventBus[Player]
 
   def apply(
     options: VideoJSOptions,

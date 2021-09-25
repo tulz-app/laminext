@@ -15,10 +15,10 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   transform: EventStream[Ev] => EventStream[A]
 ) {
 
-  @inline def -->[El <: Element](sink: Sink[A]): Modifier[ReactiveElement.Base] =
+  @inline def -->[El <: Element](sink: Sink[A]): Modifier[ReactiveElement.Base]         =
     composeEvents(t)(transform) --> sink
 
-  @inline def -->[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
+  @inline def -->[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base]     =
     composeEvents(t)(transform) --> onNext
 
   @inline def foreach[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] = -->(onNext)
@@ -49,13 +49,13 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
 
   @inline def delay(ms: Int = 0): ThisEventsStreamBuilder[Ev, A] = andThen(_.delay(ms))
 
-  @inline def delaySync(after: EventStream[_]): ThisEventsStreamBuilder[Ev, A] =
+  @inline def delaySync(after: EventStream[_]): ThisEventsStreamBuilder[Ev, A]         =
     andThen(_.delaySync(after))
 
-  @inline def throttle(intervalMillis: Int): ThisEventsStreamBuilder[Ev, A] =
+  @inline def throttle(intervalMillis: Int): ThisEventsStreamBuilder[Ev, A]            =
     andThen(_.throttle(intervalMillis))
 
-  @inline def debounce(delayFromLastEventMillis: Int): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debounce(delayFromLastEventMillis: Int): ThisEventsStreamBuilder[Ev, A]  =
     andThen(_.debounce(delayFromLastEventMillis))
 
   @inline def foldLeft[B](initial: B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B] =
@@ -66,28 +66,28 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   )(fn: (Try[B], Try[A]) => Try[B]): ThisEventsSignalBuilder[Ev, B] =
     new ThisEventsSignalBuilder(t, transform.andThen(_.foldLeftRecover(initial)(fn)))
 
-  @inline def startWith[B >: A](initial: => B): ThisEventsSignalBuilder[Ev, B] = toSignal(initial)
+  @inline def startWith[B >: A](initial: => B): ThisEventsSignalBuilder[Ev, B]         = toSignal(initial)
 
   @inline def startWithTry[B >: A](initial: => Try[B]): ThisEventsSignalBuilder[Ev, B] = toSignalWithTry(initial)
 
   @inline def startWithNone: ThisEventsSignalBuilder[Ev, Option[A]] = toWeakSignal
 
-  @inline def toSignal[B >: A](initial: => B): ThisEventsSignalBuilder[Ev, B] =
+  @inline def toSignal[B >: A](initial: => B): ThisEventsSignalBuilder[Ev, B]                            =
     new ThisEventsSignalBuilder(t, transform = transform.andThen(_.toSignal(initial)))
 
-  @inline def toSignalWithTry[B >: A](initial: => Try[B]): ThisEventsSignalBuilder[Ev, B] =
+  @inline def toSignalWithTry[B >: A](initial: => Try[B]): ThisEventsSignalBuilder[Ev, B]                =
     new ThisEventsSignalBuilder(t, transform = transform.andThen(_.toSignalWithTry(initial)))
 
-  @inline def toWeakSignal: ThisEventsSignalBuilder[Ev, Option[A]] =
+  @inline def toWeakSignal: ThisEventsSignalBuilder[Ev, Option[A]]                                       =
     new ThisEventsSignalBuilder(t, transform = transform.andThen(_.toWeakSignal))
 
-  @inline def compose[B](operator: EventStream[A] => EventStream[B]): ThisEventsStreamBuilder[Ev, B] =
+  @inline def compose[B](operator: EventStream[A] => EventStream[B]): ThisEventsStreamBuilder[Ev, B]     =
     andThen(_.compose(operator))
 
   @inline def recover[B >: A](pf: PartialFunction[Throwable, Option[B]]): ThisEventsStreamBuilder[Ev, B] =
     andThen(_.recover(pf))
 
-  @inline def recoverToTry: ThisEventsStreamBuilder[Ev, Try[A]] = andThen(_.recoverToTry)
+  @inline def recoverToTry: ThisEventsStreamBuilder[Ev, Try[A]]                                          = andThen(_.recoverToTry)
 
   @inline def combineWith[T1, Out](
     s1: EventStream[T1]
@@ -101,13 +101,13 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   ): ThisEventsStreamBuilder[Ev, Out] =
     andThen(_.combineWithFn(otherEventStream)(combinator))
 
-  @inline def withCurrentValueOf[T1](signal: Signal[T1]): ThisEventsStreamBuilder[Ev, (A, T1)] =
+  @inline def withCurrentValueOf[T1](signal: Signal[T1]): ThisEventsStreamBuilder[Ev, (A, T1)]            =
     andThen(_.withCurrentValueOf(signal))
 
-  @inline def sample[T1](signal: Signal[T1]): ThisEventsStreamBuilder[Ev, T1] =
+  @inline def sample[T1](signal: Signal[T1]): ThisEventsStreamBuilder[Ev, T1]                             =
     andThen(_.sample(signal))
 
-  @inline def setDisplayName(name: String): ThisEventsStreamBuilder[Ev, A] =
+  @inline def setDisplayName(name: String): ThisEventsStreamBuilder[Ev, A]                                =
     andThen(_.setDisplayName(name))
 
   @inline def flatMap[B](compose: A => EventStream[B])(implicit
@@ -138,52 +138,52 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   ): ThisEventsStreamBuilder[Ev, A] =
     andThen(_.debugLogLifecycle(logStarts, logStops))
 
-  @inline def debugLogStarts: ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugLogStarts: ThisEventsStreamBuilder[Ev, A]                                              =
     andThen(_.debugLogStarts)
 
-  @inline def debugLogStops: ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugLogStops: ThisEventsStreamBuilder[Ev, A]                                               =
     andThen(_.debugLogStops)
 
-  @inline def debugBreak(when: Try[A] => Boolean = always): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugBreak(when: Try[A] => Boolean = always): ThisEventsStreamBuilder[Ev, A]                =
     andThen(_.debugBreak(when))
 
-  @inline def debugBreakEvents(when: A => Boolean = always): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugBreakEvents(when: A => Boolean = always): ThisEventsStreamBuilder[Ev, A]               =
     andThen(_.debugBreakEvents(when))
 
-  @inline def debugBreakErrors(when: Throwable => Boolean = always): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugBreakErrors(when: Throwable => Boolean = always): ThisEventsStreamBuilder[Ev, A]       =
     andThen(_.debugBreakErrors(when))
 
-  @inline def debugBreakLifecycle: ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugBreakLifecycle: ThisEventsStreamBuilder[Ev, A]                                         =
     andThen(_.debugBreakLifecycle)
 
-  @inline def debugBreakStarts: ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugBreakStarts: ThisEventsStreamBuilder[Ev, A]                                            =
     andThen(_.debugBreakStarts)
 
-  @inline def debugBreakStops: ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugBreakStops: ThisEventsStreamBuilder[Ev, A]                                             =
     andThen(_.debugBreakStops)
 
-  @inline def debugWithName(displayName: String): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugWithName(displayName: String): ThisEventsStreamBuilder[Ev, A]                          =
     andThen(_.debugWithName(displayName))
 
-  @inline def debugSpy(fn: Try[A] => Unit): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugSpy(fn: Try[A] => Unit): ThisEventsStreamBuilder[Ev, A]                                =
     andThen(_.debugSpy(fn))
 
-  @inline def debugSpyEvents(fn: A => Unit): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugSpyEvents(fn: A => Unit): ThisEventsStreamBuilder[Ev, A]                               =
     andThen(_.debugSpyEvents(fn))
 
-  @inline def debugSpyErrors(fn: Throwable => Unit): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugSpyErrors(fn: Throwable => Unit): ThisEventsStreamBuilder[Ev, A]                       =
     andThen(_.debugSpyErrors(fn))
 
   @inline def debugSpyLifecycle(startFn: Int => Unit, stopFn: () => Unit): ThisEventsStreamBuilder[Ev, A] =
     andThen(_.debugSpyLifecycle(startFn, stopFn))
 
-  @inline def debugSpyStarts(fn: Int => Unit): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugSpyStarts(fn: Int => Unit): ThisEventsStreamBuilder[Ev, A]                             =
     andThen(_.debugSpyStarts(fn))
 
-  @inline def debugSpyStops(fn: () => Unit): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugSpyStops(fn: () => Unit): ThisEventsStreamBuilder[Ev, A]                               =
     andThen(_.debugSpyStops(fn))
 
-  @inline def debugWith(debugger: Debugger[A]): ThisEventsStreamBuilder[Ev, A] =
+  @inline def debugWith(debugger: Debugger[A]): ThisEventsStreamBuilder[Ev, A]                            =
     andThen(_.debugWith(debugger))
 
 }

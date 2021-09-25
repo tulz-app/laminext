@@ -121,7 +121,7 @@ class WebSocket[Receive, Send](
     }
   }
 
-  private def trySend(): Unit = {
+  private def trySend(): Unit       = {
     if (js.isUndefined(maybeWS)) {
       if (!bufferWhenDisconnected) {
         sendBuffer.clear()

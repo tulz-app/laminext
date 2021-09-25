@@ -15,7 +15,7 @@ object Main {
 
 //  val mainCss: MainCss.type = MainCss
 
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit                       = {
     val _ = documentEvents.onDomContentLoaded.foreach { _ =>
       Theme.setTheme(DefaultTheme.theme)
       Modal.initialize()
@@ -30,12 +30,12 @@ object Main {
     }(unsafeWindowOwner)
   }
 
-  private def insertJsClass(ssrContext: SsrContext): Unit = {
+  private def insertJsClass(ssrContext: SsrContext): Unit   = {
     if (!ssrContext.ssr) {
       val style = dom.document.createElement("style").asInstanceOf[dom.html.Style]
       style.`type` = "text/css"
       style.innerHTML = s""".hidden-if-js{display: none;}""".stripMargin
-      val _ = dom.document.getElementsByTagName("head")(0).appendChild(style)
+      val _     = dom.document.getElementsByTagName("head")(0).appendChild(style)
     }
   }
 

@@ -20,7 +20,7 @@ class HtmlTagTailwindButtonInitOps[T <: dom.html.Element](tag: HtmlTag[T]) {
       cls(Theme.current.animation.focusTransition.classes)
     )
 
-  @inline def buttonGroup: AmendedHtmlTag[T, AmAny] =
+  @inline def buttonGroup: AmendedHtmlTag[T, AmAny]                    =
     tag.amend[AmAny](
       cls(Theme.current.buttonGroup.base)
     )

@@ -21,7 +21,7 @@ class FetchEventStreamBuilderUpickleOps(underlying: FetchEventStreamBuilder) {
       }
     }
 
-  private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder =
+  private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder               =
     b.updateHeaders(_.updated("accept", "application/json"))
 
   def decode[A](implicit decoder: Reader[A]): EventStream[FetchResponse[A]] =

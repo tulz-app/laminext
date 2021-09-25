@@ -18,7 +18,7 @@ class MutationObserverBinders(
   attributeFilter: js.UndefOr[js.Array[String]] = js.undefined
 ) {
 
-  @inline def -->[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](sink: Sink[Seq[MutationRecord]]): BinderWithStartStop[El] = {
+  @inline def -->[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](sink: Sink[Seq[MutationRecord]]): BinderWithStartStop[El]     = {
     new MutationObserverBinder(
       t => sink.toObserver.onNext(t),
       MutationObserverInit(
@@ -48,7 +48,7 @@ class MutationObserverBinders(
     )
   }
 
-  @inline def bind[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](sink: Sink[Seq[MutationRecord]]): BinderWithStartStop[El] = -->(sink)
+  @inline def bind[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](sink: Sink[Seq[MutationRecord]]): BinderWithStartStop[El]    = -->(sink)
 
   @inline def bind[El <: ReactiveElement[org.scalajs.dom.raw.HTMLElement]](onNext: Seq[MutationRecord] => Unit): BinderWithStartStop[El] = -->(onNext)
 

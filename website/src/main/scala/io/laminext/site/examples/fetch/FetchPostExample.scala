@@ -18,9 +18,9 @@ object FetchPostExample
       import io.laminext.fetch.Fetch
       import org.scalajs.dom
 
-      val inputElement = input(
-        tpe := "text",
-        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+      val inputElement                        = input(
+        tpe         := "text",
+        cls         := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "send a message"
       )
       val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[String]]
@@ -44,7 +44,7 @@ object FetchPostExample
           div(
             cls := "flex flex-col space-y-4 p-4 max-h-96 overflow-auto bg-gray-900",
             children.command <-- responsesStream.recoverToTry.map {
-              case Success(response) =>
+              case Success(response)  =>
                 CollectionCommand.Append(
                   div(
                     div(

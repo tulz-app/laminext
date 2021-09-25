@@ -109,7 +109,7 @@ final class WebSocketReceiveBuilder(private[websocket] val url: String, private[
 
   @inline def blob: WebSocketBuilder[dom.Blob, dom.Blob] = new WebSocketBuilder(url, protocol, initialize.blob, send.blob, receive.blob)
 
-  @inline def arraybuffer: WebSocketBuilder[js.typedarray.ArrayBuffer, js.typedarray.ArrayBuffer] =
+  @inline def arraybuffer: WebSocketBuilder[js.typedarray.ArrayBuffer, js.typedarray.ArrayBuffer]                      =
     new WebSocketBuilder(url, protocol, initialize.arraybuffer, send.arraybuffer, receive.arraybuffer)
 
   @inline def receiveString: WebSocketReceiveStringBuilder                                                             =
@@ -129,7 +129,7 @@ private[websocket] object initialize {
   def arraybuffer: WebSocketInitialize = _.binaryType = "arraybuffer"
 }
 
-private[websocket] object send {
+private[websocket] object send       {
   def string: WebSocketSend[String]                           =
     text(identity)
   def text[Send](encode: Send => String): WebSocketSend[Send] =
@@ -140,7 +140,7 @@ private[websocket] object send {
     (socket, data) => socket.send(data)
 }
 
-private[websocket] object receive {
+private[websocket] object receive    {
   def string: WebSocketReceive[String]                                                       =
     text(s => Right(s))
   def text[Receive](decode: String => Either[Throwable, Receive]): WebSocketReceive[Receive] =

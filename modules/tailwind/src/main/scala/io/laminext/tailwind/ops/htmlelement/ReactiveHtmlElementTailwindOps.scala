@@ -7,7 +7,7 @@ import org.scalajs.dom
 
 class ReactiveHtmlElementTailwindOps[T <: dom.html.Element](el: ReactiveHtmlElement[T]) {
 
-  @inline def hiddenIf(s: Signal[Boolean]): ReactiveHtmlElement[T] =
+  @inline def hiddenIf(s: Signal[Boolean]): ReactiveHtmlElement[T]  =
     el.amend(
       cls <-- s.map { hiding =>
         Seq("hidden" -> hiding)

@@ -8,13 +8,13 @@ class HtmlTagTailwindButtonExpectsStyleOps[T <: dom.html.Element, Am <: AmButton
   tag: AmendedHtmlTagPartial[T, Am]
 ) {
 
-  @inline def fill: AmendedHtmlTagPartial[T, AmButtonFillExpectColor] =
+  @inline def fill: AmendedHtmlTagPartial[T, AmButtonFillExpectColor]               =
     tag.amended[AmButtonFillExpectColor]
 
-  @inline def outline: AmendedHtmlTagPartial[T, AmButtonOutlineExpectColor] =
+  @inline def outline: AmendedHtmlTagPartial[T, AmButtonOutlineExpectColor]         =
     tag.amended[AmButtonOutlineExpectColor]
 
-  @inline def text: AmendedHtmlTagPartial[T, AmButtonTransparentExpectColor] =
+  @inline def text: AmendedHtmlTagPartial[T, AmButtonTransparentExpectColor]        =
     tag.amended[AmButtonTransparentExpectColor]
 
   @inline def transparent: AmendedHtmlTagPartial[T, AmButtonTransparentExpectColor] =

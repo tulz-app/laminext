@@ -25,7 +25,7 @@ class TakeEventStream[A](
       fireValue(nextValue, transaction)
     }
 
-  override def onError(nextError: Throwable, transaction: Transaction): Unit =
+  override def onError(nextError: Throwable, transaction: Transaction): Unit  =
     fireError(nextError, transaction)
 
 }

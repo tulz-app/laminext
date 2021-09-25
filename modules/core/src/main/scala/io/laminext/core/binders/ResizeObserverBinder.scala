@@ -23,7 +23,7 @@ class ResizeObserverBinder[El <: ReactiveElement[dom.raw.HTMLElement]](
     }
   }
 
-  def doStart(): Unit = {
+  def doStart(): Unit                                 = {
     maybeResizeObserver.foreach { resizeObserver =>
       resizeObserver.observe(element.ref)
     }

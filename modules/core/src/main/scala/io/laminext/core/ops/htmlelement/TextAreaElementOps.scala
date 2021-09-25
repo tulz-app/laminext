@@ -9,9 +9,9 @@ class TextAreaElementOps(el: TextArea) {
   @inline def changes: EventStream[Event] = InputChangeEvents(el)
   @inline def changes(
     changeStreamTransform: EventStream[Event] => EventStream[Event]
-  ): EventStream[Event]                   = InputChangeEvents(el, changeStreamTransform)
+  ): EventStream[Event] = InputChangeEvents(el, changeStreamTransform)
 
-  @inline def value: Signal[String] = value(identity)
+  @inline def value: Signal[String]       = value(identity)
 
   def value(
     changeStreamTransform: EventStream[Event] => EventStream[Event]
