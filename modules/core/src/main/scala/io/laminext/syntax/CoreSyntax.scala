@@ -29,6 +29,7 @@ trait CoreSyntax
     with OptionOfSignalSyntax
     with SeqSyntax
     with MiscSyntax
+    with SequentiallySyntax
     with HtmlEntities
     with SmartClass
     with ReceiversSyntax {

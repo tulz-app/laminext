@@ -45,7 +45,7 @@ object Site {
         docPage("signal-of-either", "Signal of Either", FileAsString("/doc/core/signal-of-either.md")),
         docPage("signal-of-option-of-signal", "Signal of Option of Signal", FileAsString("/doc/core/signal-of-option-of-signal.md")),
         docPage("option-of-signal", "Option of Signal", FileAsString("/doc/core/option-of-signal.md")),
-        docPage("var-of-boolean", "Var of Boolean", FileAsString("/doc/core/var-of-boolean.md"))
+        docPage("var-of-boolean", "Var of Boolean", FileAsString("/doc/core/var-of-boolean.md")),
       ),
       "EventStream" -> Seq(
         docPage("eventstream", "EventStream", FileAsString("/doc/core/eventstream.md")),
@@ -70,7 +70,8 @@ object Site {
         examplePage(examples.iterable.ex_seq_join.SeqJoinExample),
         examplePage(examples.element.ex_input_values.InputValuesExample),
         examplePage(examples.eventproptransformation.ex_eventprop_stream.ThisEventsExample),
-        examplePage(examples.observable.ex_observable_switching_bind.AddSwitchingObserverExample)
+        examplePage(examples.observable.ex_observable_switching_bind.AddSwitchingObserverExample),
+        examplePage(examples.sequentially.SequentiallyExample),
       )
     ),
     SiteModule(
