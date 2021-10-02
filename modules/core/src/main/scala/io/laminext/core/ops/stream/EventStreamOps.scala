@@ -48,7 +48,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       .withCurrentValueOf(b)
       .collect { case (v, true) => v }
 
-  @inline def drop(toDrop: Int): EventStream[A]    = new DropEventStream[A](underlying, toDrop)
+  @inline def drop(toDrop: Int): EventStream[A] = new DropEventStream[A](underlying, toDrop)
 
   @inline def take(toTake: Int): EventStream[A] = new TakeEventStream[A](underlying, toTake)
 
