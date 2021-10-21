@@ -17,7 +17,7 @@ final class SeqOps[Repr, S <: IsSeq[Repr]](coll: Repr, val seq: S) {
         private val it              = seqOps.iterator
         private var intersperseNext = false
         def hasNext: Boolean        = intersperseNext || it.hasNext
-        def next(): B = {
+        def next(): B               = {
           val elem = if (intersperseNext) sep() else it.next()
           intersperseNext = !intersperseNext && it.hasNext
           elem
