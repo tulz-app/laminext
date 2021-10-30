@@ -88,7 +88,7 @@ object CodeExampleDisplay {
         }
       ),
       div(
-        cls := "space-y-2",
+        cls            := "space-y-2",
         div(
           cls := "flex space-x-4 items-center",
           h2(
@@ -149,7 +149,7 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls := "space-y-2",
+        cls            := "space-y-2",
         h2(
           cls := "text-xl font-semibold text-gray-900",
           "Live demo:"
@@ -185,7 +185,7 @@ object CodeExampleDisplay {
     }
 
     var childrenOpaque = opaque
-    val newChildNodes = element.childNodes.flatMap { child =>
+    val newChildNodes  = element.childNodes.flatMap { child =>
       if (child.nodeName == "#text") {
         val span = dom.document.createElement("span").asInstanceOf[html.Element]
         span.innerText = child.textContent

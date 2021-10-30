@@ -62,11 +62,11 @@ object PageWrap {
               titleElement.setAttribute("data-status", "200")
             }
           }
-        case Some((_, Left((code, _)))) =>
+        case Some((_, Left((code, _))))      =>
           titleElement.textContent = s"Error"
           org.scalajs.dom.document.title = s"Error"
           titleElement.setAttribute("data-status", code.toString)
-        case None =>
+        case None                            =>
           titleElement.textContent = s"Loading..."
           org.scalajs.dom.document.title = s"Loading..."
           titleElement.removeAttribute("data-status")
