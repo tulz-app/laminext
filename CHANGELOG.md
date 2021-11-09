@@ -1,9 +1,11 @@
 # Changelog
 
-### ...
+### 0.14.0
+
+Update to Laminar `v0.14.0` and `scala-js-dom` `v2.0.0`
 
 * input element ops – `files` returns a `Signal[FileList]` instead of `Signal[Seq[File]]` (use `.toSeq` to get a `Seq`)
-* API new: task queue – TODO: description
+* API new: task queue
 
 ### 0.13.10
 
