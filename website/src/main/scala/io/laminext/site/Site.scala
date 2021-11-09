@@ -32,13 +32,13 @@ object Site {
     SiteModule(
       path = "core",
       index = docPage("", "Core", FileAsString("/doc/core/index.md")),
-      "Source" -> Seq(
+      "Source"         -> Seq(
         docPage("source", "Source", FileAsString("/doc/core/source.md")),
         docPage("source-of-boolean", "Source of Boolean", FileAsString("/doc/core/source-of-boolean.md")),
         docPage("source-of-option", "Source of Option", FileAsString("/doc/core/source-of-option.md")),
         docPage("source-of-either", "Source of Either", FileAsString("/doc/core/source-of-either.md")),
       ),
-      "Signal" -> Seq(
+      "Signal"         -> Seq(
         docPage("signal", "Signal", FileAsString("/doc/core/signal.md")),
         docPage("signal-of-boolean", "Signal of Boolean", FileAsString("/doc/core/signal-of-boolean.md")),
         docPage("signal-of-option", "Signal of Option", FileAsString("/doc/core/signal-of-option.md")),
@@ -47,21 +47,21 @@ object Site {
         docPage("option-of-signal", "Option of Signal", FileAsString("/doc/core/option-of-signal.md")),
         docPage("var-of-boolean", "Var of Boolean", FileAsString("/doc/core/var-of-boolean.md")),
       ),
-      "EventStream" -> Seq(
+      "EventStream"    -> Seq(
         docPage("eventstream", "EventStream", FileAsString("/doc/core/eventstream.md")),
         docPage("eventstream-of-option", "EventStream of Option", FileAsString("/doc/core/eventstream-of-option.md")),
         docPage("eventstream-of-either", "EventStream of Either", FileAsString("/doc/core/eventstream-of-either.md")),
       ),
-      "EventProp" -> Seq(
+      "EventProp"      -> Seq(
         docPage("this-event", "thisEvents", FileAsString("/doc/core/this-events.md")),
       ),
       "Input Elements" -> Seq(
         docPage("input-values", "Input Values", FileAsString("/doc/core/input-values.md"))
       ),
-      "Misc" -> Seq(
+      "Misc"           -> Seq(
         docPage("helpers", "Small helpers", FileAsString("/doc/core/helpers.md")),
       ),
-      "Examples" -> Seq(
+      "Examples"       -> Seq(
         examplePage(examples.signal.ex_signal_transitions.SignalTransitionsExample),
         examplePage(examples.signal.ex_var_of_boolean_toggle.VarOfBooleanToggleExample),
         examplePage(examples.signal.ex_signal_of_boolean_class_switch.SignalOfBooleanClassSwitchExample),
@@ -77,7 +77,7 @@ object Site {
     SiteModule(
       path = "fetch",
       index = docPage("", "fetch", FileAsString("/doc/fetch/index.md")),
-      "" -> Seq(
+      ""               -> Seq(
         docPage("request-method", "Request method", FileAsString("/doc/fetch/request-method.md")),
         docPage("request-headers", "Request headers", FileAsString("/doc/fetch/request-headers.md")),
         docPage("request-body", "Request body", FileAsString("/doc/fetch/request-body.md")),
@@ -86,7 +86,7 @@ object Site {
         docPage("circe", "circe support", FileAsString("/doc/fetch/circe.md")),
         docPage("upickle", "upickle support", FileAsString("/doc/fetch/upickle.md")),
       ),
-      "Examples" -> Seq(
+      "Examples"       -> Seq(
         examplePage(examples.fetch.FetchPostExample),
         examplePage(examples.fetch.FetchCirceExample),
         examplePage(examples.fetch.FetchUpickleExample),
@@ -95,11 +95,11 @@ object Site {
     SiteModule(
       path = "websocket",
       index = docPage("", "WebSocket", FileAsString("/doc/websocket/index.md")),
-      "" -> Seq(
+      ""               -> Seq(
         docPage("circe", "circe support", FileAsString("/doc/websocket/circe.md")),
         docPage("upickle", "upickle support", FileAsString("/doc/websocket/upickle.md"))
       ),
-      "Examples" -> Seq(
+      "Examples"       -> Seq(
         examplePage(examples.websocket.WebSocketExample),
         examplePage(examples.websocket.WebSocketCirceExample),
         examplePage(examples.websocket.WebSocketUpickleExample)
@@ -108,7 +108,7 @@ object Site {
     SiteModule(
       path = "ui",
       index = docPage("", "UI", FileAsString("/doc/ui/index.md")),
-      "Examples" -> Seq(
+      "Examples"       -> Seq(
         examplePage(examples.ui.ex_animation.AnimationExample),
         examplePage(examples.ui.ex_transition.TransitionExample),
       )
@@ -116,10 +116,10 @@ object Site {
     SiteModule(
       path = "validation",
       index = docPage("", "Validation", FileAsString("/doc/validation/index.md")),
-      "" -> Seq(
+      ""               -> Seq(
         docPage("cats", "cats", FileAsString("/doc/validation/cats.md")),
       ),
-      "Examples" -> Seq(
+      "Examples"       -> Seq(
         examplePage(examples.validation.ex_validation.ValidationExample),
         examplePage(examples.validation.ex_validation_cats.ValidationCatsExample),
       )
@@ -131,7 +131,7 @@ object Site {
     SiteModule(
       path = "tailwind",
       index = docPage("", "Tailwind", FileAsString("/doc/tailwind/index.md")),
-      "" -> Seq(
+      ""               -> Seq(
         docPage("theme", "Theme", FileAsString("/doc/tailwind/theme.md")),
         docPage("buttons", "Buttons", FileAsString("/doc/tailwind/buttons.md")),
         docPage("card", "Card", FileAsString("/doc/tailwind/card.md")),
@@ -140,7 +140,7 @@ object Site {
         docPage("file-input", "File Input", FileAsString("/doc/tailwind/file-input.md")),
         docPage("modal", "Modal", FileAsString("/doc/tailwind/modal.md")),
       ),
-      "Examples" -> Seq(
+      "Examples"       -> Seq(
         examplePage(examples.tailwind.ex_tailwind_button_colors.TailwindButtonColorsExample),
         examplePage(examples.tailwind.ex_tailwind_button_sizes.TailwindButtonSizesExample),
         examplePage(examples.tailwind.ex_tailwind_button_group.TailwindButtonGroupExample),
@@ -167,14 +167,14 @@ object Site {
     SiteModule(
       path = "util",
       index = docPage("", "Util", FileAsString("/doc/util/index.md")),
-      "Examples" -> Seq(
+      "Examples"       -> Seq(
         examplePage(examples.util.ex_human_readable_size.HumanReadableSizeExample),
       )
     ),
     SiteModule(
       path = "news",
       index = docPage("", "News", FileAsString("/doc/news/index.md")),
-      "" -> Seq(
+      ""               -> Seq(
         docPage("v0-13-10", "v0.13.10", FileAsString("/doc/news/v0.13.10.md")),
         docPage("v0-13-9", "v0.13.9", FileAsString("/doc/news/v0.13.9.md")),
         docPage("v0-13-8", "v0.13.8", FileAsString("/doc/news/v0.13.8.md")),

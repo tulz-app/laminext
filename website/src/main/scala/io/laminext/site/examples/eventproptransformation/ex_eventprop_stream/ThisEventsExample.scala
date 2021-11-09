@@ -14,8 +14,8 @@ object ThisEventsExample
       import org.scalajs.dom
 
       val inputElement = input(
-        tpe := "text",
-        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+        tpe         := "text",
+        cls         := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "set value"
       )
 

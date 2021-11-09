@@ -14,8 +14,8 @@ object HumanReadableSizeExample
       import io.laminext.util.HumanReadableSize
 
       val inputElement = input(
-        tpe := "number",
-        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+        tpe         := "number",
+        cls         := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "new value"
       )
 
