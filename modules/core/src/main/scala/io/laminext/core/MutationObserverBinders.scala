@@ -20,13 +20,13 @@ class MutationObserverBinders(
 ) { self =>
 
   private def init = new MutationObserverInit {
-    childList = self.childList
-    attributes = self.attributes
-    characterData = self.characterData
-    subtree = self.subtree
-    attributeOldValue = self.attributeOldValue
-    characterDataOldValue = self.characterDataOldValue
-    attributeFilter = self.attributeFilter
+    this.childList = self.childList
+    this.attributes = self.attributes
+    this.characterData = self.characterData
+    this.subtree = self.subtree
+    this.attributeOldValue = self.attributeOldValue
+    this.characterDataOldValue = self.characterDataOldValue
+    this.attributeFilter = self.attributeFilter
   }
 
   @inline def -->[El <: ReactiveElement[org.scalajs.dom.HTMLElement]](sink: Sink[Seq[MutationRecord]]): BinderWithStartStop[El] = {
