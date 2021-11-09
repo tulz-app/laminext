@@ -2,13 +2,13 @@ package io.laminext.fetch
 
 import com.raquo.laminar.api.L._
 import org.scalajs.dom
-import org.scalajs.dom.experimental.HttpMethod
-import org.scalajs.dom.experimental.ReferrerPolicy
-import org.scalajs.dom.experimental.RequestCache
-import org.scalajs.dom.experimental.RequestCredentials
-import org.scalajs.dom.experimental.RequestMode
-import org.scalajs.dom.experimental.RequestRedirect
-import org.scalajs.dom.experimental.Response
+import org.scalajs.dom.HttpMethod
+import org.scalajs.dom.ReferrerPolicy
+import org.scalajs.dom.RequestCache
+import org.scalajs.dom.RequestCredentials
+import org.scalajs.dom.RequestMode
+import org.scalajs.dom.RequestRedirect
+import org.scalajs.dom.Response
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.Future
 import scala.scalajs.js

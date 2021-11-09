@@ -1,7 +1,7 @@
 package io.laminext.videojs.api
 
 import io.laminext.videojs.api.components.ControlBar
-import org.scalajs.dom.raw.TimeRanges
+import org.scalajs.dom.TimeRanges
 import org.scalajs.dom.Element
 import org.scalajs.dom.MediaError
 import scala.scalajs.js

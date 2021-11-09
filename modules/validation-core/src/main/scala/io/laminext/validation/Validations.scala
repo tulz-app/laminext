@@ -1,6 +1,6 @@
 package io.laminext.validation
 
-import org.scalajs.dom.raw.File
+import org.scalajs.dom.File
 
 object Validations {
 

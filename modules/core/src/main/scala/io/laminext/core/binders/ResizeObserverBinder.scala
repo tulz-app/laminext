@@ -6,11 +6,11 @@ import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.domext.ResizeObserver
 import io.laminext.domext.ResizeObserverEntry
 import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLElement
-import org.scalajs.dom.raw.SVGElement
+import org.scalajs.dom.HTMLElement
+import org.scalajs.dom.SVGElement
 import scala.scalajs.js.|
 
-class ResizeObserverBinder[El <: ReactiveElement[dom.raw.HTMLElement]](
+class ResizeObserverBinder[El <: ReactiveElement[dom.HTMLElement]](
   onNext: ResizeObserverEntry => Unit
 ) extends BinderWithStartStop[El] {
 

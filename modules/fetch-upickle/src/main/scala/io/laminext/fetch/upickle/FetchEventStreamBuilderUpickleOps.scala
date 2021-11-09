@@ -3,7 +3,7 @@ package upickle
 
 import _root_.upickle.default._
 import com.raquo.laminar.api.L._
-import org.scalajs.dom.experimental.Response
+import org.scalajs.dom.Response
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js.Thenable.Implicits._

@@ -2,9 +2,8 @@ package io.laminext.core
 package ops.htmlelement
 
 import com.raquo.laminar.api.L._
-import org.scalajs.dom.ext._
-import org.scalajs.dom.raw.Event
-import org.scalajs.dom.raw.File
+import org.scalajs.dom.Event
+import org.scalajs.dom.FileList
 
 final class InputElementOps(el: Input) {
 
@@ -28,17 +27,13 @@ final class InputElementOps(el: Input) {
   ): Signal[Boolean] =
     changes(changeStreamTransform).mapTo(el.ref.checked).toSignal(el.ref.checked)
 
-  @inline def files: Signal[Seq[File]] = files(identity)
+  @inline def files: Signal[FileList] = files(identity)
 
   def files(
     changeStreamTransform: EventStream[Event] => EventStream[Event]
-  ): Signal[Seq[File]] =
+  ): Signal[FileList] =
     changes(changeStreamTransform)
-      .mapTo(
-        new EasySeq[File](el.ref.files.length, el.ref.files.apply).toSeq
-      )
-      .toSignal(
-        new EasySeq[File](el.ref.files.length, el.ref.files.apply).toSeq
-      )
+      .mapTo(el.ref.files)
+      .toSignal(el.ref.files)
 
 }

@@ -1,7 +1,7 @@
 package io.laminext.highlight
 
 import scala.scalajs.js
-import org.scalajs.dom.raw.Node
+import org.scalajs.dom.Node
 import scala.scalajs.js.annotation.JSImport
 
 @js.native

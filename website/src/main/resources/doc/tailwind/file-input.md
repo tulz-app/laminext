@@ -3,7 +3,7 @@ A styled component for file inputs.
 First, you define a validation (from the `validation` module):
 
 ```scala
-import org.scalajs.dom.raw.File
+import org.scalajs.dom.File
 import io.laminext.syntax.validation._
 
 val fileValidation: Validation[File, Seq[String], File] =

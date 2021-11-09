@@ -6,8 +6,8 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 import theme.Theme
 import io.laminext.syntax.core._
 import io.laminext.validation.components.ValidatedElement
-import org.scalajs.dom.raw.File
-import org.scalajs.dom.raw.HTMLInputElement
+import org.scalajs.dom.File
+import org.scalajs.dom.HTMLInputElement
 import org.scalajs.dom
 
 class ButtonTailwindFileInputOps[T <: dom.html.Button](el: ReactiveHtmlElement[T]) {

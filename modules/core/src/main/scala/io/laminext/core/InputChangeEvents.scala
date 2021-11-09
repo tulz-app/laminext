@@ -1,7 +1,7 @@
 package io.laminext.core
 
 import com.raquo.laminar.api.L._
-import org.scalajs.dom.raw.Event
+import org.scalajs.dom.Event
 
 object InputChangeEvents {
 

@@ -1,8 +1,8 @@
 package io.laminext.fetch
 
-import org.scalajs.dom.experimental.ByteString
-import org.scalajs.dom.experimental.Headers
-import org.scalajs.dom.experimental.ResponseType
+import org.scalajs.dom.ByteString
+import org.scalajs.dom.Headers
+import org.scalajs.dom.ResponseType
 
 /**
  * @param data

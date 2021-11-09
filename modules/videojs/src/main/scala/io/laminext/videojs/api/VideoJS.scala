@@ -1,7 +1,7 @@
 package io.laminext.videojs.api
 
 import org.scalajs.dom.Element
-import org.scalajs.dom.raw.TimeRanges
+import org.scalajs.dom.TimeRanges
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.annotation.JSName

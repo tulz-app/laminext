@@ -15,7 +15,7 @@ object WebSocketExample
       import io.laminext.websocket._
 
       /* <focus> */
-      val ws = WebSocket.url("wss://echo.websocket.org").string.build(managed = false)
+      val ws = WebSocket.url("wss://echo.websocket.events").string.build(managed = false)
       /* </focus> */
 
       val inputElement = input(

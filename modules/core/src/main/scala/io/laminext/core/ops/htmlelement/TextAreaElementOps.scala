@@ -2,7 +2,7 @@ package io.laminext.core
 package ops.htmlelement
 
 import com.raquo.laminar.api.L._
-import org.scalajs.dom.raw.Event
+import org.scalajs.dom.Event
 
 class TextAreaElementOps(el: TextArea) {
 

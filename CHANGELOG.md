@@ -2,6 +2,7 @@
 
 ### ...
 
+* input element ops – `files` returns a `Signal[FileList]` instead of `Signal[Seq[File]]` (use `.toSeq` to get a `Seq`)
 * API new: task queue – TODO: description
 
 ### 0.13.10

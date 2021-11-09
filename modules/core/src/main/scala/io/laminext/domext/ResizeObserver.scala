@@ -1,8 +1,8 @@
 package io.laminext.domext
 
-import org.scalajs.dom.ClientRect
-import org.scalajs.dom.raw.HTMLElement
-import org.scalajs.dom.raw.SVGElement
+import org.scalajs.dom.DOMRect
+import org.scalajs.dom.HTMLElement
+import org.scalajs.dom.SVGElement
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
 import scala.scalajs.js.|
@@ -37,7 +37,7 @@ trait ResizeObserverEntry extends js.Any {
 
   val borderBoxSize: ResizeObserverBorderBoxSize
   val contentBoxSize: ResizeObserverContentBoxSize
-  val contentRect: ClientRect
+  val contentRect: DOMRect
   val target: HTMLElement | SVGElement
 
 }

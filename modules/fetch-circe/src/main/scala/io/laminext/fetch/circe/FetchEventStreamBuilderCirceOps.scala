@@ -4,7 +4,7 @@ package circe
 import com.raquo.laminar.api.L._
 import io.circe._
 import io.circe.parser
-import org.scalajs.dom.experimental.Response
+import org.scalajs.dom.Response
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js.Thenable.Implicits._
