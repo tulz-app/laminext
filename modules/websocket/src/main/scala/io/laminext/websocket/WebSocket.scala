@@ -121,18 +121,19 @@ class WebSocket[Receive, Send](
   }
 
   private def trySend(): Unit = {
-    if (js.isUndefined(maybeWS)) {
+    if (connectedVar.now()) {
+      maybeWS.foreach { ws =>
+        sendBuffer.foreach { message =>
+          sender(ws, message)
+        }
+        sendBuffer.clear()
+      }
+    } else {
       if (!bufferWhenDisconnected) {
         sendBuffer.clear()
       } else if (sendBuffer.size > bufferSize) {
         sendBuffer.drop(sendBuffer.size - bufferSize)
       }
-    }
-    maybeWS.foreach { ws =>
-      sendBuffer.foreach { message =>
-        sender(ws, message)
-      }
-      sendBuffer.clear()
     }
   }
 
