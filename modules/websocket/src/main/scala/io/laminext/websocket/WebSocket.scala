@@ -121,14 +121,15 @@ class WebSocket[Receive, Send](
   }
 
   private def trySend(): Unit = {
-    if (js.isUndefined(maybeWS)) {
+    val connectedWS = maybeWS.filter(_.readyState == 1 /* OPEN */ )
+    if (js.isUndefined(connectedWS)) {
       if (!bufferWhenDisconnected) {
         sendBuffer.clear()
       } else if (sendBuffer.size > bufferSize) {
         sendBuffer.drop(sendBuffer.size - bufferSize)
       }
     }
-    maybeWS.foreach { ws =>
+    connectedWS.foreach { ws =>
       sendBuffer.foreach { message =>
         sender(ws, message)
       }
