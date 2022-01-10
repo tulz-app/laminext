@@ -1,5 +1,9 @@
 # Changelog
 
+### 0.14.3
+
+* Bugfix: in the WebSocket client, a check for the "connected" status was incomplete - https://github.com/tulz-app/laminext/pull/108 (@lavrov) 
+
 ### 0.14.2
 
 Update Laminar to 0.14.2

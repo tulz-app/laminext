@@ -173,21 +173,7 @@ object Site {
     ),
     SiteModule(
       path = "news",
-      index = docPage("", "News", FileAsString("/doc/news/index.md")),
-      ""               -> Seq(
-        docPage("v0-14-2", "v0.14.2", FileAsString("/doc/news/v0.14.2.md")),
-        docPage("v0-14-0", "v0.14.0", FileAsString("/doc/news/v0.14.0.md")),
-        docPage("v0-13-10", "v0.13.10", FileAsString("/doc/news/v0.13.10.md")),
-        docPage("v0-13-9", "v0.13.9", FileAsString("/doc/news/v0.13.9.md")),
-        docPage("v0-13-8", "v0.13.8", FileAsString("/doc/news/v0.13.8.md")),
-        docPage("v0-13-7", "v0.13.7", FileAsString("/doc/news/v0.13.7.md")),
-        docPage("v0-13-6", "v0.13.6", FileAsString("/doc/news/v0.13.6.md")),
-        docPage("v0-13-5", "v0.13.5", FileAsString("/doc/news/v0.13.5.md")),
-        docPage("v0-13-4", "v0.13.4", FileAsString("/doc/news/v0.13.4.md")),
-        docPage("v0-13-3", "v0.13.3", FileAsString("/doc/news/v0.13.3.md")),
-        docPage("v0-13-2", "v0.13.2", FileAsString("/doc/news/v0.13.2.md")),
-        docPage("v0-13-1", "v0.13.1", FileAsString("/doc/news/v0.13.1.md")),
-      )
+      index = docPage("", "News", FileAsString("/doc/news/index.md"))
     ),
   )
 
