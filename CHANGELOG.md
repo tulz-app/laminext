@@ -1,5 +1,13 @@
 # Changelog
 
+### 0.14.2
+
+Update Laminar to 0.14.2
+
+### 0.14.1
+
+Skipped
+
 ### 0.14.0
 
 Update to Laminar `v0.14.0` and `scala-js-dom` `v2.0.0`
