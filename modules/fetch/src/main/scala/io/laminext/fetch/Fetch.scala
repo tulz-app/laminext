@@ -9,7 +9,9 @@ import org.scalajs.dom.RequestCredentials
 import org.scalajs.dom.RequestMode
 import org.scalajs.dom.RequestRedirect
 import org.scalajs.dom.Response
+
 import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.typedarray.ArrayBuffer
@@ -135,7 +137,7 @@ final class FetchEventStreamBuilder(
 
   @inline def build[A](
     extract: Response => Future[A]
-  ): EventStream[FetchResponse[A]] = {
+  )(implicit ec: ExecutionContext): EventStream[FetchResponse[A]] = {
     this._body()
     FetchEventStream(
       url = _url(),
@@ -155,15 +157,15 @@ final class FetchEventStreamBuilder(
     )
   }
 
-  @inline def raw: EventStream[FetchResponse[Response]] = build(response => Future.successful(response))
+  @inline def raw(implicit ec: ExecutionContext): EventStream[FetchResponse[Response]] = build(response => Future.successful(response))
 
-  @inline def text: EventStream[FetchResponse[String]] = build(_.text().toFuture)
+  @inline def text(implicit ec: ExecutionContext): EventStream[FetchResponse[String]] = build(_.text().toFuture)
 
-  @inline def json: EventStream[FetchResponse[js.Any]] = build(_.json().toFuture)
+  @inline def json(implicit ec: ExecutionContext): EventStream[FetchResponse[js.Any]] = build(_.json().toFuture)
 
-  @inline def blob: EventStream[FetchResponse[dom.Blob]] = build(_.blob().toFuture)
+  @inline def blob(implicit ec: ExecutionContext): EventStream[FetchResponse[dom.Blob]] = build(_.blob().toFuture)
 
-  @inline def arrayBuffer: EventStream[FetchResponse[ArrayBuffer]] = build(_.arrayBuffer().toFuture)
+  @inline def arrayBuffer(implicit ec: ExecutionContext): EventStream[FetchResponse[ArrayBuffer]] = build(_.arrayBuffer().toFuture)
 
   def headers(
     headers: js.UndefOr[Map[String, String]],

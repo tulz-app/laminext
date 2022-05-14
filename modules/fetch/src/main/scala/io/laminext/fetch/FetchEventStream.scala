@@ -12,12 +12,13 @@ import org.scalajs.dom.RequestInit
 import org.scalajs.dom.RequestMode
 import org.scalajs.dom.RequestRedirect
 import org.scalajs.dom.Response
+
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 import scala.scalajs.js.timers.clearTimeout
 import scala.scalajs.js.timers.setTimeout
 import scala.scalajs.js.timers.SetTimeoutHandle
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import com.raquo.airstream.custom.CustomSource
 import com.raquo.airstream.custom.CustomStreamSource
@@ -39,7 +40,7 @@ object FetchEventStream {
     keepalive: js.UndefOr[Boolean],
     timeout: js.UndefOr[FiniteDuration],
     extract: Response => Future[A],
-  ): EventStream[FetchResponse[A]] = {
+  )(implicit ec: ExecutionContext): EventStream[FetchResponse[A]] = {
     CustomStreamSource[FetchResponse[A]]((fireValue, fireError, _, _) => {
       val abortController                             = new AbortController()
       var timeoutHandle: js.UndefOr[SetTimeoutHandle] = js.undefined

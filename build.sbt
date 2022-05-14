@@ -16,7 +16,7 @@ inThisBuild(
     Test / publishArtifact              := false,
     Test / parallelExecution            := false,
     scalafmtOnCompile                   := true,
-    githubWorkflowJavaVersions          := Seq("openjdk@1.16.0"),
+    githubWorkflowJavaVersions          := Seq(JavaSpec.temurin("17")),
     githubWorkflowUseSbtThinClient      := false,
     githubWorkflowSbtCommand            := "sbt -mem 5000",
     githubWorkflowTargetTags ++= Seq("v*"),
