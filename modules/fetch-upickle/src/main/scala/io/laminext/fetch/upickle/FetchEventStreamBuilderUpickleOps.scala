@@ -4,7 +4,8 @@ package upickle
 import _root_.upickle.default._
 import com.raquo.laminar.api.L._
 import org.scalajs.dom.Response
-import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import scala.scalajs.js.Thenable.Implicits._
 import scala.util.Failure
@@ -13,7 +14,7 @@ import scala.util.Try
 
 class FetchEventStreamBuilderUpickleOps(underlying: FetchEventStreamBuilder) {
 
-  private def decodeResponse[A](response: Response)(implicit decoder: Reader[A]): Future[A] =
+  private def decodeResponse[A](response: Response)(implicit decoder: Reader[A], ec: ExecutionContext): Future[A] =
     response.text().flatMap { text =>
       Try(read[A](text)) match {
         case Success(a)     => Future.successful(a)
@@ -24,12 +25,13 @@ class FetchEventStreamBuilderUpickleOps(underlying: FetchEventStreamBuilder) {
   private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder =
     b.updateHeaders(_.updated("accept", "application/json"))
 
-  def decode[A](implicit decoder: Reader[A]): EventStream[FetchResponse[A]] =
+  def decode[A](implicit decoder: Reader[A], ec: ExecutionContext): EventStream[FetchResponse[A]] =
     acceptJson(underlying).build(decodeResponse[A](_))
 
   def decodeEither[NonOkay, Okay](implicit
     decodeNonOkay: Reader[NonOkay],
-    decodeOkay: Reader[Okay]
+    decodeOkay: Reader[Okay],
+    ec: ExecutionContext
   ): EventStream[FetchResponse[Either[NonOkay, Okay]]] =
     acceptJson(underlying).build { response =>
       if (response.ok) {
@@ -39,10 +41,10 @@ class FetchEventStreamBuilderUpickleOps(underlying: FetchEventStreamBuilder) {
       }
     }
 
-  def decodeOkay[Okay](implicit decodeOkay: Reader[Okay]): EventStream[FetchResponse[Okay]] =
+  def decodeOkay[Okay](implicit decodeOkay: Reader[Okay], ec: ExecutionContext): EventStream[FetchResponse[Okay]] =
     acceptJson(underlying).build { response =>
       if (response.ok) {
-        decodeResponse(response)(decodeOkay)
+        decodeResponse[Okay](response)
       } else {
         Future.failed(new NonOkayResponse(response))
       }

@@ -5,13 +5,14 @@ import com.raquo.laminar.api.L._
 import io.circe._
 import io.circe.parser
 import org.scalajs.dom.Response
-import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import scala.scalajs.js.Thenable.Implicits._
 
 class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
 
-  private def decodeResponse[A](response: Response)(implicit decoder: Decoder[A]): Future[A] =
+  private def decodeResponse[A](response: Response)(implicit decoder: Decoder[A], ec: ExecutionContext): Future[A] =
     response.text().flatMap { text =>
       parser.decode[A](text) match {
         case Right(a)    => Future.successful(a)
@@ -22,12 +23,13 @@ class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
   private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder =
     b.updateHeaders(_.updated("accept", "application/json"))
 
-  def decode[A](implicit decoder: Decoder[A]): EventStream[FetchResponse[A]] =
+  def decode[A](implicit decoder: Decoder[A], ec: ExecutionContext): EventStream[FetchResponse[A]] =
     acceptJson(underlying).build(decodeResponse[A](_))
 
   def decodeEither[NonOkay, Okay](implicit
     decodeNonOkay: Decoder[NonOkay],
-    decodeOkay: Decoder[Okay]
+    decodeOkay: Decoder[Okay],
+    ec: ExecutionContext
   ): EventStream[FetchResponse[Either[NonOkay, Okay]]] =
     acceptJson(underlying).build { response =>
       if (response.ok) {
@@ -37,7 +39,7 @@ class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
       }
     }
 
-  def decodeOkay[Okay](implicit decodeOkay: Decoder[Okay]): EventStream[FetchResponse[Okay]] =
+  def decodeOkay[Okay](implicit decodeOkay: Decoder[Okay], ec: ExecutionContext): EventStream[FetchResponse[Okay]] =
     acceptJson(underlying).build { response =>
       if (response.ok) {
         decodeResponse(response)
