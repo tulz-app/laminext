@@ -42,7 +42,7 @@ object FetchEventStream {
     extract: Response => Future[A],
   )(implicit ec: ExecutionContext): EventStream[FetchResponse[A]] = {
     CustomStreamSource[FetchResponse[A]]((fireValue, fireError, _, _) => {
-      val abortController                             = new AbortController()
+      val abortController                             = new AbortController
       var timeoutHandle: js.UndefOr[SetTimeoutHandle] = js.undefined
 
       def handleError(error: Throwable): Unit = {

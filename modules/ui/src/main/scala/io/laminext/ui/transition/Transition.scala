@@ -14,7 +14,7 @@ object Transition {
     observer: Observer[Boolean] = Observer.empty
   ): Modifier[HtmlElement] = {
     val classes = Var[Seq[(Seq[String], Boolean)]](Seq.empty)
-    val bus     = new EventBus[TransitionEvent]()
+    val bus     = new EventBus[TransitionEvent]
 
     import TransitionEvent._
 

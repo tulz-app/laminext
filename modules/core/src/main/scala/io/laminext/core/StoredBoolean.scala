@@ -7,7 +7,7 @@ final class StoredBoolean(name: String, initial: Boolean = true) {
 
   private val storageId = s"[StoreBoolean]$name"
 
-  private val updateBus = new EventBus[Boolean => Boolean]()
+  private val updateBus = new EventBus[Boolean => Boolean]
 
   val signal: Signal[Boolean] =
     updateBus.events

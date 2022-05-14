@@ -15,7 +15,7 @@ object Animation {
   ): Modifier[ReactiveHtmlElement.Base] = {
     val klass            = Var[Seq[(String, Boolean)]](Seq.empty)
     var maybeLastClass   = Option.empty[String]
-    val bus              = new EventBus[AnimationEvent]()
+    val bus              = new EventBus[AnimationEvent]
     var iterationCounter = 0
 
     import AnimationEvent._

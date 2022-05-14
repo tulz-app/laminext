@@ -16,7 +16,7 @@ class MarkedOptions extends js.Object {
   /**
    * An object containing functions to render tokens to HTML.
    */
-  val renderer: MarkedRenderer = new MarkedRenderer()
+  val renderer: MarkedRenderer = new MarkedRenderer
 
   /**
    * Enable [[https://help.github.com/articles/github-flavored-markdown GitHub flavored markdown]].
@@ -77,7 +77,7 @@ object MarkedOptions {
    *   Use "smart" typograhic punctuation for things like quotes and dashes.
    */
   def apply(highlight: UndefOr[(String, UndefOr[String], js.Function) => String] = js.undefined,
-            renderer: MarkedRenderer = new MarkedRenderer(),
+            renderer: MarkedRenderer = new MarkedRenderer,
             gfm: Boolean = true,
             tables: Boolean = true,
             breaks: Boolean = false,

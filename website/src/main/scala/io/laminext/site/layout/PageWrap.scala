@@ -41,9 +41,9 @@ object PageWrap {
             div(
               cls := "lg:container lg:mx-auto lg:max-w-4xl lg:p-8 p-4 bg-white min-h-full",
               child <-- $pageAndResult.map {
-                case Some((_, Right((el, _))))     => el
-                case Some((_, Left((_, message)))) => div(message)
-                case None                          => div("loading...")
+                case Some(_, Right(el, _))     => el
+                case Some(_, Left(_, message)) => div(message)
+                case None                      => div("loading...")
               }
             )
           )
@@ -52,7 +52,7 @@ object PageWrap {
       ),
       TW.modal(ExampleModalContent.modalContent.signal),
       $pageAndResult.bind {
-        case Some((_, Right((_, theTitle)))) =>
+        case Some(_, Right(_, theTitle)) =>
           titleElement.textContent = s"$theTitle - laminext"
           org.scalajs.dom.document.title = s"$theTitle - laminext"
           if (theTitle.nonEmpty) {
@@ -62,11 +62,11 @@ object PageWrap {
               titleElement.setAttribute("data-status", "200")
             }
           }
-        case Some((_, Left((code, _))))      =>
+        case Some(_, Left(code, _))      =>
           titleElement.textContent = s"Error"
           org.scalajs.dom.document.title = s"Error"
           titleElement.setAttribute("data-status", code.toString)
-        case None                            =>
+        case None                        =>
           titleElement.textContent = s"Loading..."
           org.scalajs.dom.document.title = s"Loading..."
           titleElement.removeAttribute("data-status")

@@ -23,7 +23,7 @@ object ValidatedElement {
     validation: Validation[A, Err, Out]
   ): ValidatedElement[R, A, Err, Out] = {
     val validatedValue = value.map(validation)
-    val resetBus       = new EventBus[Unit]()
+    val resetBus       = new EventBus[Unit]
 
     val blurredAtLeastOnce =
       EventStream

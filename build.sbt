@@ -38,9 +38,9 @@ lazy val commonSettings = Seq.concat(
   scalacOptions ++= {
     val sourcesGithubUrl  = s"https://raw.githubusercontent.com/tulz-app/laminext/${git.gitHeadCommit.value.get}/"
     val sourcesOptionName = CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, _)) => "-P:scalajs:mapSourceURI"
-      case Some((3, _)) => "-scalajs-mapSourceURI"
-      case _            => throw new RuntimeException(s"unexpected scalaVersion: ${scalaVersion.value}")
+      case Some(2, _) => "-P:scalajs:mapSourceURI"
+      case Some(3, _) => "-scalajs-mapSourceURI"
+      case _          => throw new RuntimeException(s"unexpected scalaVersion: ${scalaVersion.value}")
     }
     val moduleSourceRoot  = file("").toURI.toString
     Seq(
@@ -50,7 +50,7 @@ lazy val commonSettings = Seq.concat(
 )
 
 lazy val bundlerSettings = Seq(
-  jsEnv                  := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+  jsEnv                  := new net.exoego.jsenv.jsdomnodejs.JSDOMNodeJSEnv,
   installJsdom / version := DependencyVersions.jsdom,
   Test / requireJsDomEnv := true,
   useYarn                := true
@@ -250,7 +250,7 @@ lazy val website = project
     ),
     embedTextGlobs                  := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
-    (Compile / sourceGenerators) += embedFiles
+    Compile / sourceGenerators += embedFiles
   )
   .dependsOn(
     base,

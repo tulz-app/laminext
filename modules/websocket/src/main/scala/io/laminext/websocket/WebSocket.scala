@@ -42,7 +42,7 @@ class WebSocket[Receive, Send](
   private var bindsCount                           = 0
   private var maybeWS: js.UndefOr[dom.WebSocket]   = js.undefined
   private val sendBuffer: mutable.ArrayDeque[Send] = mutable.ArrayDeque.empty
-  private val eventBus                             = new EventBus[WebSocketEvent[Receive]]()
+  private val eventBus                             = new EventBus[WebSocketEvent[Receive]]
   private val connectedVar                         = Var(false)
   private val connectingVar                        = Var(false)
 

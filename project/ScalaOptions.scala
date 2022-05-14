@@ -15,7 +15,7 @@ object ScalaOptions {
         "future"
       )
     )),
-    (Compile / doc / scalacOptions) ~= (_.filterNot(
+    Compile / doc / scalacOptions ~= (_.filterNot(
       Set(
         "-scalajs",
         "-deprecation",

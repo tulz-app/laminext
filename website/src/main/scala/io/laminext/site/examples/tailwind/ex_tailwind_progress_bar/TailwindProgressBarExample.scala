@@ -15,7 +15,7 @@ object TailwindProgressBarExample
       div(
         cls := "p-4 space-y-4 bg-white",
         /* <focus> */
-        TW.progressBar(EventStream.periodic(300).map(n => ((n * 3) % 100).toDouble).toSignal(0.0))
+        TW.progressBar(EventStream.periodic(300).map(n => (n * 3 % 100).toDouble).toSignal(0.0))
         /* </focus> */
       )
     })

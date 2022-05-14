@@ -10,7 +10,7 @@ class AirFSM[State](initialState: State, initialStateRequests: EventStream[State
 ) {
 
   def binder: Binder[ReactiveElement.Base] = (element: ReactiveElement.Base) => {
-    val stateChangeRequests               = new EventBus[State]()
+    val stateChangeRequests               = new EventBus[State]
     var currentState                      = initialState
     var currentSubscription: Subscription = null
     ReactiveElement.bindSubscription(element) { ctx =>

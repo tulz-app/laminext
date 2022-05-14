@@ -7,7 +7,7 @@ final class StoredString(name: String, initial: String) {
 
   private val storageId = s"[StoredString]$name"
 
-  private val updateBus = new EventBus[String => String]()
+  private val updateBus = new EventBus[String => String]
 
   val signal: Signal[String] =
     updateBus.events

@@ -56,7 +56,7 @@ object MarkedRenderer {
             link: UndefOr[(String, String, String) => String] = js.undefined,
             image: UndefOr[(String, String, String) => String] = js.undefined
   ): MarkedRenderer = {
-    val renderer = new MarkedRenderer().asInstanceOf[js.Dynamic]
+    val renderer = new MarkedRenderer.asInstanceOf[js.Dynamic]
     code.foreach(renderer.code = _)
     blockquote.foreach(renderer.blockquote = _)
     html.foreach(renderer.html = _)
