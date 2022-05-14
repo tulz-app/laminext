@@ -20,6 +20,14 @@ class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
       }
     }
 
+  private def decodeStatusDependantResponse[A](response: Response, decoder: StatusDependantDecoder[A]): Future[A] =
+    response.text().flatMap { text =>
+      decoder.decode(text, response.status) match {
+        case Right(a)    => Future.successful(a)
+        case Left(error) => Future.failed(ResponseError(error, response))
+      }
+    }
+
   private def acceptJson(b: FetchEventStreamBuilder): FetchEventStreamBuilder =
     b.updateHeaders(_.updated("accept", "application/json"))
 
@@ -36,6 +44,20 @@ class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
         decodeResponse[Okay](response).map(Right(_))
       } else {
         decodeResponse[NonOkay](response).map(Left(_))
+      }
+    }
+
+  def decodeOkayOr[NonOkay, Okay](
+    decodeNonOkay: StatusDependantDecoderBuilder[NonOkay] => StatusDependantDecoderBuilder[NonOkay],
+  )(implicit
+    decodeOkay: Decoder[Okay],
+    ec: ExecutionContext
+  ): EventStream[FetchResponse[Either[NonOkay, Okay]]] =
+    acceptJson(underlying).build { response =>
+      if (response.ok) {
+        decodeResponse[Okay](response).map(Right(_))
+      } else {
+        decodeStatusDependantResponse[NonOkay](response, decodeNonOkay(new StatusDependantDecoderBuilder[NonOkay]).build).map(Left(_))
       }
     }
 
