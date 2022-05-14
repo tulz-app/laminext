@@ -6,6 +6,7 @@ import io.laminext.fetch.FetchResponse
 import io.laminext.site.examples.CodeExample
 import scala.util.Failure
 import scala.util.Success
+import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
 object FetchPostExample
     extends CodeExample(
