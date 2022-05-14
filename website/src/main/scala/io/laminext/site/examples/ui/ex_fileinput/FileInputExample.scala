@@ -13,7 +13,7 @@ object FileInputExample
       import io.laminext.syntax.core._
       import io.laminext.ui._
       import io.laminext.syntax.validation.cats._
-      import org.scalajs.dom.raw.File
+      import org.scalajs.dom.File
 
       val fileValidation: Validation[File, Seq[String], File] =
         V.file(Seq("must be <= 100MB"))(_.size <= 100 * 1024 * 1024) &

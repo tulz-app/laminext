@@ -6,8 +6,8 @@ import io.laminext.syntax.core.hellip
 import io.laminext.syntax.validation._
 import io.laminext.validation.components.ValidatedElement
 import io.laminext.validation.Validation
-import org.scalajs.dom.raw.File
-import org.scalajs.dom.raw.HTMLInputElement
+import org.scalajs.dom.File
+import org.scalajs.dom.HTMLInputElement
 
 trait FileInputElementCreate {
 

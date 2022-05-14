@@ -5,7 +5,7 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 import io.laminext.base.ComponentBase
 import io.laminext.validation.ValidatedValue
 import org.scalajs.dom.html
-import org.scalajs.dom.raw.File
+import org.scalajs.dom.File
 
 class FileInputElement[Err, Out](
   val el: ReactiveHtmlElement[html.Button],
