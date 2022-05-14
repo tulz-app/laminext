@@ -2,6 +2,7 @@ package io.laminext.site.examples.fetch
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
+import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
 object FetchCirceExample
     extends CodeExample(

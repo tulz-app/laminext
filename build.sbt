@@ -246,6 +246,7 @@ lazy val website = project
       Dependencies.`embedded-files-macro`.value,
       Dependencies.sourcecode.value,
       Dependencies.`scala-java-time`.value,
+      Dependencies.`scala-js-macrotask-executor`.value,
     ),
     embedTextGlobs                  := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
