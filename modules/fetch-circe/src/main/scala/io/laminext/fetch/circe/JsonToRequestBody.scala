@@ -1,7 +1,7 @@
 package io.laminext.fetch
 package circe
 
-import org.scalajs.dom.experimental.BodyInit
+import org.scalajs.dom.BodyInit
 import scala.scalajs.js
 import scala.scalajs.js.UndefOr
 

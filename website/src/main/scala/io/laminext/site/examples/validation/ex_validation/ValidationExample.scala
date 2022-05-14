@@ -15,14 +15,14 @@ object ValidationExample
 
       /* <focus> */
       val validatedInput1 = input(
-        tpe := "email",
+        tpe         := "email",
         placeholder := "enter an e-mail address"
       ).validated(V.email("Please enter a valid e-mail address."))
       /* </focus> */
 
       /* <focus> */
       val validatedInput2 = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "enter something BIG"
       ).validated(
         V.nonBlank("Must not be blank!") &&
@@ -32,7 +32,7 @@ object ValidationExample
 
       /* <focus> */
       val validatedInput3 = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "enter something else"
       ).validated(
         V.custom("Must be longer than 5 characters!")(_.length > 5) &&
@@ -42,8 +42,7 @@ object ValidationExample
 
       /* <focus> */
       val validatedInput4 = input(
-        tpe := "text",
-        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+        tpe         := "text",
         placeholder := "enter something with a space"
       ).validated(
         V.custom { s =>
@@ -55,8 +54,7 @@ object ValidationExample
       /* </focus> */
       /* <focus> */
       val validatedInput5 = input(
-        tpe := "text",
-        cls := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
+        tpe         := "text",
         placeholder := "enter something (debounced 1 sec)"
       ).validated(
         V.nonBlank("Must not be blank!"),

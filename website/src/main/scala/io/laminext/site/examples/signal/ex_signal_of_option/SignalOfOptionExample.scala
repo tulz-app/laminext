@@ -16,7 +16,7 @@ object SignalOfOptionExample
       val signal    = optionVar.signal
 
       val inputElement = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "new value"
       )
       div(

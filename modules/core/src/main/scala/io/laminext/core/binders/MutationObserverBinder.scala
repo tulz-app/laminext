@@ -2,18 +2,12 @@ package io.laminext.core.binders
 
 import com.raquo.airstream.ownership.DynamicSubscription
 import com.raquo.laminar.nodes.ReactiveElement
-import io.laminext.domext.ResizeObserver
-import io.laminext.domext.ResizeObserverEntry
 import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLElement
-import org.scalajs.dom.raw.MutationObserver
-import org.scalajs.dom.raw.MutationObserverInit
-import org.scalajs.dom.raw.MutationRecord
-import org.scalajs.dom.raw.SVGElement
-import scala.scalajs.js
-import scala.scalajs.js.|
+import org.scalajs.dom.MutationObserver
+import org.scalajs.dom.MutationObserverInit
+import org.scalajs.dom.MutationRecord
 
-class MutationObserverBinder[El <: ReactiveElement[dom.raw.HTMLElement]](
+class MutationObserverBinder[El <: ReactiveElement[dom.HTMLElement]](
   onNext: Seq[MutationRecord] => Unit,
   options: MutationObserverInit
 ) extends BinderWithStartStop[El] {

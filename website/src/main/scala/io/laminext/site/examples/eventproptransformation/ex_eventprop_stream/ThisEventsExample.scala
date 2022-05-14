@@ -14,7 +14,7 @@ object ThisEventsExample
       import org.scalajs.dom
 
       val inputElement = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "set value"
       )
 

@@ -66,9 +66,9 @@ Use when you know what you're doing.
 ```scala
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.dangerous._
-import org.scalajs.dom.raw
+import org.scalajs.dom
 
-val rawNode: raw.Node = ???
+val rawNode: dom.Node = ???
 
 div(
   unsafeAppendRawChild(rawNode)

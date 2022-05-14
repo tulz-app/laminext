@@ -14,7 +14,7 @@ object HumanReadableSizeExample
       import io.laminext.util.HumanReadableSize
 
       val inputElement = input(
-        tpe := "number",
+        tpe         := "number",
         placeholder := "new value"
       )
 

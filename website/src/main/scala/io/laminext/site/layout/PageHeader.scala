@@ -19,8 +19,8 @@ object PageHeader {
   ): ReactiveHtmlElement.Base = {
     val styleDropDownOpen = Var(false)
     val styleSearch       = Var("")
-    val searchInput = input(
-      cls := "appearance-none block w-full px-3 py-2 rounded-md text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out",
+    val searchInput       = input(
+      cls         := "appearance-none block w-full px-3 py-2 rounded-md text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out",
       placeholder := "search..."
     )
     searchInput.amend(
@@ -55,8 +55,8 @@ object PageHeader {
         cls := "hidden lg:block relative inline-block text-left",
         div(
           button(
-            cls := "btn-sm-text-white",
-            `type` := "button",
+            cls           := "btn-sm-text-white",
+            `type`        := "button",
             Icons.highlighter(svg.cls := "h-4 text-gray-300"),
             aria.hasPopup := true,
             aria.expanded <-- styleDropDownOpen.signal,
@@ -85,7 +85,7 @@ object PageHeader {
             ),
             Styles.styles.map { styleName =>
               button(
-                cls := "block flex items-center space-x-2 w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-200 hover:text-gray-900",
+                cls  := "block flex items-center space-x-2 w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-200 hover:text-gray-900",
                 onClick.mapTo(styleName) --> Styles.highlightStyle.setObserver,
                 role := "menuitem",
                 span(
@@ -153,7 +153,7 @@ object PageHeader {
 
   private def moduleLink(currentModule: Signal[Option[SiteModule]])(module: SiteModule) =
     a(
-      cls := "border-b-2 px-2 border-transparent flex font-display tracking-wide",
+      cls  := "border-b-2 px-2 border-transparent flex font-display tracking-wide",
       currentModule
         .map(_.exists(_.path == module.path)).classSwitch(
           "border-gray-300 text-white",

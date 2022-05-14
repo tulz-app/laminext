@@ -1,5 +1,24 @@
 # Changelog
 
+### 0.14.3
+
+* Bugfix: in the WebSocket client, a check for the "connected" status was incomplete - https://github.com/tulz-app/laminext/pull/108 (@lavrov) 
+
+### 0.14.2
+
+Update Laminar to 0.14.2
+
+### 0.14.1
+
+Skipped
+
+### 0.14.0
+
+Update to Laminar `v0.14.0` and `scala-js-dom` `v2.0.0`
+
+* input element ops – `files` returns a `Signal[FileList]` instead of `Signal[Seq[File]]` (use `.toSeq` to get a `Seq`)
+* API new: task queue
+
 ### 0.13.10
 
 * API: new: `input`/`textArea` `.changes`/`.value`/`.checked`/`.files` now have additional overloaded versions 

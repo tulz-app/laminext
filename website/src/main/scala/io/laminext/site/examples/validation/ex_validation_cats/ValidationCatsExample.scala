@@ -15,14 +15,14 @@ object ValidationCatsExample
 
       /* <focus> */
       val validatedInput1 = input(
-        tpe := "email",
+        tpe         := "email",
         placeholder := "enter an e-mail address"
       ).validated(V.email("Please enter a valid e-mail address."))
       /* </focus> */
 
       /* <focus> */
       val validatedInput2 = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "enter something BIG"
       ).validated(
         V.nonBlank("Must not be blank!") &
@@ -32,7 +32,7 @@ object ValidationCatsExample
 
       /* <focus> */
       val validatedInput3 = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "enter something else"
       ).validated(
         V.custom("Must be longer than 5 characters!")(_.length > 5) &

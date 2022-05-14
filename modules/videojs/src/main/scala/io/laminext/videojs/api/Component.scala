@@ -1,7 +1,8 @@
 package io.laminext.videojs.api
 
 import org.scalajs.dom.Element
-import org.scalajs.dom.raw.NodeList
+import org.scalajs.dom.NodeList
+import org.scalajs.dom.Node
 import scala.scalajs.js
 import scala.scalajs.js.|
 
@@ -32,7 +33,7 @@ import scala.scalajs.js.|
 trait Component extends js.Object {
   def $(selector: String, context: Element | String = ???): Element = js.native
 
-  def $$(selector: String, context: Element | String = ???): NodeList = js.native
+  def $$(selector: String, context: Element | String = ???): NodeList[Node] = js.native
 
   def addChild(child: String | Component, options: js.Object = ???): Unit = js.native
 

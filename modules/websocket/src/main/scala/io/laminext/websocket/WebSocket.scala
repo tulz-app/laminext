@@ -5,7 +5,6 @@ import com.raquo.airstream.ownership.Subscription
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
-import org.scalajs.dom.raw
 import scala.collection.mutable
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
@@ -41,7 +40,7 @@ class WebSocket[Receive, Send](
   private var reconnectRetriesLeft: Int = reconnectRetries
 
   private var bindsCount                           = 0
-  private var maybeWS: js.UndefOr[raw.WebSocket]   = js.undefined
+  private var maybeWS: js.UndefOr[dom.WebSocket]   = js.undefined
   private val sendBuffer: mutable.ArrayDeque[Send] = mutable.ArrayDeque.empty
   private val eventBus                             = new EventBus[WebSocketEvent[Receive]]()
   private val connectedVar                         = Var(false)
@@ -51,7 +50,7 @@ class WebSocket[Receive, Send](
     if (js.isUndefined(maybeWS)) {
       try {
         connectingVar.writer.onNext(true)
-        val ws = protocol.fold(new raw.WebSocket(url))(new raw.WebSocket(url, _))
+        val ws = protocol.fold(new dom.WebSocket(url))(new dom.WebSocket(url, _))
         maybeWS = ws
 
         initializer(ws)
@@ -122,14 +121,15 @@ class WebSocket[Receive, Send](
   }
 
   private def trySend(): Unit = {
-    if (js.isUndefined(maybeWS)) {
+    val connectedWS = maybeWS.filter(_.readyState == 1 /* OPEN */ )
+    if (js.isUndefined(connectedWS)) {
       if (!bufferWhenDisconnected) {
         sendBuffer.clear()
       } else if (sendBuffer.size > bufferSize) {
         sendBuffer.drop(sendBuffer.size - bufferSize)
       }
     }
-    maybeWS.foreach { ws =>
+    connectedWS.foreach { ws =>
       sendBuffer.foreach { message =>
         sender(ws, message)
       }
@@ -179,9 +179,9 @@ class WebSocket[Receive, Send](
 
   val received: EventStream[Receive] = eventBus.events.collect { case WebSocketEvent.Received(message) => message }
 
-  val connected: EventStream[raw.WebSocket] = eventBus.events.collect { case WebSocketEvent.Connected(ws) => ws }
+  val connected: EventStream[dom.WebSocket] = eventBus.events.collect { case WebSocketEvent.Connected(ws) => ws }
 
-  val closed: EventStream[(raw.WebSocket, Boolean)] = eventBus.events.collect { case WebSocketEvent.Closed(ws, willReconnect) => (ws, willReconnect) }
+  val closed: EventStream[(dom.WebSocket, Boolean)] = eventBus.events.collect { case WebSocketEvent.Closed(ws, willReconnect) => (ws, willReconnect) }
 
   val errors: EventStream[Throwable] = eventBus.events.collect { case WebSocketEvent.Error(error) => error }
 

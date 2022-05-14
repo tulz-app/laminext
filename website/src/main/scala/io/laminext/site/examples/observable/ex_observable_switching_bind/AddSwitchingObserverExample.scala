@@ -20,12 +20,12 @@ object AddSwitchingObserverExample
       val messages         = new EventBus[String]
       val observerMessages = new EventBus[String]
 
-      val prefixInputElement = input(
-        tpe := "text",
+      val prefixInputElement  = input(
+        tpe         := "text",
         placeholder := "observer prefix"
       )
       val messageInputElement = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "message"
       )
       div(

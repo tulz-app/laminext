@@ -1,7 +1,7 @@
 package io.laminext.fetch
 
 import io.laminext.util.UrlUtils
-import org.scalajs.dom.raw.Location
+import org.scalajs.dom.Location
 import scala.collection.immutable.ArraySeq
 import scala.scalajs.js.URIUtils.encodeURIComponent
 

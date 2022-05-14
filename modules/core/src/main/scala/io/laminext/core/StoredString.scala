@@ -1,7 +1,7 @@
 package io.laminext.core
 
 import com.raquo.laminar.api.L._
-import org.scalajs.dom.ext.LocalStorage
+import org.scalajs.dom
 
 final class StoredString(name: String, initial: String) {
 
@@ -13,14 +13,14 @@ final class StoredString(name: String, initial: String) {
     updateBus.events
       .foldLeft[String](
         if (BrowserUtils.storageEnabled) {
-          LocalStorage(storageId).getOrElse(initial)
+          Option(dom.window.localStorage.getItem(storageId)).getOrElse(initial)
         } else {
           initial
         }
       ) { case (current, update) =>
         val newValue = update(current)
         if (BrowserUtils.storageEnabled) {
-          LocalStorage(storageId) = newValue
+          dom.window.localStorage.setItem(storageId, newValue)
         }
         newValue
       }

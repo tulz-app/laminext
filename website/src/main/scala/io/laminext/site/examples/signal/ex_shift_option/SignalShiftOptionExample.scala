@@ -16,7 +16,7 @@ object SignalShiftOptionExample
       val inner = Var("initial")
 
       val inputElement = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "new value"
       )
       div(

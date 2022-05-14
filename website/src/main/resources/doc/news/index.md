@@ -1,10 +1,7 @@
-* [v0.13.10 release](/news/v0-13-10) (27.07.2021)
-* [v0.13.9 release](/news/v0-13-9) (13.07.2021)
-* [v0.13.8 release](/news/v0-13-8) (8.07.2021)
-* [v0.13.7 release](/news/v0-13-7) (5.07.2021)
-* [v0.13.6 bug-fix release](/news/v0-13-6) (15.06.2021)
-* [v0.13.5 release](/news/v0-13-5) (06.06.2021)
-* [v0.13.4 release](/news/v0-13-4) (04.06.2021)
-* [v0.13.3 release](/news/v0-13-3) (27.05.2021)
-* [v0.13.2 release](/news/v0-13-2) (23.05.2021)
-* [v0.13.1](/news/v0-13-1)
+### Releases
+
+https://github.com/tulz-app/laminext/releases
+
+### Changelog
+
+https://github.com/tulz-app/laminext/blob/main/CHANGELOG.md

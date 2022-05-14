@@ -19,7 +19,7 @@ class AmendedHtmlTagPartial[R <: dom.html.Element, AmType <: AmAny](
     amendments = amendments ++ mods
     this.asInstanceOf[AmendedHtmlTagPartial[R, NewAmType]]
   }
-  def amended[NewAmType <: AmAny]: AmendedHtmlTagPartial[R, NewAmType] =
+  def amended[NewAmType <: AmAny]: AmendedHtmlTagPartial[R, NewAmType]                                   =
     this.asInstanceOf[AmendedHtmlTagPartial[R, NewAmType]]
 
   def build[NewAmType <: AmAny]: AmendedHtmlTag[R, NewAmType] = new AmendedHtmlTag[R, NewAmType](original, amendments)

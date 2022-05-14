@@ -13,11 +13,11 @@ object InputValuesExample
       import com.raquo.laminar.api.L._
 
       val inputElement1 = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "input 1"
       )
       val inputElement2 = input(
-        tpe := "text",
+        tpe         := "text",
         placeholder := "input 2"
       )
       val inputElement3 = input(tpe := "checkbox")
