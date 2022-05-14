@@ -20,7 +20,10 @@ class FetchEventStreamBuilderCirceOps(underlying: FetchEventStreamBuilder) {
       }
     }
 
-  private def decodeStatusDependantResponse[A](response: Response, decoder: StatusDependantDecoder[A]): Future[A] =
+  private def decodeStatusDependantResponse[A](
+    response: Response,
+    decoder: StatusDependantDecoder[A]
+  )(implicit ec: ExecutionContext): Future[A] =
     response.text().flatMap { text =>
       decoder.decode(text, response.status) match {
         case Right(a)    => Future.successful(a)
