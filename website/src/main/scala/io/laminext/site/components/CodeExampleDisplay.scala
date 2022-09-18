@@ -10,7 +10,6 @@ import io.laminext.site.Styles
 import io.laminext.site.TemplateVars
 import io.laminext.tailwind.theme.TailwindTransition
 import org.scalajs.dom
-import org.scalajs.dom.ext._
 import org.scalajs.dom.html
 import scala.scalajs.js
 
@@ -35,12 +34,12 @@ object CodeExampleDisplay {
   }
 
   private val collapseTransition = TailwindTransition.resize.customize(
-    hidden = _ :+ "max-h-32",
-    showing = _ :+ "max-h-[400px]",
-    enterFrom = _ :+ "max-h-32",
-    enterTo = _ :+ "max-h-[400px]",
-    leaveFrom = _ :+ "max-h-[400px]",
-    leaveTo = _ :+ "max-h-32"
+    hidden = _ + " max-h-32",
+    showing = _ + " max-h-[400px]",
+    enterFrom = _ + " max-h-32",
+    enterTo = _ + " max-h-[400px]",
+    leaveFrom = _ + " max-h-[400px]",
+    leaveTo = _ + " max-h-32"
   )
 
   def apply(example: CodeExample): Element = {

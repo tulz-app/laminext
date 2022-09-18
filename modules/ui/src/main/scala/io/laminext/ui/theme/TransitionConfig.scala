@@ -35,16 +35,16 @@ import org.scalajs.dom
  *   optional callback to reset the element
  */
 final case class TransitionConfig(
-  hidden: Seq[String],
-  nonHidden: Seq[String],
-  showing: Seq[String],
-  inTransition: Seq[String],
-  enter: Seq[String],
-  enterFrom: Seq[String],
-  enterTo: Seq[String],
-  leave: Seq[String],
-  leaveFrom: Seq[String],
-  leaveTo: Seq[String],
+  hidden: String,
+  nonHidden: String,
+  showing: String,
+  inTransition: String,
+  enter: String,
+  enterFrom: String,
+  enterTo: String,
+  leave: String,
+  leaveFrom: String,
+  leaveTo: String,
   onEnterFrom: dom.html.Element => Unit,
   onEnterTo: dom.html.Element => Unit,
   onLeaveFrom: dom.html.Element => Unit,
@@ -53,16 +53,16 @@ final case class TransitionConfig(
 ) {
 
   def customize(
-    hidden: Seq[String] => Seq[String] = identity,
-    nonHidden: Seq[String] => Seq[String] = identity,
-    showing: Seq[String] => Seq[String] = identity,
-    inTransition: Seq[String] => Seq[String] = identity,
-    enter: Seq[String] => Seq[String] = identity,
-    enterFrom: Seq[String] => Seq[String] = identity,
-    enterTo: Seq[String] => Seq[String] = identity,
-    leave: Seq[String] => Seq[String] = identity,
-    leaveFrom: Seq[String] => Seq[String] = identity,
-    leaveTo: Seq[String] => Seq[String] = identity,
+    hidden: String => String = identity,
+    nonHidden: String => String = identity,
+    showing: String => String = identity,
+    inTransition: String => String = identity,
+    enter: String => String = identity,
+    enterFrom: String => String = identity,
+    enterTo: String => String = identity,
+    leave: String => String = identity,
+    leaveFrom: String => String = identity,
+    leaveTo: String => String = identity,
     onEnterFrom: dom.html.Element => Unit = this.onEnterFrom,
     onEnterTo: dom.html.Element => Unit = this.onEnterTo,
     onLeaveFrom: dom.html.Element => Unit = this.onLeaveFrom,
@@ -92,9 +92,6 @@ object TransitionConfig {
 
   val empty: TransitionConfig = TransitionConfig()
 
-  def split(s: String): Seq[String] =
-    s.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty)
-
   def apply(
     hidden: String = "",
     nonHidden: String = "",
@@ -112,16 +109,16 @@ object TransitionConfig {
     onLeaveTo: dom.html.Element => Unit = _ => {},
     onReset: (dom.html.Element, Boolean) => Unit = (_, _) => {},
   ): TransitionConfig = new TransitionConfig(
-    hidden = split(hidden),
-    nonHidden = split(nonHidden),
-    showing = split(showing),
-    inTransition = split(inTransition),
-    enter = split(enter),
-    enterFrom = split(enterFrom),
-    enterTo = split(enterTo),
-    leave = split(leave),
-    leaveFrom = split(leaveFrom),
-    leaveTo = split(leaveTo),
+    hidden = hidden,
+    nonHidden = nonHidden,
+    showing = showing,
+    inTransition = inTransition,
+    enter = enter,
+    enterFrom = enterFrom,
+    enterTo = enterTo,
+    leave = leave,
+    leaveFrom = leaveFrom,
+    leaveTo = leaveTo,
     onEnterFrom = onEnterFrom,
     onEnterTo = onEnterTo,
     onLeaveFrom = onLeaveFrom,

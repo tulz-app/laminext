@@ -20,10 +20,9 @@ object TailwindModal {
       leaveTo = "bg-opacity-0"
     ),
     contentWrapTransition = TailwindTransition.scale.copy(
-      nonHidden = TransitionConfig.split(
-        "w-full h-screen pb-20 overflow-y-scroll bg-white md:absolute md:top-1/3 left-1/2 md:-translate-y-1/3 md:-translate-x-1/2 md:max-w-4xl md:h-auto md:pb-0 md:rounded-lg md:shadow-xl"
-      ),
-      showing = Seq("transform")
+      nonHidden =
+        "w-full h-screen pb-20 overflow-y-scroll bg-white md:absolute md:top-1/3 left-1/2 md:-translate-y-1/3 md:-translate-x-1/2 md:max-w-4xl md:h-auto md:pb-0 md:rounded-lg md:shadow-xl",
+      showing = "transform"
     ),
     contentWrapInner = cls("md:mx-auto")
   )

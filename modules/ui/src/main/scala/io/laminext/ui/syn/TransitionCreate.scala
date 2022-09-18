@@ -9,11 +9,6 @@ import scala.scalajs.js
 
 trait TransitionCreate {
 
-  private def concatClasses(seq: (Seq[String], Boolean)*): Seq[(String, Boolean)] =
-    seq.flatMap { case (classes, enable) =>
-      classes.map(_ -> enable)
-    }
-
   def addTransition(
     show: Signal[Boolean],
     config: TransitionConfig,
@@ -25,7 +20,7 @@ trait TransitionCreate {
     import TransitionEvent._
 
     val enterFromClasses =
-      concatClasses(
+      Seq(
         config.hidden       -> false,
         config.nonHidden    -> true,
         config.showing      -> false,
@@ -39,7 +34,7 @@ trait TransitionCreate {
       )
 
     val enterToClasses =
-      concatClasses(
+      Seq(
         config.nonHidden    -> true,
         config.hidden       -> false,
         config.showing      -> false,
@@ -53,7 +48,7 @@ trait TransitionCreate {
       )
 
     val leaveFromClasses =
-      concatClasses(
+      Seq(
         config.nonHidden    -> true,
         config.hidden       -> false,
         config.showing      -> false,
@@ -67,7 +62,7 @@ trait TransitionCreate {
       )
 
     val leaveToClasses =
-      concatClasses(
+      Seq(
         config.nonHidden    -> true,
         config.hidden       -> false,
         config.showing      -> false,
@@ -81,7 +76,7 @@ trait TransitionCreate {
       )
 
     def resetClasses(show: Boolean) =
-      concatClasses(
+      Seq(
         config.hidden       -> !show,
         config.nonHidden    -> show,
         config.showing      -> show,

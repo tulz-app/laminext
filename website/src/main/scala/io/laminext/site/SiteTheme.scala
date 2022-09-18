@@ -9,7 +9,7 @@ object SiteTheme {
 
   val mobileMenuModalStyling: ModalConfig = TailwindModal.styling.customize(
     contentWrapTransition = _.customize(
-      nonHidden = _ :+ "bg-gray-900"
+      nonHidden = _ + " bg-gray-900"
     )
   )
 
