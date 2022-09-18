@@ -1,7 +1,9 @@
-package io.laminext.ui
+package io.laminext.ui.syn
 
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
+import io.laminext.ui.TransitionEvent
+import io.laminext.ui.theme.TransitionConfig
 
 import scala.scalajs.js
 
@@ -29,13 +31,9 @@ trait TransitionCreate {
         config.showing      -> false,
         config.inTransition -> true,
         config.enter        -> true,
-//        config.enterDuration -> true,
-//        config.enterTiming   -> true,
         config.enterFrom    -> true,
         config.enterTo      -> false,
         config.leave        -> false,
-//        config.leaveDuration -> false,
-//        config.leaveTiming   -> false,
         config.leaveFrom    -> false,
         config.leaveTo      -> false
       )
@@ -47,13 +45,9 @@ trait TransitionCreate {
         config.showing      -> false,
         config.inTransition -> true,
         config.enter        -> true,
-//        config.enterDuration -> true,
-//        config.enterTiming   -> true,
         config.enterFrom    -> false,
         config.enterTo      -> true,
         config.leave        -> false,
-//        config.leaveDuration -> false,
-//        config.leaveTiming   -> false,
         config.leaveFrom    -> false,
         config.leaveTo      -> false
       )
@@ -65,13 +59,9 @@ trait TransitionCreate {
         config.showing      -> false,
         config.inTransition -> true,
         config.enter        -> false,
-//        config.enterDuration -> false,
-//        config.enterTiming   -> false,
         config.enterFrom    -> false,
         config.enterTo      -> false,
         config.leave        -> true,
-//        config.leaveDuration -> true,
-//        config.leaveTiming   -> true,
         config.leaveFrom    -> true,
         config.leaveTo      -> false
       )
@@ -83,13 +73,9 @@ trait TransitionCreate {
         config.showing      -> false,
         config.inTransition -> true,
         config.enter        -> false,
-//        config.enterDuration -> false,
-//        config.enterTiming   -> false,
         config.enterFrom    -> false,
         config.enterTo      -> false,
         config.leave        -> true,
-//        config.leaveDuration -> true,
-//        config.leaveTiming   -> true,
         config.leaveFrom    -> false,
         config.leaveTo      -> true
       )
@@ -101,13 +87,9 @@ trait TransitionCreate {
         config.showing      -> show,
         config.inTransition -> false,
         config.enter        -> false,
-//        config.enterDuration -> false,
-//        config.enterTiming   -> false,
         config.enterFrom    -> false,
         config.enterTo      -> false,
         config.leave        -> false,
-//        config.leaveDuration -> false,
-//        config.leaveTiming   -> false,
         config.leaveFrom    -> false,
         config.leaveTo      -> false
       )

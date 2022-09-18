@@ -1,6 +1,6 @@
 package io.laminext.tailwind.theme
 
-import io.laminext.ui.TransitionConfig
+import io.laminext.ui.theme.TransitionConfig
 
 object TailwindTransition {
 

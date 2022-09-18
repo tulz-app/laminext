@@ -10,10 +10,11 @@ object ProgressBarExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import io.laminext.ui._
+      import io.laminext.syntax.ui._
+      import io.laminext.ui.theme._
 
       /* <focus> */
-      val styling = ProgressBarElement.Styling(
+      val styling    = ProgressBarConfig(
         wrap = cls("w-full rounded bg-green-200"),
         progress = cls("bg-green-500 h-2 rounded")
       )

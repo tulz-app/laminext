@@ -5,9 +5,9 @@ object DependencyVersions {
   val `scala-test` = "3.2.9"
   val stringdiff   = "0.3.4"
   val domtestutils = "0.15.1"
-  val cats         = "2.7.0"
+  val cats         = "2.8.0"
   val upickle      = "2.0.0"
-  val circe        = "0.14.2"
+  val circe        = "0.14.3"
 
   // -- website
 

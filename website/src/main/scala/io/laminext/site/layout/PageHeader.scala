@@ -3,8 +3,8 @@ package io.laminext.site
 package layout
 
 import com.raquo.laminar.api.L._
-import io.laminext.ui._
-import io.laminext.syntax.tailwind._
+import io.laminext.syntax.ui._
+import io.laminext.syntax.ui._
 import io.laminext.syntax.core._
 import io.laminext.site.icons.Icons
 import com.raquo.laminar.nodes.ReactiveHtmlElement
@@ -15,7 +15,7 @@ object PageHeader {
   def apply(
     $module: Signal[Option[SiteModule]],
     $page: Signal[Option[Page]],
-    menuObserver: Observer[Option[ModalContent]]
+    menuObserver: Observer[Option[Element]]
   ): ReactiveHtmlElement.Base = {
     val styleDropDownOpen = Var(false)
     val styleSearch       = Var("")
@@ -64,7 +64,8 @@ object PageHeader {
             Icons
               .chevronDown(
                 svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
-              ).hiddenIf(styleDropDownOpen.signal),
+              )
+              .hiddenIf(styleDropDownOpen.signal),
             Icons
               .chevronUp(
                 svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
@@ -118,23 +119,20 @@ object PageHeader {
           "Menu",
           onClick.mapTo(
             Some(
-              ModalContent(
+              div(
                 div(
-                  div(
-                    cls := "flex justify-end py-4 px-8",
-                    button(
-                      cls := "btn-md-outline-white",
-                      "Close",
-                      onClick.mapTo(None) --> menuObserver
-                    )
-                  ),
-                  PageNavigation($module, $page, mobile = true),
-                  div(
-                    cls := "flex flex-wrap justify-start items-center p-4",
-                    Site.modules.drop(1).map(moduleLink($module))
-                  ),
+                  cls := "flex justify-end py-4 px-8",
+                  button(
+                    cls := "btn-md-outline-white",
+                    "Close",
+                    onClick.mapTo(None) --> menuObserver
+                  )
                 ),
-                Some(menuObserver.contramap(_ => None))
+                PageNavigation($module, $page, mobile = true),
+                div(
+                  cls := "flex flex-wrap justify-start items-center p-4",
+                  Site.modules.drop(1).map(moduleLink($module))
+                ),
               )
             )
           ) --> menuObserver

@@ -1,12 +1,11 @@
-package io.laminext.tailwind
-package ops.svgelement
+package io.laminext.ui.ops.svgelement
 
 import com.raquo.laminar.api.L
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveSvgElement
 import org.scalajs.dom
 
-class ReactiveSvgElementTailwindOps[T <: dom.svg.Element](el: ReactiveSvgElement[T]) {
+class ReactiveSvgElementUiOps[T <: dom.svg.Element](el: ReactiveSvgElement[T]) {
 
   def hiddenIf(s: Signal[Boolean]): ReactiveSvgElement[T] =
     el.amend(

@@ -16,13 +16,6 @@ class FileInputElement[Err, Out](
 
 object FileInputElement {
 
-  type Styling = Signal[Status] => Mod[HtmlElement]
-
-  object Styling {
-    @inline def classes(styling: Status => String): Styling =
-      $status => cls <-- $status.map(styling)
-  }
-
   sealed trait Status extends Product with Serializable
   object Status {
     case object Ready     extends Status

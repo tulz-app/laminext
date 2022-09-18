@@ -2,7 +2,7 @@ package io.laminext.site.examples.ui.ex_animation
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import io.laminext.ui
+import io.laminext.syntax.ui._
 
 object AnimationExample
     extends CodeExample(

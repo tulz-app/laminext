@@ -12,18 +12,18 @@ class HtmlTagCardOps[T <: dom.html.Element](
 ) {
 
   @inline def wrap: AmendedHtmlTag[T, AmAny] =
-    tag.amend[AmAny](cls := "card-wrap").build
+    tag.amend[AmAny](Theme.default.card.wrap).build
 
   @inline def body: AmendedHtmlTag[T, AmAny] =
-    tag.amend[AmAny](cls := "card-body").build
+    tag.amend[AmAny](Theme.default.card.body).build
 
   @inline def header: AmendedHtmlTag[T, AmAny] =
-    tag.amend[AmAny](cls := "card-header").build
+    tag.amend[AmAny](Theme.default.card.header).build
 
   @inline def footer: AmendedHtmlTag[T, AmAny] =
-    tag.amend[AmAny](cls := "card-footer").build
+    tag.amend[AmAny](Theme.default.card.footer).build
 
   @inline def title: AmendedHtmlTag[T, AmAny] =
-    tag.amend[AmAny](cls := "card-title").build
+    tag.amend[AmAny](Theme.default.card.title).build
 
 }

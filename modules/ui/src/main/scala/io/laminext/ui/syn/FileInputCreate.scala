@@ -1,22 +1,25 @@
-package io.laminext.ui
+package io.laminext.ui.syn
 
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import io.laminext.syntax.core.hellip
 import io.laminext.syntax.validation._
+import io.laminext.ui.FileInputElement
+import io.laminext.ui.Theme
+import io.laminext.ui.theme.FileInputConfig
 import io.laminext.validation.components.ValidatedElement
 import io.laminext.validation.Validation
 import org.scalajs.dom.File
 import org.scalajs.dom.HTMLInputElement
 
-trait FileInputElementCreate {
+trait FileInputCreate {
 
-  import FileInputElementCreate._
+  import FileInputCreate._
 
   def fileInput[Err](
     validation: Validation[File, Err, File],
     noFileError: Err,
-    styling: FileInputElement.Styling,
+    styling: FileInputConfig = Theme.default.fileInput,
     inputMods: Modifier[ReactiveHtmlElement[org.scalajs.dom.html.Input]] = emptyMod,
     labelSelecting: Element = defaultLabelSelecting,
     labelReady: Seq[File] => Element = defaultLabelReady
@@ -28,7 +31,7 @@ trait FileInputElementCreate {
   def multiFileInput[Err](
     validation: Validation[File, Err, File],
     noFileError: Err,
-    styling: FileInputElement.Styling,
+    styling: FileInputConfig = Theme.default.fileInput,
     inputMods: Modifier[ReactiveHtmlElement[org.scalajs.dom.html.Input]] = emptyMod,
     labelSelecting: Element = defaultLabelSelecting,
     labelReady: Seq[File] => Element = defaultLabelReady
@@ -47,13 +50,14 @@ trait FileInputElementCreate {
           }
         }
       }
-    val fileInput                                                                            = input(tpe := "file", multiple(true), inputElementMods, inputMods).validatedFiles(multiFileValidation)
+
+    val fileInput = input(tpe := "file", multiple(true), inputElementMods, inputMods).validatedFiles(multiFileValidation)
     build(fileInput, styling, labelSelecting, labelReady)
   }
 
   private def build[Err, Out](
     fileInput: ValidatedElement[HTMLInputElement, Seq[File], Err, Out],
-    styling: FileInputElement.Styling,
+    styling: FileInputConfig,
     labelSelecting: Element = defaultLabelSelecting,
     labelReady: Seq[File] => Element = defaultLabelReady
   ): FileInputElement[Err, Out] = {
@@ -93,7 +97,7 @@ trait FileInputElementCreate {
 
 }
 
-private[ui] object FileInputElementCreate {
+private[ui] object FileInputCreate {
 
   private val inputElementMods: Mod[HtmlElement] = Seq(
     position.absolute,

@@ -2,6 +2,7 @@ package io.laminext.site.examples.ui.ex_card
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
+import io.laminext.syntax.ui._
 
 object CardExample
     extends CodeExample(

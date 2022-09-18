@@ -151,15 +151,6 @@ lazy val `ui` =
     .settings(baseDependencies)
     .dependsOn(`base`, `core`, `validation-core`)
 
-lazy val `tailwind` =
-  project
-    .in(file("modules/tailwind"))
-    .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
-    .settings(commonSettings)
-    .settings(bundlerSettings)
-    .settings(baseDependencies)
-    .dependsOn(`base`, `core`, `ui`, `validation-core`)
-
 lazy val `tailwind-default-theme` =
   project
     .in(file("modules/tailwind-default-theme"))
@@ -167,7 +158,7 @@ lazy val `tailwind-default-theme` =
     .settings(commonSettings)
     .settings(bundlerSettings)
     .settings(baseDependencies)
-    .dependsOn(`tailwind`)
+    .dependsOn(`ui`)
 
 lazy val `websocket` =
   project
@@ -262,7 +253,6 @@ lazy val website = project
     `highlight`,
     `markdown`,
     `ui`,
-    `tailwind`,
     `tailwind-default-theme`,
     `websocket`,
     `websocket-circe`,
@@ -295,7 +285,6 @@ lazy val root = project
     `highlight`,
     `markdown`,
     `ui`,
-    `tailwind`,
     `tailwind-default-theme`,
     `fetch`,
     `fetch-circe`,

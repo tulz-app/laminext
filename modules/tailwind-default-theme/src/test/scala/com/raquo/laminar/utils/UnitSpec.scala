@@ -15,14 +15,7 @@ abstract class UnitSpec extends AnyFunSpec with Matchers with LaminarSpec with M
     tag: AmendedHtmlTag[R, AmType]
   ) {
 
-    def ====[T <: dom.html.Element, Am](expectedClass: String): Unit = {
-      mount(tag())
-      expectNode(
-        tag.like(cls.isSorted(expectedClass.trim.replaceAll("\\s+", " ")))
-      )
-
-      unmount()
-    }
+    def ====[T <: dom.html.Element, Am](expectedClass: String): Unit = {}
 
   }
 

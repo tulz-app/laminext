@@ -1,9 +1,10 @@
-package io.laminext.ui
+package io.laminext.ui.syn
 
 import com.raquo.laminar.builders.HtmlTag
+import io.laminext.AmendedHtmlTagPartial
 import io.laminext.ui.ops.htmltag.card.HtmlTagCardInitOps
 import io.laminext.ui.ops.htmltag.card.HtmlTagCardOps
-import io.laminext.AmendedHtmlTagPartial
+import io.laminext.ui.AmCard
 import org.scalajs.dom
 
 trait CardSyntax {

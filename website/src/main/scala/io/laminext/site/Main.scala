@@ -7,14 +7,14 @@ import io.laminext.highlight.HighlightCss
 import io.laminext.highlight.HighlightJavaScript
 import io.laminext.highlight.HighlightJson
 import io.laminext.highlight.HighlightScala
-import io.laminext.ui.Modal
+import io.laminext.syntax.ui._
 import org.scalajs.dom
 
 object Main {
 
   def main(args: Array[String]): Unit = {
     val _ = documentEvents.onDomContentLoaded.foreach { _ =>
-      Modal.initialize()
+      initializeModal()
       LinkHandler.install()
       val wiring = Wiring()
       removeNoJsClass(wiring.ssrContext)

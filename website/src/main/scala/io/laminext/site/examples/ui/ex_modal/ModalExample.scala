@@ -10,10 +10,11 @@ object ModalExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import io.laminext.ui._
+      import io.laminext.syntax.ui._
+      import io.laminext.ui.theme._
 
       /* <focus> */
-      val modalStyling: Modal.Styling = Modal.Styling(
+      val modalStyling = ModalConfig(
         container = cls("fixed inset-0 z-50"),
         overlayTransition = TransitionConfig(
           nonHidden = "hidden md:block md:absolute md:inset-0 bg-gray-900",
@@ -41,8 +42,9 @@ object ModalExample
         contentWrapInner = cls("md:mx-auto")
       )
       /* </focus> */
+
       /* <focus> */
-      val modalContent: Var[Option[ModalContent]] = Var[Option[ModalContent]](Option.empty)
+      val modalContent = Var[Option[Element]](Option.empty)
       /* </focus> */
       div(
         cls := "p-4",
@@ -53,22 +55,19 @@ object ModalExample
             /* <focus> */
             modalContent.writer.onNext(
               Some(
-                ModalContent(
+                div(
                   div(
-                    div(
-                      cls := "p-8",
-                      "I'm in the modal!",
-                    ),
-                    div(
-                      cls := "p-8",
-                      button(
-                        cls := "btn-md-outline-blue",
-                        "close me",
-                        onClick.mapTo(None) --> modalContent.writer
-                      )
-                    )
+                    cls := "p-8",
+                    "I'm in the modal!",
                   ),
-                  Some(Observer(_ => modalContent.writer.onNext(None)))
+                  div(
+                    cls := "p-8",
+                    button(
+                      cls := "btn-md-outline-blue",
+                      "close me",
+                      onClick.mapTo(None) --> modalContent.writer
+                    )
+                  )
                 )
               )
             )
@@ -76,7 +75,9 @@ object ModalExample
           }
         ),
         /* <focus> */
-        modal(modalContent.signal, modalStyling),
+        modal(styling = modalStyling, closeObserver = Observer(_ => modalContent.writer.onNext(None))) {
+          modalContent.signal
+        },
         /* </focus> */
       )
     })

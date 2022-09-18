@@ -3,14 +3,10 @@ package io.laminext.site
 import com.raquo.laminar.api.L._
 import io.laminext.site.layout.PageWrap
 import io.laminext.syntax.core._
-import io.laminext.syntax.tailwind._
-import io.laminext.ui._
 import io.frontroute._
 import org.scalajs.dom
 
 class Routes(locationProvider: LocationProvider) {
-
-  private val mobileMenuContent = Var[Option[ModalContent]](None)
 
   private def notFound: Route =
     complete {
@@ -33,7 +29,7 @@ class Routes(locationProvider: LocationProvider) {
     }
 
   private val reset: () => Unit = () => {
-    mobileMenuContent.writer.onNext(None)
+//    mobileMenuContent.writer.onNext(None)
     dom.window.scrollTo(0, 0)
   }
 
@@ -60,13 +56,11 @@ class Routes(locationProvider: LocationProvider) {
   private val $page   = routeResult.optionMap(_._2)
 
   def start(): Unit = {
-    val appContainer  = dom.document.querySelector("#app")
-    val menuContainer = dom.document.querySelector("#menu-modal")
-    val appContent    = PageWrap($module.signal, $page.signal, mobileMenuContent.writer)
+    val appContainer = dom.document.querySelector("#app")
+    val appContent   = PageWrap($module.signal, $page.signal)
 
     appContainer.innerHTML = ""
     com.raquo.laminar.api.L.render(appContainer, appContent)
-    com.raquo.laminar.api.L.render(menuContainer, modal(mobileMenuContent.signal, Theme.mobileMenuModalStyling))
 
     runRoute(route, locationProvider)(unsafeWindowOwner)
 

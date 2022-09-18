@@ -2,12 +2,10 @@ package io.laminext.site.components
 
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
-import io.laminext.ui._
-import io.laminext.syntax.tailwind._
+import io.laminext.syntax.ui._
 import io.laminext.syntax.markdown._
 import io.laminext.highlight.Highlight
 import io.laminext.site.examples.CodeExample
-import io.laminext.tailwind.theme
 import io.laminext.site.Styles
 import io.laminext.site.TemplateVars
 import io.laminext.tailwind.theme.TailwindTransition
@@ -132,12 +130,14 @@ object CodeExampleDisplay {
               codeNode(dim)
             }
           ),
-          div(
-            cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-gray-500 to-gray-600 opacity-75",
-            button(
-              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-gray-200 text-gray-50 font-semibold",
-              onClick.mapToUnit --> sourceCollapsed.toggleObserver,
-              "expand"
+          syntaxReactiveHtmlElementTailwind(
+            div(
+              cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-gray-500 to-gray-600 opacity-75",
+              button(
+                cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-gray-200 text-gray-50 font-semibold",
+                onClick.mapToUnit --> sourceCollapsed.toggleObserver,
+                "expand"
+              )
             )
           ).visibleIf(sourceCollapsed.signal),
           div(

@@ -1,12 +1,12 @@
 package io.laminext.tailwind.theme
 
 import com.raquo.laminar.api.L._
-import io.laminext.ui.TransitionConfig
-import io.laminext.ui._
+import io.laminext.ui.theme.ModalConfig
+import io.laminext.ui.theme.TransitionConfig
 
 object TailwindModal {
 
-  val styling: Modal.Styling = Modal.Styling(
+  val styling: ModalConfig = ModalConfig(
     container = cls("fixed inset-0 z-50"),
     overlayTransition = TransitionConfig(
       nonHidden = "hidden md:block md:absolute md:inset-0 bg-gray-900",

@@ -1,4 +1,4 @@
-package io.laminext.ui
+package io.laminext.ui.theme
 
 import org.scalajs.dom
 
@@ -89,6 +89,8 @@ final case class TransitionConfig(
 }
 
 object TransitionConfig {
+
+  val empty: TransitionConfig = TransitionConfig()
 
   def split(s: String): Seq[String] =
     s.split(' ').toSeq.map(_.trim).filterNot(_.isEmpty)

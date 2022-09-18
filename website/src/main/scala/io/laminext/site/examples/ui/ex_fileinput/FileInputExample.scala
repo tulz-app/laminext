@@ -2,6 +2,8 @@ package io.laminext.site.examples.ui.ex_fileinput
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
+import io.laminext.syntax.ui._
+import io.laminext.ui.theme.FileInputConfig
 
 object FileInputExample
     extends CodeExample(
@@ -20,7 +22,7 @@ object FileInputExample
           V.file(Seq("must be a .png file"))(_.name.split('.').lastOption.map(_.toLowerCase).contains("png"))
 
       /* <focus> */
-      val styling = FileInputElement.Styling.classes {
+      val styling = FileInputConfig.classes {
         case FileInputElement.Status.Selecting => "btn-md-outline-blue"
         case FileInputElement.Status.Ready     => "btn-md-outline-green"
         case FileInputElement.Status.Invalid   => "btn-md-outline-red"

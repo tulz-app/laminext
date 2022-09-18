@@ -58,6 +58,7 @@ Then you mount a modal container in the DOM:
 ```scala
 import com.raquo.laminar.api.L._
 import io.laminext.ui._
+import io.laminext.ui.theme.Modal
 
 val modalStyling: Modal.Styling = ???
 val modalContent: Var[Option[ModalContent]] = ??? 

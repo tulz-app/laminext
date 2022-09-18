@@ -1,11 +1,10 @@
-package io.laminext.tailwind
-package ops.htmlelement
+package io.laminext.ui.ops.htmlelement
 
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import org.scalajs.dom
 
-class ReactiveHtmlElementTailwindOps[T <: dom.html.Element](el: ReactiveHtmlElement[T]) {
+class ReactiveHtmlElementUiOps[T <: dom.html.Element](el: ReactiveHtmlElement[T]) {
 
   @inline def hiddenIf(s: Signal[Boolean]): ReactiveHtmlElement[T] =
     el.amend(
