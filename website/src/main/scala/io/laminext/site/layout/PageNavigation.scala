@@ -10,23 +10,24 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 object PageNavigation {
 
   def apply(
-    $module: Signal[Option[SiteModule]],
-    $page: Signal[Option[Page]],
+    $page: Signal[Option[(SiteModule, Page)]],
     mobile: Boolean = false
   ): ReactiveHtmlElement.Base =
     nav(
       cls := "py-4 overflow-auto bg-gray-800 text-white",
       cls := (if (mobile) "" else "w-80 hidden lg:block"),
-      child.maybe <-- $module.optionMap { module =>
+      child.maybe <-- $page.optionMap { case (module, _) =>
         div(
           cls := "space-y-4",
-          navigationItem($page, module.index)(
-            a(
-              cls  := "ml-2 flex text-xl font-display font-bold",
-              href := s"/${module.path}",
-              module.index.title
+          when(module.index.title.nonEmpty) {
+            navigationItem($page, module.index)(
+              a(
+                cls  := "ml-2 flex text-xl font-display font-bold",
+                href := Site.thisVersionHref(s"/${module.path}"),
+                module.index.title
+              )
             )
-          ),
+          },
           module.navigation.map { case (title, pages) =>
             div(
               when(title.nonEmpty) {
@@ -39,7 +40,7 @@ object PageNavigation {
                 navigationItem($page, page)(
                   a(
                     cls  := "ml-6 flex font-display font-medium tracking-wide",
-                    href := s"/${module.path}/${page.path}",
+                    href := Site.thisVersionHref(s"/${module.path}/${page.link}"),
                     page.title
                   )
                 )
@@ -51,12 +52,12 @@ object PageNavigation {
     )
 
   private def navigationItem(
-    $currentPage: Signal[Option[Page]],
+    $currentPage: Signal[Option[(SiteModule, Page)]],
     page: Page
   )(mods: Modifier[Element]*) =
     div(
       cls := "px-2 py-1",
-      $currentPage.optionExists(_.path == page.path).classSwitch(
+      $currentPage.optionExists(_._2.path == page.path).classSwitch(
         whenTrue = "text-white bg-gray-700",
         whenFalse = "text-gray-200 hover:text-white hover:bg-gray-700"
       ),

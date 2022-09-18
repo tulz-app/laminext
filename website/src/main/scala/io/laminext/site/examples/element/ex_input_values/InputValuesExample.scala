@@ -7,7 +7,7 @@ object InputValuesExample
     extends CodeExample(
       id = "example-input-values",
       title = "Input Values",
-      description = FileAsString("description.md")
+      description = FileAsString("description.md"),
     )(() => {
       import io.laminext.syntax.core._
       import com.raquo.laminar.api.L._

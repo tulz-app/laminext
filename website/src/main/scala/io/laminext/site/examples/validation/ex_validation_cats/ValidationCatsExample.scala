@@ -77,27 +77,32 @@ object ValidationCatsExample
           /* </focus> */
         ),
         div(
-          button(
-            "Reset values",
-            onClick --> { _ =>
-              validatedInput1.ref.value = ""
-              validatedInput2.ref.value = ""
-              validatedInput3.ref.value = ""
-            }
+          cls := "flex items-center space-x-4",
+          div(
+            button(
+              "Reset values",
+              cls := "btn-sm-outline-blue",
+              onClick --> { _ =>
+                validatedInput1.ref.value = ""
+                validatedInput2.ref.value = ""
+                validatedInput3.ref.value = ""
+              }
+            )
+          ),
+          div(
+            button(
+              "Reset errors",
+              cls := "btn-sm-outline-blue",
+              /* <focus> */
+              onClick.mapToUnit --> validatedInput1.resetError,
+              onClick.mapToUnit --> validatedInput2.resetError,
+              onClick.mapToUnit --> validatedInput3.resetError
+              /* </focus> */
+            )
           )
         ),
         div(
-          button(
-            "Reset errors",
-            /* <focus> */
-            onClick.mapToUnit --> validatedInput1.resetError,
-            onClick.mapToUnit --> validatedInput2.resetError,
-            onClick.mapToUnit --> validatedInput3.resetError
-            /* </focus> */
-          )
-        ),
-        div(
-          cls := "flex space-x-4 items-center",
+          cls := "flex space-x-4 items-center text-xs",
           code("validatedInput1.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
@@ -105,7 +110,7 @@ object ValidationCatsExample
           )
         ),
         div(
-          cls := "flex space-x-4 items-center",
+          cls := "flex space-x-4 items-center text-xs",
           code("validatedInput1.validatedValue:"),
           code(
             cls := "text-blue-700 font-medium",
@@ -115,7 +120,7 @@ object ValidationCatsExample
           )
         ),
         div(
-          cls := "flex space-x-4 items-center",
+          cls := "flex space-x-4 items-center text-xs",
           code("validatedInput2.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
@@ -123,7 +128,7 @@ object ValidationCatsExample
           )
         ),
         div(
-          cls := "flex space-x-4 items-center",
+          cls := "flex space-x-4 items-center text-xs",
           code("validatedInput2.validatedValue:"),
           code(
             cls := "text-blue-700 font-medium",
@@ -133,7 +138,7 @@ object ValidationCatsExample
           )
         ),
         div(
-          cls := "flex space-x-4 items-center",
+          cls := "flex space-x-4 items-center text-xs",
           code("validatedInput3.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
@@ -141,7 +146,7 @@ object ValidationCatsExample
           )
         ),
         div(
-          cls := "flex space-x-4 items-center",
+          cls := "flex space-x-4 items-center text-xs",
           code("validatedInput3.validatedValue:"),
           code(
             cls := "text-blue-700 font-medium",

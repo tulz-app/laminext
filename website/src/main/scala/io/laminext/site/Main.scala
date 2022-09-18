@@ -1,12 +1,15 @@
 package io.laminext.site
 
 import com.raquo.laminar.api.L._
+import io.frontroute.BrowserNavigation
 import io.frontroute.LinkHandler
 import io.laminext.highlight.Highlight
 import io.laminext.highlight.HighlightCss
 import io.laminext.highlight.HighlightJavaScript
 import io.laminext.highlight.HighlightJson
 import io.laminext.highlight.HighlightScala
+import io.laminext.highlight.HighlightXml
+import io.laminext.site.components.CodeExampleDisplay
 import io.laminext.syntax.ui._
 import org.scalajs.dom
 
@@ -15,7 +18,6 @@ object Main {
   def main(args: Array[String]): Unit = {
     val _ = documentEvents.onDomContentLoaded.foreach { _ =>
       initializeModal()
-      LinkHandler.install()
       val wiring = Wiring()
       removeNoJsClass(wiring.ssrContext)
       insertJsClass(wiring.ssrContext)
@@ -23,8 +25,21 @@ object Main {
       Highlight.registerLanguage("javascript", HighlightJavaScript)
       Highlight.registerLanguage("css", HighlightCss)
       Highlight.registerLanguage("json", HighlightJson)
-      wiring.routes.start()
+      Highlight.registerLanguage("html", HighlightXml)
+      if (dom.window.location.pathname.startsWith(Site.thisVersionHref("/example-frame/"))) {
+        renderExample()
+      } else {
+        wiring.routes.start()
+      }
     }(unsafeWindowOwner)
+  }
+
+  private def renderExample(): Unit = {
+    val id           = dom.window.location.pathname.drop(Site.thisVersionHref("/example-frame/").length).takeWhile(_ != '/')
+    val appContainer = dom.document.querySelector("#app")
+    val content      = Site.allExamples.find(_.id == id).map(ex => CodeExampleDisplay.frame(ex)).getOrElse(div(s"EXAMPLE NOT FOUND: ${id}"))
+    val _            = com.raquo.laminar.api.L.render(appContainer, content.amend(LinkHandler.bind))
+    BrowserNavigation.pushState(url = "/")
   }
 
   private def insertJsClass(ssrContext: SsrContext): Unit = {

@@ -7,23 +7,34 @@ import com.yurique.embedded.FileAsString
 
 object Site {
 
-//  private def indexExamplePage(
-//    example: CodeExample
-//  ): Page = Page("", example.title, CodeExamplePage(example))
+  val laminextVersion: String = "0.15.x"
+
+  val thisVersionPrefix = s"/v/$laminextVersion/"
+
+  def thisVersionHref(href: String): String =
+    s"${thisVersionPrefix}${href.dropWhile(_ == '/')}"
 
   private def examplePage(
     example: CodeExample
-  ): Page = Page(example.id, example.title, CodeExamplePage(example))
+  ): Page = {
+    if (_allExamples == null) {
+      _allExamples = Seq(example)
+    } else {
+      _allExamples = _allExamples :+ example
+    }
+    Page(example.id, example.id + "/live", example.title, CodeExamplePage(example))
+  }
 
   private def docPage(
     path: String,
     title: String,
     markdown: String
-  ): Page = Page(path, title, DocumentationPage(title, markdown))
+  ): Page = Page(path, path, title, DocumentationPage(title, markdown))
 
   val indexModule: SiteModule =
     SiteModule(
       path = "",
+      title = "laminext",
       index = docPage("", "laminext", FileAsString("/doc/index.md"))
     )
 
@@ -31,6 +42,7 @@ object Site {
     indexModule,
     SiteModule(
       path = "core",
+      title = "Core",
       index = docPage("", "Core", FileAsString("/doc/core/index.md")),
       "Source"         -> Seq(
         docPage("source", "Source", FileAsString("/doc/core/source.md")),
@@ -76,6 +88,7 @@ object Site {
     ),
     SiteModule(
       path = "fetch",
+      title = "fetch",
       index = docPage("", "fetch", FileAsString("/doc/fetch/index.md")),
       ""               -> Seq(
         docPage("request-method", "Request method", FileAsString("/doc/fetch/request-method.md")),
@@ -94,6 +107,7 @@ object Site {
     ),
     SiteModule(
       path = "websocket",
+      title = "websocket",
       index = docPage("", "WebSocket", FileAsString("/doc/websocket/index.md")),
       ""               -> Seq(
         docPage("circe", "circe support", FileAsString("/doc/websocket/circe.md")),
@@ -107,6 +121,7 @@ object Site {
     ),
     SiteModule(
       path = "ui",
+      title = "UI",
       index = docPage("", "UI", FileAsString("/doc/ui/index.md")),
       ""               -> Seq(
         docPage("card", "Card", FileAsString("/doc/ui/card.md")),
@@ -127,6 +142,7 @@ object Site {
     ),
     SiteModule(
       path = "validation",
+      title = "Validation",
       index = docPage("", "Validation", FileAsString("/doc/validation/index.md")),
       ""               -> Seq(
         docPage("cats", "cats", FileAsString("/doc/validation/cats.md")),
@@ -142,6 +158,7 @@ object Site {
 //    ),
     SiteModule(
       path = "tailwind",
+      title = "tailwind",
       index = docPage("", "Tailwind", FileAsString("/doc/tailwind/index.md")),
       ""               -> Seq(
         docPage("transition", "Transition", FileAsString("/doc/tailwind/transition.md")),
@@ -163,6 +180,7 @@ object Site {
 //    ),
     SiteModule(
       path = "util",
+      title = "Utilities",
       index = docPage("", "Util", FileAsString("/doc/util/index.md")),
       "Examples"       -> Seq(
         examplePage(examples.util.ex_human_readable_size.HumanReadableSizeExample),
@@ -170,9 +188,13 @@ object Site {
     ),
     SiteModule(
       path = "news",
+      title = "News",
       index = docPage("", "News", FileAsString("/doc/news/index.md"))
     ),
   )
+
+  private var _allExamples: Seq[CodeExample] = _
+  def allExamples: Seq[CodeExample]          = _allExamples
 
   def findModule(path: String): Option[SiteModule] =
     modules.find(_.path == path)

@@ -218,6 +218,10 @@ body {
     }
 
 
+    .btn-sm-outline-blue {
+        @apply btn btn-single btn-sm btn-outline-blue;
+    }
+
     .btn-lg-outline-blue {
         @apply btn btn-single btn-lg btn-outline-blue;
     }
