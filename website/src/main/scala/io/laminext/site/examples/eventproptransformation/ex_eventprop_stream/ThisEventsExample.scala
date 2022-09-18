@@ -34,7 +34,8 @@ object ThisEventsExample
               .map(_.toUpperCase)
               .collect {
                 case s if s.trim.nonEmpty => s
-              }.foreach { s =>
+              }
+              .foreach { s =>
                 dom.window.alert(s"You typed: ${s}")
               }
             /* </focus> */
