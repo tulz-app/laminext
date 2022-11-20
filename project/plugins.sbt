@@ -10,7 +10,7 @@ addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.1.2")
 
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.13")
 
-addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.21.1")
 
 libraryDependencies += "net.exoego" %% "scalajs-env-jsdom-nodejs" % "2.1.0"
 
