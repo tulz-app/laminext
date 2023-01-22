@@ -1,9 +1,9 @@
 package io.laminext.core
 
 import com.raquo.airstream.common.InternalNextErrorObserver
-import com.raquo.airstream.common.SingleParentObservable
+import com.raquo.airstream.common.SingleParentStream
 import com.raquo.airstream.core.Transaction
-import com.raquo.airstream.core.WritableEventStream
+import com.raquo.airstream.core.WritableStream
 import com.raquo.laminar.api.L._
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
@@ -12,8 +12,8 @@ class DelayForEventStream[A](
   override protected val parent: EventStream[A],
   projectDelayMillis: A => FiniteDuration
 ) extends EventStream[A]
-    with WritableEventStream[A]
-    with SingleParentObservable[A, A]
+    with WritableStream[A]
+    with SingleParentStream[A, A]
     with InternalNextErrorObserver[A] {
 
   /**

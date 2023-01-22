@@ -3,7 +3,7 @@ package io.laminext.tailwind
 import io.laminext.AmendedHtmlTagPartial
 import io.laminext.tailwind.ops.htmltag._
 import io.laminext.tailwind.ops.htmltag.card.HtmlTagTailwindCardOps
-import com.raquo.laminar.builders.HtmlTag
+import com.raquo.laminar.tags.HtmlTag
 import org.scalajs.dom
 
 trait CardSyntax {

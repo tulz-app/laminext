@@ -27,7 +27,7 @@ object FetchUpickleExample
         placeholder := "send a message"
       )
 
-      val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[String]]
+      val (responsesStream, responseReceived) = EventStream.fromCallback[FetchResponse[String]]
       div(
         EventStream.fromValue(1).debugLogStarts --> { _ => },
         cls := "space-y-4",

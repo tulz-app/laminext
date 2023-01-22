@@ -4,7 +4,7 @@ package ops.htmltag
 import com.raquo.laminar.api.L._
 import io.laminext.AmendedHtmlTag
 import io.laminext.AmendedHtmlTagPartial
-import com.raquo.laminar.builders.HtmlTag
+import com.raquo.laminar.tags.HtmlTag
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import io.laminext.AmAny
 import org.scalajs.dom

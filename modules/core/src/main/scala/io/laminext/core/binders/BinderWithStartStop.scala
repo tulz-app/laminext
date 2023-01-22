@@ -27,7 +27,7 @@ abstract class BinderWithStartStop[-El <: ReactiveElement.Base] extends Binder[E
   }
 
   override def bind(element: El): DynamicSubscription = {
-    ReactiveElement.bindSubscription(element) { ctx =>
+    ReactiveElement.bindSubscriptionUnsafe(element) { ctx =>
       subscribed = true
       start()
 

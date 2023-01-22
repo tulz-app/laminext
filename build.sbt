@@ -133,7 +133,7 @@ lazy val `videojs` =
     .enablePlugins(ScalaJSPlugin)
     .settings(commonSettings)
     .settings(baseDependencies)
-    .dependsOn(`core`)
+    .dependsOn(`core`, `base`)
 
 lazy val `highlight` =
   project

@@ -6,7 +6,7 @@ import com.raquo.laminar.api.L._
 final class SignalOps[A](underlying: Signal[A]) {
 
   @inline def transitions: Signal[(Option[A], A)] =
-    underlying.foldLeft(initial => (Option.empty[A], initial)) { case ((_, previous), current) =>
+    underlying.scanLeft(initial => (Option.empty[A], initial)) { case ((_, previous), current) =>
       (Some(previous), current)
     }
 

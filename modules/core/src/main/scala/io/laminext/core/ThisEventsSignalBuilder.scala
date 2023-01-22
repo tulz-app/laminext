@@ -17,10 +17,10 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
 ) {
 
   @inline def -->[El <: Element](sink: Sink[A]): Binder[ReactiveElement.Base] =
-    composeEvents(t)(transform) --> sink
+    t.compose(transform) --> sink
 
   @inline def -->[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
-    composeEvents(t)(transform) --> onNext
+    t.compose(transform) --> onNext
 
   // ---
 
@@ -48,13 +48,13 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   @inline def changes: ThisEventsStreamBuilder[Ev, A] =
     new ThisEventsStreamBuilder(t, transform.andThen(_.changes))
 
-  @inline def foldLeft[B](makeInitial: A => B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B] =
-    andThen(_.foldLeft(makeInitial)(fn))
+  @inline def scanLeft[B](makeInitial: A => B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B] =
+    andThen(_.scanLeft(makeInitial)(fn))
 
-  @inline def foldLeftRecover[B](makeInitial: Try[A] => Try[B])(
+  @inline def scanLeftRecover[B](makeInitial: Try[A] => Try[B])(
     fn: (Try[B], Try[A]) => Try[B]
   ): ThisEventsSignalBuilder[Ev, B] =
-    andThen(_.foldLeftRecover(makeInitial)(fn))
+    andThen(_.scanLeftRecover(makeInitial)(fn))
 
   @inline def recover[B >: A](
     pf: PartialFunction[Throwable, Option[B]]

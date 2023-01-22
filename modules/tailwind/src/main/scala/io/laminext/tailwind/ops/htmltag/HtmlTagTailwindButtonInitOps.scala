@@ -6,7 +6,7 @@ import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
 import io.laminext.AmendedHtmlTag
 import io.laminext.AmendedHtmlTagPartial
-import com.raquo.laminar.builders.HtmlTag
+import com.raquo.laminar.tags.HtmlTag
 import io.laminext.AmAny
 import io.laminext.util.ClassJoin
 import org.scalajs.dom

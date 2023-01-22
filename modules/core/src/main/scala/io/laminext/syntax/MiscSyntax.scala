@@ -3,7 +3,6 @@ package io.laminext.syntax
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.core.MutationObserverBinders
-import io.laminext.core.NodeSeqModifier
 import io.laminext.core.ResizeObserverBinders
 import io.laminext.core.SetTimeoutBinders
 import io.laminext.core.StoredBoolean
@@ -18,7 +17,7 @@ trait MiscSyntax {
 
   @inline def nodeSeq[El <: ReactiveElement[dom.Element]](
     seq: Modifier[El]*
-  ): Modifier[El] = new NodeSeqModifier[El](seq: _*)
+  ): Modifier[El] = seq
 
   @inline def nodeSequence[A, El <: ReactiveElement[dom.Element]](
     seq: Seq[Modifier[El]]
@@ -52,7 +51,7 @@ trait MiscSyntax {
   }
 
   @inline def createTrigger(): (EventStream[Unit], () => Unit) = {
-    val (stream, callback) = EventStream.withCallback[Unit]
+    val (stream, callback) = EventStream.fromCallback[Unit]
     (stream, () => { callback((): Unit) })
   }
 

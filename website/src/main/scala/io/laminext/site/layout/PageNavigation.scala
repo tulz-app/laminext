@@ -1,7 +1,6 @@
 package io.laminext.site.layout
 
 import io.laminext.site.Page
-import io.laminext.site.Site
 import io.laminext.site.SiteModule
 import io.laminext.syntax.core._
 import com.raquo.laminar.api.L._
@@ -14,7 +13,7 @@ object PageNavigation {
     $page: Signal[Option[Page]],
     mobile: Boolean = false
   ): ReactiveHtmlElement.Base =
-    nav(
+    navTag(
       cls := "py-4 overflow-auto bg-gray-800 text-white",
       cls := (if (mobile) "" else "w-80 hidden lg:block"),
       child.maybe <-- $module.optionMap { module =>

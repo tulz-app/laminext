@@ -24,7 +24,7 @@ object FetchPostExample
         cls         := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "send a message"
       )
-      val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[String]]
+      val (responsesStream, responseReceived) = EventStream.fromCallback[FetchResponse[String]]
       div(
         cls := "space-y-4",
         div(inputElement),

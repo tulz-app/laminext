@@ -13,7 +13,7 @@ import io.laminext.tailwind.ops.htmltag.button.HtmlTagTailwindButtonExpectsStyle
 import io.laminext.tailwind.ops.htmltag.button.HtmlTagTailwindButtonGroupExpectsPositionOps
 import io.laminext.tailwind.ops.htmltag.button.HtmlTagTailwindButtonGroupExpectsSizeOps
 import io.laminext.tailwind.ops.htmltag.button.HtmlTagTailwindButtonGroupExpectsStyleOps
-import com.raquo.laminar.builders.HtmlTag
+import com.raquo.laminar.tags.HtmlTag
 import org.scalajs.dom
 
 trait ButtonSyntax {

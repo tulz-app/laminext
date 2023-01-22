@@ -16,7 +16,7 @@ object Main {
 //  val mainCss: MainCss.type = MainCss
 
   def main(args: Array[String]): Unit = {
-    val _ = documentEvents.onDomContentLoaded.foreach { _ =>
+    val _ = documentEvents(_.onDomContentLoaded).foreach { _ =>
       Theme.setTheme(DefaultTheme.theme)
       Modal.initialize()
       LinkHandler.install()

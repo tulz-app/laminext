@@ -31,7 +31,7 @@ object FetchCirceExample
         placeholder := "send a message"
       )
 
-      val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[Json]]
+      val (responsesStream, responseReceived) = EventStream.fromCallback[FetchResponse[Json]]
 
       div(
         cls := "space-y-4",

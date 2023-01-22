@@ -16,7 +16,7 @@ object SequentiallyExample
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.core._
       val boundVar            = Var(true)
-      val (tasks, submitTask) = EventStream.withCallback[String]
+      val (tasks, submitTask) = EventStream.fromCallback[String]
 
       /* <focus> */
       val taskQueue = sequentially(tasks) { task =>
