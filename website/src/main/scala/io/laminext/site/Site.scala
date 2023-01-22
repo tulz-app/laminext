@@ -138,6 +138,8 @@ object Site {
         examplePage(examples.ui.ex_modal.ModalExample),
         examplePage(examples.ui.ex_animation.AnimationExample),
         examplePage(examples.ui.ex_transition.TransitionExample),
+        examplePage(examples.ui.ex_drag_drop.DragDropExample),
+        examplePage(examples.ui.ex_drag_drop_2.DragDropExample2),
       )
     ),
     SiteModule(

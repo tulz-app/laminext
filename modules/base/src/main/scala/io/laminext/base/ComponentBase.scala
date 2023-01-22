@@ -13,8 +13,8 @@ trait ComponentBase[+R <: dom.html.Element] {
     this
   }
 
-  @inline def amendThis(makeMod: ReactiveHtmlElement[R] => Modifier[ReactiveHtmlElement[R]]): this.type = {
-    el.amendThis(makeMod)
+  @inline def amendThis(makeMod: this.type => Modifier[ReactiveHtmlElement[R]]): this.type = {
+    el.amend(makeMod(this))
     this
   }
 

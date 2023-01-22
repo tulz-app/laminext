@@ -67,13 +67,14 @@ object PageHeader {
             onClick --> { _ => styleDropDownOpen.toggle() },
             Icons
               .chevronDown(
-                svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
-              )
-              .hiddenIf(styleDropDownOpen.signal),
+                svg.cls               := "-mr-1 ml-2 h-4 fill-current text-gray-300",
+                svg.cls.toggle("hidden") <-- styleDropDownOpen.signal
+              ),
             Icons
               .chevronUp(
-                svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
-              ).visibleIf(styleDropDownOpen.signal)
+                svg.cls               := "-mr-1 ml-2 h-4 fill-current text-gray-300",
+                svg.cls.toggle("hidden") <-- !styleDropDownOpen.signal
+              )
           )
         ),
         div(
@@ -107,9 +108,8 @@ object PageHeader {
                   } else {
                     None
                   }
-                }
-              ).hiddenIf(
-                styleSearch.signal.map(search => !styleName.contains(search))
+                },
+                cls.toggle("hidden") <-- styleSearch.signal.map(search => !styleName.contains(search))
               )
             }
           )

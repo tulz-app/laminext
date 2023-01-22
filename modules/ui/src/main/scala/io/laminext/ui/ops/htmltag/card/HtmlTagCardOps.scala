@@ -1,7 +1,6 @@
 package io.laminext.ui
 package ops.htmltag.card
 
-import com.raquo.laminar.api.L._
 import io.laminext.AmAny
 import io.laminext.AmendedHtmlTag
 import io.laminext.AmendedHtmlTagPartial

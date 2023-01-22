@@ -6,10 +6,11 @@ import io.laminext.syntax.ui._
 
 final class SignalOfBooleanUiOps(underlying: Signal[Boolean]) {
 
-  @inline def switchVisibility(whenTrue: => HtmlElement, whenFalse: => HtmlElement): Mod[HtmlElement] =
-    nodeSeq(
-      whenTrue.visibleIf(underlying),
-      whenFalse.hiddenIf(underlying)
-    )
+//  TODO: this is tailwind
+//  @inline def switchVisibility(whenTrue: => HtmlElement, whenFalse: => HtmlElement): Mod[HtmlElement] =
+//    nodeSeq(
+//      whenTrue.visibleIf(underlying),
+//      whenFalse.hiddenIf(underlying)
+//    )
 
 }

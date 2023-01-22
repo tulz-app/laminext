@@ -33,7 +33,9 @@ object PageWrap {
         ),
         div(
           cls := "flex-1 flex overflow-hidden",
-          PageNavigation($page).hiddenIf($page.optionMap(_._1).optionContains(Site.indexModule)),
+          PageNavigation($page).amend(
+            cls.toggle("hidden") <-- $page.optionMap(_._1).optionContains(Site.indexModule)
+          ),
           div(
             cls := "flex-1 bg-gray-200 overflow-auto md:p-4",
             div(

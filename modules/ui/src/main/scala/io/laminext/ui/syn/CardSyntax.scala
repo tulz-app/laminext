@@ -9,11 +9,11 @@ import org.scalajs.dom
 
 trait CardSyntax {
 
-  implicit def syntaxHtmlTagTailwindCardInit[T <: dom.html.Element](
+  @inline implicit def syntaxHtmlTagCardInit[T <: dom.html.Element](
     tag: HtmlTag[T]
   ): HtmlTagCardInitOps[T] = new HtmlTagCardInitOps[T](tag)
 
-  implicit def syntaxHtmlTagTailwindCard[T <: dom.html.Element](
+  @inline implicit def syntaxHtmlTagTailwindCard[T <: dom.html.Element](
     tag: AmendedHtmlTagPartial[T, AmCard]
   ): HtmlTagCardOps[T] = new HtmlTagCardOps[T](tag)
 
