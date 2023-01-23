@@ -7,9 +7,12 @@ import com.yurique.embedded.FileAsString
 
 object Site {
 
-//  private def indexExamplePage(
-//    example: CodeExample
-//  ): Page = Page("", example.title, CodeExamplePage(example))
+  val laminextVersion: String = "0.15.x"
+
+  val thisVersionPrefix = s"/v/$laminextVersion/"
+
+  def thisVersionHref(href: String): String =
+    s"${thisVersionPrefix}${href.dropWhile(_ == '/')}"
 
   private def examplePage(
     example: CodeExample

@@ -20,6 +20,12 @@ class Routes(locationProvider: LocationProvider) {
       dom.window.scrollTo(0, 0)
     }
 
+  private def reloadPage: Route =
+    complete {
+//      $page.writer.onNext(Some(Page("", "Not Found", () => Left((404, "Not Found")))))
+      dom.window.location.reload()
+    }
+
   private def modulePrefix =
     pathPrefix(segment).flatMap { moduleName =>
       provide(Site.findModule(moduleName)).collect { case Some(module) =>
@@ -39,20 +45,41 @@ class Routes(locationProvider: LocationProvider) {
     dom.window.scrollTo(0, 0)
   }
 
+  private val versionSegment = {
+    regex("\\d+\\.\\d+\\.\\S+".r).map(_.source)
+  }
+
+  private val versionPrefix =
+    pathPrefix("v" / versionSegment)
+
+  private val thisVersionPrefix =
+    versionPrefix.filter(_.toString.startsWith(Site.laminextVersion)).mapTo(())
+
+  private val anyVersionPrefix =
+    versionPrefix.mapTo(())
+
   private val (routeResult, route) = makeRouteWithCallback[(SiteModule, Page)](reset) { render =>
     concat(
-      pathEnd {
-        render(Site.indexModule -> Site.indexModule.index)
-      },
-      modulePrefix { module =>
+      thisVersionPrefix {
         concat(
           pathEnd {
-            render(module -> module.index)
+            render(Site.indexModule -> Site.indexModule.index)
           },
-          modulePagePrefix(module) { page =>
-            render(module -> page)
-          }
+          modulePrefix { module =>
+            concat(
+              pathEnd {
+                render(module -> module.index)
+              },
+              modulePagePrefix(module) { page =>
+                render(module -> page)
+              }
+            )
+          },
+          notFound
         )
+      },
+      anyVersionPrefix {
+        reloadPage
       },
       notFound
     )
