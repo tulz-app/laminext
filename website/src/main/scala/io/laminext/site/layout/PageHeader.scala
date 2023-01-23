@@ -30,7 +30,7 @@ object PageHeader {
       div(
         cls := "flex-shrink-0 -my-4 -mx-4",
         img(
-          src := "/images/logo.svg",
+          src := Site.thisVersionHref("/images/logo.svg"),
           cls := "w-10 h-10"
         )
       ),
@@ -47,7 +47,7 @@ object PageHeader {
       ),
       div(
         cls := "hidden lg:block",
-        img(src := "https://img.shields.io/maven-central/v/io.laminext/core_sjs1_2.13.svg", alt := "latest version on maven central")
+        img(src := "https://img.shields.io/maven-central/v/io.laminext/core_sjs1_2.13.svg?versionPrefix=0.14", alt := "latest version on maven central")
       ),
       div(
         cls := "hidden lg:block relative inline-block text-left",
@@ -156,7 +156,7 @@ object PageHeader {
           "border-gray-300 text-white",
           "text-gray-300 hover:border-gray-300 hover:text-white "
         ),
-      href := s"/${module.path}",
+      href := Site.thisVersionHref(s"/${module.path}"),
       module.index.title
     )
 

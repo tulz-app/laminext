@@ -5,13 +5,16 @@ import io.laminext.syntax.core._
 import io.laminext.syntax.tailwind._
 import io.laminext.syntax.markdown._
 import io.laminext.highlight.Highlight
+import io.laminext.markdown.markedjs.Marked
 import io.laminext.site.examples.CodeExample
 import io.laminext.tailwind.theme
+import io.laminext.site.Site
 import io.laminext.site.Styles
 import io.laminext.site.TemplateVars
 import org.scalajs.dom
 import org.scalajs.dom.ext._
 import org.scalajs.dom.html
+
 import scala.scalajs.js
 
 object CodeExampleDisplay {
@@ -79,8 +82,14 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls            := "prose max-w-none",
-        unsafeMarkdown := TemplateVars(example.description),
+        cls := "prose max-w-none",
+        new Modifier[HtmlElement] {
+          override def apply(element: HtmlElement): Unit = element.ref.innerHTML = Marked
+            .parse(TemplateVars(example.description)).replace(
+              """<a href="/""",
+              s"""<a href="${Site.thisVersionPrefix}"""
+            )
+        },
         onMountCallback { ctx =>
           ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
             Highlight.highlightElement(codeElement)
@@ -88,7 +97,7 @@ object CodeExampleDisplay {
         }
       ),
       div(
-        cls            := "space-y-2",
+        cls := "space-y-2",
         div(
           cls := "flex space-x-4 items-center",
           h2(
@@ -149,7 +158,7 @@ object CodeExampleDisplay {
         )
       ),
       div(
-        cls            := "space-y-2",
+        cls := "space-y-2",
         h2(
           cls := "text-xl font-semibold text-gray-900",
           "Live demo:"
