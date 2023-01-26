@@ -1,6 +1,6 @@
 package io.laminext.ui.syn
 
-import com.raquo.laminar.builders.HtmlTag
+import com.raquo.laminar.tags.HtmlTag
 import io.laminext.AmendedHtmlTagPartial
 import io.laminext.ui.ops.htmltag.card.HtmlTagCardInitOps
 import io.laminext.ui.ops.htmltag.card.HtmlTagCardOps

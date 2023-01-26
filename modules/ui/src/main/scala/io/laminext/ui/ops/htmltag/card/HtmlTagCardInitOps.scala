@@ -1,7 +1,7 @@
 package io.laminext.ui
 package ops.htmltag.card
 
-import com.raquo.laminar.builders.HtmlTag
+import com.raquo.laminar.tags.HtmlTag
 import io.laminext.syntax.core._
 import io.laminext.AmendedHtmlTagPartial
 import org.scalajs.dom

@@ -41,89 +41,89 @@ object FetchEventStream {
     timeout: js.UndefOr[FiniteDuration],
     extract: Response => Future[A],
   )(implicit ec: ExecutionContext): EventStream[FetchResponse[A]] = {
-    CustomStreamSource[FetchResponse[A]]((fireValue, fireError, _, _) => {
-      val abortController                             = new AbortController()
-      var timeoutHandle: js.UndefOr[SetTimeoutHandle] = js.undefined
 
-      def handleError(error: Throwable): Unit = {
-        timeoutHandle.foreach(clearTimeout)
-        timeoutHandle = js.undefined
-        fireError {
-          error match {
-            case e: FetchException => e
-            case other             => FetchError(other)
-          }
-        }
-      }
+    val abortController = new AbortController()
 
-      def sendRequest(): Future[Response] = {
-        val init = js.Object().asInstanceOf[RequestInit]
-        init.method = method
-        init.headers = headers.map { headers =>
-          val dict = js.Object().asInstanceOf[js.Dictionary[String]]
-          headers.foreach { case (name, value) =>
-            dict(name) = value
-          }
-          dict
-        }
-        init.body = body
-        init.referrer = referrer
-        init.referrerPolicy = referrerPolicy
-        init.mode = mode
-        init.credentials = credentials
-        init.cache = cache
-        init.redirect = redirect
-        init.integrity = integrity
-        init.keepalive = keepalive
-        init.signal = abortController.signal
-        fetch(url, init).toFuture
-      }
+    EventStream.fromCustomSource[FetchResponse[A]](
+      start = (fireValue, fireError, _, _) => {
+        var timeoutHandle: js.UndefOr[SetTimeoutHandle] = js.undefined
 
-      CustomSource.Config(
-        onStart = () => {
-          val response = sendRequest()
-
-          timeout.foreach { timeout =>
-            timeoutHandle = setTimeout(timeout) {
-              timeoutHandle = js.undefined
-              abortController.abort()
-              fireError(FetchTimeout(timeout))
+        def handleError(error: Throwable): Unit = {
+          timeoutHandle.foreach(clearTimeout)
+          timeoutHandle = js.undefined
+          fireError {
+            error match {
+              case e: FetchException => e
+              case other             => FetchError(other)
             }
           }
-
-          response.onComplete { result =>
-            result.fold[Unit](
-              handleError,
-              response => {
-                timeoutHandle.foreach(clearTimeout)
-                timeoutHandle = js.undefined
-                extract(response).onComplete { extracted =>
-                  extracted.fold[Unit](
-                    handleError,
-                    extracted => {
-                      fireValue(
-                        FetchResponse[A](
-                          ok = response.ok,
-                          status = response.status,
-                          statusText = response.statusText,
-                          headers = response.headers,
-                          `type` = response.`type`,
-                          data = extracted,
-                          url = response.url
-                        )
-                      )
-                    }
-                  )
-                }
-              }
-            )
-          }
-        },
-        onStop = () => {
-          abortController.abort()
         }
-      )
-    })
+
+        def sendRequest(): Future[Response] = {
+          val init = js.Object().asInstanceOf[RequestInit]
+          init.method = method
+          init.headers = headers.map { headers =>
+            val dict = js.Object().asInstanceOf[js.Dictionary[String]]
+            headers.foreach { case (name, value) =>
+              dict(name) = value
+            }
+            dict
+          }
+          init.body = body
+          init.referrer = referrer
+          init.referrerPolicy = referrerPolicy
+          init.mode = mode
+          init.credentials = credentials
+          init.cache = cache
+          init.redirect = redirect
+          init.integrity = integrity
+          init.keepalive = keepalive
+          init.signal = abortController.signal
+          fetch(url, init).toFuture
+        }
+
+        val response = sendRequest()
+
+        timeout.foreach { timeout =>
+          timeoutHandle = setTimeout(timeout) {
+            timeoutHandle = js.undefined
+            abortController.abort()
+            fireError(FetchTimeout(timeout))
+          }
+        }
+
+        response.onComplete { result =>
+          result.fold[Unit](
+            handleError,
+            response => {
+              timeoutHandle.foreach(clearTimeout)
+              timeoutHandle = js.undefined
+              extract(response).onComplete { extracted =>
+                extracted.fold[Unit](
+                  handleError,
+                  extracted => {
+                    fireValue(
+                      FetchResponse[A](
+                        ok = response.ok,
+                        status = response.status,
+                        statusText = response.statusText,
+                        headers = response.headers,
+                        `type` = response.`type`,
+                        data = extracted,
+                        url = response.url
+                      )
+                    )
+                  }
+                )
+              }
+            }
+          )
+        }
+      },
+      stop = { _ =>
+        abortController.abort()
+      }
+    )
   }
 
 }

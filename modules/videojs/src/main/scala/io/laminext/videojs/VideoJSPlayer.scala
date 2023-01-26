@@ -5,23 +5,21 @@ import com.raquo.airstream.eventbus.EventBus
 import com.raquo.airstream.ownership.Subscription
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
-import com.raquo.laminar.nodes.ReactiveHtmlElement
 import scala.scalajs.js
 
 object VideoJSPlayer {
 
   lazy val h264Supported: String =
-    video().ref.canPlayType("""video/mp4; codecs="avc1"""")
+    videoTag().ref.canPlayType("""video/mp4; codecs="avc1"""")
 
   lazy val h265Supported: String =
-    video().ref.canPlayType("""video/mp4; codecs="hvc1"""")
+    videoTag().ref.canPlayType("""video/mp4; codecs="hvc1"""")
 
   private def playerBus() = new EventBus[Player]
 
   def apply(
     options: VideoJSOptions,
-    mods: Modifier[ReactiveHtmlElement.Base]*
-  ): (ReactiveHtmlElement.Base, PlayerEvents) = {
+  ): VideoPlayer = {
     var playerAPI: Option[Player] = None
     val readyPlayerVar            = Var(Option.empty[Player])
     val loadStartBus              = playerBus()
@@ -59,18 +57,9 @@ object VideoJSPlayer {
       playerAPI.foreach(timeUpdatedBus.writer.onNext)
     }
 
-    val events = new PlayerEvents(
-      player = readyPlayerVar.signal,
-      loadStart = loadStartBus.events,
-      ended = endedBus.events,
-      timeUpdate = timeUpdatedBus.events.throttle(1000),
-      seek = seekedBus.events
-    )
-
     val wrapper =
-      video(
-        cls := "video-js hidden-if-no-js",
-        mods,
+      videoTag(
+        cls := "video-js",
         onUnmountCallback { _ =>
           playerAPI.foreach(_.dispose())
         },
@@ -86,7 +75,7 @@ object VideoJSPlayer {
           player.on("loadstart", onLoadStartHandler)
 
           Binder(
-            ReactiveElement.bindSubscription(_) { ctx =>
+            ReactiveElement.bindSubscriptionUnsafe(_) { ctx =>
               new Subscription(
                 ctx.owner,
                 cleanup = () => {
@@ -102,6 +91,13 @@ object VideoJSPlayer {
         }
       )
 
-    (wrapper, events)
+    new VideoPlayer(
+      el = wrapper,
+      player = readyPlayerVar.signal,
+      loadStart = loadStartBus.events,
+      ended = endedBus.events,
+      timeUpdate = timeUpdatedBus.events.throttle(1000),
+      seek = seekedBus.events
+    )
   }
 }

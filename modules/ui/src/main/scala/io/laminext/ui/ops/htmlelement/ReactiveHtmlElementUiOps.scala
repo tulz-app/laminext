@@ -2,7 +2,6 @@ package io.laminext.ui.ops.htmlelement
 
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.api.L
-import io.laminext.syntax.core._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import io.laminext.ui.dnd.DragDropDecoder
 import io.laminext.ui.dnd.DragDropEncoder
@@ -69,7 +68,7 @@ class ReactiveHtmlElementUiOps[T <: dom.html.Element](el: ReactiveHtmlElement[T]
   def draggable[A: DragDropEncoder](value: Signal[A]): ReactiveHtmlElement[T] = {
     el.amend(
       L.draggable := true,
-      composeEvents(onDragStart)(_.withCurrentValueOf(value)) --> { case (ev, value) =>
+      onDragStart.compose(_.withCurrentValueOf(value)) --> { case (ev, value) =>
         DragDropEncoder[A].setData(ev, value)
       }
     )

@@ -12,7 +12,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
   @inline def transitions: EventStream[(Option[A], A)] = new TransitionsEventStream(underlying)
 
   def previousAndLatest: Signal[(Option[A], Option[A])] = {
-    underlying.foldLeft((Option.empty[A], Option.empty[A])) { case ((_, previous), current) =>
+    underlying.scanLeft((Option.empty[A], Option.empty[A])) { case ((_, previous), current) =>
       (previous, Some(current))
     }
   }
@@ -22,7 +22,8 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       .merge(
         underlying.map(Some(_)),
         reset.mapToStrict(None)
-      ).foldLeft((Option.empty[A], Option.empty[A])) { case ((_, previous), maybeCurrent) =>
+      )
+      .scanLeft((Option.empty[A], Option.empty[A])) { case ((_, previous), maybeCurrent) =>
         maybeCurrent match {
           case Some(current) => (previous, Some(current))
           case None          => (None, None)
@@ -30,7 +31,6 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       }
   }
 
-  @inline def mapToUnit: EventStream[Unit]     = underlying.mapToStrict((): Unit)
   @inline def mapToTrue: EventStream[Boolean]  = underlying.mapToStrict(true)
   @inline def mapToFalse: EventStream[Boolean] = underlying.mapToStrict(false)
 
@@ -48,25 +48,8 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
       .withCurrentValueOf(b)
       .collect { case (v, true) => v }
 
-  @inline def drop(toDrop: Int): EventStream[A] = new DropEventStream[A](underlying, toDrop)
-
-  @inline def take(toTake: Int): EventStream[A] = new TakeEventStream[A](underlying, toTake)
-
-  // TODO extract into a DistinctEventStream
-  def distinct: EventStream[A] = {
-    var previous = Option.empty[A]
-    underlying.filter { event =>
-      previous match {
-        case Some(prev) if prev == event => false
-        case _                           =>
-          previous = Some(event)
-          true
-      }
-    }
-  }
-
   def flip(on: A, off: A, initial: Boolean = false): Signal[Boolean] =
-    underlying.foldLeft(initial) { (prev, event) =>
+    underlying.scanLeft(initial) { (prev, event) =>
       if (event == on) {
         true
       } else if (event == off) {
@@ -77,7 +60,7 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
     }
 
   def flip[T](toggle: PartialFunction[A, (T, Boolean)], initial: Boolean): Signal[Map[T, Boolean]] =
-    underlying.foldLeft(Map.empty[T, Boolean].withDefaultValue(initial)) { (map, event) =>
+    underlying.scanLeft(Map.empty[T, Boolean].withDefaultValue(initial)) { (map, event) =>
       if (toggle.isDefinedAt(event)) {
         val (v, state) = toggle(event)
         map.updated(v, state)

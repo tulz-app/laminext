@@ -1,7 +1,7 @@
 package io.laminext.markdown
 
-import com.raquo.domtypes.generic.Modifier
 import com.raquo.laminar.api.L.HtmlElement
+import com.raquo.laminar.modifiers.Modifier
 import io.laminext.markdown.markedjs.Marked
 
 object UnsafeMarkdownReceiver {

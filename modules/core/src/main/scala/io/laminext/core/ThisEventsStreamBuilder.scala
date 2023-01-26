@@ -16,10 +16,10 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
 ) {
 
   @inline def -->[El <: Element](sink: Sink[A]): Modifier[ReactiveElement.Base] =
-    composeEvents(t)(transform) --> sink
+    t.compose(transform) --> sink
 
   @inline def -->[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] =
-    composeEvents(t)(transform) --> onNext
+    t.compose(transform) --> onNext
 
   @inline def foreach[El <: Element](onNext: A => Unit): Modifier[ReactiveElement.Base] = -->(onNext)
 
@@ -58,13 +58,13 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   @inline def debounce(delayFromLastEventMillis: Int): ThisEventsStreamBuilder[Ev, A] =
     andThen(_.debounce(delayFromLastEventMillis))
 
-  @inline def foldLeft[B](initial: B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B] =
-    new ThisEventsSignalBuilder(t, transform.andThen(_.foldLeft(initial)(fn)))
+  @inline def scanLeft[B](initial: B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B] =
+    new ThisEventsSignalBuilder(t, transform.andThen(_.scanLeft(initial)(fn)))
 
-  @inline def foldLeftRecover[B](
+  @inline def scanLeftRecover[B](
     initial: Try[B]
   )(fn: (Try[B], Try[A]) => Try[B]): ThisEventsSignalBuilder[Ev, B] =
-    new ThisEventsSignalBuilder(t, transform.andThen(_.foldLeftRecover(initial)(fn)))
+    new ThisEventsSignalBuilder(t, transform.andThen(_.scanLeftRecover(initial)(fn)))
 
   @inline def startWith[B >: A](initial: => B): ThisEventsSignalBuilder[Ev, B] = toSignal(initial)
 

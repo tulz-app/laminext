@@ -1,16 +1,14 @@
 package io.laminext.core
-package ops.reactiveeventprop
+package ops.eventprop
 
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.keys.ReactiveEventProp
+import com.raquo.laminar.keys.EventProp
 import org.scalajs.dom
 
-final class ReactiveEventPropOps[Ev <: dom.Event](underlying: ReactiveEventProp[Ev]) {
+final class EventPropOps[Ev <: dom.Event](underlying: EventProp[Ev]) {
 
   @inline def mapToTrue: EventProcessor[Ev, Boolean] = underlying.mapToStrict(true)
 
   @inline def mapToFalse: EventProcessor[Ev, Boolean] = underlying.mapToStrict(false)
-
-  @inline def mapToUnit: EventProcessor[Ev, Unit] = underlying.mapToStrict((): Unit)
 
 }

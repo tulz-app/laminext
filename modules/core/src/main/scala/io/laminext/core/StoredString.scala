@@ -11,7 +11,7 @@ final class StoredString(name: String, initial: String) {
 
   val signal: Signal[String] =
     updateBus.events
-      .foldLeft[String](
+      .scanLeft[String](
         if (BrowserUtils.storageEnabled) {
           Option(dom.window.localStorage.getItem(storageId)).getOrElse(initial)
         } else {

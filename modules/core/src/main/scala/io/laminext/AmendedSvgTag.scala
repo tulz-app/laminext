@@ -1,8 +1,8 @@
 package io.laminext
 
-import com.raquo.domtypes.generic.Modifier
+import com.raquo.laminar.modifiers.Modifier
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.builders.SvgTag
+import com.raquo.laminar.tags.SvgTag
 import com.raquo.laminar.nodes.ReactiveSvgElement
 import org.scalajs.dom
 

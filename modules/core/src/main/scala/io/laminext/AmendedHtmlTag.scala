@@ -1,8 +1,8 @@
 package io.laminext
 
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.builders.HtmlTag
 import com.raquo.laminar.nodes.ReactiveHtmlElement
+import com.raquo.laminar.tags.HtmlTag
 import org.scalajs.dom
 
 class AmendedHtmlTag[+R <: dom.html.Element, AmType <: AmAny](

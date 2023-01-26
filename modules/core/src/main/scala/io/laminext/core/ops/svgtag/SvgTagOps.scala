@@ -3,7 +3,7 @@ package ops.svgtag
 
 import com.raquo.laminar.api.L._
 import io.laminext.AmendedSvgTag
-import com.raquo.laminar.builders.SvgTag
+import com.raquo.laminar.tags.SvgTag
 import com.raquo.laminar.nodes.ReactiveSvgElement
 import org.scalajs.dom
 

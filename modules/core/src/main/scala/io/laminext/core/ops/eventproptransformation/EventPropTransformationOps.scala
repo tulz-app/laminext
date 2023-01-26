@@ -8,6 +8,5 @@ final class EventPropTransformationOps[Ev <: dom.Event, V](underlying: EventProc
 
   @inline def mapToTrue: EventProcessor[Ev, Boolean]  = underlying.mapToStrict(true)
   @inline def mapToFalse: EventProcessor[Ev, Boolean] = underlying.mapToStrict(false)
-  @inline def mapToUnit: EventProcessor[Ev, Unit]     = underlying.mapToStrict(())
 
 }

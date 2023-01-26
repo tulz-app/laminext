@@ -17,7 +17,7 @@ trait CoreSyntax
     with EventStreamOfOptionSyntax
     with VarOfBooleanSyntax
     with EventPropTransformationSyntax
-    with ReactiveEventPropSyntax
+    with EventPropSyntax
     with FutureOfEitherSyntax
     with HtmlTagSyntax
     with SvgTagSyntax

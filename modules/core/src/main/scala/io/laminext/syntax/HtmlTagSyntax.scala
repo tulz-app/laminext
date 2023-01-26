@@ -1,6 +1,6 @@
 package io.laminext.syntax
 
-import com.raquo.laminar.builders.HtmlTag
+import com.raquo.laminar.tags.HtmlTag
 import io.laminext.core.ops.htmltag.HtmlTagOps
 import org.scalajs.dom
 

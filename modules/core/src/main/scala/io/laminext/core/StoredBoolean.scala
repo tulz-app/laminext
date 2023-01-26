@@ -11,7 +11,7 @@ final class StoredBoolean(name: String, initial: Boolean = true) {
 
   val signal: Signal[Boolean] =
     updateBus.events
-      .foldLeft[Boolean] {
+      .scanLeft[Boolean] {
         if (BrowserUtils.storageEnabled) {
           Option(dom.window.localStorage.getItem(storageId)).map(_.toBoolean).getOrElse(initial)
         } else {

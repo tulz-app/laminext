@@ -30,7 +30,8 @@ object ValidatedElement {
         .merge(
           el.events(onBlur.mapToTrue),
           resetBus.events.mapToFalse
-        ).foldLeft(false)((_, value) => value)
+        )
+        .scanLeft(false)((_, value) => value)
 
     val shouldShowError =
       EventStream

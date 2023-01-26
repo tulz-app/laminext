@@ -139,7 +139,7 @@ class WebSocket[Receive, Send](
 
   def connect[El <: ReactiveElement.Base]: Binder[El] =
     (element: El) =>
-      ReactiveElement.bindSubscription(element) { ctx =>
+      ReactiveElement.bindSubscriptionUnsafe(element) { ctx =>
         binderStarted()
         new Subscription(
           ctx.owner,
