@@ -31,7 +31,7 @@ trait SmartClass {
           disabledClasses.flatten.distinct.filterNot(enabledClassesDistinct.contains)
 
         enabledClassesDistinct.map(_ -> true) ++ disabledClassesFiltered.map(
-          _                          -> false
+          _ -> false
         )
 
       }
