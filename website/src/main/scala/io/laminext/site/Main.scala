@@ -16,7 +16,7 @@ import org.scalajs.dom
 object Main {
 
   def main(args: Array[String]): Unit = {
-    val _ = documentEvents.onDomContentLoaded.foreach { _ =>
+    val _ = documentEvents(_.onDomContentLoaded).foreach { _ =>
       initializeModal()
       val wiring = Wiring()
       removeNoJsClass(wiring.ssrContext)

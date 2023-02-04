@@ -23,7 +23,7 @@ object FetchPostExample
         tpe         := "text",
         placeholder := "send a message"
       )
-      val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[String]]
+      val (responsesStream, responseReceived) = EventStream.fromCallback[FetchResponse[String]]
       div(
         cls := "space-y-4",
         div(inputElement),

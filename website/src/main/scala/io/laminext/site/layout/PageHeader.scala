@@ -34,7 +34,7 @@ object PageHeader {
           cls := "w-10 h-10"
         )
       ),
-      nav(
+      navTag(
         cls := "flex flex-1 md:flex-none space-x-4 items-center justify-start",
         span(
           Site.modules.take(1).map(moduleLink($page))
@@ -44,7 +44,7 @@ object PageHeader {
           Site.laminextVersion
         )
       ),
-      nav(
+      navTag(
         cls := "hidden md:flex flex-1 space-x-4",
         div(
           cls := "flex flex-wrap justify-start items-center",

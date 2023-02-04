@@ -13,7 +13,7 @@ object PageNavigation {
     $page: Signal[Option[(SiteModule, Page)]],
     mobile: Boolean = false
   ): ReactiveHtmlElement.Base =
-    nav(
+    navTag(
       cls := "py-4 overflow-auto bg-gray-800 text-white",
       cls := (if (mobile) "" else "w-80 hidden lg:block"),
       child.maybe <-- $page.optionMap { case (module, _) =>

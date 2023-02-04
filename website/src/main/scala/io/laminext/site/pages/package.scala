@@ -2,12 +2,9 @@ package io.laminext.site
 
 import com.raquo.laminar.api.L._
 import io.frontroute._
-import io.frontroute.internal.Document
+import io.frontroute.DocumentMeta
 
 package object pages {
-
-  type PageRender = () => PageResult
-  type PageResult = Either[(Int, String), (Element, String)]
 
   def page(
     title: String,
@@ -19,13 +16,11 @@ package object pages {
   ): Element =
     content.amend(
       onMountCallback { _ =>
-        Document.updateMeta(
-          DocumentMeta(
-            title = title,
-            description = description,
-            keywords = keywords,
-            status = status
-          )
+        DocumentMeta.set(
+          title = title,
+          description = description,
+          keywords = keywords,
+          status = status
         )
       }
     )
