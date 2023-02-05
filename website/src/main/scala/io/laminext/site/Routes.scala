@@ -33,6 +33,9 @@ class Routes {
   private val thisVersionPrefix =
     versionPrefix.filter(_.toString.startsWith(Site.laminextVersion)).mapTo(())
 
+  private val anyVersionPrefix =
+    versionPrefix.mapTo(())
+
   def start(): Unit = {
     val appContainer = dom.document.querySelector("#app")
 
@@ -54,12 +57,13 @@ class Routes {
             div("Not Found")
           )
         ),
+        (noneMatched & anyVersionPrefix) {
+          runEffect {
+            dom.window.location.reload()
+          }
+        },
         noneMatched {
-          div(
-            onMountCallback { _ =>
-              dom.window.location.reload()
-            }
-          )
+          div("Not Found")
         }
       )
     )

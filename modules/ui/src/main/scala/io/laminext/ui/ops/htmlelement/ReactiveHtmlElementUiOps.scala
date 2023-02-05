@@ -51,6 +51,12 @@ class ReactiveHtmlElementUiOps[T <: dom.html.Element](el: ReactiveHtmlElement[T]
           .map { ev =>
             enters = 0
             draggingOver.set(DraggingOver.Out)
+            ev
+          }
+          .filter { ev =>
+            decoder.willAccept(ev)
+          }
+          .map { ev =>
             decoder.getData(ev).toOption
           }
           .collect { case Some(data) => data } --> drops,

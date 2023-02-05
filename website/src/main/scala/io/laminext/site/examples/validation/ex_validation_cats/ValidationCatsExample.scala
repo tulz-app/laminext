@@ -106,7 +106,7 @@ object ValidationCatsExample
           code("validatedInput1.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
-            child.text <-- validatedInput1.el.value
+            child.text <-- validatedInput1.value
           )
         ),
         div(
@@ -124,7 +124,7 @@ object ValidationCatsExample
           code("validatedInput2.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
-            child.text <-- validatedInput2.el.value
+            child.text <-- validatedInput2.value
           )
         ),
         div(
@@ -142,7 +142,7 @@ object ValidationCatsExample
           code("validatedInput3.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
-            child.text <-- validatedInput3.el.value
+            child.text <-- validatedInput3.value
           )
         ),
         div(

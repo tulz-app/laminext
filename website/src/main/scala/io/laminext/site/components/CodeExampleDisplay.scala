@@ -1,8 +1,7 @@
 package io.laminext.site.components
 
 import com.raquo.laminar.api.L._
-import io.frontroute.path
-import io.frontroute.pathEnd
+import io.frontroute._
 import io.laminext.syntax.core._
 import io.laminext.highlight.Highlight
 import io.laminext.markdown.markedjs.Marked
@@ -98,9 +97,9 @@ object CodeExampleDisplay {
             ),
             a(
               href := "description",
-              cls  := "px-2 text-lg font-semibold rounded",
-              cls.toggle("bg-gray-500 text-gray-200") <-- tab.map(_ == "description"),
-              cls.toggle("text-gray-800") <-- tab.map(_ != "description"),
+              cls  := "px-2 rounded",
+              cls.toggle("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "description"),
+              cls.toggle("text-gray-700 font-semibold") <-- tab.map(_ != "description"),
               cls  := (if (example.description.trim.isEmpty) "hidden" else ""),
               "Description"
             )

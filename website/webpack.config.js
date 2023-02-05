@@ -14,13 +14,19 @@ const scalaOutputPath = path.resolve(__dirname, `./target/scala-${scalaVersion}`
 const devServerHost = '127.0.0.1';
 const devServerPort = 30088;
 
+const publicPath = 'v/0.16.x'
+
 const devServer =
   {
     hot: true,
     port: devServerPort,
     host: devServerHost,
     historyApiFallback: {
-      index: ''
+      verbose: true,
+      rewrites: [
+        { from: /\/v\/0.16.x\//, to: `/${publicPath}/index.html`}
+      ],
+      index: true
     }
   }
 
@@ -32,15 +38,24 @@ function common(mode) {
       path.resolve(__dirname, './src/main/static/stylesheets/main.css'),
     ],
     output: {
-      publicPath: '/',
-      path: path.resolve(__dirname, 'dist'),
+      publicPath: `/${publicPath}`,
+      path: path.resolve(__dirname, `dist/${publicPath}`),
       filename: '[name].bundle.[contenthash].js'
     },
     module: {
       rules: [
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: `/${publicPath}/`,
+              },
+            },
+            'css-loader',
+            'postcss-loader'
+          ],
         },
         {
           test: /\.(png|jpg|woff(2)?|ttf|eot|svg)$/,

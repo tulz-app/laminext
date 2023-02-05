@@ -20,7 +20,7 @@ object PageWrap {
     div(
       linkTag(
         rel := "stylesheet",
-        href <-- Styles.highlightStyle.signal.map(s => s"/stylesheets/highlightjs/${s}.css")
+        href <-- Styles.highlightStyle.signal.map(s => Site.thisVersionHref(s"/stylesheets/highlightjs/${s}.css"))
       ),
       div(
         cls := "h-screen flex flex-col",

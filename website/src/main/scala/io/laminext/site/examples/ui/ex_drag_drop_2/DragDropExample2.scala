@@ -18,6 +18,12 @@ object DragDropExample2
       val dragging = Var(false)
       val insert   = Var(false)
 
+      val el: io.laminext.ui.dnd.DropZoneElement[org.scalajs.dom.HTMLDivElement, String] = ???
+
+      div(
+        children <-- Val(List.empty[String]).split(identity)((_, _, _) => el),
+        children <-- Val(List(el)),
+      )
       div(
         cls := "p-4 bg-sky-100 space-y-8",
         div(

@@ -7,7 +7,7 @@ import com.yurique.embedded.FileAsString
 
 object Site {
 
-  val laminextVersion: String = "0.15.x"
+  val laminextVersion: String = "0.16.x"
 
   val thisVersionPrefix = s"/v/$laminextVersion/"
 

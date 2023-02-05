@@ -153,7 +153,7 @@ object ValidationExample
           code("validatedInput1.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
-            child.text <-- validatedInput1.el.value
+            child.text <-- validatedInput1.value
           )
         ),
         div(
@@ -171,7 +171,7 @@ object ValidationExample
           code("validatedInput2.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
-            child.text <-- validatedInput2.el.value
+            child.text <-- validatedInput2.value
           )
         ),
         div(
@@ -189,7 +189,7 @@ object ValidationExample
           code("validatedInput3.el.value:"),
           code(
             cls := "text-blue-700 font-medium",
-            child.text <-- validatedInput3.el.value
+            child.text <-- validatedInput3.value
           )
         ),
         div(

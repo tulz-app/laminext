@@ -81,7 +81,7 @@ trait FileInputCreate {
           labelSelecting
         }
       },
-      fileInput.el,
+      fileInput,
       position.relative,
       overflow.hidden,
       styling($status),
