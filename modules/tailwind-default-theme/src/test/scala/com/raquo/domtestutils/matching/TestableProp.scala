@@ -26,14 +26,13 @@ class TestableProp[V, DomV](
     testNode.addCheck(nodePropIs(maybeExpectedValue = None))
   }
 
-  private def sortValue[U](value: U): U = {
+  private def sortValue[U](value: U): U =
     value match {
       case str: String =>
         str.split("\\s+").toSeq.sorted.mkString(" ").asInstanceOf[U]
       case value       => value
     }
 
-  }
   private[domtestutils] def nodePropIs(maybeExpectedValue: Option[V], sorted: Boolean = false)(node: dom.Node): MaybeError = {
     val maybeActualValue = getProp(node)
     if (node.isInstanceOf[dom.html.Element]) {
