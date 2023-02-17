@@ -11,8 +11,7 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 object PageHeader {
 
   def apply(
-    $module: Signal[Option[SiteModule]],
-    $page: Signal[Option[Page]],
+    $page: Signal[Option[(SiteModule, Page)]],
     menuObserver: Observer[Option[ModalContent]]
   ): ReactiveHtmlElement.Base = {
     val styleDropDownOpen = Var(false)
@@ -36,13 +35,19 @@ object PageHeader {
       ),
       navTag(
         cls := "flex flex-1 md:flex-none space-x-4 items-center justify-start",
-        Site.modules.take(1).map(moduleLink($module))
+        span(
+          Site.modules.take(1).map(moduleLink($page))
+        ),
+        span(
+          cls := "text-gray-500 text-xs font-black",
+          Site.laminextVersion
+        )
       ),
       navTag(
         cls := "hidden md:flex flex-1 space-x-4",
         div(
           cls := "flex flex-wrap justify-start items-center",
-          Site.modules.drop(1).map(moduleLink($module))
+          Site.modules.drop(1).map(moduleLink($page))
         )
       ),
       div(
@@ -60,12 +65,14 @@ object PageHeader {
             onClick --> { _ => styleDropDownOpen.toggle() },
             Icons
               .chevronDown(
-                svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
-              ).hiddenIf(styleDropDownOpen.signal),
+                svg.cls               := "-mr-1 ml-2 h-4 fill-current text-gray-300",
+                svg.cls.toggle("hidden") <-- styleDropDownOpen.signal
+              ),
             Icons
               .chevronUp(
-                svg.cls := "-mr-1 ml-2 h-4 fill-current text-gray-300"
-              ).visibleIf(styleDropDownOpen.signal)
+                svg.cls               := "-mr-1 ml-2 h-4 fill-current text-gray-300",
+                svg.cls.toggle("hidden") <-- !styleDropDownOpen.signal
+              )
           )
         ),
         div(
@@ -99,9 +106,8 @@ object PageHeader {
                   } else {
                     None
                   }
-                }
-              ).hiddenIf(
-                styleSearch.signal.map(search => !styleName.contains(search))
+                },
+                cls.toggle("hidden") <-- styleSearch.signal.map(search => !styleName.contains(search))
               )
             }
           )
@@ -125,10 +131,10 @@ object PageHeader {
                           onClick.mapTo(None) --> menuObserver
                         )
                     ),
-                    PageNavigation($module, $page, mobile = true),
+                    PageNavigation($page, mobile = true),
                     div(
                       cls := "flex flex-wrap justify-start items-center p-4",
-                      Site.modules.drop(1).map(moduleLink($module))
+                      Site.modules.drop(1).map(moduleLink($page))
                     ),
                   ),
                   Some(menuObserver.contramap(_ => None))
@@ -148,16 +154,19 @@ object PageHeader {
     )
   }
 
-  private def moduleLink(currentModule: Signal[Option[SiteModule]])(module: SiteModule) =
+  private def moduleLink(
+    currentPage: Signal[Option[(SiteModule, Page)]]
+  )(module: SiteModule) =
     a(
       cls  := "border-b-2 px-2 border-transparent flex font-display tracking-wide",
-      currentModule
-        .map(_.exists(_.path == module.path)).classSwitch(
+      currentPage
+        .map(_.exists(_._1.path == module.path))
+        .classSwitch(
           "border-gray-300 text-white",
           "text-gray-300 hover:border-gray-300 hover:text-white "
         ),
       href := Site.thisVersionHref(s"/${module.path}"),
-      module.index.title
+      module.title
     )
 
 }

@@ -2,8 +2,8 @@ package io.laminext.site
 
 object TemplateVars {
 
-  val vars = Seq(
-    "laminextVersion" -> "0.15.0-M4"
+  val vars: Seq[(String, String)] = Seq(
+    "laminextVersion" -> "0.15.0-M5"
   )
 
   def apply(s: String): String =

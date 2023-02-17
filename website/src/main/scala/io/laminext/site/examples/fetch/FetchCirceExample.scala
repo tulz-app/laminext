@@ -2,7 +2,6 @@ package io.laminext.site.examples.fetch
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
 object FetchCirceExample
     extends CodeExample(
@@ -10,7 +9,7 @@ object FetchCirceExample
       title = "circe example",
       description = FileAsString("description.md")
     )(() => {
-      import com.raquo.laminar.api.L._
+      import com.raquo.laminar.api.L.{Fetch => _, _}
 
       import io.laminext.syntax.core._
       import io.laminext.fetch.circe._
@@ -18,6 +17,7 @@ object FetchCirceExample
       import scala.util.Failure
       import scala.util.Success
       import com.raquo.laminar.CollectionCommand
+      import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
       case class Data(s: String)
       implicit val codeData: Codec[Data] = Codec.from(
@@ -31,7 +31,7 @@ object FetchCirceExample
         placeholder := "send a message"
       )
 
-      val (responsesStream, responseReceived) = EventStream.fromCallback[FetchResponse[Json]]
+      val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[Json]]
 
       div(
         cls := "space-y-4",

@@ -16,9 +16,6 @@ object Wiring {
   class MainBlueprint {
 
 //    @provides
-    val provideLocationProvider: LocationProvider = LocationProvider.browser(windowEvents(_.onPopState))
-
-//    @provides
     val ssrContext: SsrContext = SsrContext(
       ssr = dom.window.navigator.userAgent == "laminext/ssr"
     )
@@ -32,7 +29,7 @@ object Wiring {
       ssrContext = SsrContext(
         ssr = dom.window.navigator.userAgent == "laminext/ssr"
       ),
-      routes = new Routes(LocationProvider.browser(windowEvents(_.onPopState)))
+      routes = new Routes
     )
   }
 

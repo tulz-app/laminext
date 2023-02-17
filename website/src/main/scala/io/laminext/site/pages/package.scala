@@ -1,13 +1,28 @@
 package io.laminext.site
 
 import com.raquo.laminar.api.L._
+import io.frontroute._
+import io.frontroute.DocumentMeta
 
 package object pages {
 
-  type PageRender = () => PageResult
-  type PageResult = Either[(Int, String), (Element, String)]
-
-  def page(title: String)(content: () => Element): PageRender = () => Right((content(), title))
-  def error(code: Int, message: String): PageRender           = () => Left((code, message))
+  def page(
+    title: String,
+    description: Option[String] = None,
+    keywords: Option[String] = None,
+    status: PageStatusCode = PageStatusCode.Ok
+  )(
+    content: => Element
+  ): Element =
+    content.amend(
+      onMountCallback { _ =>
+        DocumentMeta.set(
+          title = title,
+          description = description,
+          keywords = keywords,
+          status = status
+        )
+      }
+    )
 
 }

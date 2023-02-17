@@ -1,18 +1,15 @@
 package io.laminext.site.components
 
 import com.raquo.laminar.api.L._
+import io.frontroute._
 import io.laminext.syntax.core._
-import io.laminext.syntax.tailwind._
-import io.laminext.syntax.markdown._
 import io.laminext.highlight.Highlight
 import io.laminext.markdown.markedjs.Marked
 import io.laminext.site.examples.CodeExample
-import io.laminext.tailwind.theme
 import io.laminext.site.Site
 import io.laminext.site.Styles
 import io.laminext.site.TemplateVars
 import org.scalajs.dom
-import org.scalajs.dom.ext._
 import org.scalajs.dom.html
 
 import scala.scalajs.js
@@ -37,24 +34,24 @@ object CodeExampleDisplay {
     lines.map(_.drop(minIndent)).mkString("\n")
   }
 
-  private val collapseTransition = theme.Theme.current.transition.resize.customize(
-    hidden = _ :+ "max-h-32",
-    showing = _ :+ "max-h-[400px]",
-    enterFrom = _ :+ "max-h-32",
-    enterTo = _ :+ "max-h-[400px]",
-    leaveFrom = _ :+ "max-h-[400px]",
-    leaveTo = _ :+ "max-h-32"
-  )
-
   def apply(example: CodeExample): Element = {
-    val sourceCollapsed = storedBoolean(example.id)
-    val dimContext      = storedBoolean("dim-context", initial = false)
-    val hasContext      = example.code.source.contains("/* <focus> */")
+    val dimContext = storedBoolean("dim-context", initial = true)
+    val hasContext = example.code.source.contains("/* <focus> */")
 
     val codeNode = (dim: Boolean) => {
       val theCode = pre(
-        cls := "w-full text-sm",
-        fixIndentation(example.code.source)
+        cls := "w-full text-sm language-scala",
+        fixIndentation {
+          example.code.source
+        }
+          .replaceAll(
+            "\n[ ]*/\\* <focus> \\*/[ ]*\n",
+            "\n/* <focus> */"
+          )
+          .replaceAll(
+            "\n[ ]*/\\* </focus> \\*/[ ]*\n",
+            "\n/* </focus> */"
+          )
       )
       div(
         theCode,
@@ -74,110 +71,118 @@ object CodeExampleDisplay {
     }
 
     div(
-      cls := "flex flex-col space-y-4 mb-20",
+      cls := "flex-1 flex flex-col min-h-full space-y-4",
       div(
+        cls := "flex space-x-4 items-center",
         h1(
-          cls := "font-display text-3xl font-bold text-gray-900 tracking-wider",
+          cls := "font-display text-xl font-bold text-gray-900 tracking-wide",
           example.title
-        )
-      ),
-      div(
-        cls := "prose max-w-none",
-        new Modifier[HtmlElement] {
-          override def apply(element: HtmlElement): Unit = element.ref.innerHTML = Marked
-            .parse(TemplateVars(example.description)).replace(
-              """<a href="/""",
-              s"""<a href="${Site.thisVersionPrefix}"""
+        ),
+        (path(Set("live", "source", "description")) | pathEnd.mapTo("live")).signal { tab =>
+          div(
+            cls := "flex space-x-2",
+            a(
+              href := "live",
+              cls  := "px-2 rounded",
+              cls.toggle("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "live"),
+              cls.toggle("text-gray-700 font-semibold") <-- tab.map(_ != "live"),
+              "Live Demo"
+            ),
+            a(
+              href := "source",
+              cls  := "px-2 rounded",
+              cls.toggle("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "source"),
+              cls.toggle("text-gray-700 font-semibold") <-- tab.map(_ != "source"),
+              "Source Code"
+            ),
+            a(
+              href := "description",
+              cls  := "px-2 rounded",
+              cls.toggle("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "description"),
+              cls.toggle("text-gray-700 font-semibold") <-- tab.map(_ != "description"),
+              cls  := (if (example.description.trim.isEmpty) "hidden" else ""),
+              "Description"
             )
-        },
-        onMountCallback { ctx =>
-          ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
-            Highlight.highlightElement(codeElement)
-          }
+          )
         }
       ),
-      div(
-        cls := "space-y-2",
+      (path(Set("live", "source", "description")) | pathEnd.mapTo("live")).signal { tab =>
         div(
-          cls := "flex space-x-4 items-center",
-          h2(
-            cls := "flex-1 text-xl font-semibold text-gray-900",
-            "Source code:"
-          ),
-          when(hasContext) {
-            label.btn.sm.text.blue(
-              cls := "flex-shrink-0 flex space-x-1 items-center cursor-pointer",
-              input(
-                tpe := "checkbox",
-                checked <-- dimContext.signal,
-                inContext { el =>
-                  el.events(onClick) --> { _ =>
-                    dimContext.set(el.ref.checked)
-                  }
-                }
-              ),
-              span(
-                "dim context"
-              )
-            )
-          },
-          span(
-            cls := "flex-shrink-0",
-            button.btn.sm.text.blue(
-              cls := "w-20 justify-center",
-              child.text <-- sourceCollapsed.signal.switch("expand", "collapse"),
-              onClick --> sourceCollapsed.toggleObserver
-            )
-          )
-        ),
-        div(
-          cls := "overflow-hidden shadow relative",
+          cls := "flex-1 flex flex-col space-y-2",
           div(
-            cls := "overflow-auto",
-            TW.transition(show = !sourceCollapsed.signal, collapseTransition),
-            child <-- Styles.highlightStyle.signal.combineWithFn(dimContext.signal) { (_, dim) =>
-              codeNode(dim)
+            cls := "flex-1 flex flex-col space-y-2",
+            cls.toggle("hidden") <-- tab.map(_ != "source"),
+            div(
+              cls := "flex space-x-4 items-center",
+              when(hasContext) {
+                label(
+                  cls := "btn-sm-text-blue flex-shrink-0 flex space-x-1 items-center cursor-pointer",
+                  input(
+                    tpe := "checkbox",
+                    checked <-- dimContext.signal,
+                    inContext { el =>
+                      el.events(onClick) --> { _ =>
+                        dimContext.set(el.ref.checked)
+                      }
+                    }
+                  ),
+                  span(
+                    "highlight relevant code"
+                  )
+                )
+              }
+            ),
+            div(
+              cls := "flex-1 shadow relative",
+              child <-- Styles.highlightStyle.signal.combineWithFn(dimContext.signal) { (_, dim) =>
+                codeNode(dim)
+              }
+            )
+          ),
+          div(
+            cls := "flex-1 flex flex-col",
+            cls.toggle("hidden") <-- tab.map(_ != "live"),
+            iframe(
+              cls := "flex-1",
+//              onLoad --> { e =>
+//                val f = e.target.asInstanceOf[HTMLIFrameElement]
+//                f.style.height = (f.contentWindow.document.body.scrollHeight + 20).toString + "px"
+//              },
+              src := Site.thisVersionHref(s"/example-frame/${example.id}")
+            )
+          ),
+          div(
+            cls := "flex-1 flex flex-col prose max-w-none",
+            cls.toggle("hidden") <-- tab.map(_ != "description"),
+            new Modifier[HtmlElement] {
+              override def apply(element: HtmlElement): Unit = element.ref.innerHTML = Marked
+                .parse(TemplateVars(example.description)).replace(
+                  """<a href="/""",
+                  s"""<a href="${Site.thisVersionPrefix}"""
+                )
+            },
+            onMountCallback { ctx =>
+              ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
+                Highlight.highlightElement(codeElement)
+              }
             }
-          ),
-          div(
-            cls := "p-2 absolute left-0 right-0 bottom-0 bg-gradient-to-b from-gray-500 to-gray-600 opacity-75",
-            button(
-              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-gray-200 text-gray-50 font-semibold",
-              onClick.mapToUnit --> sourceCollapsed.toggleObserver,
-              "expand"
-            )
-          ).visibleIf(sourceCollapsed.signal),
-          div(
-            cls := "p-2 bg-gradient-to-b from-gray-500 to-gray-600 opacity-75",
-            button(
-              cls := "w-full h-full text-center p-1 focus:outline-none focus:ring focus:ring-gray-200 text-gray-200 font-semibold",
-              onClick.mapToUnit --> sourceCollapsed.toggleObserver,
-              "collapse"
-            )
-          ).hiddenIf(sourceCollapsed.signal)
-        )
-      ),
-      div(
-        cls := "space-y-2",
-        h2(
-          cls := "text-xl font-semibold text-gray-900",
-          "Live demo:"
-        ),
-        div(
-          cls := "border-4 border-dashed border-blue-400 bg-blue-300 text-blue-900 rounded-lg -m-2 p-4",
-          onMountUnmountCallbackWithState(
-            mount = ctx => render(ctx.thisNode.ref, example.code.value()),
-            unmount = (_, root: Option[RootNode]) => root.foreach(_.unmount())
           )
         )
-      )
+      }
     )
   }
 
+  def frame(example: CodeExample): Element =
+    div(
+      cls := "border-4 border-dashed border-blue-400 bg-blue-300 text-blue-900 rounded-lg p-6",
+      example.code.value(),
+    )
+
+  @scala.annotation.unused
   private def opaqueColor(color: String, opaque: Int, dim: Boolean): String = {
     if (opaque == 0 && dim) {
       if (color.startsWith("rgb(")) {
-        color.replace("rgb(", "rgba(").replace(")", ", .4)")
+        color.replace("rgb(", "rgba(").replace(")", ", .5)")
       } else {
         color
       }
@@ -189,9 +194,6 @@ object CodeExampleDisplay {
   private def setOpacityRecursively(element: html.Element, opaque: Int, dim: Boolean): dom.Node = {
     val elementColor = dom.window.getComputedStyle(element).color
     val newElement   = element.cloneNode(false).asInstanceOf[html.Element]
-    if (opaque == 0) {
-      newElement.style.color = opaqueColor(elementColor, opaque, dim)
-    }
 
     var childrenOpaque = opaque
     val newChildNodes  = element.childNodes.flatMap { child =>
@@ -201,10 +203,10 @@ object CodeExampleDisplay {
         span.style.color = opaqueColor(elementColor, childrenOpaque, dim)
         Some(span)
       } else {
-        if (child.innerText == "/* <focus> */") {
+        if (child.innerText.contains("<focus>")) {
           childrenOpaque += 1
           None
-        } else if (child.innerText == "/* </focus> */") {
+        } else if (child.innerText.contains("</focus>")) {
           childrenOpaque -= 1
           None
         } else {
@@ -219,7 +221,7 @@ object CodeExampleDisplay {
   private def hideFocusMarkers(element: html.Element): Unit =
     element.childNodes.foreach { child =>
       if (child.nodeName != "#text") {
-        if (child.innerText == "/* <focus> */" || child.innerText == "/* </focus> */") {
+        if (child.innerText.contains("<focus>") || child.innerText.contains("</focus>")) {
           child.asInstanceOf[html.Element].style.display = "none"
         } else {
           hideFocusMarkers(child.asInstanceOf[html.Element])

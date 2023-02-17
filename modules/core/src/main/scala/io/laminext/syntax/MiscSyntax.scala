@@ -51,7 +51,7 @@ trait MiscSyntax {
   }
 
   @inline def createTrigger(): (EventStream[Unit], () => Unit) = {
-    val (stream, callback) = EventStream.fromCallback[Unit]
+    val (stream, callback) = EventStream.withCallback[Unit]
     (stream, () => { callback((): Unit) })
   }
 

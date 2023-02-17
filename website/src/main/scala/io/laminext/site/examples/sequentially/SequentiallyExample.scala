@@ -1,11 +1,7 @@
 package io.laminext.site.examples.sequentially
 
-import com.raquo.laminar.CollectionCommand
 import com.yurique.embedded.FileAsString
-import io.laminext.fetch.FetchResponse
 import io.laminext.site.examples.CodeExample
-import scala.util.Failure
-import scala.util.Success
 
 object SequentiallyExample
     extends CodeExample(
@@ -16,7 +12,7 @@ object SequentiallyExample
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.core._
       val boundVar            = Var(true)
-      val (tasks, submitTask) = EventStream.fromCallback[String]
+      val (tasks, submitTask) = EventStream.withCallback[String]
 
       /* <focus> */
       val taskQueue = sequentially(tasks) { task =>

@@ -2,6 +2,7 @@ package io.laminext.site
 
 class SiteModule private (
   val path: String,
+  val title: String,
   val index: Page,
   val navigation: Seq[(String, Seq[Page])]
 ) {
@@ -16,8 +17,9 @@ object SiteModule {
 
   def apply(
     path: String,
+    title: String,
     index: Page,
     navigation: (String, Seq[Page])*
-  ): SiteModule = new SiteModule(path, index, navigation)
+  ): SiteModule = new SiteModule(path, title, index, navigation)
 
 }
