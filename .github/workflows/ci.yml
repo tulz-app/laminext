@@ -61,7 +61,7 @@ jobs:
       - run: sbt -mem 5000 ++${{ matrix.scala }} test
 
       - name: Compress target directories
-        run: tar cf targets.tar website/target modules/validation-core/target modules/util/target target modules/highlight/target modules/fsm/target modules/websocket/target modules/fetch-circe/target modules/fetch-upickle/target modules/tailwind-default-theme/target modules/base/target modules/ui/target modules/validation-cats/target modules/fetch/target modules/websocket-upickle/target modules/core/target modules/tailwind/target modules/websocket-circe/target modules/videojs/target modules/markdown/target project/target
+        run: tar cf targets.tar  modules/validation-core/target modules/util/target target modules/highlight/target modules/fsm/target modules/websocket/target modules/fetch-circe/target modules/fetch-upickle/target modules/tailwind-default-theme/target modules/base/target modules/ui/target modules/validation-cats/target modules/fetch/target modules/websocket-upickle/target modules/core/target modules/tailwind/target modules/websocket-circe/target modules/videojs/target modules/markdown/target project/target
 
       - name: Upload target directories
         uses: actions/upload-artifact@v2

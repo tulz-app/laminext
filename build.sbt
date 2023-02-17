@@ -1,5 +1,7 @@
 import org.scalajs.linker.interface.ESVersion
 
+val disableWebsiteBuildInCI = true
+
 inThisBuild(
   List(
     organization                        := "io.laminext",
@@ -22,13 +24,31 @@ inThisBuild(
     githubWorkflowTargetTags ++= Seq("v*"),
     githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
     githubWorkflowPublish               := Seq(WorkflowStep.Sbt(List("ci-release"))),
-    githubWorkflowBuild                 := Seq(WorkflowStep.Sbt(List("test"/*, "website/compile"*/))),
+    githubWorkflowBuild                 := Seq(WorkflowStep.Sbt(List("test") ++ List("website/compile").filterNot(_ => disableWebsiteBuildInCI))),
     githubWorkflowEnv ~= (_ ++ Map(
       "PGP_PASSPHRASE"    -> s"$${{ secrets.PGP_PASSPHRASE }}",
       "PGP_SECRET"        -> s"$${{ secrets.PGP_SECRET }}",
       "SONATYPE_PASSWORD" -> s"$${{ secrets.SONATYPE_PASSWORD }}",
       "SONATYPE_USERNAME" -> s"$${{ secrets.SONATYPE_USERNAME }}"
     )),
+    githubWorkflowGeneratedUploadSteps ~= (steps =>
+      if (disableWebsiteBuildInCI)
+        steps.map {
+          case run: WorkflowStep.Run =>
+            run.copy(commands = run.commands.map { command =>
+              if (command.startsWith("tar cf targets.tar")) {
+                command
+                  .replace("website/target", "")
+                  .replace("modules/websocket-zio/target", "")
+              } else {
+                command
+              }
+
+            })
+          case other                 => other
+        }
+      else steps
+    ),
     versionScheme                       := Some("semver-spec") // all 0.y.z are treated as initial development (no bincompat guarantees)
   ),
 )
