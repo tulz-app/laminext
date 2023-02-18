@@ -2,8 +2,6 @@ package io.laminext.site.examples.ui.ex_drag_drop_2
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import io.laminext.ui.dnd.DraggingOver
-import io.laminext.syntax.core._
 
 object DragDropExample2
     extends CodeExample(
@@ -13,17 +11,13 @@ object DragDropExample2
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.ui._
+      import io.laminext.ui.dnd.DraggingOver
+      import io.laminext.syntax.core._
 
       val listVar  = Var(List.empty[String])
       val dragging = Var(false)
       val insert   = Var(false)
 
-      val el: io.laminext.ui.dnd.DropZoneElement[org.scalajs.dom.HTMLDivElement, String] = ???
-
-      div(
-        children <-- Val(List.empty[String]).split(identity)((_, _, _) => el),
-        children <-- Val(List(el)),
-      )
       div(
         cls := "p-4 bg-sky-100 space-y-8",
         div(

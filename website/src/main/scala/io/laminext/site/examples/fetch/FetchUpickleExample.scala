@@ -2,7 +2,6 @@ package io.laminext.site.examples.fetch
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
 object FetchUpickleExample
     extends CodeExample(
@@ -10,13 +9,14 @@ object FetchUpickleExample
       title = "upickle example",
       description = FileAsString("description.md")
     )(() => {
-      import com.raquo.laminar.api.L._
+      import com.raquo.laminar.api.L.{Fetch => _, _}
       import io.laminext.syntax.core._
       import io.laminext.fetch.upickle._
       import upickle.default._
       import scala.util.Failure
       import scala.util.Success
       import com.raquo.laminar.CollectionCommand
+      import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
       case class Data(s: String)
       implicit val codeData: Writer[Data] = writer[Map[String, String]].comap(d => Map("s" -> d.s))
@@ -26,7 +26,7 @@ object FetchUpickleExample
         placeholder := "send a message"
       )
 
-      val (responsesStream, responseReceived) = EventStream.fromCallback[FetchResponse[String]]
+      val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[String]]
       div(
         EventStream.fromValue(1).debugLogStarts --> { _ => },
         cls := "space-y-4",

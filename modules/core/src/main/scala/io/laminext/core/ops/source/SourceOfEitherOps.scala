@@ -2,15 +2,16 @@ package io.laminext.core
 package ops.source
 
 import com.raquo.laminar.api.L._
+import com.raquo.laminar.nodes.ChildNode
 import com.raquo.laminar.nodes.ReactiveElement
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 final class SourceOfEitherOps[A, B](val underlying: Source[Either[A, B]]) {
 
-  @inline def childIfLeft(child: => Child): Inserter[ReactiveElement.Base] =
+  @inline def childIfLeft(child: => ChildNode.Base): Inserter[ReactiveElement.Base] =
     ConditionalChildInserter(underlying.toObservable.map(_.isLeft), child)
 
-  @inline def childIfRight(child: => Child): Inserter[ReactiveElement.Base] =
+  @inline def childIfRight(child: => ChildNode.Base): Inserter[ReactiveElement.Base] =
     ConditionalChildInserter(underlying.toObservable.map(_.isRight), child)
 
   @inline def doWhenLeft(

@@ -14,8 +14,8 @@ class TaskQueue[In, Out] private (tasks: EventStream[In], run: In => EventStream
 
   private var bindsCount                                   = 0
   private val queue: mutable.ArrayDeque[In]                = mutable.ArrayDeque.empty
-  private val (events, submitEvent)                        = EventStream.fromCallback[QueueEvent]
-  private val (_output, submitOutput)                      = EventStream.fromCallback[Out]
+  private val (events, submitEvent)                        = EventStream.withCallback[QueueEvent]
+  private val (_output, submitOutput)                      = EventStream.withCallback[Out]
   private var state: QueueState                            = TaskQueue.QueueState.Stopped
   private var tasksSubscription: js.UndefOr[Subscription]  = js.undefined
   private var eventsSubscription: js.UndefOr[Subscription] = js.undefined

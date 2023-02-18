@@ -3,6 +3,7 @@ package ops.source
 
 import com.raquo.laminar.api.L
 import com.raquo.laminar.api.L._
+import com.raquo.laminar.nodes.ChildNode
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 final class SourceOfBooleanOps(underlying: Source[Boolean]) {
@@ -16,12 +17,12 @@ final class SourceOfBooleanOps(underlying: Source[Boolean]) {
     }
 
   @inline def childWhenTrue(
-    child: => Child
+    child: => ChildNode.Base
   ): Inserter[ReactiveHtmlElement.Base] =
     ConditionalChildInserter(underlying.toObservable, child)
 
   @inline def childWhenFalse(
-    child: => Child
+    child: => ChildNode.Base
   ): Inserter[ReactiveHtmlElement.Base] =
     ConditionalChildInserter(underlying.toObservable.map(!_), child)
 

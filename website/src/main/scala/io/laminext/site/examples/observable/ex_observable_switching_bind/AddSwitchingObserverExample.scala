@@ -1,10 +1,7 @@
 package io.laminext.site.examples.observable.ex_observable_switching_bind
 
-import com.raquo.laminar.CollectionCommand
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import scala.util.Failure
-import scala.util.Success
 
 object AddSwitchingObserverExample
     extends CodeExample(
@@ -16,7 +13,9 @@ object AddSwitchingObserverExample
       import io.laminext.syntax.core._
 
       val prefixes         = Var(Option.empty[String])
+      /* <focus> */
       val observers        = Var(Option.empty[Observer[String]])
+      /* </focus> */
       val messages         = new EventBus[String]
       val observerMessages = new EventBus[String]
 

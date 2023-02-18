@@ -1,11 +1,7 @@
 package io.laminext.site.examples.ui.ex_drag_drop
 
-import com.raquo.laminar.CollectionCommand
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import io.laminext.ui.dnd.DraggingOver
-import io.laminext.syntax.core._
-import org.scalajs.dom.FileList
 
 object DragDropExample
     extends CodeExample(
@@ -15,6 +11,9 @@ object DragDropExample
     )(() => {
       import com.raquo.laminar.api.L._
       import io.laminext.syntax.ui._
+      import io.laminext.ui.dnd.DraggingOver
+      import io.laminext.syntax.core._
+      import org.scalajs.dom.FileList
 
       div(
         cls := "p-4 bg-sky-100 space-y-8",

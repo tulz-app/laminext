@@ -1,6 +1,5 @@
 package io.laminext.site.examples.websocket
 
-import com.raquo.laminar.CollectionCommand
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
 

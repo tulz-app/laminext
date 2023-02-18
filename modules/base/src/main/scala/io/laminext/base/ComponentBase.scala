@@ -1,12 +1,15 @@
 package io.laminext.base
 
 import com.raquo.laminar.api.L._
+import com.raquo.laminar.modifiers.RenderableNode
+import com.raquo.laminar.nodes.ChildNode.Base
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import org.scalajs.dom
 
 trait ComponentBase[+R <: dom.html.Element] {
 
   val el: ReactiveHtmlElement[R]
+  def ref: R = el.ref
 
   @inline def amend(mods: Modifier[ReactiveHtmlElement[R]]*): this.type = {
     el.amend(mods)
@@ -22,8 +25,16 @@ trait ComponentBase[+R <: dom.html.Element] {
 
 object ComponentBase {
 
-  @inline implicit def componentBaseToReactiveHtmlElement[R <: dom.html.Element](
-    component: ComponentBase[R]
-  ): ReactiveHtmlElement[R] = component.el
+  implicit def componentBaseToReactiveHtmlElement[R <: dom.html.Element]: RenderableNode[ComponentBase[R]] = new RenderableNode[ComponentBase[R]] {
+
+    override def asNode(value: ComponentBase[R]): Base = value.el
+
+    override def asNodeSeq(values: Seq[ComponentBase[R]]): Seq[Base] = values.map(_.el)
+
+    override def asNodeIterable(values: Iterable[ComponentBase[R]]): Iterable[Base] = values.map(_.el)
+
+    override def asNodeOption(value: Option[ComponentBase[R]]): Option[Base] = value.map(_.el)
+
+  }
 
 }

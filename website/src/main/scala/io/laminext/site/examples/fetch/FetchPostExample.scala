@@ -1,12 +1,7 @@
 package io.laminext.site.examples.fetch
 
-import com.raquo.laminar.CollectionCommand
 import com.yurique.embedded.FileAsString
-import io.laminext.fetch.FetchResponse
 import io.laminext.site.examples.CodeExample
-import scala.util.Failure
-import scala.util.Success
-import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
 object FetchPostExample
     extends CodeExample(
@@ -14,16 +9,19 @@ object FetchPostExample
       title = "POST example",
       description = FileAsString("description.md")
     )(() => {
-      import com.raquo.laminar.api.L._
+      import com.raquo.laminar.api.L.{Fetch => _, _}
       import io.laminext.syntax.core._
       import io.laminext.fetch.Fetch
-      import org.scalajs.dom
+      import io.laminext.fetch.FetchResponse
+      import scala.util.Failure
+      import scala.util.Success
+      import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
       val inputElement                        = input(
         tpe         := "text",
         placeholder := "send a message"
       )
-      val (responsesStream, responseReceived) = EventStream.fromCallback[FetchResponse[String]]
+      val (responsesStream, responseReceived) = EventStream.withCallback[FetchResponse[String]]
       div(
         cls := "space-y-4",
         div(inputElement),
