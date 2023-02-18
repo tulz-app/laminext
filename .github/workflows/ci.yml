@@ -29,6 +29,7 @@ jobs:
         os: [ubuntu-latest]
         scala: [2.13.10, 3.2.1]
         java: [temurin@17]
+        ci: [ciFirefox, ciChrome, ciJSDOMNodeJS]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -55,19 +56,25 @@ jobs:
             ~/Library/Caches/Coursier/v1
           key: ${{ runner.os }}-sbt-cache-v2-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}
 
+      - name: Setup NodeJS v18 LTS
+        if: matrix.ci == 'ciJSDOMNodeJS'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install jsdom
+        if: matrix.ci == 'ciJSDOMNodeJS'
+        run: npm install
+
       - name: Check that workflows are up to date
         run: sbt -mem 5000 ++${{ matrix.scala }} githubWorkflowCheck
 
-      - run: sbt -mem 5000 ++${{ matrix.scala }} test
+      - run: sbt -mem 5000 ++${{ matrix.scala }} '${{ matrix.ci }}'
 
-      - name: Compress target directories
-        run: tar cf targets.tar  modules/validation-core/target modules/util/target target modules/highlight/target modules/fsm/target modules/websocket/target modules/fetch-circe/target modules/fetch-upickle/target modules/tailwind-default-theme/target modules/base/target modules/ui/target modules/validation-cats/target modules/fetch/target modules/websocket-upickle/target modules/core/target modules/tailwind/target modules/websocket-circe/target modules/videojs/target modules/markdown/target project/target
-
-      - name: Upload target directories
-        uses: actions/upload-artifact@v2
-        with:
-          name: target-${{ matrix.os }}-${{ matrix.scala }}-${{ matrix.java }}
-          path: targets.tar
+      - name: build website
+        if: matrix.ci == 'ciJSDOMNodeJS'
+        run: sbt -mem 5000 ++${{ matrix.scala }} website/compile
 
   publish:
     name: Publish Artifacts
@@ -103,25 +110,5 @@ jobs:
             ~/AppData/Local/Coursier/Cache/v1
             ~/Library/Caches/Coursier/v1
           key: ${{ runner.os }}-sbt-cache-v2-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}
-
-      - name: Download target directories (2.13.10)
-        uses: actions/download-artifact@v2
-        with:
-          name: target-${{ matrix.os }}-2.13.10-${{ matrix.java }}
-
-      - name: Inflate target directories (2.13.10)
-        run: |
-          tar xf targets.tar
-          rm targets.tar
-
-      - name: Download target directories (3.2.1)
-        uses: actions/download-artifact@v2
-        with:
-          name: target-${{ matrix.os }}-3.2.1-${{ matrix.java }}
-
-      - name: Inflate target directories (3.2.1)
-        run: |
-          tar xf targets.tar
-          rm targets.tar
 
       - run: sbt -mem 5000 ++${{ matrix.scala }} ci-release
