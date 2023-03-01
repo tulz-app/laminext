@@ -9,7 +9,7 @@ object FetchCirceExample
       title = "circe example",
       description = FileAsString("description.md")
     )(() => {
-      import com.raquo.laminar.api.L.{Fetch => _, _}
+      import com.raquo.laminar.api.L._
 
       import io.laminext.syntax.core._
       import io.laminext.fetch.circe._
