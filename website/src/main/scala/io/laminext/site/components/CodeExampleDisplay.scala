@@ -1,7 +1,7 @@
 package io.laminext.site.components
 
 import com.raquo.laminar.api.L._
-import io.frontroute._
+import frontroute._
 import io.laminext.syntax.core._
 import io.laminext.highlight.Highlight
 import io.laminext.markdown.markedjs.Marked

@@ -4,7 +4,7 @@ import com.raquo.laminar.api.L._
 import io.laminext.site.layout.PageWrap
 import io.laminext.syntax.core._
 import io.laminext.syntax.tailwind._
-import io.frontroute._
+import frontroute._
 import io.laminext.tailwind.modal.ModalContent
 import io.laminext.tailwind.theme.Modal
 import io.laminext.tailwind.theme.Theme

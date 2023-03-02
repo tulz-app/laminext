@@ -1,8 +1,8 @@
 package io.laminext.site
 
 import com.raquo.laminar.api.L._
-import io.frontroute.BrowserNavigation
-import io.frontroute.LinkHandler
+import frontroute.BrowserNavigation
+import frontroute.LinkHandler
 import io.laminext.highlight.Highlight
 import io.laminext.highlight.HighlightCss
 import io.laminext.highlight.HighlightJavaScript
