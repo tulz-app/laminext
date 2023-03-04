@@ -38,7 +38,7 @@ class Routes {
     pathPrefix("v" / versionSegment)
 
   private val thisVersionPrefix =
-    versionPrefix.filter(_.toString.startsWith(Site.laminextVersion)).mapTo(())
+    versionPrefix.filter(_.toString.startsWith(Site.laminextSiteVersion)).mapTo(())
 
   private val anyVersionPrefix =
     versionPrefix.mapTo(())
