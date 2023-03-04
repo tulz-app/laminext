@@ -9,7 +9,7 @@ object FetchUpickleExample
       title = "upickle example",
       description = FileAsString("description.md")
     )(() => {
-      import com.raquo.laminar.api.L.{Fetch => _, _}
+      import com.raquo.laminar.api.L._
       import io.laminext.syntax.core._
       import io.laminext.fetch.upickle._
       import upickle.default._

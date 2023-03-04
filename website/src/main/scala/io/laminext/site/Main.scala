@@ -10,9 +10,7 @@ import io.laminext.highlight.HighlightJson
 import io.laminext.highlight.HighlightScala
 import io.laminext.highlight.HighlightXml
 import io.laminext.site.components.CodeExampleDisplay
-import io.laminext.tailwind.modal.Modal
-import io.laminext.tailwind.theme.DefaultTheme
-import io.laminext.tailwind.theme.Theme
+import io.laminext.syntax.ui._
 import org.scalajs.dom
 
 import scala.scalajs.js

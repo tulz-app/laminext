@@ -300,6 +300,24 @@ lazy val `util` =
     .settings(commonSettings)
     .settings(baseDependencies)
 
+lazy val parser   = Parser.builder.build
+lazy val renderer = HtmlRenderer.builder.build
+
+lazy val laminextSiteVersion: String = IO.read(file("website/.laminext-version")).trim
+lazy val thisVersionSitePrefix       = s"/v/$laminextSiteVersion/"
+
+lazy val vars = Seq(
+  "laminextVersion" -> "0.15.0-M6",
+  "laminarVersion"  -> "15.0.0-M7",
+  "scalajsVersion"  -> "1.13.0",
+  "scala3version"   -> "3.2.1",
+)
+
+def templateVars(s: String): String =
+  vars.foldLeft(s) { case (acc, (varName, varValue)) =>
+    acc.replace(s"{{${varName}}}", varValue)
+  }
+
 lazy val website = project
   .in(file("website"))
   .enablePlugins(ScalaJSPlugin, EmbeddedFilesPlugin, BuildInfoPlugin)

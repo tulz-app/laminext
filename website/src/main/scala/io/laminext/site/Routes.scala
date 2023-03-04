@@ -36,12 +36,6 @@ class Routes {
   private val anyVersionPrefix =
     versionPrefix.mapTo(())
 
-  private val mobileMenuModal: Modal = Theme.current.modal.customize(
-    contentWrapTransition = _.customize(
-      nonHidden = _ :+ "bg-gray-900"
-    )
-  )
-
   def start(): Unit = {
     val appContainer = dom.document.querySelector("#app-container")
 
@@ -59,7 +53,7 @@ class Routes {
                   (modulePrefix & pathEnd).map(m => Some((m, m.index))) |
                   moduleAndPagePrefix.map(moduleAndPage => Some(moduleAndPage))
               ).signal { moduleAndPage =>
-                PageWrap(moduleAndPage, mobileMenuContent.writer)
+                PageWrap(moduleAndPage)
               },
               div("Not Found")
             )

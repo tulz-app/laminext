@@ -1,14 +1,13 @@
 package io.laminext.site.components
 
 import com.raquo.laminar.api.L._
-import io.frontroute._
+import frontroute._
 import io.laminext.syntax.core._
+import io.laminext.syntax.dangerous._
 import io.laminext.highlight.Highlight
-import io.laminext.markdown.markedjs.Marked
 import io.laminext.site.examples.CodeExample
 import io.laminext.site.Site
 import io.laminext.site.Styles
-import io.laminext.site.TemplateVars
 import org.scalajs.dom
 import org.scalajs.dom.html
 
@@ -110,7 +109,7 @@ object CodeExampleDisplay {
         div(
           cls := "flex-1 flex flex-col space-y-2",
           div(
-            cls := "flex-1 flex flex-col space-y-2",
+            cls             := "flex-1 flex flex-col space-y-2",
             cls.toggle("hidden") <-- tab.map(_ != "source"),
             div(
               cls := "flex space-x-4 items-center",
@@ -140,7 +139,7 @@ object CodeExampleDisplay {
             )
           ),
           div(
-            cls := "flex-1 flex flex-col",
+            cls             := "flex-1 flex flex-col",
             cls.toggle("hidden") <-- tab.map(_ != "live"),
             iframe(
               cls := "flex-1",
@@ -152,15 +151,9 @@ object CodeExampleDisplay {
             )
           ),
           div(
-            cls := "flex-1 flex flex-col prose max-w-none",
+            cls             := "flex-1 flex flex-col prose max-w-none",
             cls.toggle("hidden") <-- tab.map(_ != "description"),
-            new Modifier[HtmlElement] {
-              override def apply(element: HtmlElement): Unit = element.ref.innerHTML = Marked
-                .parse(TemplateVars(example.description)).replace(
-                  """<a href="/""",
-                  s"""<a href="${Site.thisVersionPrefix}"""
-                )
-            },
+            unsafeInnerHtml := example.description,
             onMountCallback { ctx =>
               ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>
                 Highlight.highlightElement(codeElement)
