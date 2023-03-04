@@ -1,4 +1,5 @@
 import sbt.CrossVersion
+
 import sbt.Keys._
 
 object ScalaOptions {

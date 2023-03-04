@@ -1,8 +1,8 @@
 package io.laminext.site
 
 import com.raquo.laminar.api.L._
-import io.frontroute.BrowserNavigation
-import io.frontroute.LinkHandler
+import frontroute.BrowserNavigation
+import frontroute.LinkHandler
 import io.laminext.highlight.Highlight
 import io.laminext.highlight.HighlightCss
 import io.laminext.highlight.HighlightJavaScript
@@ -10,10 +10,21 @@ import io.laminext.highlight.HighlightJson
 import io.laminext.highlight.HighlightScala
 import io.laminext.highlight.HighlightXml
 import io.laminext.site.components.CodeExampleDisplay
-import io.laminext.syntax.ui._
+import io.laminext.tailwind.modal.Modal
+import io.laminext.tailwind.theme.DefaultTheme
+import io.laminext.tailwind.theme.Theme
 import org.scalajs.dom
 
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSImport
+
+@js.native
+@JSImport("stylesheets/index.css", JSImport.Default)
+object IndexCss extends js.Object
+
 object Main {
+
+  val indexCss: IndexCss.type = IndexCss
 
   def main(args: Array[String]): Unit = {
     val _ = documentEvents(_.onDomContentLoaded).foreach { _ =>
@@ -36,7 +47,7 @@ object Main {
 
   private def renderExample(): Unit = {
     val id           = dom.window.location.pathname.drop(Site.thisVersionHref("/example-frame/").length).takeWhile(_ != '/')
-    val appContainer = dom.document.querySelector("#app")
+    val appContainer = dom.document.querySelector("#app-container")
     val content      = Site.allExamples.find(_.id == id).map(ex => CodeExampleDisplay.frame(ex)).getOrElse(div(s"EXAMPLE NOT FOUND: ${id}"))
     val _            = com.raquo.laminar.api.L.render(appContainer, content.amend(LinkHandler.bind))
     BrowserNavigation.pushState(url = "/")

@@ -2,7 +2,7 @@ package io.laminext.site
 
 import com.raquo.laminar.api.L._
 //import factorio._
-import io.frontroute.LocationProvider
+import frontroute.LocationProvider
 import org.scalajs.dom
 
 class Wiring(

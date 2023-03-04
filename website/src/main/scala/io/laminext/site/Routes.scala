@@ -2,7 +2,7 @@ package io.laminext.site
 
 import com.raquo.laminar.api.L._
 import io.laminext.site.layout.PageWrap
-import io.frontroute._
+import frontroute._
 import org.scalajs.dom
 
 class Routes {
@@ -36,35 +36,41 @@ class Routes {
   private val anyVersionPrefix =
     versionPrefix.mapTo(())
 
+  private val mobileMenuModal: Modal = Theme.current.modal.customize(
+    contentWrapTransition = _.customize(
+      nonHidden = _ :+ "bg-gray-900"
+    )
+  )
+
   def start(): Unit = {
-    val appContainer = dom.document.querySelector("#app")
+    val appContainer = dom.document.querySelector("#app-container")
 
     appContainer.innerHTML = ""
     val _ = com.raquo.laminar.api.L.render(
       appContainer,
-      div(
-        cls := "contents",
-        LinkHandler.bind,
-        thisVersionPrefix(
-          firstMatch(
-            (
-              pathEnd.mapTo(Some((Site.indexModule, Site.indexModule.index))) |
-                (modulePrefix & pathEnd).map(m => Some((m, m.index))) |
-                moduleAndPagePrefix.map(moduleAndPage => Some(moduleAndPage))
-            ).signal { moduleAndPage =>
-              PageWrap(moduleAndPage)
-            },
+      routes(
+        div(
+          cls := "contents",
+          LinkHandler.bind,
+          thisVersionPrefix(
+            firstMatch(
+              (
+                pathEnd.mapTo(Some((Site.indexModule, Site.indexModule.index))) |
+                  (modulePrefix & pathEnd).map(m => Some((m, m.index))) |
+                  moduleAndPagePrefix.map(moduleAndPage => Some(moduleAndPage))
+              ).signal { moduleAndPage =>
+                PageWrap(moduleAndPage, mobileMenuContent.writer)
+              },
+              div("Not Found")
+            )
+          ),
+          (noneMatched & anyVersionPrefix) {
+            div("Not Found (wrong version)")
+          },
+          noneMatched {
             div("Not Found")
-          )
-        ),
-        (noneMatched & anyVersionPrefix) {
-          runEffect {
-            dom.window.location.reload()
           }
-        },
-        noneMatched {
-          div("Not Found")
-        }
+        )
       )
     )
   }

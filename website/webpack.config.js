@@ -14,7 +14,7 @@ const scalaOutputPath = path.resolve(__dirname, `./target/scala-${scalaVersion}`
 const devServerHost = '127.0.0.1';
 const devServerPort = 30088;
 
-const publicPath = 'v/0.16.x'
+const publicPath = 'v/0.15.x'
 
 const devServer =
   {
@@ -24,7 +24,7 @@ const devServer =
     historyApiFallback: {
       verbose: true,
       rewrites: [
-        { from: /\/v\/0.16.x\//, to: `/${publicPath}/index.html`}
+        { from: /\/v\/0.15.x\//, to: `/${publicPath}/index.html`}
       ],
       index: true
     }

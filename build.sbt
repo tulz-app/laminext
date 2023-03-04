@@ -13,6 +13,9 @@ import org.scalajs.jsenv.selenium.SeleniumJSEnv
 
 import java.util.concurrent.TimeUnit
 
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
+
 val disableWebsiteOnCI = false
 
 val ciVariants = List("ciFirefox", "ciChrome", "ciJSDOMNodeJS")
@@ -299,13 +302,13 @@ lazy val `util` =
 
 lazy val website = project
   .in(file("website"))
-  .enablePlugins(ScalaJSPlugin)
-  .enablePlugins(EmbeddedFilesPlugin)
+  .enablePlugins(ScalaJSPlugin, EmbeddedFilesPlugin, BuildInfoPlugin)
   .settings(commonSettings)
   .settings(noPublish)
   .settings(
     githubWorkflowTargetTags        := Seq.empty,
-    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fastLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
+    Compile / fullLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withESVersion(ESVersion.ES5_1)) },
     Compile / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     scalaJSUseMainModuleInitializer := true,
@@ -320,6 +323,18 @@ lazy val website = project
     ),
     embedTextGlobs                  := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
+    embedTransform                  := Seq(
+      TransformConfig(
+        when = _.getFileName.toString.endsWith(".md"),
+        transform = { s =>
+          templateVars(renderer.render(parser.parse(s)))
+            .replace(
+              """<a href="/""",
+              s"""<a href="${thisVersionSitePrefix}"""
+            )
+        }
+      )
+    ),
     (Compile / sourceGenerators) += embedFiles
   )
   .dependsOn(

@@ -7,7 +7,7 @@ import com.raquo.laminar.api.Laminar.CompositeSvgAttr
 import com.raquo.laminar.api._
 import com.raquo.laminar.codecs.StringAsIsCodec
 import com.raquo.laminar.defs.complex.ComplexHtmlKeys.CompositeHtmlAttr
-import com.raquo.laminar.defs.complex.ComplexHtmlKeys.CompositeProp
+import com.raquo.laminar.defs.complex.ComplexHtmlKeys.CompositeHtmlProp
 import com.raquo.laminar.keys.HtmlAttr
 import com.raquo.laminar.keys.HtmlProp
 import com.raquo.laminar.keys.StyleProp
@@ -91,7 +91,7 @@ trait LaminarSpec extends MountOps with RuleImplicits[Tag.Base, CommentNode, Htm
     new TestableSvgAttr[V](svgAttr.name, svgAttr.codec.encode, svgAttr.codec.decode, svgAttr.namespaceUri)
   }
 
-  implicit def makeCompositePropTestable(prop: CompositeProp): TestableProp[String, String] = {
+  implicit def makeCompositePropTestable(prop: CompositeHtmlProp): TestableProp[String, String] = {
     new TestableProp(prop.name, StringAsIsCodec.decode)
   }
 

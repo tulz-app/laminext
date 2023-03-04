@@ -1,3 +1,7 @@
+<div class="text-rose-600 font-medium">
+The buttons module will be deprecated with no replacement in the next version of laminext.
+</div>
+
 You can build buttons using the extension methods provided.
 
 Start with a Laminar tag (`button`, `a`, or any other) call the `.btn` extension method 

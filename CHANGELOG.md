@@ -7,6 +7,11 @@
 * Modal changes:
   * no pre-existing container needed
   * no modal content – close observer is separate from content 
+
+### 0.14.4
+
+Scala 3.2.0, Scala.js 1.11.0
+
 ### 0.14.3
 
 * Bugfix: in the WebSocket client, a check for the "connected" status was incomplete - https://github.com/tulz-app/laminext/pull/108 (@lavrov) 

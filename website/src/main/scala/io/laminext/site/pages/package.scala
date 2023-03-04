@@ -1,8 +1,8 @@
 package io.laminext.site
 
 import com.raquo.laminar.api.L._
-import io.frontroute._
-import io.frontroute.DocumentMeta
+import frontroute._
+import frontroute.DocumentMeta
 
 package object pages {
 
