@@ -4,12 +4,13 @@ import io.laminext.site.examples.CodeExample
 import io.laminext.site.pages.CodeExamplePage
 import io.laminext.site.pages.DocumentationPage
 import com.yurique.embedded.FileAsString
+import io.laminext.BuildInfo
 
 object Site {
 
-  val laminextVersion: String = "0.16.x"
+  val laminextSiteVersion: String = BuildInfo.laminextSiteVersion
 
-  val thisVersionPrefix = s"/v/$laminextVersion/"
+  val thisVersionPrefix = s"/v/$laminextSiteVersion/"
 
   def thisVersionHref(href: String): String =
     s"${thisVersionPrefix}${href.dropWhile(_ == '/')}"

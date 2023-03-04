@@ -307,7 +307,7 @@ lazy val laminextSiteVersion: String = IO.read(file("website/.laminext-version")
 lazy val thisVersionSitePrefix       = s"/v/$laminextSiteVersion/"
 
 lazy val vars = Seq(
-  "laminextVersion" -> "0.15.0-M6",
+  "laminextVersion" -> "0.15.0-M7",
   "laminarVersion"  -> "15.0.0-M7",
   "scalajsVersion"  -> "1.13.0",
   "scala3version"   -> "3.2.1",
@@ -325,6 +325,15 @@ lazy val website = project
   .settings(noPublish)
   .settings(
     githubWorkflowTargetTags        := Seq.empty,
+    publish / skip                  := true,
+    buildInfoKeys                   := Seq[BuildInfoKey](
+      version,
+      scalaVersion,
+      BuildInfoKey(
+        "laminextSiteVersion" -> laminextSiteVersion
+      )
+    ),
+    buildInfoPackage                := "io.laminext",
     Compile / fastLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
     Compile / fullLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withESVersion(ESVersion.ES5_1)) },

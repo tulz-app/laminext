@@ -41,7 +41,7 @@ object PageHeader {
         ),
         span(
           cls := "text-gray-500 text-xs font-black",
-          Site.laminextVersion
+          Site.laminextSiteVersion
         )
       ),
       navTag(
