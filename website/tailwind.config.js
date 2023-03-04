@@ -1,19 +1,14 @@
-const colors = require('tailwindcss/colors')
 const scalaVersion = require('./scala-version')
 
 module.exports = (api) => {
-  const scalajsMode = api.mode === 'production' ? 'opt' : 'fastopt'
+  const scalajsMode = api.env === 'production' ? 'opt' : 'fastopt'
   return {
-    mode: 'jit',
-    purge: [
+    content: [
       `./target/scala-${scalaVersion}/website-${scalajsMode}/*.js`,
-      './src/main/static/html/*',
+      './index.html',
     ],
     theme: {
       extend: {
-        colors: {
-          gray: colors.coolGray,
-        },
         fontFamily: {
           display: ['Oxanium', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
           serif: ['Inter', 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],

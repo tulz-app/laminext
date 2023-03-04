@@ -15,7 +15,16 @@ import io.laminext.tailwind.theme.DefaultTheme
 import io.laminext.tailwind.theme.Theme
 import org.scalajs.dom
 
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSImport
+
+@js.native
+@JSImport("stylesheets/index.css", JSImport.Default)
+object IndexCss extends js.Object
+
 object Main {
+
+  val indexCss: IndexCss.type = IndexCss
 
   def main(args: Array[String]): Unit = {
     val _ = documentEvents(_.onDomContentLoaded).foreach { _ =>
@@ -39,7 +48,7 @@ object Main {
 
   private def renderExample(): Unit = {
     val id           = dom.window.location.pathname.drop(Site.thisVersionHref("/example-frame/").length).takeWhile(_ != '/')
-    val appContainer = dom.document.querySelector("#app")
+    val appContainer = dom.document.querySelector("#app-container")
     val content      = Site.allExamples.find(_.id == id).map(ex => CodeExampleDisplay.frame(ex)).getOrElse(div(s"EXAMPLE NOT FOUND: ${id}"))
     val _            = com.raquo.laminar.api.L.render(appContainer, content.amend(LinkHandler.bind))
     BrowserNavigation.pushState(url = "/")

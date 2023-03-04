@@ -50,33 +50,35 @@ class Routes {
   )
 
   def start(): Unit = {
-    val appContainer  = dom.document.querySelector("#app")
+    val appContainer  = dom.document.querySelector("#app-container")
     val menuContainer = dom.document.querySelector("#menu-modal")
 
     appContainer.innerHTML = ""
     val _ = com.raquo.laminar.api.L.render(
       appContainer,
-      div(
-        cls := "contents",
-        LinkHandler.bind,
-        thisVersionPrefix(
-          firstMatch(
-            (
-              pathEnd.mapTo(Some((Site.indexModule, Site.indexModule.index))) |
-                (modulePrefix & pathEnd).map(m => Some((m, m.index))) |
-                moduleAndPagePrefix.map(moduleAndPage => Some(moduleAndPage))
-            ).signal { moduleAndPage =>
-              PageWrap(moduleAndPage, mobileMenuContent.writer)
-            },
+      routes(
+        div(
+          cls := "contents",
+          LinkHandler.bind,
+          thisVersionPrefix(
+            firstMatch(
+              (
+                pathEnd.mapTo(Some((Site.indexModule, Site.indexModule.index))) |
+                  (modulePrefix & pathEnd).map(m => Some((m, m.index))) |
+                  moduleAndPagePrefix.map(moduleAndPage => Some(moduleAndPage))
+              ).signal { moduleAndPage =>
+                PageWrap(moduleAndPage, mobileMenuContent.writer)
+              },
+              div("Not Found")
+            )
+          ),
+          (noneMatched & anyVersionPrefix) {
+            div("Not Found (wrong version)")
+          },
+          noneMatched {
             div("Not Found")
-          )
-        ),
-        (noneMatched & anyVersionPrefix) {
-          div("Not Found (wrong version)")
-        },
-        noneMatched {
-          div("Not Found")
-        }
+          }
+        )
       )
     )
     val _ = com.raquo.laminar.api.L.render(menuContainer, TW.modal(mobileMenuContent.signal, mobileMenuModal))

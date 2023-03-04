@@ -13,6 +13,9 @@ import org.scalajs.jsenv.selenium.SeleniumJSEnv
 
 import java.util.concurrent.TimeUnit
 
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
+
 val disableWebsiteOnCI = false
 
 val ciVariants = List("ciFirefox", "ciChrome", "ciJSDOMNodeJS")
@@ -305,15 +308,33 @@ lazy val `util` =
     .settings(commonSettings)
     .settings(baseDependencies)
 
+lazy val parser   = Parser.builder.build
+lazy val renderer = HtmlRenderer.builder.build
+
+lazy val laminextSiteVersion: String = IO.read(file("website/.laminext-version")).trim
+lazy val thisVersionSitePrefix       = s"/v/$laminextSiteVersion/"
+
+lazy val vars = Seq(
+  "laminextVersion" -> "0.15.0-M6",
+  "laminarVersion"  -> "15.0.0-M7",
+  "scalajsVersion"  -> "1.13.0",
+  "scala3version"   -> "3.2.1",
+)
+
+def templateVars(s: String): String =
+  vars.foldLeft(s) { case (acc, (varName, varValue)) =>
+    acc.replace(s"{{${varName}}}", varValue)
+  }
+
 lazy val website = project
   .in(file("website"))
-  .enablePlugins(ScalaJSPlugin)
-  .enablePlugins(EmbeddedFilesPlugin)
+  .enablePlugins(ScalaJSPlugin, EmbeddedFilesPlugin, BuildInfoPlugin)
   .settings(commonSettings)
   .settings(noPublish)
   .settings(
     githubWorkflowTargetTags        := Seq.empty,
-    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fastLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
+    Compile / fullLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     scalaJSLinkerConfig ~= { _.withESFeatures(_.withESVersion(ESVersion.ES5_1)) },
     Compile / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     scalaJSUseMainModuleInitializer := true,
@@ -328,6 +349,18 @@ lazy val website = project
     ),
     embedTextGlobs                  := Seq("**/*.md"),
     embedDirectories ++= (Compile / unmanagedSourceDirectories).value,
+    embedTransform                  := Seq(
+      TransformConfig(
+        when = _.getFileName.toString.endsWith(".md"),
+        transform = { s =>
+          templateVars(renderer.render(parser.parse(s)))
+            .replace(
+              """<a href="/""",
+              s"""<a href="${thisVersionSitePrefix}"""
+            )
+        }
+      )
+    ),
     (Compile / sourceGenerators) += embedFiles
   )
   .dependsOn(
