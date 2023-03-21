@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 
-val disableWebsiteOnCI = false
+val disableWebsiteOnCI = true
 
 val ciVariants = List("ciFirefox", "ciChrome", "ciJSDOMNodeJS")
 
