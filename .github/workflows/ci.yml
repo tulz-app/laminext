@@ -72,10 +72,6 @@ jobs:
 
       - run: sbt -mem 5000 ++${{ matrix.scala }} '${{ matrix.ci }}'
 
-      - name: build website
-        if: matrix.ci == 'ciJSDOMNodeJS'
-        run: sbt -mem 5000 ++${{ matrix.scala }} website/compile
-
   publish:
     name: Publish Artifacts
     needs: [build]
