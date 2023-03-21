@@ -3,7 +3,7 @@ package com.raquo.laminar.utils
 import com.raquo.domtestutils.matching._
 import com.raquo.domtestutils.EventSimulator
 import com.raquo.domtestutils.MountOps
-import com.raquo.laminar.api.Laminar.CompositeSvgAttr
+import com.raquo.laminar.api.L.CompositeSvgAttr
 import com.raquo.laminar.api._
 import com.raquo.laminar.codecs.StringAsIsCodec
 import com.raquo.laminar.defs.complex.ComplexHtmlKeys.CompositeHtmlAttr
