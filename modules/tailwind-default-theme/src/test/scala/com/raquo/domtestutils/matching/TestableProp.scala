@@ -1,7 +1,6 @@
 package com.raquo.domtestutils.matching
 
 import com.raquo.domtestutils.Utils.repr
-import com.raquo.domtypes.generic.codecs.Codec
 import org.scalajs.dom
 import app.tulz.diff.TokenDiff
 

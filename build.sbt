@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 
-val disableWebsiteOnCI = false
+val disableWebsiteOnCI = true
 
 val ciVariants = List("ciFirefox", "ciChrome", "ciJSDOMNodeJS")
 
@@ -308,9 +308,9 @@ lazy val thisVersionSitePrefix       = s"/v/$laminextSiteVersion/"
 
 lazy val vars = Seq(
   "laminextVersion" -> "0.16.0-SNAPSHOT",
-  "laminarVersion"  -> "15.0.0-M7",
+  "laminarVersion"  -> "15.0.1",
   "scalajsVersion"  -> "1.13.0",
-  "scala3version"   -> "3.2.1",
+  "scala3version"   -> "3.2.2",
 )
 
 def templateVars(s: String): String =

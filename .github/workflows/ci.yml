@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [2.13.10, 3.2.1]
+        scala: [2.13.10, 3.2.2]
         java: [temurin@17]
         ci: [ciFirefox, ciChrome, ciJSDOMNodeJS]
     runs-on: ${{ matrix.os }}
@@ -71,10 +71,6 @@ jobs:
         run: sbt -mem 5000 ++${{ matrix.scala }} githubWorkflowCheck
 
       - run: sbt -mem 5000 ++${{ matrix.scala }} '${{ matrix.ci }}'
-
-      - name: build website
-        if: matrix.ci == 'ciJSDOMNodeJS'
-        run: sbt -mem 5000 ++${{ matrix.scala }} website/compile
 
   publish:
     name: Publish Artifacts
