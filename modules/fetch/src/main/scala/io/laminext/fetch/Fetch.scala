@@ -2,6 +2,7 @@ package io.laminext.fetch
 
 import com.raquo.laminar.api.L._
 import org.scalajs.dom
+import org.scalajs.dom.AbortController
 import org.scalajs.dom.HttpMethod
 import org.scalajs.dom.ReferrerPolicy
 import org.scalajs.dom.RequestCache
@@ -138,7 +139,6 @@ final class FetchEventStreamBuilder(
   @inline def build[A](
     extract: Response => Future[A]
   )(implicit ec: ExecutionContext): EventStream[FetchResponse[A]] = {
-    this._body()
     FetchEventStream(
       url = _url(),
       method = _method,
@@ -166,6 +166,47 @@ final class FetchEventStreamBuilder(
   @inline def blob(implicit ec: ExecutionContext): EventStream[FetchResponse[dom.Blob]] = build(_.blob().toFuture)
 
   @inline def arrayBuffer(implicit ec: ExecutionContext): EventStream[FetchResponse[ArrayBuffer]] = build(_.arrayBuffer().toFuture)
+
+  object future {
+
+    @inline def apply[A](
+      extract: Response => Future[A],
+      abortController: AbortController = new AbortController()
+    )(implicit ec: ExecutionContext): Future[FetchResponse[A]] =
+      FetchEventStream.future(
+        url = _url(),
+        method = _method,
+        headers = _body.updateHeaders(_headers),
+        body = _body(),
+        referrer = _referrer,
+        referrerPolicy = _referrerPolicy,
+        mode = _mode,
+        credentials = _credentials,
+        cache = _cache,
+        redirect = _redirect,
+        integrity = _integrity,
+        keepalive = _keepalive,
+        timeout = _timeout,
+        extract = extract,
+        abortController = abortController,
+      )
+
+    @inline def raw(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[Response]] =
+      apply(response => Future.successful(response), abortController)
+
+    @inline def text(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[String]] =
+      apply(_.text().toFuture, abortController)
+
+    @inline def json(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[js.Any]] =
+      apply(_.json().toFuture, abortController)
+
+    @inline def blob(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[dom.Blob]] =
+      apply(_.blob().toFuture, abortController)
+
+    @inline def arrayBuffer(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[ArrayBuffer]] =
+      apply(_.arrayBuffer().toFuture, abortController)
+
+  }
 
   def headers(
     headers: js.UndefOr[Map[String, String]],

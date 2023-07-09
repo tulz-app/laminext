@@ -33,7 +33,7 @@ Fetch.get("https://...").referrer("...")
 
 ```scala
 import io.laminext.fetch.Fetch
-import org.scalajs.dom.experimental.ReferrerPolicy
+import org.scalajs.dom.ReferrerPolicy
 
 Fetch.get("https://...").referrerPolicy(ReferrerPolicy.`origin-when-cross-origin`)
 ```
@@ -42,7 +42,7 @@ Fetch.get("https://...").referrerPolicy(ReferrerPolicy.`origin-when-cross-origin
 
 ```scala
 import io.laminext.fetch.Fetch
-import org.scalajs.dom.experimental.RequestMode
+import org.scalajs.dom.RequestMode
 
 Fetch.get("https://...").mode(RequestMode.`same-origin`)
 ```
@@ -51,7 +51,7 @@ Fetch.get("https://...").mode(RequestMode.`same-origin`)
 
 ```scala
 import io.laminext.fetch.Fetch
-import org.scalajs.dom.experimental.RequestCredentials
+import org.scalajs.dom.RequestCredentials
 
 Fetch.get("https://...").credentials(RequestCredentials.omit)
 ```
@@ -60,7 +60,7 @@ Fetch.get("https://...").credentials(RequestCredentials.omit)
 
 ```scala
 import io.laminext.fetch.Fetch
-import org.scalajs.dom.experimental.RequestCache
+import org.scalajs.dom.RequestCache
 
 Fetch.get("https://...").cache(RequestCache.`no-cache`)
 ```
@@ -69,7 +69,7 @@ Fetch.get("https://...").cache(RequestCache.`no-cache`)
 
 ```scala
 import io.laminext.fetch.Fetch
-import org.scalajs.dom.experimental.RequestRedirect
+import org.scalajs.dom.RequestRedirect
 
 Fetch.get("https://...").redirect(RequestRedirect.follow)
 ```

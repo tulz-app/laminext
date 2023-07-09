@@ -11,7 +11,7 @@ This is encapsulated in the `ToRequestBody` trait:
 
 ```scala
 import scala.scalajs.js
-import org.scalajs.dom.experimental.BodyInit
+import org.scalajs.dom.BodyInit
 
 trait ToRequestBody {
   def apply(): js.UndefOr[BodyInit]
@@ -34,7 +34,7 @@ the method as a parameter):
 ```scala
 import io.laminext.fetch.Fetch
 import org.scalajs.dom
-import org.scalajs.dom.experimental.HttpMethod
+import org.scalajs.dom.HttpMethod
 
 val blob: dom.Blob = ???
 val formData: dom.FormData = ???

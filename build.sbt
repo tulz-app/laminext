@@ -307,10 +307,10 @@ lazy val laminextSiteVersion: String = IO.read(file("website/.laminext-version")
 lazy val thisVersionSitePrefix       = s"/v/$laminextSiteVersion/"
 
 lazy val vars = Seq(
-  "laminextVersion" -> "0.16.0-SNAPSHOT",
-  "laminarVersion"  -> "15.0.1",
-  "scalajsVersion"  -> "1.13.0",
-  "scala3version"   -> "3.2.2",
+  "laminextVersion" -> "0.17.0-SNAPSHOT",
+  "laminarVersion"  -> "16.0.0",
+  "scalajsVersion"  -> "1.13.2",
+  "scala3version"   -> "3.3.0",
 )
 
 def templateVars(s: String): String =

@@ -25,7 +25,7 @@ You can also specify the method as a parameter:
 
 ```scala
 import io.laminext.fetch.Fetch
-import org.scalajs.dom.experimental.HttpMethod
+import org.scalajs.dom.HttpMethod
 
 Fetch(HttpMethod.GET, "https://...")
 ```

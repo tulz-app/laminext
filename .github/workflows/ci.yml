@@ -27,34 +27,23 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [2.13.10, 3.2.2]
+        scala: [2.13.11, 3.3.0]
         java: [temurin@17]
         ci: [ciFirefox, ciChrome, ciJSDOMNodeJS]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup Java (temurin@17)
         if: matrix.java == 'temurin@17'
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
-
-      - name: Cache sbt
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.sbt
-            ~/.ivy2/cache
-            ~/.coursier/cache/v1
-            ~/.cache/coursier/v1
-            ~/AppData/Local/Coursier/Cache/v1
-            ~/Library/Caches/Coursier/v1
-          key: ${{ runner.os }}-sbt-cache-v2-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}
+          cache: sbt
 
       - name: Setup NodeJS v18 LTS
         if: matrix.ci == 'ciJSDOMNodeJS'
@@ -68,9 +57,9 @@ jobs:
         run: npm install
 
       - name: Check that workflows are up to date
-        run: sbt -mem 5000 ++${{ matrix.scala }} githubWorkflowCheck
+        run: sbt -mem 5000 '++ ${{ matrix.scala }}' githubWorkflowCheck
 
-      - run: sbt -mem 5000 ++${{ matrix.scala }} '${{ matrix.ci }}'
+      - run: sbt -mem 5000 '++ ${{ matrix.scala }}' '${{ matrix.ci }}'
 
   publish:
     name: Publish Artifacts
@@ -79,32 +68,21 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [2.13.10]
+        scala: [2.13.11]
         java: [temurin@17]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Setup Java (temurin@17)
         if: matrix.java == 'temurin@17'
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
+          cache: sbt
 
-      - name: Cache sbt
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.sbt
-            ~/.ivy2/cache
-            ~/.coursier/cache/v1
-            ~/.cache/coursier/v1
-            ~/AppData/Local/Coursier/Cache/v1
-            ~/Library/Caches/Coursier/v1
-          key: ${{ runner.os }}-sbt-cache-v2-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}
-
-      - run: sbt -mem 5000 ++${{ matrix.scala }} ci-release
+      - run: sbt -mem 5000 ci-release
