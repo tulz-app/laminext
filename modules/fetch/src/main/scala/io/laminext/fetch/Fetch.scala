@@ -191,15 +191,20 @@ final class FetchEventStreamBuilder(
         abortController = abortController,
       )
 
-    @inline def raw()(implicit ec: ExecutionContext): Future[FetchResponse[Response]] = apply(response => Future.successful(response))
+    @inline def raw(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[Response]] =
+      apply(response => Future.successful(response), abortController)
 
-    @inline def text()(implicit ec: ExecutionContext): Future[FetchResponse[String]] = apply(_.text().toFuture)
+    @inline def text(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[String]] =
+      apply(_.text().toFuture, abortController)
 
-    @inline def json()(implicit ec: ExecutionContext): Future[FetchResponse[js.Any]] = apply(_.json().toFuture)
+    @inline def json(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[js.Any]] =
+      apply(_.json().toFuture, abortController)
 
-    @inline def blob()(implicit ec: ExecutionContext): Future[FetchResponse[dom.Blob]] = apply(_.blob().toFuture)
+    @inline def blob(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[dom.Blob]] =
+      apply(_.blob().toFuture, abortController)
 
-    @inline def arrayBuffer()(implicit ec: ExecutionContext): Future[FetchResponse[ArrayBuffer]] = apply(_.arrayBuffer().toFuture)
+    @inline def arrayBuffer(abortController: AbortController = new AbortController())(implicit ec: ExecutionContext): Future[FetchResponse[ArrayBuffer]] =
+      apply(_.arrayBuffer().toFuture, abortController)
 
   }
 
