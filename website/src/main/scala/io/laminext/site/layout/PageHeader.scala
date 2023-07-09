@@ -52,7 +52,7 @@ object PageHeader {
       ),
       div(
         cls := "hidden lg:block",
-        img(src := "https://img.shields.io/maven-central/v/io.laminext/core_sjs1_2.13.svg?versionPrefix=0.15", alt := "latest version on maven central")
+        img(src := "https://img.shields.io/maven-central/v/io.laminext/core_sjs1_2.13.svg?versionPrefix=0.16", alt := "latest version on maven central")
       ),
       div(
         cls := "hidden lg:block relative inline-block text-left",
