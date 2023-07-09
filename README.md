@@ -11,7 +11,7 @@ https://laminext.dev
 
 ## Author
 
-Iurii Malchenko – [@yurique](https://twitter.com/yurique) / [keybase.io/yurique](https://keybase.io/yurique)
+Iurii Malchenko – [@yurique](https://twitter.com/yurique)
 
 
 ## License
