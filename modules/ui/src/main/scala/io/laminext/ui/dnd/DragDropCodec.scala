@@ -35,7 +35,7 @@ trait DragDropDecoder[T] {
 
   def format: String
 
-  def willAccept(ev: DragEvent): Boolean = Option(ev.dataTransfer).exists(_.types.contains(format))
+  def willAccept(ev: DragEvent): Boolean = Option(ev.dataTransfer).exists(_.types.exists(_ == format))
 
   def getData(ev: DragEvent): Either[String, T]
 
