@@ -10,6 +10,8 @@ import io.laminext.core.StoredString
 import io.laminext.core.TeeObserver
 import io.laminext.core.ThisEventsStreamBuilder
 import org.scalajs.dom
+import org.scalajs.dom.ResizeObserverOptions
+
 import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 
@@ -70,7 +72,9 @@ trait MiscSyntax {
     timeout: FiniteDuration,
   ): SetTimeoutBinders[Unit] = new SetTimeoutBinders((): Unit, timeout)
 
-  @inline def resizeObserver: ResizeObserverBinders.type = ResizeObserverBinders
+  @inline def resizeObserver: ResizeObserverBinders = new ResizeObserverBinders()
+
+  @inline def resizeObserver(options: ResizeObserverOptions): ResizeObserverBinders = new ResizeObserverBinders(options)
 
   @inline def mutationObserver(
     childList: Boolean = false,
