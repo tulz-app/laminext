@@ -3,15 +3,16 @@ package binders
 
 import com.raquo.airstream.ownership.DynamicSubscription
 import com.raquo.laminar.nodes.ReactiveElement
-import io.laminext.domext.ResizeObserver
-import io.laminext.domext.ResizeObserverEntry
 import org.scalajs.dom
-import org.scalajs.dom.HTMLElement
-import org.scalajs.dom.SVGElement
-import scala.scalajs.js.|
+import org.scalajs.dom.ResizeObserver
+import org.scalajs.dom.ResizeObserverEntry
+import org.scalajs.dom.ResizeObserverOptions
 
-class ResizeObserverBinder[El <: ReactiveElement[dom.HTMLElement]](
-  onNext: ResizeObserverEntry => Unit
+import scala.scalajs.js
+
+class ResizeObserverBinder[El <: ReactiveElement[dom.Element]](
+  onNext: ResizeObserverEntry => Unit,
+  options: js.UndefOr[ResizeObserverOptions] = js.undefined
 ) extends BinderWithStartStop[El] {
 
   private var element: El                                 = _
@@ -25,7 +26,7 @@ class ResizeObserverBinder[El <: ReactiveElement[dom.HTMLElement]](
 
   def doStart(): Unit = {
     maybeResizeObserver.foreach { resizeObserver =>
-      resizeObserver.observe(element.ref)
+      options.fold(resizeObserver.observe(element.ref))(resizeObserver.observe(element.ref, _))
     }
   }
 
@@ -37,7 +38,7 @@ class ResizeObserverBinder[El <: ReactiveElement[dom.HTMLElement]](
     maybeResizeObserver = Some(
       new ResizeObserver(
         callback = (entries, _) => {
-          if (entries.nonEmpty && entries.head.target == element.ref.asInstanceOf[HTMLElement | SVGElement]) {
+          if (entries.nonEmpty && entries.head.target == element.ref) {
             onNext(entries.head)
           }
         }

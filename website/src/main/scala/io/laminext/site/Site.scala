@@ -85,6 +85,7 @@ object Site {
         examplePage(examples.eventproptransformation.ex_eventprop_stream.ThisEventsExample),
         examplePage(examples.observable.ex_observable_switching_bind.AddSwitchingObserverExample),
         examplePage(examples.sequentially.SequentiallyExample),
+        examplePage(examples.resizeobserver.ResizeObserverExample),
       )
     ),
     SiteModule(
