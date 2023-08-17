@@ -37,9 +37,9 @@ object WebSocketUpickleExample
 
       /* <focus> */
       val ws = WebSocket.url("wss://echo.websocket.events").upickle(OptionPickler).json[Data, Data].build()
+      /* </focus> */
       // or, when using upickle.default:
       // val ws = WebSocket.url("wss://echo.websocket.events").json[Data, Data].build()
-      /* </focus> */
 
       val inputElement = input(
         tpe         := "text",
