@@ -8,7 +8,7 @@ class WebSocketReceiveBuilderUpickleOps(b: WebSocketReceiveBuilder) {
 
   @inline def upickle[T <: AttributeTagged](u: T): UpickleBuilder[T] = new UpickleBuilder[T](u)
 
-  class UpickleBuilder[T <: AttributeTagged](u: T) {
+  class UpickleBuilder[T <: AttributeTagged](val u: T) {
     def json[Receive, Send](implicit receiveReader: u.Reader[Receive], sendWriter: u.Writer[Send]): WebSocketBuilder[Receive, Send] =
       new WebSocketBuilder[Receive, Send](
         url = b.url,
