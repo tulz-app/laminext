@@ -58,7 +58,7 @@ trait Slider extends Component {
 
   /**
    * Handle the `mousemove`, `touchmove`, and `mousedown` events on this `Slider`. The `mousemove` and `touchmove` events will only only trigger this function
-   * during `mousedown` and `touchstart`. This is due to {@link Slider#handleMouseDown} and {@link Slider#handleMouseUp}.
+   * during `mousedown` and `touchstart`. This is due to {@@linkSlider#handleMouseDown} and {@@linkSlider#handleMouseUp} .
    *
    * @param event
    *   `mousedown`, `mousemove`, `touchstart`, or `touchmove` event that triggered this function
