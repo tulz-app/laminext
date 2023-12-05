@@ -2,7 +2,7 @@ package io.laminext.core
 
 import com.raquo.laminar.api.L._
 
-class SignalOptionT[A](val value: Signal[Option[A]]) {
+class SignalOptionT[A](val value: Signal[Option[A]]) extends AnyVal {
 
   def fold[B](default: => B)(f: A => B): Signal[B] =
     value.map(_.fold(default)(f))
