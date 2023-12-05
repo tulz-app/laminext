@@ -10,7 +10,7 @@ object WebSocketUpickleExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import com.raquo.laminar.CollectionCommand
+      import com.raquo.laminar.api.L.CollectionCommand
       import io.laminext.syntax.core._
       import io.laminext.websocket.upickle._
 

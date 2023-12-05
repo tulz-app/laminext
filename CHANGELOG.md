@@ -2,6 +2,10 @@
 
 ### WIP
 
+### 0.17.0
+
+
+
 * Methods in `FutureOps` now require an implicit `ExecutionContext` (before, the global EC was used)
 * `Fetch` builders now require an implicit `ExecutionContext` (before, the global EC was used) 
 

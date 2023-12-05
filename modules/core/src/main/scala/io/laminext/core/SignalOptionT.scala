@@ -11,7 +11,7 @@ class SignalOptionT[A](val value: Signal[Option[A]]) extends AnyVal {
    * Transform this `SignalOptionT[A]` into a `Signal[B]`.
    */
   def foldF[B](default: => Signal[B])(f: A => Signal[B]): Signal[B] =
-    value.flatMap(_.fold(default)(f))
+    value.flatMapSwitch(_.fold(default)(f))
 
   /**
    * Catamorphism on the Option. This is identical to [[fold]], but it only has one parameter list, which can result in better type inference in some contexts.
@@ -36,10 +36,10 @@ class SignalOptionT[A](val value: Signal[Option[A]]) extends AnyVal {
     flatMapF(a => f(a).value)
 
   def flatMapF[B](f: A => Signal[Option[B]]): SignalOptionT[B] =
-    new SignalOptionT(value.flatMap(_.fold[Signal[Option[B]]](Signal.fromValue[Option[B]](None))(f)))
+    new SignalOptionT(value.flatMapSwitch(_.fold[Signal[Option[B]]](Signal.fromValue[Option[B]](None))(f)))
 
   def flatTransform[B](f: Option[A] => Signal[Option[B]]): SignalOptionT[B] =
-    new SignalOptionT(value.flatMap(f))
+    new SignalOptionT(value.flatMapSwitch(f))
 
   def transform[B](f: Option[A] => Option[B]): SignalOptionT[B] =
     new SignalOptionT(value.map(f))
@@ -51,7 +51,7 @@ class SignalOptionT[A](val value: Signal[Option[A]]) extends AnyVal {
     value.map(_.getOrElse(default))
 
   def getOrElseF[B >: A](default: => Signal[B]): Signal[B] =
-    value.flatMap(_.fold(default)(Signal.fromValue(_)))
+    value.flatMapSwitch(_.fold(default)(Signal.fromValue(_)))
 
   def collect[B](f: PartialFunction[A, B]): SignalOptionT[B] =
     new SignalOptionT(value.map(_.collect(f)))
@@ -81,7 +81,7 @@ class SignalOptionT[A](val value: Signal[Option[A]]) extends AnyVal {
     orElseF(default.value)
 
   def orElseF(default: => Signal[Option[A]]): SignalOptionT[A] = {
-    val s = value.flatMap {
+    val s = value.flatMapSwitch {
       case s @ Some(_) => Signal.fromValue(s)
       case None        => default
     }

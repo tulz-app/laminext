@@ -33,7 +33,13 @@ object FetchPostExample
             "send",
             thisEvents(onClick)
               .sample(inputElement.value)
-              .flatMap(inputValue => /* <focus> */ Fetch.post("https://httpbin.org/anything", body = inputValue).text /* </focus> */ ) --> responseReceived,
+              .flatMapSwitch { inputValue =>
+                /* <focus> */
+                Fetch
+                  .post("https://httpbin.org/anything", body = inputValue)
+                  .text
+                /* </focus> */
+              } --> responseReceived,
           ),
         ),
         div(

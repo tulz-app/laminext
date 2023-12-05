@@ -15,7 +15,7 @@ object FetchUpickleExample
       import upickle.default._
       import scala.util.Failure
       import scala.util.Success
-      import com.raquo.laminar.CollectionCommand
+      import com.raquo.laminar.api.L.CollectionCommand
       import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
       case class Data(s: String)
@@ -39,7 +39,7 @@ object FetchUpickleExample
             "send",
             thisEvents(onClick)
               .sample(inputElement.value)
-              .flatMap { inputValue =>
+              .flatMapSwitch { inputValue =>
                 /* <focus> */
                 Fetch
                   .post("https://httpbin.org/anything", body = jsonRequestBody(Data(s = inputValue))) // Data has an implicit Encoder[Data] auto-derived

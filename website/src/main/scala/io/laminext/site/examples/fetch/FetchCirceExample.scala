@@ -16,7 +16,7 @@ object FetchCirceExample
       import io.circe._
       import scala.util.Failure
       import scala.util.Success
-      import com.raquo.laminar.CollectionCommand
+      import com.raquo.laminar.api.L.CollectionCommand
       import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
 
       case class Data(s: String)
@@ -43,7 +43,7 @@ object FetchCirceExample
             "send",
             thisEvents(onClick)
               .sample(inputElement.value)
-              .flatMap { inputValue =>
+              .flatMapSwitch { inputValue =>
                 /* <focus> */
                 Fetch
                   .post(

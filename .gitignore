@@ -1,6 +1,7 @@
 target
 .idea
 .bsp
+.bloop
 .vscode
 .metals
 devserver.config.js

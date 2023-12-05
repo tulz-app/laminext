@@ -86,22 +86,22 @@ object CodeExampleDisplay {
             a(
               href := "live",
               cls  := "px-2 rounded",
-              cls.toggle("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "live"),
-              cls.toggle("text-gray-700 font-semibold") <-- tab.map(_ != "live"),
+              cls("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "live"),
+              cls("text-gray-700 font-semibold") <-- tab.map(_ != "live"),
               "Live Demo"
             ),
             a(
               href := "source",
               cls  := "px-2 rounded",
-              cls.toggle("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "source"),
-              cls.toggle("text-gray-700 font-semibold") <-- tab.map(_ != "source"),
+              cls("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "source"),
+              cls("text-gray-700 font-semibold") <-- tab.map(_ != "source"),
               "Source Code"
             ),
             a(
               href := "description",
               cls  := "px-2 rounded",
-              cls.toggle("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "description"),
-              cls.toggle("text-gray-700 font-semibold") <-- tab.map(_ != "description"),
+              cls("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "description"),
+              cls("text-gray-700 font-semibold") <-- tab.map(_ != "description"),
               cls  := (if (example.description.trim.isEmpty) "hidden" else ""),
               "Description"
             )
@@ -113,7 +113,7 @@ object CodeExampleDisplay {
           cls := "flex-1 flex flex-col space-y-2",
           div(
             cls             := "flex-1 flex flex-col space-y-2",
-            cls.toggle("hidden") <-- tab.map(_ != "source"),
+            cls("hidden") <-- tab.map(_ != "source"),
             div(
               cls := "flex space-x-4 items-center",
               when(hasContext) {
@@ -143,7 +143,7 @@ object CodeExampleDisplay {
           ),
           div(
             cls             := "flex-1 flex flex-col",
-            cls.toggle("hidden") <-- tab.map(_ != "live"),
+            cls("hidden") <-- tab.map(_ != "live"),
             iframe(
               cls := "flex-1",
 //              onLoad --> { e =>
@@ -155,7 +155,7 @@ object CodeExampleDisplay {
           ),
           div(
             cls             := "flex-1 flex flex-col prose max-w-none",
-            cls.toggle("hidden") <-- tab.map(_ != "description"),
+            cls("hidden") <-- tab.map(_ != "description"),
             unsafeInnerHtml := example.description,
             onMountCallback { ctx =>
               ctx.thisNode.ref.querySelectorAll("pre > code").foreach { codeElement =>

@@ -66,12 +66,12 @@ object PageHeader {
             Icons
               .chevronDown(
                 svg.cls               := "-mr-1 ml-2 h-4 fill-current text-gray-300",
-                svg.cls.toggle("hidden") <-- styleDropDownOpen.signal
+                svg.cls("hidden") <-- styleDropDownOpen.signal
               ),
             Icons
               .chevronUp(
                 svg.cls               := "-mr-1 ml-2 h-4 fill-current text-gray-300",
-                svg.cls.toggle("hidden") <-- !styleDropDownOpen.signal
+                svg.cls("hidden") <-- !styleDropDownOpen.signal
               )
           )
         ),
@@ -107,7 +107,7 @@ object PageHeader {
                     None
                   }
                 },
-                cls.toggle("hidden") <-- styleSearch.signal.map(search => !styleName.contains(search))
+                cls("hidden") <-- styleSearch.signal.map(search => !styleName.contains(search))
               )
             }
           )
