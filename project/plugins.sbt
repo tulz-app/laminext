@@ -1,6 +1,6 @@
 logLevel := Level.Warn
 
-libraryDependencies += "org.commonmark" % "commonmark"               % "0.20.0"
+libraryDependencies += "org.commonmark" % "commonmark"               % "0.21.0"
 libraryDependencies += "org.scala-js"  %% "scalajs-env-nodejs"       % "1.4.0"
 libraryDependencies += "org.scala-js"  %% "scalajs-env-selenium"     % "1.1.1"
 libraryDependencies += "org.scala-js"  %% "scalajs-env-jsdom-nodejs" % "1.1.0"
