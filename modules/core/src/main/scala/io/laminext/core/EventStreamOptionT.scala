@@ -2,7 +2,7 @@ package io.laminext.core
 
 import com.raquo.laminar.api.L._
 
-class EventStreamOptionT[A](val value: EventStream[Option[A]]) {
+class EventStreamOptionT[A](val value: EventStream[Option[A]]) extends AnyVal {
 
   def fold[B](default: => B)(f: A => B): EventStream[B] =
     value.map(_.fold(default)(f))

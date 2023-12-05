@@ -2,7 +2,7 @@ package io.laminext.core
 
 import com.raquo.laminar.api.L._
 
-class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
+class SignalEitherT[A, B](val value: Signal[Either[A, B]]) extends AnyVal {
 
   /**
    * Transform this `SignalEitherT[A, B]` into a `Signal[C]`.

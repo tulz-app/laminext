@@ -2,7 +2,7 @@ package io.laminext.core
 
 import com.raquo.laminar.api.L._
 
-class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
+class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) extends AnyVal {
 
   /**
    * Transform this `EventStreamEitherT[A, B]` into a `EventStream[C]`.
