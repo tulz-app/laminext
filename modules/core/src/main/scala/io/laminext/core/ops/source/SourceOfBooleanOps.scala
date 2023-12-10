@@ -18,12 +18,12 @@ final class SourceOfBooleanOps(underlying: Source[Boolean]) {
 
   @inline def childWhenTrue(
     child: => ChildNode.Base
-  ): Inserter[ReactiveHtmlElement.Base] =
+  ): Inserter =
     ConditionalChildInserter(underlying.toObservable, child)
 
   @inline def childWhenFalse(
     child: => ChildNode.Base
-  ): Inserter[ReactiveHtmlElement.Base] =
+  ): Inserter =
     ConditionalChildInserter(underlying.toObservable.map(!_), child)
 
   @inline def doWhenTrue(

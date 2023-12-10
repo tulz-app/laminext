@@ -3,14 +3,6 @@ package io.laminext.site.examples.websocket
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
 
-case class Data(s: String)
-
-object Data {
-  import upickle.default._
-  implicit val dataReader: Reader[Data] = reader[Map[String, String]].map(m => Data(m("s")))
-  implicit val dataWriter: Writer[Data] = writer[Map[String, String]].comap(d => Map("s" -> d.s))
-}
-
 object WebSocketUpickleExample
     extends CodeExample(
       id = "example-websocket-echo-upickle",
@@ -18,21 +10,36 @@ object WebSocketUpickleExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      import com.raquo.laminar.CollectionCommand
+      import com.raquo.laminar.api.L.CollectionCommand
       import io.laminext.syntax.core._
       import io.laminext.websocket.upickle._
-      import upickle.default._
 
-      /*
-      case class Data(s: String)
-      object Data {
-        implicit val rw: ReadWriter[Data] = macroRW[Data]
+      object OptionPickler extends upickle.AttributeTagged {
+        implicit override def OptionWriter[T: Writer]: Writer[Option[T]] =
+          implicitly[Writer[T]].comap[Option[T]] {
+            case None    => null.asInstanceOf[T]
+            case Some(x) => x
+          }
+
+        implicit override def OptionReader[T: Reader]: Reader[Option[T]] = {
+          new Reader.Delegate[Any, Option[T]](implicitly[Reader[T]].map(Some(_))) {
+            override def visitNull(index: Int): Option[T] = None
+          }
+        }
       }
-       */
+
+      import OptionPickler._
+
+      case class Data(s: String)
+
+      implicit val dataReader: Reader[Data] = reader[Map[String, String]].map(m => Data(m("s")))
+      implicit val dataWriter: Writer[Data] = writer[Map[String, String]].comap(d => Map("s" -> d.s))
 
       /* <focus> */
-      val ws = WebSocket.url("wss://echo.websocket.events").json[Data, Data].build()
+      val ws = WebSocket.url("wss://echo.websocket.events").upickle(OptionPickler).json[Data, Data].build()
       /* </focus> */
+      // or, when using upickle.default:
+      // val ws = WebSocket.url("wss://echo.websocket.events").json[Data, Data].build()
 
       val inputElement = input(
         tpe         := "text",

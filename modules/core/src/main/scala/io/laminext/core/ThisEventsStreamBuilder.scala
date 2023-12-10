@@ -4,10 +4,12 @@ import app.tulz.tuplez.Composition
 import com.raquo.airstream.core.Sink
 import com.raquo.airstream.debug.Debugger
 import com.raquo.airstream.flatten.FlattenStrategy
+import com.raquo.airstream.flatten.SwitchingStrategy
 import com.raquo.airstream.util.always
 import com.raquo.laminar.api.L._
 import com.raquo.laminar.nodes.ReactiveElement
 import org.scalajs.dom
+
 import scala.util.Try
 
 class ThisEventsStreamBuilder[Ev <: dom.Event, A](
@@ -112,6 +114,11 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
 
   @inline def flatMap[B](compose: A => EventStream[B])(implicit
     strategy: FlattenStrategy[EventStream, EventStream, EventStream]
+  ): ThisEventsStreamBuilder[Ev, B] =
+    andThen(s => strategy.flatten(s.map(compose)))
+
+  @inline def flatMapSwitch[B](compose: A => EventStream[B])(implicit
+    strategy: SwitchingStrategy[EventStream, EventStream, EventStream]
   ): ThisEventsStreamBuilder[Ev, B] =
     andThen(s => strategy.flatten(s.map(compose)))
 

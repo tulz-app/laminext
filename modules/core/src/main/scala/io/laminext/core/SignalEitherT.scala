@@ -2,7 +2,7 @@ package io.laminext.core
 
 import com.raquo.laminar.api.L._
 
-class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
+class SignalEitherT[A, B](val value: Signal[Either[A, B]]) extends AnyVal {
 
   /**
    * Transform this `SignalEitherT[A, B]` into a `Signal[C]`.
@@ -12,7 +12,7 @@ class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
   /**
    * Transform this `SignalEitherT[A, B]` into a `Signal[C]`.
    */
-  def foldF[C](fa: A => Signal[C], fb: B => Signal[C]): Signal[C] = value.flatMap(_.fold(fa, fb))
+  def foldF[C](fa: A => Signal[C], fb: B => Signal[C]): Signal[C] = value.flatMapSwitch(_.fold(fa, fb))
 
   def isLeft: Signal[Boolean] = value.map(_.isLeft)
 
@@ -23,13 +23,13 @@ class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
   def getOrElse[BB >: B](default: => BB): Signal[BB] = value.map(_.getOrElse(default))
 
   def getOrElseF[BB >: B](default: => Signal[BB]): Signal[BB] =
-    value.flatMap {
+    value.flatMapSwitch {
       case Left(_)  => default
       case Right(b) => Signal.fromValue(b)
     }
 
   def orElse[C, BB >: B](default: => SignalEitherT[C, BB]): SignalEitherT[C, BB] =
-    new SignalEitherT(value.flatMap {
+    new SignalEitherT(value.flatMapSwitch {
       case Left(_)  => default.value
       case Right(b) => Signal.fromValue(Right(b))
     })
@@ -43,7 +43,7 @@ class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
     )
 
   def recoverWith(pf: PartialFunction[A, SignalEitherT[A, B]]): SignalEitherT[A, B] = {
-    val s = value.flatMap {
+    val s = value.flatMapSwitch {
       case Left(a) if pf.isDefinedAt(a) => pf(a).value
       case other                        => Signal.fromValue(other)
     }
@@ -53,7 +53,7 @@ class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
   def valueOr[BB >: B](f: A => BB): Signal[BB] = fold(f, identity)
 
   def valueOrF[BB >: B](f: A => Signal[BB]): Signal[BB] =
-    value.flatMap {
+    value.flatMapSwitch {
       case Left(a)  => f(a)
       case Right(b) => Signal.fromValue(b)
     }
@@ -89,13 +89,13 @@ class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
     )
 
   def biflatMap[C, D](fa: A => SignalEitherT[C, D], fb: B => SignalEitherT[C, D]): SignalEitherT[C, D] =
-    new SignalEitherT(value.flatMap {
+    new SignalEitherT(value.flatMapSwitch {
       case Left(a)  => fa(a).value
       case Right(a) => fb(a).value
     })
 
   def flatMap[AA >: A, D](f: B => SignalEitherT[AA, D]): SignalEitherT[AA, D] =
-    new SignalEitherT(value.flatMap {
+    new SignalEitherT(value.flatMapSwitch {
       case Left(a)  => Signal.fromValue(Left(a))
       case Right(b) => f(b).value
     })
@@ -114,7 +114,7 @@ class SignalEitherT[A, B](val value: Signal[Either[A, B]]) {
   def leftMap[C](f: A => C): SignalEitherT[C, B] = bimap(f, identity)
 
   def leftFlatMap[BB >: B, C](f: A => SignalEitherT[C, BB]): SignalEitherT[C, BB] =
-    new SignalEitherT(value.flatMap {
+    new SignalEitherT(value.flatMapSwitch {
       case Left(a)  => f(a).value
       case Right(b) => Signal.fromValue(Right(b))
     })

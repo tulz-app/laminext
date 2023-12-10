@@ -10,7 +10,7 @@ import scala.concurrent.Future
 
 private[laminext] object FutureChildrenReceiver {
 
-  @inline def <--(future: Future[immutable.Seq[ChildNode.Base]])(implicit ec: ExecutionContext): Inserter[ReactiveElement.Base] =
+  @inline def <--(future: Future[immutable.Seq[ChildNode.Base]])(implicit ec: ExecutionContext): Inserter =
     children <-- EventStream.fromFuture(future)
 
 }

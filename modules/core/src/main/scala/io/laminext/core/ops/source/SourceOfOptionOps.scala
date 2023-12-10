@@ -9,10 +9,10 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 final class SourceOfOptionOps[A](val underlying: Source[Option[A]]) {
 
-  @inline def childIfEmpty(child: => ChildNode.Base): Inserter[ReactiveElement.Base] =
+  @inline def childIfEmpty(child: => ChildNode.Base): Inserter =
     ConditionalChildInserter(underlying.toObservable.map(_.isEmpty), child)
 
-  @inline def childIfDefined(child: => ChildNode.Base): Inserter[ReactiveElement.Base] =
+  @inline def childIfDefined(child: => ChildNode.Base): Inserter =
     ConditionalChildInserter(underlying.toObservable.map(_.isDefined), child)
 
   @inline def doWhenDefined(

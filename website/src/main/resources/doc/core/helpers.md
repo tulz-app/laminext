@@ -36,29 +36,6 @@ div(
 )
 ```
 
-## `nodeSeq` 
-## `nodeSequence`
-
-Combine a sequence of modifiers into a `Modifier`.
-
-```scala
-import com.raquo.laminar.api.L._
-import io.laminext.syntax.core._
-
-val flag: Boolean = ???
-
-div(
-  if (flag) {
-    nodeSeq(
-      span("a"),
-      span("b")
-    )
-  } else {
-    emptyMod
-  }
-)
-```
-
 ## `unsafeAppendRawChild`
 
 Use when you know what you're doing.

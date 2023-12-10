@@ -2,7 +2,7 @@ package io.laminext.core
 
 import com.raquo.laminar.api.L._
 
-class EventStreamOptionT[A](val value: EventStream[Option[A]]) {
+class EventStreamOptionT[A](val value: EventStream[Option[A]]) extends AnyVal {
 
   def fold[B](default: => B)(f: A => B): EventStream[B] =
     value.map(_.fold(default)(f))
@@ -11,7 +11,7 @@ class EventStreamOptionT[A](val value: EventStream[Option[A]]) {
    * Transform this `EventStreamOptionT[A]` into a `EventStream[B]`.
    */
   def foldF[B](default: => EventStream[B])(f: A => EventStream[B]): EventStream[B] =
-    value.flatMap(_.fold(default)(f))
+    value.flatMapSwitch(_.fold(default)(f))
 
   /**
    * Catamorphism on the Option. This is identical to [[fold]], but it only has one parameter list, which can result in better type inference in some contexts.
@@ -36,10 +36,10 @@ class EventStreamOptionT[A](val value: EventStream[Option[A]]) {
     flatMapF(a => f(a).value)
 
   def flatMapF[B](f: A => EventStream[Option[B]]): EventStreamOptionT[B] =
-    new EventStreamOptionT(value.flatMap(_.fold(EventStream.fromValue[Option[B]](None))(f)))
+    new EventStreamOptionT(value.flatMapSwitch(_.fold(EventStream.fromValue[Option[B]](None))(f)))
 
   def flatTransform[B](f: Option[A] => EventStream[Option[B]]): EventStreamOptionT[B] =
-    new EventStreamOptionT(value.flatMap(f))
+    new EventStreamOptionT(value.flatMapSwitch(f))
 
   def transform[B](f: Option[A] => Option[B]): EventStreamOptionT[B] =
     new EventStreamOptionT(value.map(f))
@@ -51,7 +51,7 @@ class EventStreamOptionT[A](val value: EventStream[Option[A]]) {
     value.map(_.getOrElse(default))
 
   def getOrElseF[B >: A](default: => EventStream[B]): EventStream[B] =
-    value.flatMap(_.fold(default)(EventStream.fromValue(_)))
+    value.flatMapSwitch(_.fold(default)(EventStream.fromValue(_)))
 
   def collect[B](f: PartialFunction[A, B]): EventStreamOptionT[B] =
     new EventStreamOptionT(value.map(_.collect(f)))
@@ -81,7 +81,7 @@ class EventStreamOptionT[A](val value: EventStream[Option[A]]) {
     orElseF(default.value)
 
   def orElseF(default: => EventStream[Option[A]]): EventStreamOptionT[A] = {
-    val s = value.flatMap {
+    val s = value.flatMapSwitch {
       case s @ Some(_) => EventStream.fromValue(s)
       case None        => default
     }

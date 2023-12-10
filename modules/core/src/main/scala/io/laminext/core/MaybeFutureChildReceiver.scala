@@ -10,7 +10,7 @@ import scala.concurrent.Future
 
 object MaybeFutureChildReceiver {
 
-  @inline def <--(future: Future[Option[ChildNode[dom.Node]]])(implicit ec: ExecutionContext): Inserter[ReactiveElement.Base] =
+  @inline def <--(future: Future[Option[ChildNode[dom.Node]]])(implicit ec: ExecutionContext): Inserter =
     child.maybe <-- EventStream.fromFuture(future)
 
 }

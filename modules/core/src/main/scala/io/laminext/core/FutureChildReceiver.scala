@@ -12,7 +12,7 @@ private[laminext] object FutureChildReceiver {
 
   val maybe: MaybeFutureChildReceiver.type = MaybeFutureChildReceiver
 
-  @inline def <--(future: Future[ChildNode.Base])(implicit ec: ExecutionContext): Inserter[ReactiveElement.Base] =
+  @inline def <--(future: Future[ChildNode.Base])(implicit ec: ExecutionContext): Inserter =
     child <-- EventStream.fromFuture(future)
 
 }

@@ -2,7 +2,6 @@ package io.laminext.core
 package ops.stream
 
 import com.raquo.laminar.api.L._
-import com.raquo.airstream.flatten.FlattenStrategy
 import scala.concurrent.duration.FiniteDuration
 
 final class EventStreamOps[A](underlying: EventStream[A]) {
@@ -71,11 +70,5 @@ final class EventStreamOps[A](underlying: EventStream[A]) {
 
   def errorOrValue: EventStream[Either[Throwable, A]] =
     underlying.recoverToTry.map(_.toEither)
-
-  @inline def flatMapTo[B, Inner[_], Output[+_] <: Observable[_]](
-    inner: => Inner[B]
-  )(implicit strategy: FlattenStrategy[EventStream, Inner, Output]): Output[B] = {
-    underlying.flatMap(_ => inner)(strategy)
-  }
 
 }

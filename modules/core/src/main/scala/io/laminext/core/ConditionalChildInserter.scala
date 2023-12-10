@@ -10,6 +10,6 @@ private[laminext] object ConditionalChildInserter {
   def apply[El <: Element](
     condition: Observable[Boolean],
     child: => ChildNode.Base
-  ): Inserter[ReactiveElement.Base] = L.child.maybe <-- condition.map(c => if (c) Some(child) else Option.empty)
+  ): Inserter = L.child.maybe <-- condition.map(c => if (c) Some(child) else Option.empty)
 
 }

@@ -17,25 +17,9 @@ import scala.scalajs.js
 
 trait MiscSyntax {
 
-  @inline def nodeSeq[El <: ReactiveElement[dom.Element]](
-    seq: Modifier[El]*
-  ): Modifier[El] = seq
-
-  @inline def nodeSequence[A, El <: ReactiveElement[dom.Element]](
-    seq: Seq[Modifier[El]]
-  ): Modifier[El] = nodeSeq(seq: _*)
-
-  @inline def when[A, El <: Element](b: Boolean)(
-    mods: Modifier[El]*
-  ): Modifier[El] =
-    if (b) { mods }
-    else { emptyMod }
-
   @inline def whenNot[A, El <: Element](b: Boolean)(
     mods: Modifier[El]*
-  ): Modifier[El] =
-    if (!b) { mods }
-    else { emptyMod }
+  ): Modifier[El] = when(!b)(mods: _*)
 
   @inline def whenEmpty[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
     when(o.isEmpty)(mods: _*)

@@ -2,7 +2,7 @@ package io.laminext.core
 
 import com.raquo.laminar.api.L._
 
-class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
+class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) extends AnyVal {
 
   /**
    * Transform this `EventStreamEitherT[A, B]` into a `EventStream[C]`.
@@ -12,7 +12,7 @@ class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
   /**
    * Transform this `EventStreamEitherT[A, B]` into a `EventStream[C]`.
    */
-  def foldF[C](fa: A => EventStream[C], fb: B => EventStream[C]): EventStream[C] = value.flatMap(_.fold(fa, fb))
+  def foldF[C](fa: A => EventStream[C], fb: B => EventStream[C]): EventStream[C] = value.flatMapSwitch(_.fold(fa, fb))
 
   def isLeft: EventStream[Boolean] = value.map(_.isLeft)
 
@@ -23,13 +23,13 @@ class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
   def getOrElse[BB >: B](default: => BB): EventStream[BB] = value.map(_.getOrElse(default))
 
   def getOrElseF[BB >: B](default: => EventStream[BB]): EventStream[BB] =
-    value.flatMap {
+    value.flatMapSwitch {
       case Left(_)  => default
       case Right(b) => EventStream.fromValue(b)
     }
 
   def orElse[C, BB >: B](default: => EventStreamEitherT[C, BB]): EventStreamEitherT[C, BB] =
-    new EventStreamEitherT(value.flatMap {
+    new EventStreamEitherT(value.flatMapSwitch {
       case Left(_)  => default.value
       case Right(b) => EventStream.fromValue(Right(b))
     })
@@ -43,7 +43,7 @@ class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
     )
 
   def recoverWith(pf: PartialFunction[A, EventStreamEitherT[A, B]]): EventStreamEitherT[A, B] = {
-    val s = value.flatMap {
+    val s = value.flatMapSwitch {
       case Left(a) if pf.isDefinedAt(a) => pf(a).value
       case other                        => EventStream.fromValue(other)
     }
@@ -53,7 +53,7 @@ class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
   def valueOr[BB >: B](f: A => BB): EventStream[BB] = fold(f, identity)
 
   def valueOrF[BB >: B](f: A => EventStream[BB]): EventStream[BB] =
-    value.flatMap {
+    value.flatMapSwitch {
       case Left(a)  => f(a)
       case Right(b) => EventStream.fromValue(b)
     }
@@ -95,13 +95,13 @@ class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
     )
 
   def biflatMap[C, D](fa: A => EventStreamEitherT[C, D], fb: B => EventStreamEitherT[C, D]): EventStreamEitherT[C, D] =
-    new EventStreamEitherT(value.flatMap {
+    new EventStreamEitherT(value.flatMapSwitch {
       case Left(a)  => fa(a).value
       case Right(a) => fb(a).value
     })
 
   def flatMap[AA >: A, D](f: B => EventStreamEitherT[AA, D]): EventStreamEitherT[AA, D] =
-    new EventStreamEitherT(value.flatMap {
+    new EventStreamEitherT(value.flatMapSwitch {
       case Left(a)  => EventStream.fromValue(Left(a))
       case Right(b) => f(b).value
     })
@@ -120,7 +120,7 @@ class EventStreamEitherT[A, B](val value: EventStream[Either[A, B]]) {
   def leftMap[C](f: A => C): EventStreamEitherT[C, B] = bimap(f, identity)
 
   def leftFlatMap[BB >: B, C](f: A => EventStreamEitherT[C, BB]): EventStreamEitherT[C, BB] =
-    new EventStreamEitherT(value.flatMap {
+    new EventStreamEitherT(value.flatMapSwitch {
       case Left(a)  => f(a).value
       case Right(b) => EventStream.fromValue(Right(b))
     })
