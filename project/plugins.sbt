@@ -17,7 +17,7 @@ addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.10.0")
 
 addSbtPlugin("com.yurique" % "sbt-embedded-files" % "0.4.0")
 
-addSbtPlugin("com.github.sbt" % "sbt-github-actions" % "0.19.0")
+addSbtPlugin("com.github.sbt" % "sbt-github-actions" % "0.22.0")
 
 addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.12")
 
