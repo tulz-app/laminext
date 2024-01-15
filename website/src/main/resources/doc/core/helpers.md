@@ -20,22 +20,6 @@ div(
 )
 ```
 
-## `when` 
-## `whenNot`
-
-```scala
-val b: Boolean = ???
-
-div(
-  when(b) {
-    span("b is true")
-  },
-  whenNot(b) {
-    span("b is false")
-  }
-)
-```
-
 ## `unsafeAppendRawChild`
 
 Use when you know what you're doing.

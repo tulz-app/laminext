@@ -17,10 +17,6 @@ import scala.scalajs.js
 
 trait MiscSyntax {
 
-  @inline def whenNot[A, El <: Element](b: Boolean)(
-    mods: Modifier[El]*
-  ): Modifier[El] = when(!b)(mods: _*)
-
   @inline def whenEmpty[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
     when(o.isEmpty)(mods: _*)
 
