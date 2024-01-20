@@ -28,10 +28,16 @@ trait LaminarSpec extends MountOps with RuleImplicits[Tag.Base, CommentNode, Htm
 
   def sentinel: ExpectedNode = ExpectedNode.comment
 
+  /**
+   * You can use this when `sentinel` does not make sense semantically
+   */
+  def emptyCommentNode: ExpectedNode = ExpectedNode.comment
+
   def mount(
     node: ReactiveElement.Base,
     clue: String = defaultMountedElementClue
   )(implicit
+    prettifier: scalactic.Prettifier,
     pos: scalactic.source.Position
   ): Unit = {
     mountedElementClue = clue
@@ -43,12 +49,18 @@ trait LaminarSpec extends MountOps with RuleImplicits[Tag.Base, CommentNode, Htm
     clue: String,
     node: ReactiveElement.Base
   )(implicit
+    prettifier: scalactic.Prettifier,
     pos: scalactic.source.Position
   ): Unit = {
-    mount(node, clue)(pos)
+    mount(node, clue)(prettifier, pos)
   }
 
-  override def unmount(clue: String = "unmount")(implicit pos: scalactic.source.Position): Unit = {
+  override def unmount(
+    clue: String = "unmount"
+  )(implicit
+    prettifier: scalactic.Prettifier,
+    pos: scalactic.source.Position
+  ): Unit = {
     assertRootNodeMounted("unmount:" + clue)
     doAssert(
       root != null,
