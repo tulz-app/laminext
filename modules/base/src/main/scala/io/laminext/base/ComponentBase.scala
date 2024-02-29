@@ -1,5 +1,6 @@
 package io.laminext.base
 
+import com.raquo.laminar
 import com.raquo.laminar.modifiers.RenderableNode
 import com.raquo.laminar.nodes.ChildNode.Base
 import com.raquo.laminar.nodes.ReactiveHtmlElement
@@ -18,9 +19,7 @@ object ComponentBase {
 
     override def asNode(value: ComponentBase[R]): Base = value.el
 
-    override def asNodeSeq(values: Seq[ComponentBase[R]]): Seq[Base] = values.map(_.el)
-
-    override def asNodeIterable(values: Iterable[ComponentBase[R]]): Iterable[Base] = values.map(_.el)
+    override def asNodeSeq(values: laminar.Seq[ComponentBase[R]]): laminar.Seq[Base] = values.map(_.el)
 
     override def asNodeOption(value: Option[ComponentBase[R]]): Option[Base] = value.map(_.el)
 
