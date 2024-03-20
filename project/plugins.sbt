@@ -5,7 +5,7 @@ libraryDependencies += "org.scala-js"  %% "scalajs-env-nodejs"       % "1.4.0"
 libraryDependencies += "org.scala-js"  %% "scalajs-env-selenium"     % "1.1.1"
 libraryDependencies += "org.scala-js"  %% "scalajs-env-jsdom-nodejs" % "1.1.0"
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.14.0")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.16.0")
 
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 
