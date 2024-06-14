@@ -49,7 +49,7 @@ object FetchCirceExample
                   .post(
                     "https://httpbin.org/anything",
                     body = jsonRequestBody(Data(s = inputValue))
-                  ) // Data has an implicit Encoder[Data] auto-derived
+                  )             // Data has an implicit Encoder[Data] auto-derived
                   .decode[Json] // Json has a corresponding implicit Decoder[Json]
                 /* </focus> */
               } --> responseReceived,
