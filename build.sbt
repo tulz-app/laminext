@@ -37,7 +37,7 @@ Global / useJSEnv := JSEnv.NodeJS
 
 inThisBuild(
   List(
-    organization                               := "io.laminext",
+    organization                               := "dev.laminext",
     homepage                                   := Some(url("https://github.com/tulz-app/laminext")),
     licenses                                   := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
     scmInfo                                    := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
