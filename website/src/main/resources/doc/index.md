@@ -3,6 +3,17 @@
 laminext is a set of libraries that provide extensions, utilities and components 
 for [Laminar](https://github.com/raquo/Laminar) and [Airstream](https://github.com/raquo/Airstream).
 
+<div class="bg-sky-200 px-8 py-4">
+<div class="font-bold">
+Important!
+</div>
+
+<div>
+Starting with version 0.17.1 the dependency organization name has changed from "io.laminext" to "dev.laminext".
+</div>
+</div>
+
+
 #### laminext `0.17.x` is for Laminar `17.x`.
 
 * [core](/core) – core extensions and utilities

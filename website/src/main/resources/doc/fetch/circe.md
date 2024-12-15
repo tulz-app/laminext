@@ -1,5 +1,5 @@
 ```scala
-libraryDependencies += "io.laminext" %%% "fetch-circe" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "fetch-circe" % "{{laminextVersion}}"
 ```
 
 ```scala

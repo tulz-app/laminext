@@ -17,7 +17,7 @@ There is the `tailwind-default-theme` module that provides a default theme that 
 from.
 
 ```scala
-libraryDependencies += "io.laminext" %%% "tailwind-default-theme" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "tailwind-default-theme" % "{{laminextVersion}}"
 ```
 
 ```scala

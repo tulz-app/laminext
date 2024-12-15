@@ -1,5 +1,5 @@
 ```scala
-libraryDependencies += "io.laminext" %%% "core" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "core" % "{{laminextVersion}}"
 ```
 
 ```scala
