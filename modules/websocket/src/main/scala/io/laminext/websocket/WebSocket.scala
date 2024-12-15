@@ -126,7 +126,7 @@ class WebSocket[Receive, Send](
       if (!bufferWhenDisconnected) {
         sendBuffer.clear()
       } else if (sendBuffer.size > bufferSize) {
-        sendBuffer.drop(sendBuffer.size - bufferSize)
+        val _ = sendBuffer.drop(sendBuffer.size - bufferSize)
       }
     }
     connectedWS.foreach { ws =>

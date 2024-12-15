@@ -15,7 +15,7 @@ class AirFSM[State](initialState: State, initialStateRequests: EventStream[State
     var currentSubscription: Subscription = null
     ReactiveElement.bindSubscriptionUnsafe(element) { ctx =>
       currentSubscription = stateChangeRequests.writer.addSource(initialStateRequests)(ctx.owner)
-      stateChangeRequests.events.foreach { nextState =>
+      val _ = stateChangeRequests.events.foreach { nextState =>
         if (control.isDefinedAt((currentState, nextState))) {
           val nextStateChangeRequests = control((currentState, nextState))
           if (currentSubscription != null) {

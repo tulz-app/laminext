@@ -50,13 +50,13 @@ object Modal {
 
   private def calculateScrollbarWidth(): Double = {
     val outer           = div(styleAttr("visibility: hidden; width: 100px; msOverflowStyle: scrollbar")).ref
-    dom.document.body.appendChild(outer)
+    val _               = dom.document.body.appendChild(outer)
     val widthNoScroll   = outer.offsetWidth
     outer.style.overflow = "scroll"
     val inner           = div(width := "100%").ref
-    outer.appendChild(inner)
+    val _               = outer.appendChild(inner)
     val widthWithScroll = inner.offsetWidth
-    outer.parentNode.removeChild(outer)
+    val _               = outer.parentNode.removeChild(outer)
     widthNoScroll - widthWithScroll
   }
 

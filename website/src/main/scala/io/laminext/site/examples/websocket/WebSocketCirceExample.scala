@@ -10,9 +10,6 @@ object WebSocketCirceExample
       description = FileAsString("description.md")
     )(() => {
       import com.raquo.laminar.api.L._
-      div(
-        "temporarily commenting this out – circe's not ready for scala 3-RC2"
-      )
 
       import com.raquo.laminar.api.L._
       import com.raquo.laminar.api.L.CollectionCommand

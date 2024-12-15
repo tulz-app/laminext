@@ -45,6 +45,7 @@ object VideoJSOptions {
     if (sources.nonEmpty) obj.sources = sources.toJSArray
     if (techOrder.nonEmpty) obj.techOrder = techOrder.toJSArray
     aspectRatio.foreach(obj.aspectRatio = _)
+    bigPlayButton.foreach(obj.bigPlayButton = _)
     controlBar.foreach(obj.controlBar = _)
     defaultVolume.foreach(obj.defaultVolume = _)
     html5.foreach(obj.html5 = _)

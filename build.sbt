@@ -1,5 +1,4 @@
 import org.scalajs.linker.interface.ESVersion
-
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
@@ -8,13 +7,16 @@ import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.remote.server.DriverFactory
 import org.openqa.selenium.remote.server.DriverProvider
 
+import scala.Ordering.Implicits.*
 import org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv
 import org.scalajs.jsenv.selenium.SeleniumJSEnv
 
 import java.util.concurrent.TimeUnit
-
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
+import org.typelevel.scalacoptions.ScalaVersion.V3_0_0
+import org.typelevel.scalacoptions.ScalacOption
+import org.typelevel.scalacoptions.ScalacOptions
 
 val disableWebsiteOnCI = true
 
@@ -124,9 +126,8 @@ inThisBuild(
   ),
 )
 
-lazy val commonSettings = Seq.concat(
-  ScalaOptions.fixOptions,
-  scalacOptions ++= {
+lazy val commonSettings = Seq(
+  tpolecatScalacOptions ++= {
     val sourcesGithubUrl  = s"https://raw.githubusercontent.com/tulz-app/laminext/${git.gitHeadCommit.value.get}/"
     val sourcesOptionName = CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, _)) => "-P:scalajs:mapSourceURI"
@@ -134,10 +135,23 @@ lazy val commonSettings = Seq.concat(
       case _            => throw new RuntimeException(s"unexpected scalaVersion: ${scalaVersion.value}")
     }
     val moduleSourceRoot  = file("").toURI.toString
-    Seq(
-      s"$sourcesOptionName:$moduleSourceRoot->$sourcesGithubUrl"
+    Set(
+      ScalacOption(s"$sourcesOptionName:$moduleSourceRoot->$sourcesGithubUrl", _ => true)
     )
-  }
+  },
+  tpolecatExcludeOptions ++= Set(
+    ScalacOptions.warnDeadCode,
+    ScalacOptions.warnUnusedImports,
+  ),
+  Test / tpolecatExcludeOptions ++= Set(
+    ScalacOptions.warnValueDiscard,
+    ScalacOptions.warnUnusedImports,
+    ScalacOptions.warnUnusedLocals,
+    ScalacOptions.warnUnusedImplicits,
+    ScalacOptions.warnUnusedPatVars,
+    ScalacOptions.warnDeadCode,
+    ScalacOptions.warnNonUnitStatement
+  ),
 )
 
 lazy val baseDependencies = Seq(
