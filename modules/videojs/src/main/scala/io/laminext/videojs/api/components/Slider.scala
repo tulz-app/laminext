@@ -30,7 +30,7 @@ trait Slider extends Component {
   def disable(): Unit
 
   /**
-   * Create the `Slider`s DOM element.
+   * Create the `Slider` s DOM element.
    *
    * @param type
    *   Type of element to create.
@@ -93,8 +93,8 @@ trait Slider extends Component {
    *
    * @return
    *   The current position of the Slider.
-   *   - position.x for vertical `Slider`s
-   *   - position.y for horizontal `Slider`s
+   *   - position.x for vertical `Slider` s
+   *   - position.y for horizontal `Slider` s
    */
   def calculateDistance(event: EventTarget.Event): Double
 

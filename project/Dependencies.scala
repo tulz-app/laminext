@@ -42,7 +42,7 @@ object Dependencies {
 
   val frontroute: Def.Initialize[Seq[ModuleID]] = Def.setting {
     Seq(
-      "io.frontroute" %%% "frontroute" % DependencyVersions.frontroute
+      "dev.frontroute" %%% "frontroute" % DependencyVersions.frontroute
     )
   }
 

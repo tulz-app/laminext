@@ -6,7 +6,7 @@ There will be no replacement for the `buttons` utilities, other functionality wi
 of the styling framework and will be moved to the `ui` module.
 
 ```scala
-libraryDependencies += "io.laminext" %%% "tailwind" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "tailwind" % "{{laminextVersion}}"
 ```
 
 ```scala

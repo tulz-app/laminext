@@ -1,5 +1,5 @@
 ```scala
-libraryDependencies += "io.laminext" %%% "websocket-upickle" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "websocket-upickle" % "{{laminextVersion}}"
 ```
 
 The `websocket-upickle` module provides an extension method for the `WebSocketReceiveBuilder`: `.json[Receive, Send]`:

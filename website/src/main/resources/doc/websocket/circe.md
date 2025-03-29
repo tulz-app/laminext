@@ -1,5 +1,5 @@
 ```scala
-libraryDependencies += "io.laminext" %%% "websocket-circe" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "websocket-circe" % "{{laminextVersion}}"
 ```
 
 The `websocket-circe` module provides an extension method for the `WebSocketReceiveBuilder`: `.json[Receive, Send]`:

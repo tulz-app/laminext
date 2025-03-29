@@ -1,5 +1,4 @@
 import org.scalajs.linker.interface.ESVersion
-
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
@@ -8,13 +7,18 @@ import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.remote.server.DriverFactory
 import org.openqa.selenium.remote.server.DriverProvider
 
+import scala.Ordering.Implicits.*
 import org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv
 import org.scalajs.jsenv.selenium.SeleniumJSEnv
 
 import java.util.concurrent.TimeUnit
-
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
+import org.typelevel.scalacoptions.ScalaVersion.V3_0_0
+import org.typelevel.scalacoptions.ScalacOption
+import org.typelevel.scalacoptions.ScalacOptions
+
+import xerial.sbt.Sonatype.sonatypeCentralHost
 
 val disableWebsiteOnCI = true
 
@@ -33,7 +37,7 @@ Global / useJSEnv := JSEnv.NodeJS
 
 inThisBuild(
   List(
-    organization                               := "io.laminext",
+    organization                               := "dev.laminext",
     homepage                                   := Some(url("https://github.com/tulz-app/laminext")),
     licenses                                   := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
     scmInfo                                    := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
@@ -47,6 +51,7 @@ inThisBuild(
     Test / publishArtifact                     := false,
     Test / parallelExecution                   := false,
     scalafmtOnCompile                          := true,
+    sonatypeCredentialHost                     := sonatypeCentralHost,
     githubWorkflowJavaVersions                 := Seq(JavaSpec.temurin("17")),
     githubWorkflowUseSbtThinClient             := false,
     githubWorkflowSbtCommand                   := "sbt -mem 5000",
@@ -124,9 +129,8 @@ inThisBuild(
   ),
 )
 
-lazy val commonSettings = Seq.concat(
-  ScalaOptions.fixOptions,
-  scalacOptions ++= {
+lazy val commonSettings = Seq(
+  tpolecatScalacOptions ++= {
     val sourcesGithubUrl  = s"https://raw.githubusercontent.com/tulz-app/laminext/${git.gitHeadCommit.value.get}/"
     val sourcesOptionName = CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, _)) => "-P:scalajs:mapSourceURI"
@@ -134,10 +138,23 @@ lazy val commonSettings = Seq.concat(
       case _            => throw new RuntimeException(s"unexpected scalaVersion: ${scalaVersion.value}")
     }
     val moduleSourceRoot  = file("").toURI.toString
-    Seq(
-      s"$sourcesOptionName:$moduleSourceRoot->$sourcesGithubUrl"
+    Set(
+      ScalacOption(s"$sourcesOptionName:$moduleSourceRoot->$sourcesGithubUrl", _ => true)
     )
-  }
+  },
+  tpolecatExcludeOptions ++= Set(
+    ScalacOptions.warnDeadCode,
+    ScalacOptions.warnUnusedImports,
+  ),
+  Test / tpolecatExcludeOptions ++= Set(
+    ScalacOptions.warnValueDiscard,
+    ScalacOptions.warnUnusedImports,
+    ScalacOptions.warnUnusedLocals,
+    ScalacOptions.warnUnusedImplicits,
+    ScalacOptions.warnUnusedPatVars,
+    ScalacOptions.warnDeadCode,
+    ScalacOptions.warnNonUnitStatement
+  ),
 )
 
 lazy val baseDependencies = Seq(
@@ -307,10 +324,10 @@ lazy val laminextSiteVersion: String = IO.read(file("website/.laminext-version")
 lazy val thisVersionSitePrefix       = s"/v/$laminextSiteVersion/"
 
 lazy val vars = Seq(
-  "laminextVersion" -> "0.17.0",
-  "laminarVersion"  -> "17.0.0",
+  "laminextVersion" -> "0.17.1",
+  "laminarVersion"  -> "17.2.0",
   "scalajsVersion"  -> "1.16.0",
-  "scala3version"   -> "3.3.1",
+  "scala3version"   -> "3.3.4",
 )
 
 def templateVars(s: String): String =

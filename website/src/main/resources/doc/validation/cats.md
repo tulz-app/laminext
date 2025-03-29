@@ -1,5 +1,5 @@
 ```scala
-libraryDependencies += "io.laminext" %%% "validation-cats" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "validation-cats" % "{{laminextVersion}}"
 ```
 
 This module provides the the `&` and `|` combinators. These are non fail-fast and will report 

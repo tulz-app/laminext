@@ -53,7 +53,7 @@ object PageHeader {
       ),
       div(
         cls := "hidden lg:block",
-        img(src := "https://img.shields.io/maven-central/v/io.laminext/core_sjs1_2.13.svg?versionPrefix=0.17", alt := "latest version on maven central")
+        img(src := "https://img.shields.io/maven-central/v/dev.laminext/core_sjs1_2.13.svg?versionPrefix=0.17", alt := "latest version on maven central")
       ),
       div(
         cls := "hidden lg:block relative inline-block text-left",
@@ -155,7 +155,7 @@ object PageHeader {
 
   private def moduleLink(
     currentPage: Signal[Option[(SiteModule, Page)]]
-  )(module: SiteModule) =
+  )(module: SiteModule)  =
     a(
       cls  := "border-b-2 px-2 border-transparent flex font-display tracking-wide",
       currentPage

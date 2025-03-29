@@ -1,5 +1,5 @@
 ```scala
-libraryDependencies += "io.laminext" %%% "ui" % "{{laminextVersion}}"
+libraryDependencies += "dev.laminext" %%% "ui" % "{{laminextVersion}}"
 ```
 
 A set of small UI components.
