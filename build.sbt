@@ -145,6 +145,9 @@ lazy val commonSettings = Seq(
   tpolecatExcludeOptions ++= Set(
     ScalacOptions.warnDeadCode,
     ScalacOptions.warnUnusedImports,
+    ScalacOptions.warnUnusedPrivates,
+    ScalacOptions.warnUnusedExplicits,
+    ScalacOptions.warnUnusedParams,
   ),
   Test / tpolecatExcludeOptions ++= Set(
     ScalacOptions.warnValueDiscard,

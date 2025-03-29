@@ -38,7 +38,7 @@ class ReactiveHtmlElementUiOps[T <: dom.html.Element](el: ReactiveHtmlElement[T]
           }
           enters += 1
         },
-        onDragLeave.preventDefault --> { ev =>
+        onDragLeave.preventDefault --> { _ =>
           enters -= 1
           if (enters == 0) {
             enters = 0

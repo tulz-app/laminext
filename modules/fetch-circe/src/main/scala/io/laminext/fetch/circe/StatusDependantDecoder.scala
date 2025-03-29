@@ -10,7 +10,7 @@ class StatusDependantDecoderBuilder[A] {
   private val decoders: mutable.Map[Int, Decoder[_]] = mutable.Map.empty
 
   def status[AA <: A: Decoder](statusCode: Int): StatusDependantDecoderBuilder[A] = {
-    decoders.put(statusCode, implicitly[Decoder[AA]])
+    val _ = decoders.put(statusCode, implicitly[Decoder[AA]])
     this
   }
 
