@@ -156,7 +156,7 @@ object PageHeader {
 
   private def moduleLink(
     currentPage: Signal[Option[(SiteModule, Page)]]
-  )(module: SiteModule) =
+  )(module: SiteModule)  =
     a(
       cls  := "border-b-2 px-2 border-transparent flex font-display tracking-wide",
       currentPage
