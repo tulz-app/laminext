@@ -26,7 +26,6 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val _ = documentEvents(_.onDomContentLoaded).foreach { _ =>
-      initializeModal()
       val wiring = Wiring()
       removeNoJsClass(wiring.ssrContext)
       insertJsClass(wiring.ssrContext)

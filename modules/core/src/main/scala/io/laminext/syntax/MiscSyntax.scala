@@ -1,7 +1,6 @@
 package io.laminext.syntax
 
 import com.raquo.laminar.api.L._
-import com.raquo.laminar.nodes.ReactiveElement
 import io.laminext.core.MutationObserverBinders
 import io.laminext.core.ResizeObserverBinders
 import io.laminext.core.SetTimeoutBinders
@@ -17,11 +16,11 @@ import scala.scalajs.js
 
 trait MiscSyntax {
 
-  @inline def whenEmpty[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
-    when(o.isEmpty)(mods: _*)
+  @inline def whenEmpty[El <: Element](o: Option[_])(mod: => Modifier[El]): Modifier[El] =
+    when(o.isEmpty)(mod)
 
-  @inline def whenDefined[El <: Element](o: Option[_])(mods: Modifier[El]*): Modifier[El] =
-    when(o.isDefined)(mods: _*)
+  @inline def whenDefined[El <: Element](o: Option[_])(mod: => Modifier[El]): Modifier[El] =
+    when(o.isDefined)(mod)
 
   @inline def tee[T](observers: Observer[T]*): Observer[T] =
     new TeeObserver[T](observers)

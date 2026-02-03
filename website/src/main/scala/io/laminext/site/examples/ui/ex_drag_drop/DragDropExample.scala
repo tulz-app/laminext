@@ -31,9 +31,9 @@ object DragDropExample
           )
         ).dropZone[String] { state =>
           List(
-            cls.toggle("border-sky-300") <-- state.over.valueIs(DraggingOver.Out),
-            cls.toggle("border-sky-400") <-- state.over.valueOneOf(DraggingOver.Over(true)),
-            cls.toggle("border-rose-400") <-- state.over.valueOneOf(DraggingOver.Over(false)),
+            cls("border-sky-300") <-- state.over.valueIs(DraggingOver.Out),
+            cls("border-sky-400") <-- state.over.valueOneOf(DraggingOver.Over(true)),
+            cls("border-rose-400") <-- state.over.valueOneOf(DraggingOver.Over(false)),
             children.command <-- state.drop.map { data =>
               CollectionCommand.Append(
                 div(
@@ -52,9 +52,9 @@ object DragDropExample
           )
         ).dropZone[FileList] { state =>
           List(
-            cls.toggle("border-sky-300") <-- state.over.valueIs(DraggingOver.Out),
-            cls.toggle("border-sky-400") <-- state.over.valueOneOf(DraggingOver.Over(true)),
-            cls.toggle("border-rose-400") <-- state.over.valueOneOf(DraggingOver.Over(false)),
+            cls("border-sky-300") <-- state.over.valueIs(DraggingOver.Out),
+            cls("border-sky-400") <-- state.over.valueOneOf(DraggingOver.Over(true)),
+            cls("border-rose-400") <-- state.over.valueOneOf(DraggingOver.Over(false)),
             children.command <-- state.drop.map { data =>
               CollectionCommand.Append(
                 div(

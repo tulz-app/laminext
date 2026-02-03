@@ -3,7 +3,7 @@ package io.laminext.site.examples.ui.ex_fileinput
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
 import io.laminext.syntax.ui._
-import io.laminext.ui.theme.FileInputConfig
+import io.laminext.ui.FileInputConfig
 
 object FileInputExample
     extends CodeExample(

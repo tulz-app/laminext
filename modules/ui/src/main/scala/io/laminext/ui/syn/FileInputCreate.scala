@@ -5,8 +5,7 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 import io.laminext.syntax.core.hellip
 import io.laminext.syntax.validation._
 import io.laminext.ui.FileInputElement
-import io.laminext.ui.Theme
-import io.laminext.ui.theme.FileInputConfig
+import io.laminext.ui.FileInputConfig
 import io.laminext.validation.components.ValidatedElement
 import io.laminext.validation.Validation
 import org.scalajs.dom.File
@@ -19,7 +18,7 @@ trait FileInputCreate {
   def fileInput[Err](
     validation: Validation[File, Err, File],
     noFileError: Err,
-    styling: FileInputConfig = Theme.default.fileInput,
+    styling: FileInputConfig = FileInputConfig.empty,
     inputMods: Modifier[ReactiveHtmlElement[org.scalajs.dom.html.Input]] = emptyMod,
     labelSelecting: Element = defaultLabelSelecting,
     labelReady: Seq[File] => Element = defaultLabelReady
@@ -31,7 +30,7 @@ trait FileInputCreate {
   def multiFileInput[Err](
     validation: Validation[File, Err, File],
     noFileError: Err,
-    styling: FileInputConfig = Theme.default.fileInput,
+    styling: FileInputConfig = FileInputConfig.empty,
     inputMods: Modifier[ReactiveHtmlElement[org.scalajs.dom.html.Input]] = emptyMod,
     labelSelecting: Element = defaultLabelSelecting,
     labelReady: Seq[File] => Element = defaultLabelReady

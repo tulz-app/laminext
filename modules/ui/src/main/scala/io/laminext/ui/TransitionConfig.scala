@@ -1,4 +1,4 @@
-package io.laminext.ui.theme
+package io.laminext.ui
 
 import org.scalajs.dom
 

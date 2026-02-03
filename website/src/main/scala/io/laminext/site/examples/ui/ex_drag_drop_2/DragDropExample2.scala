@@ -43,10 +43,10 @@ object DragDropExample2
                 state.leave.mapToFalse --> insert,
                 div(
                   cls := "py-1 border-t-4 border-dashed",
-                  cls.toggle("border-sky-400") <-- state.over.valueIs(DraggingOver.Out),
-                  cls.toggle("border-sky-700") <-- state.over.valueIs(DraggingOver.Over(true)),
-                  cls.toggle("border-rose-700") <-- state.over.valueIs(DraggingOver.Over(false)),
-                  cls.toggle("invisible") <-- state.over.valueIs(DraggingOver.Out),
+                  cls("border-sky-400") <-- state.over.valueIs(DraggingOver.Out),
+                  cls("border-sky-700") <-- state.over.valueIs(DraggingOver.Over(true)),
+                  cls("border-rose-700") <-- state.over.valueIs(DraggingOver.Over(false)),
+                  cls("invisible") <-- state.over.valueIs(DraggingOver.Out),
                 ),
                 div(
                   cls := "p-2 bg-sky-800 text-sky-100",
@@ -57,13 +57,13 @@ object DragDropExample2
           },
           div(
             cls := "p-2 bg-sky-300 space-y-4 h-12 border-4 border-dashed rounded",
-            cls.toggle("hidden") <-- !dragging.signal,
+            cls("hidden") <-- !dragging.signal,
           ).dropZone[String] { state =>
             List(
               state.drop --> listVar.updater[String](_ :+ _),
-              cls.toggle("border-sky-400") <-- state.over.valueIs(DraggingOver.Out),
-              cls.toggle("border-sky-700") <-- state.over.valueIs(DraggingOver.Over(true)),
-              cls.toggle("border-rose-700") <-- state.over.valueIs(DraggingOver.Over(false)),
+              cls("border-sky-400") <-- state.over.valueIs(DraggingOver.Out),
+              cls("border-sky-700") <-- state.over.valueIs(DraggingOver.Over(true)),
+              cls("border-rose-700") <-- state.over.valueIs(DraggingOver.Over(false)),
             )
           }
         )

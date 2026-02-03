@@ -21,8 +21,6 @@ trait CoreSyntax
     with FutureOfEitherSyntax
     with HtmlTagSyntax
     with SvgTagSyntax
-    with ReactiveHtmlElementSyntax
-    with ReactiveSvgElementSyntax
     with InputElementSyntax
     with TextAreaSyntax
     with OptionOfSignalSyntax

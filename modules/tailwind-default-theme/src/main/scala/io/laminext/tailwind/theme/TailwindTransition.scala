@@ -1,6 +1,6 @@
 package io.laminext.tailwind.theme
 
-import io.laminext.ui.theme.TransitionConfig
+import io.laminext.ui.TransitionConfig
 
 object TailwindTransition {
 
@@ -42,15 +42,5 @@ object TailwindTransition {
     enter = "duration-500 linear",
     leave = "duration-300 linear",
   )
-
-//  val opacityAndScaleLong: TransitionConfig = opacityAndScale.copy(
-//    enterTiming = ClassTokenize("duration-300"),
-//    leaveTiming = ClassTokenize("duration-500")
-//  )
-//
-//  val opacityLong: TransitionConfig = opacity.copy(
-//    enterTiming = ClassTokenize("duration-300"),
-//    leaveTiming = ClassTokenize("duration-500")
-//  )
 
 }

@@ -3,7 +3,7 @@ package io.laminext.ui.syn
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
 import io.laminext.ui.TransitionEvent
-import io.laminext.ui.theme.TransitionConfig
+import io.laminext.ui.TransitionConfig
 
 import scala.scalajs.js
 

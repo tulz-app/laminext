@@ -126,18 +126,13 @@ object Site {
       title = "UI",
       index = docPage("", "UI", FileAsString("/doc/ui/index.md")),
       ""               -> Seq(
-        docPage("card", "Card", FileAsString("/doc/ui/card.md")),
         docPage("file-input", "File Input", FileAsString("/doc/ui/file-input.md")),
-        docPage("progress-bar", "Progress Bar", FileAsString("/doc/ui/progress-bar.md")),
         docPage("transition", "Transition", FileAsString("/doc/ui/transition.md")),
-        docPage("modal", "Modal", FileAsString("/doc/ui/modal.md")),
         docPage("animation", "Animation", FileAsString("/doc/ui/animation.md")),
+        docPage("drag-and-drop", "Drag-and-drop", FileAsString("/doc/ui/drag-and-drop.md")),
       ),
       "Examples"       -> Seq(
-        examplePage(examples.ui.ex_card.CardExample),
         examplePage(examples.ui.ex_fileinput.FileInputExample),
-        examplePage(examples.ui.ex_progress_bar.ProgressBarExample),
-        examplePage(examples.ui.ex_modal.ModalExample),
         examplePage(examples.ui.ex_animation.AnimationExample),
         examplePage(examples.ui.ex_transition.TransitionExample),
         examplePage(examples.ui.ex_drag_drop.DragDropExample),
@@ -160,16 +155,6 @@ object Site {
 //      path = "fsm",
 //      index = docPage("", "FSM", FileAsString("/doc/todo.md"))
 //    ),
-    SiteModule(
-      path = "tailwind",
-      title = "tailwind",
-      index = docPage("", "Tailwind", FileAsString("/doc/tailwind/index.md")),
-      ""               -> Seq(
-        docPage("transition", "Transition", FileAsString("/doc/tailwind/transition.md")),
-        //        docPage("theme", "Theme", FileAsString("/doc/tailwind/theme.md")),
-//        docPage("buttons", "Buttons", FileAsString("/doc/tailwind/buttons.md")),
-      )
-    ),
 //    SiteModule(
 //      path = "videojs",
 //      index = docPage("", "video.js", FileAsString("/doc/todo.md"))

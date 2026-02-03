@@ -2,7 +2,7 @@ package io.laminext.site.examples.ui.ex_transition
 
 import com.yurique.embedded.FileAsString
 import io.laminext.site.examples.CodeExample
-import io.laminext.ui.theme.TransitionConfig
+import io.laminext.ui.TransitionConfig
 
 object TransitionExample
     extends CodeExample(

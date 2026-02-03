@@ -18,8 +18,6 @@ import org.typelevel.scalacoptions.ScalaVersion.V3_0_0
 import org.typelevel.scalacoptions.ScalacOption
 import org.typelevel.scalacoptions.ScalacOptions
 
-import xerial.sbt.Sonatype.sonatypeCentralHost
-
 val disableWebsiteOnCI = true
 
 val ciVariants = List("ciFirefox", "ciChrome", "ciJSDOMNodeJS")
@@ -51,7 +49,6 @@ inThisBuild(
     Test / publishArtifact                     := false,
     Test / parallelExecution                   := false,
     scalafmtOnCompile                          := true,
-    sonatypeCredentialHost                     := sonatypeCentralHost,
     githubWorkflowJavaVersions                 := Seq(JavaSpec.temurin("17")),
     githubWorkflowUseSbtThinClient             := false,
     githubWorkflowSbtCommand                   := "sbt -mem 5000",
@@ -142,6 +139,9 @@ lazy val commonSettings = Seq(
       ScalacOption(s"$sourcesOptionName:$moduleSourceRoot->$sourcesGithubUrl", _ => true)
     )
   },
+  tpolecatScalacOptions ++= Set(
+//    ScalacOptions.source("3-cross", _ < V3_0_0)
+  ),
   tpolecatExcludeOptions ++= Set(
     ScalacOptions.warnDeadCode,
     ScalacOptions.warnUnusedImports,
@@ -356,7 +356,7 @@ lazy val website = project
     buildInfoPackage                := "io.laminext",
     Compile / fastLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) },
     Compile / fullLinkJS / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-    scalaJSLinkerConfig ~= { _.withESFeatures(_.withESVersion(ESVersion.ES5_1)) },
+    scalaJSLinkerConfig ~= { _.withESFeatures(_.withESVersion(ESVersion.ES2015)) },
     Compile / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
     scalaJSUseMainModuleInitializer := true,
     //    scalaJSLinkerConfig ~= (_.withModuleSplitStyle(org.scalajs.linker.interface.ModuleSplitStyle.FewestModules)),

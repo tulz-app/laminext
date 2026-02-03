@@ -3,11 +3,9 @@ package io.laminext.site.layout
 import io.laminext.site.Page
 import io.laminext.site.Site
 import io.laminext.site.SiteModule
-import io.laminext.site.SiteTheme
 import io.laminext.site.Styles
 import com.raquo.laminar.api.L._
 import io.laminext.syntax.core._
-import io.laminext.syntax.ui._
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 
 object PageWrap {
@@ -45,9 +43,15 @@ object PageWrap {
           )
         ),
         PageFooter(),
-        modal(styling = SiteTheme.mobileMenuModalStyling) {
-          mobileMenuContent.signal
+        child.maybe <-- mobileMenuContent.signal.mapSome { content =>
+          dialogTag(
+            content
+          )
         }
+//          .modal((styling = SiteTheme.mobileMenuModalStyling) {
+//
+//            mobileMenuContent.signal
+//          })
       )
     )
   }
