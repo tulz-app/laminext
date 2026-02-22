@@ -1,12 +1,12 @@
 object DependencyVersions {
 
   val jsdom        = "16.4.0"
-  val laminar      = "18.0.0-M2"
+  val laminar      = "18.0.0-M3"
   val `scala-test` = "3.2.9"
   val stringdiff   = "0.4.0"
   val domtestutils = "19.0.0"
   val cats         = "2.13.0"
-  val upickle      = "4.4.2"
+  val upickle      = "4.4.3"
   val circe        = "0.14.15"
 
   // -- website

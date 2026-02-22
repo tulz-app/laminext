@@ -190,6 +190,15 @@ class ThisEventsStreamBuilder[Ev <: dom.Event, A](
   @inline def debugSpyStops(fn: () => Unit): ThisEventsStreamBuilder[Ev, A] =
     andThen(_.debugSpyStops(fn))
 
+  @inline def debugSpyAll(
+    onStart: Int => Unit = _ => (),
+    onStop: () => Unit = () => (),
+    onFire: Try[A] => Unit = _ => (),
+    onEvalFromParent: Try[A] => Unit = _ => ()
+  ): ThisEventsStreamBuilder[Ev, A] =
+    andThen(_.debugSpyAll(onStart, onStop, onFire, onEvalFromParent))
+
+  @deprecated("Use debugSpyAll instead of debugWith", since = "0.18.0-M3")
   @inline def debugWith(debugger: Debugger[A]): ThisEventsStreamBuilder[Ev, A] =
     andThen(_.debugWith(debugger))
 

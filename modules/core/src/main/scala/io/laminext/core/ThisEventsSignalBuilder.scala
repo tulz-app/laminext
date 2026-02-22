@@ -35,9 +35,14 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   @inline def compose[B](operator: Signal[A] => Signal[B]): ThisEventsSignalBuilder[Ev, B] =
     andThen(_.compose(operator))
 
+  @inline def composeUpdates[AA >: A](
+    operator: EventStream[A] => EventStream[AA]
+  ): ThisEventsSignalBuilder[Ev, AA] = andThen(_.composeUpdates(operator))
+
+  @deprecated("composeChanges renamed to composeUpdates", since = "0.18.0-M3")
   @inline def composeChanges[AA >: A](
     operator: EventStream[A] => EventStream[AA]
-  ): ThisEventsSignalBuilder[Ev, AA] = andThen(_.composeChanges(operator))
+  ): ThisEventsSignalBuilder[Ev, AA] = composeUpdates(operator)
 
   @inline def composeAll[B](
     operator: EventStream[A] => EventStream[B],
@@ -45,8 +50,11 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   ): ThisEventsSignalBuilder[Ev, B] =
     andThen(_.composeAll(operator, initialOperator))
 
-  @inline def changes: ThisEventsStreamBuilder[Ev, A] =
-    new ThisEventsStreamBuilder(t, transform.andThen(_.changes))
+  @inline def updates: ThisEventsStreamBuilder[Ev, A] =
+    new ThisEventsStreamBuilder(t, transform.andThen(_.updates))
+
+  @deprecated("changes renamed to updates", since = "0.18.0-M3")
+  @inline def changes: ThisEventsStreamBuilder[Ev, A] = updates
 
   @inline def scanLeft[B](makeInitial: A => B)(fn: (B, A) => B): ThisEventsSignalBuilder[Ev, B] =
     andThen(_.scanLeft(makeInitial)(fn))
@@ -76,6 +84,15 @@ class ThisEventsSignalBuilder[Ev <: dom.Event, A](
   )(implicit c: Composition[A, T1]): ThisEventsSignalBuilder[Ev, c.Composed] =
     andThen(_.combineWith(s1))
 
+  @inline def debugSpyAll(
+    onStart: Int => Unit = _ => (),
+    onStop: () => Unit = () => (),
+    onFire: Try[A] => Unit = _ => (),
+    onEvalFromParent: Try[A] => Unit = _ => ()
+  ): ThisEventsSignalBuilder[Ev, A] =
+    andThen(_.debugSpyAll(onStart, onStop, onFire, onEvalFromParent))
+
+  @deprecated("Use debugSpyAll instead of debugWith", since = "0.18.0-M3")
   @inline def debugWith(debugger: Debugger[A]): ThisEventsSignalBuilder[Ev, A] =
     andThen(_.debugWith(debugger))
 
