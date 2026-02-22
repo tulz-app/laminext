@@ -33,7 +33,7 @@ object DragDropExample2
         ),
         div(
           cls := "p-8 bg-sky-300 space-y-2 rounded",
-          children <-- listVar.signal.map(_.zipWithIndex).split(_._2) { (index, _, s) =>
+          children <-- listVar.signal.map(_.zipWithIndex).splitSeq(_._2) { case s withKey index =>
             div().dropZone[String] { state =>
               List(
                 state.drop --> listVar.updater[String] { (list, item) =>
