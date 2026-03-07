@@ -40,7 +40,7 @@ inThisBuild(
     licenses                                   := List("MIT" -> url("https://github.com/tulz-app/laminext/blob/main/LICENSE.md")),
     scmInfo                                    := Some(ScmInfo(url("https://github.com/tulz-app/tuplez"), "scm:git@github.com/tulz-app/laminext.git")),
     developers                                 := List(Developer("yurique", "Iurii Malchenko", "i@yurique.com", url("https://github.com/yurique"))),
-    scalaVersion                               := ScalaVersions.v213,
+    scalaVersion                               := ScalaVersions.v3,
     description                                := "Laminar utilities and components",
     crossScalaVersions                         := Seq(
       ScalaVersions.v213,
@@ -140,7 +140,7 @@ lazy val commonSettings = Seq(
     )
   },
   tpolecatScalacOptions ++= Set(
-//    ScalacOptions.source("3-cross", _ < V3_0_0)
+    ScalacOptions.source("3-cross", _ < V3_0_0)
   ),
   tpolecatExcludeOptions ++= Set(
     ScalacOptions.warnDeadCode,
