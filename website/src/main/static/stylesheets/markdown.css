@@ -1,9 +1,9 @@
 .prose code:not(.hljs) {
-    @apply bg-blue-50 !important;
-    @apply hover:bg-blue-200 !important;
-    @apply text-blue-900 !important;
-    @apply px-1 !important;
-    @apply rounded !important;
+    @apply !bg-blue-50;
+    @apply hover:!bg-blue-200;
+    @apply !text-blue-900;
+    @apply !px-1;
+    @apply !rounded ;
 }
 
 .prose code:not(.hljs):before {

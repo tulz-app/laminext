@@ -34,7 +34,7 @@ object Main {
       Highlight.registerLanguage("css", HighlightCss)
       Highlight.registerLanguage("json", HighlightJson)
       Highlight.registerLanguage("html", HighlightXml)
-      if (dom.window.location.pathname.startsWith(Site.thisVersionHref("/example-frame/"))) {
+      if (dom.window.location.pathname.contains("/example-frame/")) {
         renderExample()
       } else {
         wiring.routes.start()
@@ -43,10 +43,11 @@ object Main {
   }
 
   private def renderExample(): Unit = {
-    val id           = dom.window.location.pathname.drop(Site.thisVersionHref("/example-frame/").length).takeWhile(_ != '/')
-    val appContainer = dom.document.querySelector("#app-container")
-    val content      = Site.allExamples.find(_.id == id).map(ex => CodeExampleDisplay.frame(ex)).getOrElse(div(s"EXAMPLE NOT FOUND: ${id}"))
-    val _            = com.raquo.laminar.api.L.render(appContainer, content.amend(LinkHandler.bind))
+    val indexOfExample = dom.window.location.pathname.indexOf("/example-frame/")
+    val id             = dom.window.location.pathname.drop(indexOfExample).drop("/example-frame/".length).takeWhile(_ != '/')
+    val appContainer   = dom.document.querySelector("#app-container")
+    val content        = Site.allExamples.find(_.id == id).map(ex => CodeExampleDisplay.frame(ex)).getOrElse(div(s"EXAMPLE NOT FOUND: ${id}"))
+    val _              = com.raquo.laminar.api.L.render(appContainer, content.amend(LinkHandler.bind))
     BrowserNavigation.pushState(url = "/")
   }
 

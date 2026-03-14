@@ -13,8 +13,8 @@ Optionally you can specify a `protocol` ([MDN](https://developer.mozilla.org/en-
 
 ```scala
 import io.laminext.websocket._
-val ws  = WebSocket.url("wss://echo.websocket.org")
-val ws2 = WebSocket.url("wss://echo.websocket.org", protocol = "my-protocol")
+val ws  = WebSocket.url("wss://ws.postman-echo.com/raw")
+val ws2 = WebSocket.url("wss://ws.postman-echo.com/raw", protocol = "my-protocol")
 ```
 
 ## Relative endpoint URL:

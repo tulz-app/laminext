@@ -14,12 +14,11 @@ object WebSocketExample
       import io.laminext.websocket._
 
       /* <focus> */
-      val ws = WebSocket.url("wss://echo.websocket.events").string.build(managed = false)
+      val ws = WebSocket.url("wss://ws.postman-echo.com/raw").string.build(managed = false)
       /* </focus> */
 
       val inputElement = input(
         tpe         := "text",
-        cls         := "shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-blue-300 rounded-md bg-blue-50 text-blue-700 placeholder-blue-400 font-mono",
         placeholder := "send a message"
       )
       div(

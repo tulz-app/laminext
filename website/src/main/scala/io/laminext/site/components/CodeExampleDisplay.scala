@@ -1,15 +1,19 @@
 package io.laminext.site.components
 
-import com.raquo.laminar.api.L._
-import frontroute._
-import io.laminext.syntax.core._
-import io.laminext.syntax.dangerous._
+import com.raquo.laminar.api.L.*
+import frontroute.internal.UrlString
+import io.laminext.syntax.core.*
+import io.laminext.syntax.dangerous.*
 import io.laminext.highlight.Highlight
 import io.laminext.site.examples.CodeExample
 import io.laminext.site.Site
 import io.laminext.site.Styles
+import frontroute.*
 import org.scalajs.dom
+import org.scalajs.dom.HTMLIFrameElement
+import org.scalajs.dom.Location
 import org.scalajs.dom.html
+import org.scalajs.dom.window
 
 import scala.scalajs.js
 
@@ -69,44 +73,35 @@ object CodeExampleDisplay {
       )
     }
 
+    val tabs = Seq(
+      "live"   -> "Live Demo",
+      "source" -> "Source Code",
+    ) ++ Seq("description" -> "Description").filter(_ => example.description.trim.nonEmpty)
+
     div(
-      cls := "flex-1 flex flex-col min-h-full space-y-4",
+      cls := "flex-1 flex flex-col space-y-4",
       div(
         cls := "flex space-x-4 items-center",
         h1(
           cls := "font-display text-xl font-bold text-gray-900 tracking-wide",
           example.title
         ),
-        pathEnd {
-          navigate("live")
-        },
-        path(Set("live", "source", "description")).signal { tab =>
-          div(
-            cls := "flex space-x-2",
+        div(
+          cls := "flex space-x-2",
+          tabs.map { case (path, tabLabel) =>
             a(
-              href := "live",
+              href := path,
               cls  := "px-2 rounded",
-              cls("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "live"),
-              cls("text-gray-700 font-semibold") <-- tab.map(_ != "live"),
-              "Live Demo"
-            ),
-            a(
-              href := "source",
-              cls  := "px-2 rounded",
-              cls("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "source"),
-              cls("text-gray-700 font-semibold") <-- tab.map(_ != "source"),
-              "Source Code"
-            ),
-            a(
-              href := "description",
-              cls  := "px-2 rounded",
-              cls("bg-gray-500 text-gray-100 font-semibold") <-- tab.map(_ == "description"),
-              cls("text-gray-700 font-semibold") <-- tab.map(_ != "description"),
-              cls  := (if (example.description.trim.isEmpty) "hidden" else ""),
-              "Description"
+              navMod { active =>
+                Seq(
+                  cls("bg-gray-500 text-gray-100 font-semibold") <-- active,
+                  cls("text-gray-700 font-semibold") <-- !active,
+                )
+              },
+              tabLabel
             )
-          )
-        }
+          }
+        )
       ),
       (path(Set("live", "source", "description")) | pathEnd.mapTo("live")).signal { tab =>
         div(
@@ -146,11 +141,11 @@ object CodeExampleDisplay {
             cls("hidden") <-- tab.map(_ != "live"),
             iframe(
               cls := "flex-1",
-//              onLoad --> { e =>
-//                val f = e.target.asInstanceOf[HTMLIFrameElement]
-//                f.style.height = (f.contentWindow.document.body.scrollHeight + 20).toString + "px"
-//              },
-              src := Site.thisVersionHref(s"/example-frame/${example.id}")
+              onLoad --> { e =>
+                val f = e.target.asInstanceOf[HTMLIFrameElement]
+                f.style.height = (f.contentWindow.document.body.scrollHeight + 20).toString + "px"
+              },
+              src := s"/example-frame/${example.id}"
             )
           ),
           div(

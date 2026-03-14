@@ -13,7 +13,7 @@ case class SendData(s: String)
 @JsonCodec
 case class ReceiveData(s: String)
 
-val ws = WebSocket.url("wss://echo.websocket.org").json[ReceiveData, SendData]
+val ws = WebSocket.url("wss://ws.postman-echo.com/raw").json[ReceiveData, SendData]
 ```
 
 [Example](/websocket/example-websocket-echo-circe)

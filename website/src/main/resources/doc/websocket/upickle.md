@@ -17,7 +17,7 @@ case class ReceiveData(s: String)
 implicit val myReader: Reader[ReceiveData] = macroR[ReceiveData]
 
 
-val ws = WebSocket.url("wss://echo.websocket.org").json[ReceiveData, SendData]
+val ws = WebSocket.url("wss://ws.postman-echo.com/raw").json[ReceiveData, SendData]
 ```
 
 [Example](/websocket/example-websocket-echo-upickle)

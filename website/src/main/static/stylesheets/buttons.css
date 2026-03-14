@@ -1,0 +1,117 @@
+@utility btn {
+    @apply inline-flex items-center justify-center
+    focus:outline-none focus:ring-2 focus:ring-offset-2
+    disabled:opacity-90 /*disabled:text-opacity-90*/
+    disabled:cursor-not-allowed;
+}
+
+@utility btn-single {
+    @apply rounded-md;
+}
+
+@utility btn-sm {
+    @apply px-3 py-1 text-base;
+}
+
+@utility btn-md {
+    @apply px-3 py-2 text-base;
+}
+
+@utility btn-lg {
+    @apply px-4 py-2 text-xl;
+}
+
+@utility btn-text {
+    @apply border border-transparent bg-transparent;
+}
+
+@utility btn-outline {
+    @apply bg-transparent border;
+}
+
+@utility btn-outline-blue {
+    @apply btn-outline
+    text-blue-700
+    border-blue-500
+    hover:bg-blue-50 hover:text-blue-700
+    focus:ring-blue-500;
+}
+
+@utility btn-outline-white {
+    @apply btn-outline
+    text-gray-200
+    border-gray-300
+    hover:text-white
+    focus:ring-gray-500;
+}
+
+@utility btn-outline-blue-light {
+    @apply btn-outline
+    text-blue-300
+    border-blue-300
+    hover:border-blue-100 hover:text-blue-100
+    focus:ring-blue-500;
+}
+
+@utility btn-text-white {
+    @apply btn-text
+    text-gray-200
+    hover:text-white
+    focus:ring-gray-500
+}
+
+@utility btn-text-blue {
+    @apply btn-text
+    text-blue-700
+    hover:text-blue-600
+    focus:ring-blue-500
+}
+
+@utility btn-lg-text-white {
+    @apply btn btn-single btn-lg btn-text-white;
+}
+
+@utility btn-md-text-blue {
+    @apply btn btn-single btn-md btn-text-blue
+}
+
+@utility btn-md-text-white {
+    @apply btn btn-single btn-md btn-text-white;
+}
+
+@utility btn-lg-text-white {
+    @apply btn btn-single btn-lg btn-text-white;
+}
+
+@utility btn-sm-text-white {
+    @apply btn btn-single btn-sm btn-text-white;
+}
+
+@utility btn-sm-text-blue {
+    @apply btn btn-single btn-sm btn-text-blue;
+}
+
+@utility btn-md-outline-blue {
+    @apply btn btn-single btn-md btn-outline-blue;
+}
+
+@utility btn-lg-outline-blue {
+    @apply btn btn-single btn-lg btn-outline-blue;
+}
+
+@utility btn-md-outline-white {
+    @apply btn btn-single btn-md btn-outline-white;
+}
+
+@utility btn-lg-outline-white {
+    @apply btn btn-single btn-lg btn-outline-white;
+}
+
+@utility btn-lg-outline-blue-light {
+    @apply btn btn-single btn-lg btn-outline-blue-light;
+}
+
+@utility btn-md-outline-blue-light {
+    @apply btn btn-single btn-md btn-outline-blue-light;
+}
+
