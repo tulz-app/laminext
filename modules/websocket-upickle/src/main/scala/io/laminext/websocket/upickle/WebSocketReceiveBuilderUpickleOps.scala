@@ -1,14 +1,14 @@
 package io.laminext.websocket.upickle
 
-import _root_.upickle.AttributeTagged
+import _root_.upickle.Api
 import io.laminext.websocket._
 import scala.util.Try
 
 class WebSocketReceiveBuilderUpickleOps(b: WebSocketReceiveBuilder) {
 
-  @inline def upickle[T <: AttributeTagged](u: T): UpickleBuilder[T] = new UpickleBuilder[T](u)
+  @inline def upickle[T <: Api](u: T): UpickleBuilder[T] = new UpickleBuilder[T](u)
 
-  class UpickleBuilder[T <: AttributeTagged](val u: T) {
+  class UpickleBuilder[+T <: Api](val u: T) {
     def json[Receive, Send](implicit receiveReader: u.Reader[Receive], sendWriter: u.Writer[Send]): WebSocketBuilder[Receive, Send] =
       new WebSocketBuilder[Receive, Send](
         url = b.url,

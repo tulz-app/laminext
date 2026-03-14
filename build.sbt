@@ -140,7 +140,7 @@ lazy val commonSettings = Seq(
     )
   },
   tpolecatScalacOptions ++= Set(
-    ScalacOptions.source("3-cross", _ < V3_0_0)
+//    ScalacOptions.source("3-cross", _ < V3_0_0)
   ),
   tpolecatExcludeOptions ++= Set(
     ScalacOptions.warnDeadCode,
