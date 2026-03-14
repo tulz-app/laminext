@@ -1,13 +1,12 @@
 import {resolve} from 'path'
 import {createHtmlPlugin} from 'vite-plugin-html'
 import tailwindcss from '@tailwindcss/vite'
-import commonjs from '@rollup/plugin-commonjs';
-import viteCompression from 'vite-plugin-compression';
+import viteCompression from 'vite-plugin-compression2';
 import fs from 'fs'
 
 import scalaVersion from './scala-version'
 
-const frontrouteVersion = fs.readFileSync('.laminext-version')
+const laminextVersion = fs.readFileSync('.laminext-version')
 
 // https://vitejs.dev/config/
 export default ({mode}) => {
@@ -19,25 +18,23 @@ export default ({mode}) => {
     server: {
       port: 6080,
     },
-    base: `/v/${frontrouteVersion}/`,
+    base: `/v/${laminextVersion}/`,
     publicDir: './src/main/public',
     build: {
-      outDir: `dist/v/${frontrouteVersion}`,
+      outDir: `dist/v/${laminextVersion}`,
     },
     optimizeDeps: {
       disabled: mode === 'production',
     },
     plugins: [
       ...(mode === 'production' ? [
-        commonjs(),
         viteCompression({
-          filter: /\.(js|css|html)$/i,
-          algorithm: 'gzip'
-        }),
-        viteCompression({
-          filter: /\.(js|css|html)$/i,
-          algorithm: 'brotliCompress'
-        }),
+          include: /\.(js|css|html)$/i,
+          algorithms: [
+            'gzip',
+            'brotliCompress'
+          ]
+        })
       ] : []),
       tailwindcss(),
       createHtmlPlugin({
