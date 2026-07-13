@@ -32,7 +32,7 @@ class TestableHtmlAttr[V](
   private[domtestutils] def nodeAttrIs(maybeExpectedValue: Option[V], sorted: Boolean = false)(node: dom.Node): MaybeError = {
     node match {
 
-      case (element: dom.html.Element) =>
+      case element: dom.html.Element =>
         val maybeActualValue = getAttr(element)
         (maybeActualValue, maybeExpectedValue) match {
 
